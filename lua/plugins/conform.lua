@@ -1,3 +1,5 @@
+local linterConfig = vim.fn.stdpath("config") .. "/.linter_configs"
+
 return {
   "stevearc/conform.nvim",
   event = { "BufWritePre" },
@@ -9,7 +11,6 @@ return {
       function()
         require("conform").format({ async = true, lsp_fallback = true })
       end,
-      mode = "",
       desc = "Format buffer",
     },
   },
@@ -21,30 +22,30 @@ return {
       lsp_fallback = true, -- not recommended to change
     },
     formatters_by_ft = {
-      css = { { "prettied", "prettier" } },
-      graphql = { { "prettied", "prettier" } },
-      html = { { "prettied", "prettier" } },
+      css = { { "prettierd", "prettier" } },
+      graphql = { { "prettierd", "prettier" } },
+      html = { { "prettierd", "prettier" } },
       javascript = { "biome" },
       javascriptreact = { "biome" },
       typescript = { "biome" },
       typescriptreact = { "biome" },
-      -- javascript = { { "prettied", "prettier" } },
-      -- javascriptreact = { { "prettied", "prettier" } },
       json = { "jq" },
       handlebars = { "prettier" },
-      -- json = { { "prettied", "prettier" } },
       lua = { "stylua" },
-      go = { "goimports", "gofmt" },
-      markdown = { { "prettied", "prettier" } },
+      ["markdown"] = { { "prettierd", "prettier" }, "markdownlint", "markdown-toc" },
       python = { "isort", "black" },
       sql = { "sql-formatter" },
-      svelte = { { "prettied", "prettier" } },
-      -- typescript = { { "prettied", "prettier" } },
-      -- typescriptreact = { { "prettied", "prettier" } },
+      svelte = { { "prettierd", "prettier" } },
       yaml = { "prettier" },
+      -- ["*"] = { "trim_whitespace" },
     },
     format_on_save = { timeout_ms = 500, lsp_fallback = true },
     formatters = {
+      markdownlint = {
+        command = "markdownlint",
+        stdin = false,
+        args = { "--fix", "--config", linterConfig .. "/markdownlint.yaml", "$FILENAME" },
+      },
       sqlfluff = {
         args = { "format", "--dialect=ansi", "-" },
       },

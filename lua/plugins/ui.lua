@@ -1,8 +1,15 @@
 local settings = require("settings")
 local indent_exclude_fts = {
-  "help", "alpha", "dashboard",
-  "notify", "toggleterm", "lazyterm", "Trouble", "lazy",
-  "mason", "NvimTree"
+  "help",
+  "alpha",
+  "dashboard",
+  "notify",
+  "toggleterm",
+  "lazyterm",
+  "Trouble",
+  "lazy",
+  "mason",
+  "NvimTree",
 }
 -- local highlight = {
 --   "CursorColumn",
@@ -10,40 +17,6 @@ local indent_exclude_fts = {
 -- }
 
 return {
-  {
-    "rcarriga/nvim-notify",
-    keys = {
-      {
-        "<leader>un",
-        function()
-          require("notify").dismiss({ silent = true, pending = true })
-        end,
-        desc = "Delete all Notifications",
-      },
-    },
-    opts = {
-      timeout = 3000,
-      background_colour = "#000000",
-      -- stages = "slide",
-      -- level = 0,
-      max_height = function()
-        return math.floor(vim.o.lines * 0.75)
-      end,
-      max_width = function()
-        return math.floor(vim.o.columns * 0.75)
-      end,
-      -- Icons for the different levels
-      icons = {
-        ERROR = "",
-        WARN = "",
-        INFO = "",
-        DEBUG = "",
-        TRACE = "✎",
-      },
-
-    },
-  },
-  --------------------------------------------------------------------------
 
   -- better vim.ui
   {
@@ -61,10 +34,10 @@ return {
       end
     end,
     keys = {
-      { "<Tab>",   "j", ft = "DressingSelect" },
+      { "<Tab>", "j", ft = "DressingSelect" },
       { "<S-Tab>", "k", ft = "DressingSelect" },
     },
-    --[[ 
+    --[[
     opts = {                 -- adapted from https://github.com/chrisgrieser/.config/blob/main/nvim/lua/plugins/appearance.lua
       input = {
         insert_only = false, -- = enable normal mode
@@ -136,7 +109,7 @@ return {
         diagnostics_indicator = function(_, _, diag)
           local icons = settings.icons.diagnostics
           local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-              .. (diag.warning and icons.Warn .. diag.warning or "")
+            .. (diag.warning and icons.Warn .. diag.warning or "")
           return vim.trim(ret)
         end,
         offsets = {
@@ -184,162 +157,21 @@ return {
     main = "ibl",
   },
 
-  -- Active indent guide and indent text objects. When you're browsing
-  -- code, this highlights the current level of indentation, and animates
-  -- the highlighting.
-  {
-    "echasnovski/mini.indentscope",
-    version = false, -- wait till new 0.7.0 release to put it back on semver
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      -- symbol = "▏",
-      symbol = "│",
-      options = { try_as_border = true },
-    },
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = {
-          "help",
-          "alpha",
-          "dashboard",
-          "neo-tree",
-          "Trouble",
-          "lazy",
-          "mason",
-          "notify",
-          "toggleterm",
-          "lazyterm",
-        },
-        callback = function()
-          vim.b.miniindentscope_disable = true
-        end,
-      })
-    end,
-  },
   --------------------------------------------------------------------------
-  -- noicer lua
-  {
-    "folke/noice.nvim",
-    cond = true,
-    event = "VeryLazy",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    },
-    opts = {
-      views = {
-        cmdline_popup = {
-          position = {
-            row = 15,
-            col = "50%",
-          },
-          size = {
-            width = 75,
-            height = "auto",
-          },
-        },
-        popupmenu = {
-          relative = "editor",
-          position = {
-            row = 8,
-            col = "50%",
-          },
-          size = {
-            width = 60,
-            height = 10,
-          },
-          border = {
-            style = "rounded",
-            padding = { 0, 1 },
-          },
-          -- win_options = {
-          --   winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-          -- },
-        },
-      },
-      lsp = {
-        progress = {
-          enabled = false,
-        },
-        signature = {
-          enabled = false,
-        },
-        hover = {
-          enabled = false,
-        }
-      },
-      presets = {
-        bottom_search = false,
-        command_palette = true,
-        long_message_to_split = true,
-        inc_rename = false,
-        cmdline_output_to_split = false,
-        lsp_doc_border = true,
-      },
-      routes = {
-        {
-          filter = {
-            event = "msg_show",
-            any = {
-              { find = "%d+L, %d+B" },
-              { find = "; after #%d+" },
-              { find = "; before #%d+" },
-            },
-          },
-          view = "mini",
-        },
-        {
-          filter = { event = 'msg_show', find = '^%d+ lines yanked$' },
-          opts = { skip = true },
-        },
-      },
-    },
-    -- stylua: ignore
-    keys = {
-      {
-        "<S-Enter>",
-        function() require("noice").redirect(vim.fn.getcmdline()) end,
-        mode = "c",
-        desc =
-        "Redirect Cmdline"
-      },
-      { "<leader>nl", function() require("noice").cmd("last") end,    desc = "Noice Last Message" },
-      { "<leader>nh", function() require("noice").cmd("history") end, desc = "Noice History" },
-      { "<leader>na", function() require("noice").cmd("all") end,     desc = "Noice All" },
-      { "<leader>nd", function() require("noice").cmd("dismiss") end, desc = "Dismiss All" },
-      {
-        "<c-f>",
-        function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end,
-        silent = true,
-        expr = true,
-        desc = "Scroll forward",
-        mode = { "i", "n", "s" }
-      },
-      {
-        "<c-b>",
-        function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end,
-        silent = true,
-        expr = true,
-        desc = "Scroll backward",
-        mode = { "i", "n", "s" }
-      },
-
-    },
-  },
   --------------------------------------------------------------------------
   -- folding fold area
   {
     "kevinhwang91/nvim-ufo",
     dependencies = { "kevinhwang91/promise-async" },
     event = "BufReadPost",
-    --stylua: ignore
+		-- stylua: ignore start
     keys = {
-      { "zR", function() require("ufo").openAllFolds() end, },
+      { "zR", function() require("ufo").openFoldsExceptKinds {} end, desc = "󱃄 Open All Folds" },
       { "zM", function() require("ufo").closeAllFolds() end, },
       { "zr", function(...) require("ufo").openFoldsExceptKinds(...) end, },
-      { "zm", function(...) require("ufo").closeFoldsWith(...) end, },
+      { "zm", function() require("ufo").closeAllFolds() end, desc = "󱃄 Close All Folds" },
       {
-        'zK',
+        'zk',
         function()
           local winid = require('ufo').peekFoldedLinesUnderCursor()
           if not winid then
@@ -347,16 +179,23 @@ return {
           end
         end,
         desc = "Preview fold or hover"
-      }
+      },
+      { "z1", function() require("ufo").closeFoldsWith(1) end, desc = "󱃄 Close L1 Folds" },
+			{ "z2", function() require("ufo").closeFoldsWith(2) end, desc = "󱃄 Close L2 Folds" },
+			{ "z3", function() require("ufo").closeFoldsWith(3) end, desc = "󱃄 Close L3 Folds" },
+			{ "z4", function() require("ufo").closeFoldsWith(4) end, desc = "󱃄 Close L4 Folds" },
     },
+    -- stylua: ignore end
+    init = function()
+      -- INFO fold commands usually change the foldlevel, which fixes folds, e.g.
+      -- auto-closing them after leaving insert mode, however ufo does not seem to
+      -- have equivalents for zr and zm because there is no saved fold level.
+      -- Consequently, the vim-internal fold levels need to be disabled by setting
+      -- them to 99.
+      vim.opt.foldlevel = 99
+      vim.opt.foldlevelstart = 99
+    end,
     opts = function()
-      local ts_indent = { "treesitter", "indent" }
-      local ft_map = {
-        vim = "indent",
-        python = "indent",
-        git = "",
-        markdown = ts_indent,
-      }
       local handler = function(virtText, lnum, endLnum, width, truncate)
         local newVirtText = {}
         local suffix = ("  %d "):format(endLnum - lnum)
@@ -385,11 +224,13 @@ return {
         return newVirtText
       end
       return {
-        open_fold_hl_timeout = 0,
+        open_fold_hl_timeout = 800,
+        -- when opening the buffer, close these fold kinds
+        -- use `:UfoInspect` to get available fold kinds from the LSP
         close_fold_kinds_for_ft = {
-          default = { 'imports', 'comment' },
-          json = { 'array' },
-          c = { 'comment', 'region' }
+          default = { "imports", "comment" },
+          json = { "array" },
+          c = { "comment", "region" },
         },
         preview = {
           win_config = {
@@ -402,8 +243,15 @@ return {
             scrollD = "<C-d>",
           },
         },
-        provider_selector = function(_, filetype, _)
-          return ft_map[filetype] or { "lsp", "indent" }
+        provider_selector = function(_, ft, _)
+          -- INFO some filetypes only allow indent, some only LSP, some only
+          -- treesitter. However, ufo only accepts two kinds as priority,
+          -- therefore making this function necessary :/
+          local lspWithOutFolding = { "markdown", "sh", "css", "html", "python", "json" }
+          if vim.tbl_contains(lspWithOutFolding, ft) then
+            return { "treesitter", "indent" }
+          end
+          return { "lsp", "indent" }
         end,
         fold_virt_text_handler = handler,
       }
@@ -411,8 +259,5 @@ return {
   },
   --------------------------------------------------------------------------
 
-  -- icons
-  { "nvim-tree/nvim-web-devicons" },
   -- ui components
-  { "MunifTanjim/nui.nvim" },
 }

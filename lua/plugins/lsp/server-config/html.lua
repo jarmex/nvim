@@ -5,9 +5,7 @@ return {
       -- make sure mason installs the server
       servers = {
         -- html
-        html = {
-          filetypes = { "html", "javascriptreact", "javascript.jsx", "typescriptreact", "typescript.tsx" },
-        },
+        html = {},
         -- Emmet
         emmet_ls = {
           init_options = {
@@ -19,8 +17,6 @@ return {
             },
           },
         },
-        -- CSS
-        cssls = {},
       },
     },
   },

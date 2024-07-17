@@ -21,7 +21,7 @@ return {
       local status = require("plugins.lualine.status")
       return {
         options = {
-          theme = "catppuccin",
+          theme = "tokyonight",
           icons_enabled = true,
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
@@ -35,6 +35,18 @@ return {
             statusline = 200,
             tabline = 1000,
             winbar = 1000,
+          },
+          ignore_focus = {
+            "DressingInput",
+            "DressingSelect",
+            "lspinfo",
+            "ccc-ui",
+            "TelescopePrompt",
+            "checkhealth",
+            "noice",
+            "mason",
+            "qf",
+            "lazy",
           },
         },
         tabline = {},
@@ -59,6 +71,7 @@ return {
             -- status.treesitter(),
           },
           lualine_y = {
+            status.codecompanion(),
             status.lsp(),
           },
           lualine_z = {
@@ -67,7 +80,7 @@ return {
             -- status.scrollbar(),
           },
         },
-        extensions = { "nvim-tree", "trouble", "quickfix" },
+        extensions = { "nvim-tree", "trouble", "quickfix", "toggleterm", "neo-tree", "lazy", "mason" },
       }
     end,
     config = function(_, opts)

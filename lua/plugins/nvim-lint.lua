@@ -7,12 +7,13 @@ return {
         python = { "ruff" },
         htmldjango = { "djlint" },
         lua = { "selene" },
+        markdown = { "markdownlint" },
         -- lua = { "selene", "luacheck" },
-        typescript = { "biomejs", "eslint_d", "eslint" },
-        javascript = { "biomejs", "eslint_d", "eslint" },
-        typescriptreact = { "biomejs", "eslint_d", "eslint" },
-        javascriptreact = { "biomejs", "eslint_d", "eslint" },
-        svelte = { "eslint_d" },
+        -- typescript = { "biomejs", "eslint_d", "eslint" },
+        -- javascript = { "biomejs", "eslint_d", "eslint" },
+        -- typescriptreact = { "biomejs", "eslint_d", "eslint" },
+        -- javascriptreact = { "biomejs", "eslint_d", "eslint" },
+        -- svelte = { "eslint_d" },
         sql = { "sqlfluff" },
       }
 

@@ -11,19 +11,16 @@ return {
           package_installed = "✓",
           -- package_pending = "➜",
           package_pending = "⟳",
-          package_uninstalled = "✗"
-        }
+          package_uninstalled = "✗",
+        },
       },
       ensure_installed = {
         "biome",
-        "typos-lsp",-- spellchecker for code
+        "typos-lsp", -- spellchecker for code
         "codelldb",
         "css-lsp",
         "emmet-ls",
-        "eslint-lsp",
-        "eslint_d",
         "gopls",
-        "graphql-language-service-cli",
         "html-lsp",
         "js-debug-adapter",
         "json-lsp",
@@ -34,8 +31,9 @@ return {
         "rust-analyzer",
         "shellcheck",
         "shfmt",
-        "stylelint-lsp", --CSS
         "stylua",
+        "selene",
+        "luacheck",
         "taplo",
         "typescript-language-server",
         "yaml-language-server",
@@ -60,5 +58,5 @@ return {
         ensure_installed()
       end
     end,
-  }
+  },
 }

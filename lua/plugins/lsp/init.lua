@@ -7,7 +7,7 @@ return {
       "b0o/SchemaStore.nvim",
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
-      { 'antosha417/nvim-lsp-file-operations', config = true },
+      { "antosha417/nvim-lsp-file-operations", config = true },
     },
     ---@class PluginLspOpts
     opts = {
@@ -18,6 +18,12 @@ return {
             lineFoldingOnly = true,
           },
         },
+        workspace = {
+          fileOperations = {
+            didRename = true,
+            willRename = true,
+          },
+        },
       },
 
       -- but can be also overridden when specified
@@ -25,7 +31,7 @@ return {
         formatting_options = nil,
         timeout_ms = nil,
       },
-
+      -- add any global capabilities here
       ---@type lspconfig.options
       servers = {},
       -- you can do any additional lsp server setup here
@@ -46,13 +52,56 @@ return {
       require("plugins.lsp.lspconfig.setup").setup(opts)
     end,
   },
+  { -- display inlay hints from at EoL, not in the text
+    "lvimuser/lsp-inlayhints.nvim",
+    keys = {
+      {
+        "<leader>oh",
+        function()
+          require("lsp-inlayhints").toggle()
+        end,
+        desc = "󰒕 Inlay Hints",
+      },
+    },
+    opts = {
+      inlay_hints = {
+        labels_separator = "",
+        parameter_hints = {
+          prefix = " 󰏪 ",
+          remove_colon_start = true,
+          remove_colon_end = true,
+        },
+        type_hints = {
+          prefix = " 󰜁 ",
+          remove_colon_start = true,
+          remove_colon_end = true,
+        },
+      },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          if not (args.data and args.data.client_id) then
+            return
+          end
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if not client then
+            return
+          end
+          require("lsp-inlayhints").on_attach(client, args.buf)
+        end,
+      })
+    end,
+  },
   { -- signature hints
     "ray-x/lsp_signature.nvim",
     event = "BufReadPre",
     keys = {
       {
-        "<D-g>",
-        function() require("lsp_signature").toggle_float_win() end,
+        "<C-i>",
+        function()
+          require("lsp_signature").toggle_float_win()
+        end,
         mode = { "n", "v", "i" },
         desc = "󰒕 LSP signature",
       },
@@ -66,16 +115,46 @@ return {
       auto_close_after = 3000,
     },
   },
-  {
-    "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
+  { -- CodeLens, but also for languages not supporting it
+    "Wansmer/symbol-usage.nvim",
+    event = "LspAttach",
     opts = {
-      library = {
-        "lazy.nvim",
-        -- Load luvit types when the `vim.uv` word is found
-        { path = "luvit-meta/library", words = { "vim%.uv" } },
+      request_pending_text = false, -- remove "loading…"
+      references = { enabled = true, include_declaration = false },
+      definition = { enabled = false },
+      implementation = { enabled = false },
+      vt_position = "signcolumn",
+      vt_priority = 5, -- below the gitsigns default of 6
+      hl = { link = "Comment" },
+      text_format = function(symbol)
+        if not symbol.references or symbol.references == 0 then
+          return
+        end
+        if symbol.references < 2 and vim.bo.filetype == "css" then
+          return
+        end
+        if symbol.references > 100 then
+          return "++"
+        end
+
+        local refs = tostring(symbol.references)
+        local altDigits = -- there is no numeric `0` nerdfont icon, so using dot
+          { "", "󰬺", "󰬻", "󰬼", "󰬽", "󰬾", "󰬿", "󰭀", "󰭁", "󰭂" }
+        for i = 0, #altDigits - 1 do
+          refs = refs:gsub(tostring(i), altDigits[i + 1])
+        end
+        return refs
+      end,
+      -- available kinds: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
+      kinds = {
+        vim.lsp.protocol.SymbolKind.Module,
+        vim.lsp.protocol.SymbolKind.Package,
+        vim.lsp.protocol.SymbolKind.Function,
+        vim.lsp.protocol.SymbolKind.Method,
+        vim.lsp.protocol.SymbolKind.Class,
+        vim.lsp.protocol.SymbolKind.Interface,
+        vim.lsp.protocol.SymbolKind.Constructor,
       },
     },
   },
-  { "Bilal2453/luvit-meta", lazy = true },
 }

@@ -1,6 +1,7 @@
 return {
   {
     "lewis6991/hover.nvim",
+    event = "VeryLazy",
     config = function()
       require("hover").setup({
         init = function()
@@ -11,10 +12,11 @@ return {
           -- require('hover.providers.jira')
           -- require('hover.providers.dap')
           -- require('hover.providers.man')
-          -- require('hover.providers.dictionary')
+          require("hover.providers.dictionary")
         end,
         preview_opts = {
-          border = "single",
+          border = vim.g.borderStyle,
+          width = 60,
         },
         -- Whether the contents of a currently open hover window should be moved
         -- to a :h preview-window when pressing the hover keymap.

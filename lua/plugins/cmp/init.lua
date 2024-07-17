@@ -3,36 +3,16 @@ local settings = require("settings")
 return {
   {
     "L3MON4D3/LuaSnip",
-    event = 'InsertEnter',
+    event = "InsertEnter",
     version = "v2.*",
     build = "make install_jsregexp",
     dependencies = {
       {
         "rafamadriz/friendly-snippets",
         config = function()
-          local luasnip = require("luasnip")
-          luasnip.filetype_extend("javascriptreact", { "html" })
-          luasnip.filetype_extend("typescriptreact", { "html" })
-          luasnip.filetype_extend("svelte", { "html" })
-          luasnip.filetype_extend("vue", { "html" })
-
           require("luasnip.loaders.from_vscode").lazy_load()
-        end
-      },
-    },
-    -- stylua: ignore
-    keys = {
-      {
-        "<tab>",
-        function()
-          return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
         end,
-        expr = true,
-        silent = true,
-        mode = "i",
       },
-      { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s", },
-      { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" }, },
     },
   },
   {
@@ -46,15 +26,14 @@ return {
       "hrsh7th/cmp-cmdline",
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-nvim-lua",
-      "hrsh7th/cmp-nvim-lsp-signature-help",
       "onsails/lspkind-nvim",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
     },
     opts = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
       local lspkind = require("lspkind")
-      local compare = require "cmp.config.compare"
-
+      local compare = require("cmp.config.compare")
 
       local check_backspace = function()
         local col = vim.fn.col(".") - 1
@@ -132,17 +111,16 @@ return {
           end, { "i", "s" }),
         },
         sources = {
-          { name = "nvim_lsp",                group_index = 1 },
+          { name = "nvim_lsp", group_index = 1, max_item_count = 20 },
+          { name = "nvim_lua", group_index = 1 },
           { name = "nvim_lsp_signature_help", group_index = 1 },
-          { name = "nvim_lua",                group_index = 1 },
-          { name = "luasnip",                 group_index = 1 },
-          { name = "path",                    group_index = 1 },
-          { name = "buffer",                  group_index = 2, keyword_length = 5 },
-          -- { name = "cmp_tabnine",             group_index = 2 }
+          { name = "luasnip", group_index = 1, max_item_count = 5 },
+          { name = "path", group_index = 1 },
+          { name = "buffer", group_index = 2, keyword_length = 5 },
         },
         window = {
-          completion = cmp.config.window.bordered(),
-          documentation = cmp.config.window.bordered(),
+          completion = { border = vim.g.borderStyle, scrolloff = 2 },
+          documentation = { border = vim.g.borderStyle, scrolloff = 2 },
         },
         formatting = {
           fields = { "kind", "abbr", "menu" },
@@ -152,7 +130,7 @@ return {
             before = function(entry, item)
               local kind = item.kind --> Class, Method, Variables...
               local icons = settings.icons.kinds[kind]
-              item.kind = (icons or '?')
+              item.kind = (icons or "?")
               if entry.source.name == "cmp_tabnine" then
                 if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
                   -- kind = entry.completion_item.data.detail .. " " .. menu
@@ -160,11 +138,18 @@ return {
                 end
                 item.kind = " "
               end
+              --TODO: remove this after the bug is fixed.
+              --https://github.com/hrsh7th/nvim-cmp/issues/1939
+
+              -- if kind is nil then it will be replaced by '?'
+              if kind == nil then
+                kind = "?"
+              end
 
               item.menu = " (" .. kind .. ") "
               return item
             end,
-          })
+          }),
         },
         experimental = {
           -- ghost_text = false,
@@ -174,17 +159,19 @@ return {
         },
         enabled = function()
           -- disable completion in comments
-          local context = require 'cmp.config.context'
+          local context = require("cmp.config.context")
           -- keep command mode completion enabled when cursor is in a comment
-          if vim.api.nvim_get_mode().mode == 'c' then
+          if vim.api.nvim_get_mode().mode == "c" then
             return true
           else
-            local buftype = vim.api.nvim_buf_get_option(0, "buftype")
-            if buftype == "prompt" then return false end
-            return not context.in_treesitter_capture("comment")
-                and not context.in_syntax_group("Comment")
+            local buftype = vim.api.nvim_get_option_value("buftype", { buf = 0 })
+            -- local buftype = vim.api.nvim_buf_get_option(0, "buftype")
+            if buftype == "prompt" then
+              return false
+            end
+            return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
           end
-        end
+        end,
       }
     end,
     config = function(_, opts)
@@ -193,7 +180,7 @@ return {
       cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
-          { name = "path",    group_index = 1 },
+          { name = "path", group_index = 1 },
           { name = "cmdline", group_index = 2 },
         },
       })
@@ -212,5 +199,5 @@ return {
       end
       vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#C792EA", italic = true })
     end,
-  }
+  },
 }

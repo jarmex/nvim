@@ -1,20 +1,22 @@
 return {
   "folke/edgy.nvim",
+  enabled = true,
   event = "VeryLazy",
   init = function()
     vim.opt.laststatus = 3
     vim.opt.splitkeep = "screen"
   end,
   opts = {
+    animate = { enabled = false },
     bottom = {
-      -- {
-      --   ft = "toggleterm",
-      --   size = { height = 0.4 },
-      --   -- exclude floating windows
-      --   filter = function(buf, win)
-      --     return vim.api.nvim_win_get_config(win).relative == ""
-      --   end,
-      -- },
+      {
+        ft = "toggleterm",
+        size = { height = 0.4 },
+        -- exclude floating windows
+        filter = function(_, win)
+          return vim.api.nvim_win_get_config(win).relative == ""
+        end,
+      },
       { ft = "qf", title = "QuickFix" },
       {
         ft = "help",
@@ -26,11 +28,17 @@ return {
       },
       { ft = "neotest-output-panel", title = "Neotest OutputPanel", size = { height = 0.3 } },
       {
-        ft = "toggleterm",
-        title = "Term",
+        ft = "Trouble",
+        title = "TROUBLE",
+        filter = function(buf, win)
+          return vim.api.nvim_win_get_config(win).relative == ""
+        end,
+      },
+      {
+        ft = "noice",
         size = { height = 0.4 },
-        filter = function(buf)
-          return not vim.b[buf].lazyterm_cmd
+        filter = function(buf, win)
+          return vim.api.nvim_win_get_config(win).relative == ""
         end,
       },
     },

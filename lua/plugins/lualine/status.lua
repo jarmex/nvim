@@ -1,8 +1,10 @@
 local settings = require("settings")
 local helper = require("helper")
 local symbols = settings.icons
+local companion_lualine = require("plugins.lualine.helper")
 local lazy_status = require("lazy.status")
-local colors = require("catppuccin.palettes").get_palette("macchiato")
+local colors = require("tokyonight.colors").setup()
+-- local colors = require("catppuccin.palettes").get_palette("macchiato")
 
 local M = {}
 
@@ -26,7 +28,7 @@ local modecolor = {
   rm = colors.cyan,
   ["r?"] = colors.cyan,
   ["!"] = colors.red,
-  t = colors.bright_red,
+  t = colors.red1,
 }
 
 local function show_macro_recording()
@@ -189,7 +191,7 @@ function M.diagnostics(opts)
       hint = symbols.diagnostics.Hint,
     },
     padding = { left = 1, right = 1 },
-    color = { bg = colors.gray2, fg = colors.blue, gui = "bold" },
+    -- color = { bg = colors.gray2, fg = colors.blue, gui = "bold" },
     separator = { left = "", right = "" },
     -- color = { bg = "None" },
   }, opts)
@@ -201,7 +203,7 @@ function M.filetype(opts)
     icon_only = true,
     separator = "",
     padding = { left = 1, right = 0 },
-    color = { bg = colors.gray2, fg = colors.bg_dark, gui = "italic,bold" },
+    color = { fg = colors.cyan, gui = "italic,bold" },
     -- color = { bg = "#282c34", fg = "#bbc2cf", gui = "bold" },
   }, opts)
 end
@@ -213,7 +215,7 @@ function M.filename(opts)
     shorting_target = 40,
     symbols = { modified = " ", readonly = " ", unnamed = " " },
     -- color = { fg = "#bcbcbc", gui = "bold" },
-    color = { bg = colors.gray2, fg = colors.bg, gui = "bold" },
+    color = { fg = colors.blue5, gui = "bold" },
     separator = { left = "", right = "" },
   }, opts)
 end
@@ -245,13 +247,16 @@ function M.git_diff(opts)
         }
       end
     end,
+    on_click = function()
+      vim.cmd("DiffviewOpen")
+    end,
     symbols = {
       added = symbols.git.added,
       modified = symbols.git.modified,
       removed = symbols.git.removed,
     }, -- changes diff symbols
     -- color = { bg = "None" },
-    color = { bg = colors.gray2, fg = colors.bg, gui = "bold" },
+    -- color = { bg = colors.gray2, fg = colors.bg, gui = "bold" },
     separator = { left = "", right = "" },
 
     diff_color = {
@@ -263,15 +268,30 @@ function M.git_diff(opts)
   }, opts)
 end
 
+function M.codecompanion(opts)
+  return helper.extend_tbl({
+    companion_lualine,
+    separator = { left = "", right = "" },
+    color = { bg = colors.purple, fg = colors.bg, gui = "italic,bold" },
+  }, opts)
+end
+
 function M.lsp(opts)
   return helper.extend_tbl({
     function()
       return getLspName()
     end,
-    -- color = { bg = "#282c34", fg = "#bbc2cf", gui = "bold" },
-    -- icon = settings.icons.lsp.ActiveLSP,
+    on_click = function()
+      vim.api.nvim_command("LspInfo")
+    end,
     separator = { left = "", right = "" },
-    color = { bg = colors.purple, fg = colors.bg, gui = "italic,bold" },
+    color = function()
+      local _, color = require("nvim-web-devicons").get_icon_cterm_color_by_filetype(
+        vim.api.nvim_get_option_value("filetype", { buf = 0 })
+      )
+      return { fg = color }
+    end,
+    -- color = { bg = colors.purple, fg = colors.bg, gui = "italic,bold" },
   }, opts)
 end
 
@@ -314,7 +334,10 @@ function M.DapStatus(opts)
       end
       return "  " .. dapStatus
     end,
-    -- color = { bg = "#282c34", fg = "#bbc2cf", gui = "bold" },
+    cond = function()
+      return package.loaded["dap"] and require("dap").status() ~= ""
+    end,
+    color = { bg = colors.purple, fg = colors.bg, gui = "italic,bold" },
   }, opts)
 end
 
