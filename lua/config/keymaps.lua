@@ -109,8 +109,11 @@ vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diag
 M = {}
 
 function M.codeium_keymaps()
-  local function local_map(key, func, desc)
-    return { key, func, mode = "i", expr = true, silent = true, desc = desc }
+  local function local_map(key, func, desc, mode)
+    if not mode then
+      mode = "i"
+    end
+    return { key, func, mode = mode, expr = true, silent = true, desc = desc }
   end
   return {
 		-- stylua: ignore start
@@ -212,6 +215,24 @@ function M.dap_ui_keymaps()
       mode = { "n", "v" },
       desc = "Evaluate expression",
     },
+  }
+end
+
+function M.illuminate_keymaps()
+  return {
+		-- stylua: ignore start
+    { "]]", function() require("illuminate").goto_next_reference(true) end, desc = "Next Reference" },
+    { "[[", function() require("illuminate").goto_prev_reference(true) end, desc = "Prev Reference" },
+    -- stylua: ignore end
+  }
+end
+
+function M.terminal_keymaps()
+  return {
+    { "<leader>wt", "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
+    { "<leader>wf", "<cmd>ToggleTerm direction=float<cr>", desc = "Toggle Floating Terminal" },
+    { "<leader>wh", "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "Toggle Horizontal Terminal" },
+    { "<leader>wv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "Toggle Vertical Terminal" },
   }
 end
 
