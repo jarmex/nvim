@@ -17,26 +17,20 @@ return {
   opts = {
     format = {
       timeout_ms = 3000,
-      async = false, -- not recommended to change
+      async = true, -- not recommended to change
       quiet = false, -- not recommended to change
       lsp_fallback = true, -- not recommended to change
     },
     formatters_by_ft = {
       css = { 'prettierd', 'prettier', stop_after_first = true },
-      -- go = { "goimports", "gofumpt" },
       graphql = { 'prettierd', 'prettier', stop_after_first = true },
       handlebars = { 'prettier' },
       html = { 'prettierd', 'prettier', stop_after_first = true },
-      javascript = { 'biome' },
-      javascriptreact = { 'biome' },
       json = { 'jq' },
       lua = { 'stylua' },
-      markdown = { 'markdownlint', 'prettierd', 'prettier', 'markdown-toc', stop_after_first = true },
+      markdown = { 'markdownlint', 'markdown-toc', stop_after_first = true },
       python = { 'isort', 'black', stop_after_first = true },
       -- sql = { "sql-formatter" },
-      svelte = { 'prettierd', 'prettier' },
-      typescript = { 'biome' },
-      typescriptreact = { 'biome' },
       yaml = { 'prettier' },
       -- ["*"] = { "trim_whitespace" },
     },
