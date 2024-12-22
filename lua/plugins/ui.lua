@@ -1,84 +1,32 @@
-local settings = require("settings")
-local indent_exclude_fts = {
-  "help",
-  "alpha",
-  "dashboard",
-  "notify",
-  "toggleterm",
-  "lazyterm",
-  "Trouble",
-  "lazy",
-  "mason",
-  "NvimTree",
-}
+local settings = require('settings')
 
 return {
 
   -- better vim.ui
   {
-    "stevearc/dressing.nvim",
+    'stevearc/dressing.nvim',
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.select = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
+        require('lazy').load({ plugins = { 'dressing.nvim' } })
         return vim.ui.select(...)
       end
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.input = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
+        require('lazy').load({ plugins = { 'dressing.nvim' } })
         return vim.ui.input(...)
       end
     end,
     keys = {
-      { "<Tab>", "j", ft = "DressingSelect" },
-      { "<S-Tab>", "k", ft = "DressingSelect" },
+      { '<Tab>', 'j', ft = 'DressingSelect' },
+      { '<S-Tab>', 'k', ft = 'DressingSelect' },
     },
-    --[[
-    opts = {                 -- adapted from https://github.com/chrisgrieser/.config/blob/main/nvim/lua/plugins/appearance.lua
-      input = {
-        insert_only = false, -- = enable normal mode
-        trim_prompt = true,
-        border = vim.g.borderStyle,
-        relative = "editor",
-        title_pos = "left",
-        prefer_width = 73, -- commit width + 1 for padding
-        min_width = 0.4,
-        max_width = 0.9,
-        mappings = { n = { ["q"] = "Close" } },
-      },
-      select = {
-        backend = { "telescope", "builtin" },
-        trim_prompt = true,
-        builtin = {
-          mappings = { ["q"] = "Close" },
-          show_numbers = false,
-          border = vim.g.borderStyle,
-          relative = "editor",
-          max_width = 80,
-          min_width = 20,
-          max_height = 12,
-          min_height = 3,
-        },
-        telescope = {
-          layout_config = {
-            horizontal = { width = { 0.7, max = 75 }, height = 0.6 },
-          },
-        },
-        get_config = function(opts)
-          local useBuiltin = { "just-recipes", "codeaction", "rule_selection" }
-          if vim.tbl_contains(useBuiltin, opts.kind) then
-            return { backend = { "builtin" }, builtin = { relative = "cursor" } }
-          end
-        end,
-      },
-    },
-    --]]
   },
   --------------------------------------------------------------------------
   -- Tabs
   {
-    "akinsho/nvim-bufferline.lua",
-    event = "VeryLazy",
+    'akinsho/nvim-bufferline.lua',
+    event = 'VeryLazy',
     -- stylua: ignore
     keys = {
       { "[b",         "<cmd>BufferLineCyclePrev<cr>",                              desc = "Previous" },
@@ -95,34 +43,34 @@ return {
       options = {
         -- stylua: ignore
         close_command = function(n) require("mini.bufremove").delete(n, false) end,
-        numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
+        numbers = 'none', -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
         show_close_icon = false,
         show_buffer_close_icons = false,
         show_buffer_icons = false,
-        diagnostics = "nvim_lsp",
+        diagnostics = 'nvim_lsp',
         always_show_bufferline = true,
-        separator_style = "thin",
+        separator_style = 'thin',
         diagnostics_indicator = function(_, _, diag)
           local icons = settings.icons.diagnostics
-          local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-            .. (diag.warning and icons.Warn .. diag.warning or "")
+          local ret = (diag.error and icons.Error .. diag.error .. ' ' or '')
+            .. (diag.warning and icons.Warn .. diag.warning or '')
           return vim.trim(ret)
         end,
         offsets = {
           {
-            filetype = "NvimTree",
-            text = "File Explorer",
-            highlight = "Directory",
-            text_align = "left",
+            filetype = 'NvimTree',
+            text = 'File Explorer',
+            highlight = 'Directory',
+            text_align = 'left',
             padding = 1,
           },
         },
       },
     },
     config = function(_, opts)
-      require("bufferline").setup(opts)
+      require('bufferline').setup(opts)
       -- Fix bufferline when restoring a session
-      vim.api.nvim_create_autocmd("BufAdd", {
+      vim.api.nvim_create_autocmd('BufAdd', {
         callback = function()
           vim.schedule(function()
             pcall(nvim_bufferline)
@@ -132,29 +80,12 @@ return {
     end,
   },
   --------------------------------------------------------------------------
-
-  --------------------------------------------------------------------------
-  -- indent guides for Neovim
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    event = "VeryLazy",
-    opts = {
-      indent = { char = "│" },
-      scope = { enabled = false },
-      exclude = {
-        filetypes = indent_exclude_fts,
-      },
-    },
-    main = "ibl",
-  },
-
-  --------------------------------------------------------------------------
   --------------------------------------------------------------------------
   -- folding fold area
   {
-    "kevinhwang91/nvim-ufo",
-    dependencies = { "kevinhwang91/promise-async" },
-    event = "BufReadPost",
+    'kevinhwang91/nvim-ufo',
+    dependencies = { 'kevinhwang91/promise-async' },
+    event = 'BufReadPost',
 		-- stylua: ignore start
     keys = {
       { "zR", function() require("ufo").openFoldsExceptKinds {} end, desc = "󱃄 Open All Folds" },
@@ -189,7 +120,7 @@ return {
     opts = function()
       local handler = function(virtText, lnum, endLnum, width, truncate)
         local newVirtText = {}
-        local suffix = ("  %d "):format(endLnum - lnum)
+        local suffix = ('  %d '):format(endLnum - lnum)
         local sufWidth = vim.fn.strdisplaywidth(suffix)
         local targetWidth = width - sufWidth
         local curWidth = 0
@@ -205,13 +136,13 @@ return {
             chunkWidth = vim.fn.strdisplaywidth(chunkText)
             -- str width returned from truncate() may less than 2nd argument, need padding
             if curWidth + chunkWidth < targetWidth then
-              suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
+              suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
             end
             break
           end
           curWidth = curWidth + chunkWidth
         end
-        table.insert(newVirtText, { suffix, "MoreMsg" })
+        table.insert(newVirtText, { suffix, 'MoreMsg' })
         return newVirtText
       end
       return {
@@ -219,30 +150,30 @@ return {
         -- when opening the buffer, close these fold kinds
         -- use `:UfoInspect` to get available fold kinds from the LSP
         close_fold_kinds_for_ft = {
-          default = { "imports", "comment" },
-          json = { "array" },
-          c = { "comment", "region" },
+          default = { 'imports', 'comment' },
+          json = { 'array' },
+          c = { 'comment', 'region' },
         },
         preview = {
           win_config = {
-            border = { "", "─", "", "", "", "─", "", "" },
-            winhighlight = "Normal:Folded",
+            border = { '', '─', '', '', '', '─', '', '' },
+            winhighlight = 'Normal:Folded',
             winblend = 0,
           },
           mappings = {
-            scrollU = "<C-u>",
-            scrollD = "<C-d>",
+            scrollU = '<C-u>',
+            scrollD = '<C-d>',
           },
         },
         provider_selector = function(_, ft, _)
           -- INFO some filetypes only allow indent, some only LSP, some only
           -- treesitter. However, ufo only accepts two kinds as priority,
           -- therefore making this function necessary :/
-          local lspWithOutFolding = { "markdown", "sh", "css", "html", "python", "json" }
+          local lspWithOutFolding = { 'markdown', 'sh', 'css', 'html', 'python', 'json' }
           if vim.tbl_contains(lspWithOutFolding, ft) then
-            return { "treesitter", "indent" }
+            return { 'treesitter', 'indent' }
           end
-          return { "lsp", "indent" }
+          return { 'lsp', 'indent' }
         end,
         fold_virt_text_handler = handler,
       }
