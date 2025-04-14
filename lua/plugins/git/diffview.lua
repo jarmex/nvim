@@ -100,6 +100,14 @@ return {
           { 'n', '<c-c>', actions.toggle_files, { desc = 'Toggle the file panel' } },
           { 'n', '-', actions.toggle_stage_entry, { desc = 'Stage / unstage the selected entry' } },
           { 'n', 'gd', function() actions.goto_file_edit() vim.lsp.buf.definition() end, },
+          {
+               'n',
+               'gq',
+               function()
+                 require('diffview.actions').toggle_files()
+                 vim.schedule(function() vim.cmd('tabclose') end)
+               end,
+             },
         },
         -- stylua: ignore end
         file_panel = {
@@ -115,6 +123,16 @@ return {
           { 'n', '[x', actions.prev_conflict, { desc = 'Go to the previous conflict' } },
           { 'n', ']x', actions.next_conflict, { desc = 'Go to the next conflict' } },
           { 'n', '<leader>b', false },
+          {
+            'n',
+            'gq',
+            function()
+              require('diffview.actions').toggle_files()
+              vim.schedule(function()
+                vim.cmd('tabclose')
+              end)
+            end,
+          },
         },
         file_history_panel = {
           { 'n', 'q', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
@@ -124,6 +142,16 @@ return {
           { 'n', '<cr>', actions.goto_file, { desc = 'Open the file in a new split in the previous tabpage' } },
           { 'n', '<c-c>', actions.toggle_files, { desc = 'Toggle the file panel' } },
           { 'n', '<leader>b', false },
+          {
+            'n',
+            'gq',
+            function()
+              require('diffview.actions').toggle_files()
+              vim.schedule(function()
+                vim.cmd('tabclose')
+              end)
+            end,
+          },
           {
             'n',
             '<C-g>',

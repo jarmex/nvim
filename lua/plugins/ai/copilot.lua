@@ -14,6 +14,12 @@ return {
         panel = {
           enabled = false,
         },
+        server_opts_overrides = {
+          settings = {
+            telemetry = { telemetryLevel = 'off' },
+            advanced = { inlineSuggestCount = 3 },
+          },
+        },
         suggestion = {
           enabled = false,
           auto_trigger = true,
