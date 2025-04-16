@@ -46,14 +46,18 @@ end
 local function keymap(bufnr, client)
   local function map(lhs, rhs, desc, mode)
     mode = mode or 'n'
-    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = '[LSP] ' .. desc, silent = true })
+    opts = opts or {}
+    opts.silent = opts.silent or true
+    opts.buffer = bufnr
+    opts.desc = string.format('Lsp: %s', opts.desc)
+    vim.keymap.set(mode, lhs, rhs, opts)
   end
 
-  map('gd', go_to_definition, 'Go to definition')
+  map('gd', go_to_definition, { desc = 'Go to definition' })
 
   vim.keymap.set('n', 'gr', function()
     Snacks.picker.lsp_references()
-  end, { buffer = bufnr, desc = 'References', nowait = true })
+  end, { desc = 'References', nowait = true })
 
   map('gi', function()
     Snacks.picker.lsp_implementations()
