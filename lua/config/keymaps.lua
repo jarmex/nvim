@@ -10,10 +10,10 @@ end
 
 -- Better window movement
 -- Move to window using the <ctrl> hjkl keys
-vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Go to left window', noremap = true })
-vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Go to lower window', noremap = true })
-vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Go to upper window', noremap = true })
-vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Go to right window', noremap = true })
+keymap('n', '<C-h>', '<C-w>h', { desc = 'Go to left window', noremap = true, unique = false })
+keymap('n', '<C-j>', '<C-w>j', { desc = 'Go to lower window', noremap = true, unique = false })
+keymap('n', '<C-k>', '<C-w>k', { desc = 'Go to upper window', noremap = true, unique = false })
+keymap('n', '<C-l>', '<C-w>l', { desc = 'Go to right window', noremap = true, unique = false })
 
 vim.keymap.set('n', 'Y', 'y$', { remap = true })
 -- Remap for dealing with word wrap
@@ -35,7 +35,7 @@ keymap('n', '<leader>zr', '<cmd>LspRestart<cr>')
 keymap('v', '<', '<gv')
 keymap('v', '>', '>gv')
 
-vim.keymap.set('n', '<Leader>r', ':%s/<c-r><c-w>//g<left><left>', { desc = 'Rename word under cursor' })
+keymap('n', '<Leader>rw', ':%s/<c-r><c-w>//g<left><left>', { desc = 'Rename word under cursor' })
 -- Paste over currently selected text without yanking it
 -- keymap('v', 'p', '"_dP')
 -- keymap('x', '<leader>p', [["_dP]])
@@ -62,11 +62,11 @@ keymap('t', '<C-/>', '<cmd>close<cr>', { desc = 'Hide Terminal' })
 keymap('t', '<c-_>', '<cmd>close<cr>', { desc = 'which_key_ignore' })
 
 -- Clear search with <esc>
-vim.keymap.set('n', '<leader><space>', ':nohlsearch<CR>', { desc = 'Clear hlsearch', nowait = true })
-vim.keymap.set({ 'n', 'i' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsearch' })
+keymap('n', '<leader><space>', ':nohlsearch<CR>', { desc = 'Clear hlsearch', nowait = true })
+keymap({ 'n', 'i' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsearch' })
 
 -- buffers
-vim.keymap.set('n', '<leader>`', '<C-^>', { noremap = true, desc = 'Alternate buffers' })
+keymap('n', '<leader>`', '<C-^>', { noremap = true, desc = 'Alternate buffers' })
 keymap('n', '<leader>bo', '<cmd>b#<cr>', { desc = 'Switch to Other Buffer' })
 
 -- lazy
@@ -124,9 +124,7 @@ end, { desc = ' Delete Quickfix List' })
 
 -- adapted from
 -- https://github.com/rachartier/dotfiles/blob/main/.config/nvim/lua/remap.lua
-local map = vim.keymap.set
-
-map('n', 'dd', function()
+keymap('n', 'dd', function()
   if vim.api.nvim_get_current_line():match('^%s*$') then
     return '"_dd'
   else
