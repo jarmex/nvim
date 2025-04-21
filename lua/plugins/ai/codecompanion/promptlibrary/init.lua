@@ -17,4 +17,6 @@ return {
   ['Generate a Commit Message for Staged Files'] = require('plugins.ai.codecompanion.promptlibrary.scommit'),
   ['Proof Read'] = require('plugins.ai.codecompanion.promptlibrary.proofread'),
   ['Naming'] = require('plugins.ai.codecompanion.promptlibrary.naming'),
+  [' Lua Developer'] = require('plugins.ai.codecompanion.promptlibrary.lua_developer'),
+  [' Python Developer'] = require('plugins.ai.codecompanion.promptlibrary.python_dev'),
 }

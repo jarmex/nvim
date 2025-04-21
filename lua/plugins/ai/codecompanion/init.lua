@@ -81,5 +81,7 @@ return {
     vim.cmd([[cab ccb CodeCompanionChat anthropic]])
 
     require('plugins.ai.codecompanion.spinner'):init()
+    -- Ensure buffer is treated as markdown by treesitter despite being codecompanion filetype
+    vim.treesitter.language.register('markdown', 'codecompanion')
   end,
 }
