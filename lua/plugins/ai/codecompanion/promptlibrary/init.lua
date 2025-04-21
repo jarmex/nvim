@@ -20,4 +20,5 @@ return {
   [' Lua Developer'] = require('plugins.ai.codecompanion.promptlibrary.lua_developer'),
   [' Python Developer'] = require('plugins.ai.codecompanion.promptlibrary.python_dev'),
   ['Vibe Code'] = require('plugins.ai.codecompanion.promptlibrary.vibe_code'),
+  ['Platform Commit'] = require('plugins.ai.codecompanion.promptlibrary.platform-commit'),
 }
