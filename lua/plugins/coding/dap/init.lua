@@ -31,6 +31,19 @@ local function dapConfig()
   end
 
   require('plugins.coding.dap.typescript')
+  -- require("config.dap.cs").setup()
+
+  vim.keymap.set('n', '<leader>tm', function()
+    if vim.api.nvim_buf_get_option(0, 'filetype') == 'java' then
+      require('jdtls').test_nearest_method()
+    end
+  end)
+
+  vim.api.nvim_create_user_command(
+    'DebugRemoteProcess',
+    require('plugins.coding.dap.custom-action').attach_to_remote_debugger,
+    {}
+  )
 end
 
 return {
