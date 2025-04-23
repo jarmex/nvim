@@ -1,9 +1,33 @@
+local vault = {
+  name = 'work',
+  path = '~/vaults',
+  -- Optional, override certain settings.
+  overrides = {
+    notes_subdir = 'notes',
+  },
+}
+
+---If the current file is a journal, return the date of the journal as a timestamp
+---Otherwise, return the current timestamp (os.time())
+local journal_date_or_now = function()
+  local file = vim.fn.expand('%')
+  local match = vim.regex([[Journal/\d\{4}/\d\{4}-\d\{2}/\d\{4}-\d\{2\}-\d\{2}\.md$]]):match_str(file)
+  if match == nil then
+    return os.time()
+  end
+  local year, month, day = file:match('(%d+)-(%d+)-(%d+)')
+  return os.time({ year = year, month = month, day = day })
+end
+
 return {
   -- 'epwalsh/obsidian.nvim',
   'obsidian-nvim/obsidian.nvim',
   enabled = true,
   version = '*',
-  ft = 'markdown',
+  event = vault.path and {
+    ('BufReadPre %s/**.md'):format(vault.path),
+    ('BufNewFile %s/**.md'):format(vault.path),
+  } or nil,
   dependencies = {
     'nvim-lua/plenary.nvim',
     { 'hrsh7th/nvim-cmp', enabled = vim.g.cmploader == 'nvim-cmp' },
@@ -11,17 +35,26 @@ return {
     'nvim-treesitter/nvim-treesitter',
   },
   cmd = {
-    'ObsidianOpen',
-    'ObsidianNew',
-    'ObsidianQuickSwitch',
-    'ObsidianFollowLink',
     'ObsidianBacklinks',
-    'ObsidianToday',
-    'ObsidianYesterday',
-    'ObsidianTemplate',
-    'ObsidianSearch',
+    'ObsidianDailies',
+    'ObsidianExtractNote',
+    'ObsidianFollowLink',
     'ObsidianLink',
     'ObsidianLinkNew',
+    'ObsidianLinks',
+    'ObsidianNew',
+    'ObsidianOpen',
+    'ObsidianPasteImg',
+    'ObsidianQuickSwitch',
+    'ObsidianRename',
+    'ObsidianSearch',
+    'ObsidianTags',
+    'ObsidianTemplate',
+    'ObsidianTitles',
+    'ObsidianToday',
+    'ObsidianTomorrow',
+    'ObsidianWorkspace',
+    'ObsidianYesterday',
   },
 
   opts = {
@@ -35,6 +68,18 @@ return {
         path = '~/vaults/work',
       },
     },
+
+    workspaces = {
+      {
+        name = 'work',
+        path = '~/vaults',
+        -- Optional, override certain settings.
+        overrides = {
+          notes_subdir = 'notes',
+        },
+      },
+    },
+    workspaces = { vault },
     completion = {
       nvim_cmp = vim.g.cmploader == 'nvim-cmp',
       blink = vim.g.cmploader == 'nvim-cmp',
@@ -61,10 +106,12 @@ return {
     },
     daily_notes = {
       folder = 'Periodic 🌄/Days 🌄',
+      date_format = '%Y/%Y-%m/%Y-%m-%d',
       -- Optional, if you want to change the date format for the ID of daily notes.
       -- date_format = "%Y-%m-%d",
       -- Optional, if you want to change the date format of the default alias of daily notes.
       -- alias_format = "%B %-d, %Y",
+      --  template = 'JournalNvim.md',
     },
 
     notes_subdir = 'inbox',
@@ -76,6 +123,41 @@ return {
       subdir = 'templates',
       date_format = '%Y-%m-%d-%a',
       time_format = '%H:%M',
+      substitutions = {
+        yesterday = function()
+          return os.date('%Y-%m-%d', journal_date_or_now() - 86400)
+        end,
+        tomorrow = function()
+          return os.date('%Y-%m-%d', journal_date_or_now() + 86400)
+        end,
+        yesterday_journal = function()
+          return os.date('Journal/%Y/%Y-%m/%Y-%m-%d', journal_date_or_now() - 86400)
+        end,
+        tomorrow_journal = function()
+          return os.date('Journal/%Y/%Y-%m/%Y-%m-%d', journal_date_or_now() + 86400)
+        end,
+        month_abbr = function()
+          return os.date('%b', journal_date_or_now())
+        end,
+        month = function()
+          return os.date('%B', journal_date_or_now())
+        end,
+        year = function()
+          return os.date('%Y', journal_date_or_now())
+        end,
+        weekday = function()
+          return os.date('%A', journal_date_or_now())
+        end,
+        today_human = function()
+          return os.date('%A, %B %d', journal_date_or_now())
+        end,
+        tomorrow_human = function()
+          return os.date('%A, %B %d', journal_date_or_now() + 86400)
+        end,
+        yesterday_human = function()
+          return os.date('%A, %B %d', journal_date_or_now() - 86400)
+        end,
+      },
     },
 
     follow_url_func = function(url)
@@ -170,5 +252,11 @@ return {
         return 'gd'
       end
     end, { noremap = false, expr = true })
+    vim.cmd.delcommand('Rename')
+    vim.cmd.cabbrev({ 'Rename', 'ObsidianRename' })
+    vim.cmd.cabbrev({ 'Today', 'ObsidianToday' })
+    vim.cmd.cabbrev({ 'Yesterday', 'ObsidianYesterday' })
+    vim.cmd.cabbrev({ 'Tomorrow', 'ObsidianTomorrow' })
+    vim.cmd.cabbrev({ 'Daily', 'ObsidianTemplate JournalNvim' })
   end,
 }
