@@ -2,7 +2,7 @@
 local debounce = require('lib.utils').debounce
 local autocmd = vim.api.nvim_create_autocmd
 
-vim.api.nvim_create_autocmd('LspAttach', {
+autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
   callback = function(ctx)
     local bufnr = ctx.buf
@@ -37,7 +37,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     if client:supports_method('textDocument/codeLens') then
       vim.lsp.codelens.refresh({ bufnr = bufnr })
-      vim.api.nvim_create_autocmd({ 'FocusGained', 'WinEnter', 'BufEnter', 'CursorMoved' }, {
+      autocmd({ 'FocusGained', 'WinEnter', 'BufEnter', 'CursorMoved' }, {
         -- callback = debounce(200, function(args0)
         callback = debounce(20, function(args0)
           vim.lsp.codelens.refresh({ bufnr = args0.buf })

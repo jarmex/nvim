@@ -8,7 +8,7 @@ return {
         },
         max_tokens = {
           -- default = 8192,
-          default = 18000,
+          default = 28000,
         },
         extended_output = {
           default = false,
