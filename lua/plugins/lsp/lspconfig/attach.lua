@@ -48,18 +48,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     require('plugins.lsp.lspconfig.keymaps').keymap(bufnr)
     codelens(bufnr, client)
-
-    -- if client:supports_method('textDocument/codeLens') then
-    --   vim.lsp.codelens.refresh({ bufnr = bufnr })
-    --   autocmd({ 'FocusGained', 'WinEnter', 'BufEnter', 'CursorMoved' }, {
-    --     -- callback = debounce(200, function(args0)
-    --     callback = debounce(500, function(args0)
-    --       vim.lsp.codelens.refresh({ bufnr = args0.buf })
-    --     end),
-    --   })
-    --   -- Code lens setup, don't call again
-    --   return true
-    -- end
   end,
 })
 
