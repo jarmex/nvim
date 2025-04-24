@@ -58,27 +58,6 @@ return {
   },
 
   opts = {
-    workspaces = {
-      {
-        name = 'personal',
-        path = '~/vaults/jamesamo',
-      },
-      {
-        name = 'work',
-        path = '~/vaults/work',
-      },
-    },
-
-    workspaces = {
-      {
-        name = 'work',
-        path = '~/vaults',
-        -- Optional, override certain settings.
-        overrides = {
-          notes_subdir = 'notes',
-        },
-      },
-    },
     workspaces = { vault },
     completion = {
       nvim_cmp = vim.g.cmploader == 'nvim-cmp',

@@ -39,7 +39,7 @@ autocmd('LspAttach', {
       vim.lsp.codelens.refresh({ bufnr = bufnr })
       autocmd({ 'FocusGained', 'WinEnter', 'BufEnter', 'CursorMoved' }, {
         -- callback = debounce(200, function(args0)
-        callback = debounce(20, function(args0)
+        callback = debounce(500, function(args0)
           vim.lsp.codelens.refresh({ bufnr = args0.buf })
         end),
       })
@@ -53,7 +53,7 @@ do -- textDocument/documentHighlight
   local method = 'textDocument/documentHighlight'
 
   autocmd({ 'FocusGained', 'WinEnter', 'BufEnter', 'CursorMoved' }, {
-    callback = debounce(200, function(args)
+    callback = debounce(500, function(args)
       vim.lsp.buf.clear_references()
       local win = vim.api.nvim_get_current_win()
       local bufnr = args.buf --- @type integer
