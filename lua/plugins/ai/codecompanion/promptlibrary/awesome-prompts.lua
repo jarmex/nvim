@@ -1,7 +1,7 @@
-local M = {}
+local AwesomePrompt = {}
 
 -- Function to fetch and parse CSV from URL
-function M.fetch_prompts()
+function AwesomePrompt:fetch_prompts()
   local url = 'https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/refs/heads/main/prompts.csv'
   local handle = io.popen(string.format('curl -s "%s"', url))
   if not handle then
@@ -14,9 +14,10 @@ function M.fetch_prompts()
   local prompts = {}
   -- Skip header line and parse CSV
   for line in result:gmatch('[^\r\n]+') do
-    if not line:match('^act,prompt') then -- Skip header
-      local act, prompt = line:match('^"?([^,"]+)"?,%s*"?(.+)"?$')
-      if act and prompt then
+    if not line:match('^act,prompt,for_devs') then -- Skip header
+      -- Updated pattern to capture act, prompt, and for_devs
+      local act, prompt, for_devs = line:match('^"?([^,"]+)"?,%s*"?(.+)"?%s*,%s*(%a+)$')
+      if act and prompt and for_devs == 'TRUE' then
         prompts[act] = prompt
       end
     end
@@ -25,7 +26,7 @@ function M.fetch_prompts()
 end
 
 -- Load prompts from cache or fetch new ones
-function M.load_prompts(cache_file, cache_expiry, keep_prompts_uptodate)
+function AwesomePrompt:load_prompts(cache_file, cache_expiry, keep_prompts_uptodate)
   local stat = vim.loop.fs_stat(cache_file)
   local needs_update = true
   local prompts = {}
@@ -48,7 +49,7 @@ function M.load_prompts(cache_file, cache_expiry, keep_prompts_uptodate)
   end
 
   if needs_update and keep_prompts_uptodate then
-    prompts = M.fetch_prompts()
+    prompts = AwesomePrompt:fetch_prompts()
     -- Save to cache
     local file = io.open(cache_file, 'w')
     if file then
@@ -60,9 +61,9 @@ function M.load_prompts(cache_file, cache_expiry, keep_prompts_uptodate)
   return prompts
 end
 
-function M.prompt_library()
+function AwesomePrompt:prompt_library()
   local prompt_lists = {}
-  local prompts = M.load_prompts(vim.fn.stdpath('cache') .. '/prompts.json', 86400, true)
+  local prompts = AwesomePrompt:load_prompts(vim.fn.stdpath('cache') .. '/awesome-prompts.json', 86400, true)
 
   for act, prompt in pairs(prompts) do
     local shortName = act:match('^(%w+)'):lower()
@@ -92,4 +93,4 @@ function M.prompt_library()
   return prompt_lists
 end
 
-return M
+return AwesomePrompt
