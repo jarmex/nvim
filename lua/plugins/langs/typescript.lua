@@ -76,6 +76,11 @@ return {
         separate_diagnostic_server = true,
         publish_diagnostic_on = 'insert_leave',
         expose_as_code_action = 'all',
+        complete_function_calls = true,
+        jsx_close_tag = {
+          enable = true,
+          filetypes = { 'javascriptreact', 'typescriptreact' },
+        },
       },
       handlers = {
         ['textDocument/publishDiagnostics'] = function(_, result, ctx, config)

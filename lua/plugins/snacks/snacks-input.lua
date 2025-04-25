@@ -13,6 +13,11 @@ return {
         width = 50,
         row = math.ceil(vim.o.lines / 2) - 3,
         wo = { colorcolumn = '' },
+        b = { completion = false },
+        bo = {
+          filetype = 'snacks_input',
+          buftype = 'prompt',
+        },
         keys = {
           -- CR = { '<CR>', 'confirm', mode = 'n' },
         },
@@ -76,11 +81,10 @@ return {
     },
     input = {
       enabled = true,
+      b = { completion = false },
       icon = icons.ui.Edit,
       icon_hl = 'SnacksInputIcon',
-      win = {
-        style = 'above_cursor',
-      },
+      win = { style = 'above_cursor' },
     },
   },
 }

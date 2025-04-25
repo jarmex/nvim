@@ -23,4 +23,5 @@ return vim.tbl_extend('force', promptList.prompt_library(), {
   [' Python Developer'] = require('plugins.ai.codecompanion.promptlibrary.python_dev'),
   ['Vibe Code'] = require('plugins.ai.codecompanion.promptlibrary.vibe_code'),
   ['Platform Commit'] = require('plugins.ai.codecompanion.promptlibrary.platform-commit'),
+  ['Fix LSP Diagnostics'] = require('plugins.ai.codecompanion.promptlibrary.fix_lsp'),
 })
