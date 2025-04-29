@@ -25,7 +25,7 @@ function AwesomePrompt:fetch_prompts()
   return prompts
 end
 
-function M.load_local_prompts()
+function AwesomePrompt:load_local_prompts()
   local filelocation = vim.fn.stdpath('config') .. '/gpt_prompt.csv'
   local handle = io.open(filelocation, 'r')
   if not handle then
@@ -89,9 +89,9 @@ end
 
 function AwesomePrompt:prompt_library()
   local prompt_lists = {}
-  local prompts = AwesomePrompt:load_prompts(vim.fn.stdpath('cache') .. '/awesome-prompts.json', 86400, true)
-  local prompts = M.load_prompts(vim.fn.stdpath('cache') .. '/prompts.json', 86400, true)
-  local prompts = M.load_local_prompts()
+  -- local prompts = AwesomePrompt:load_prompts(vim.fn.stdpath('cache') .. '/awesome-prompts.json', 86400, true)
+  -- local prompts = M.load_prompts(vim.fn.stdpath('cache') .. '/prompts.json', 86400, true)
+  local prompts = AwesomePrompt:load_local_prompts()
 
   for act, prompt in pairs(prompts) do
     local shortName = act:match('^(%w+)'):lower()
@@ -121,9 +121,9 @@ function AwesomePrompt:prompt_library()
   return prompt_lists
 end
 
-function M.prompt_library_online()
+function AwesomePrompt:prompt_library_online()
   local prompt_lists = {}
-  local prompts = M.load_prompts(vim.fn.stdpath('cache') .. '/prompts.json', 86400, true)
+  local prompts = AwesomePrompt:load_prompts(vim.fn.stdpath('cache') .. '/prompts.json', 86400, true)
 
   for act, prompt in pairs(prompts) do
     local shortName = act:match('^(%w+)'):lower()
