@@ -68,14 +68,24 @@ return {
             .. ' feat: some new feature'
         end
 
-        -- Check for PLATFORM branch format
-        local platform_issue_id = string.match(current_branch, 'PLATFORM%-(%d+)')
+        -- Check for MOB branch format
+        local platform_issue_id = string.match(current_branch, 'MOB%-(%d+)')
         if platform_issue_id then
           template = template
-            .. '\n\nPlease prefix the summary line with the following issue ID: PLATFORM-'
+            .. '\n\nPlease prefix the summary line with the following issue ID: MOB-'
             .. platform_issue_id
-            .. '\n\nExample: PLATFORM-'
+            .. '\n\nExample: MOB-'
             .. platform_issue_id
+            .. ' feat: some new feature'
+        end
+
+        local tech_issue_id = string.match(current_branch, 'TEC%-(%d+)')
+        if tech_issue_id then
+          template = template
+            .. '\n\nPlease prefix the summary line with the following issue ID: TEC-'
+            .. tech_issue_id
+            .. '\n\nExample: TEC-'
+            .. tech_issue_id
             .. ' feat: some new feature'
         end
 

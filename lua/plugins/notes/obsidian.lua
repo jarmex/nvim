@@ -1,6 +1,6 @@
 local vault = {
   name = 'work',
-  path = '~/vaults',
+  path = '~/vaults/jamesamo',
   -- Optional, override certain settings.
   overrides = {
     notes_subdir = 'notes',
@@ -84,13 +84,13 @@ return {
       },
     },
     daily_notes = {
-      folder = 'Periodic 🌄/Days 🌄',
+      folder = 'Periodic/Days',
       date_format = '%Y/%Y-%m/%Y-%m-%d',
       -- Optional, if you want to change the date format for the ID of daily notes.
       -- date_format = "%Y-%m-%d",
       -- Optional, if you want to change the date format of the default alias of daily notes.
       -- alias_format = "%B %-d, %Y",
-      --  template = 'JournalNvim.md',
+      template = 'note.md',
     },
 
     notes_subdir = 'inbox',
@@ -231,8 +231,8 @@ return {
         return 'gd'
       end
     end, { noremap = false, expr = true })
-    vim.cmd.delcommand('Rename')
-    vim.cmd.cabbrev({ 'Rename', 'ObsidianRename' })
+    -- vim.cmd.delcommand('Rename')
+    -- vim.cmd.cabbrev({ 'Rename', 'ObsidianRename' })
     vim.cmd.cabbrev({ 'Today', 'ObsidianToday' })
     vim.cmd.cabbrev({ 'Yesterday', 'ObsidianYesterday' })
     vim.cmd.cabbrev({ 'Tomorrow', 'ObsidianTomorrow' })

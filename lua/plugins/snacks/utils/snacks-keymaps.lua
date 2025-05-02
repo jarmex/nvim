@@ -86,7 +86,7 @@ return function()
       desc = 'Toggle Terminal',
     },
     {
-      ']]',
+      ']r',
       function()
         Snacks.words.jump(vim.v.count1)
       end,
@@ -94,19 +94,12 @@ return function()
       mode = { 'n', 't' },
     },
     {
-      '[[',
+      '[r',
       function()
         Snacks.words.jump(-vim.v.count1)
       end,
       desc = 'Prev Reference',
       mode = { 'n', 't' },
-    },
-    {
-      '<leader>jg',
-      function()
-        Snacks.picker.grep()
-      end,
-      desc = 'Grep',
     },
     {
       '<leader>/',
@@ -116,7 +109,7 @@ return function()
       desc = 'Grep',
     },
     {
-      '<leader>sb',
+      '<leader>bg',
       function()
         Snacks.picker.grep_buffers()
       end,
@@ -145,25 +138,11 @@ return function()
       desc = 'Resume',
     },
     {
-      '<leader>jf',
-      function()
-        Snacks.picker.files()
-      end,
-      desc = 'Find Files',
-    },
-    {
-      '<leader>:',
-      function()
-        Snacks.picker.commands()
-      end,
-      desc = 'Commands',
-    },
-    {
       '<leader>je',
       function()
         Snacks.picker.explorer()
       end,
-      desc = 'Commands',
+      desc = 'Explorer',
     },
     {
       '<leader>ff',
@@ -187,63 +166,18 @@ return function()
       desc = 'Pickers',
     },
     {
-      '<leader>ld',
-      function()
-        Snacks.picker.lsp_definitions():set_layout('vertical')
-      end,
-      desc = 'Definition',
-    },
-    {
-      '<leader>lr',
-      function()
-        Snacks.picker.lsp_references():set_layout('mivy')
-      end,
-      nowait = true,
-      desc = 'References',
-    },
-    {
-      '<leader>lI',
-      function()
-        Snacks.picker.lsp_implementations():set_layout('mivy')
-      end,
-      desc = 'Implementation',
-    },
-    {
-      '<leader>lt',
-      function()
-        Snacks.picker.lsp_type_definitions():set_layout('mivy')
-      end,
-      desc = 'Type Definition',
-    },
-    {
       '<leader>:',
       function()
         Snacks.picker.command_history()
       end,
       desc = 'Command History',
     },
-    -- Grep
     {
       '<leader>sb',
       function()
         Snacks.picker.lines()
       end,
       desc = 'Buffer Lines',
-    },
-    {
-      '<leader>sB',
-      function()
-        Snacks.picker.grep_buffers()
-      end,
-      desc = 'Grep Open Buffers',
-    },
-    {
-      '<leader>sw',
-      function()
-        Snacks.picker.grep_word()
-      end,
-      desc = 'Visual selection or word',
-      mode = { 'n', 'x' },
     },
     {
       '<leader>s/',
