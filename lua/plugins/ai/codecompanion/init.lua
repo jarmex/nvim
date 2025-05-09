@@ -18,7 +18,9 @@ return {
       strategies = {
         chat = {
           keymaps = {
-            close = { modes = { n = { 'q', '<C-c>' }, i = '<C-c>' } },
+            close = {
+              modes = { n = 'q', i = '<C-c>' },
+            },
             switch_mode = {
               modes = { n = 'gm' },
               description = 'Switch Chat Mode',
@@ -55,6 +57,7 @@ return {
               number = false,
               relativenumber = false,
               winbar = '',
+              statuscolumn = ' ', -- just for padding
             },
           },
         },

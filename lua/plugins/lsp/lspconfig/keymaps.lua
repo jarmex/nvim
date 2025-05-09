@@ -6,7 +6,7 @@ local function diagnostic_goto(next, severity)
   local count = next and 1 or -1
   severity = severity and vim.diagnostic.severity[severity] or nil
   return function()
-    vim.diagnostic.jump({ count = count, float = true, severity = severity })
+    vim.diagnostic.jump({ count = count, float = true, severity = severity, wrap = true })
   end
 end
 
@@ -64,7 +64,7 @@ function M.keymap(bufnr)
 
   map('[d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
   map(']d', diagnostic_goto(false), { desc = 'Next Diagnostic' })
-  map('<leader>cd', "<cmd>lua vim.diagnostic.open_float({source='if_many'})<cr>", { desc = 'Diagnostic' })
+  -- map('<leader>cd', "<cmd>lua vim.diagnostic.open_float({source='if_many'})<cr>", { desc = 'Diagnostic' })
 
   map('<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', { desc = 'Set loclist' })
 
@@ -84,8 +84,21 @@ function M.keymap(bufnr)
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
   end, { desc = 'Toggle inlay hints' })
 
-  local opts = { noremap = true, silent = true }
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  map('<leader>gD', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
+  map('grD', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
+
+  -- Copy the diagnostic message under your cursor to the clipboard
+  map('<leader>cd', function()
+    local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
+    local diags = vim.diagnostic.get(0, { lnum = lnum })
+    if #diags > 0 then
+      local msg = diags[1].message
+      vim.fn.setreg('+', msg)
+      print('✔ Diagnostic copied: ' .. msg:gsub('\n.*', ' …'))
+    else
+      print('No diagnostic on this line')
+    end
+  end, { desc = '[C]opy [D]iagnostic under cursor' })
 end
 
 return M

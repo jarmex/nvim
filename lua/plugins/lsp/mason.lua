@@ -1,68 +1,201 @@
+-- adapted from https://github.com/chrisgrieser/.config/blob/main/nvim/lua/plugin-specs/mason.lua
+
+local ensureInstalled = {
+  lsps = {
+    'basedpyright', -- python lsp (pyright fork)
+    'bash-language-server', -- also used for zsh
+    'biome', -- ts/js/json/css linter/formatter
+    'clangd',
+    'css-lsp',
+    'css-variables-language-server', -- support css variables across multiple files
+    'cucumber-language-server',
+    'dockerfile-language-server',
+    'emmet-ls',
+    'golangci-lint-langserver',
+    'gopls',
+    'harper-ls', -- natural language linter
+    'html-lsp',
+    'jdtls',
+    'json-lsp',
+    'just-lsp',
+    'lua-language-server',
+    'marksman', -- Markdown lsp
+    -- 'omnisharp',
+    'pyright',
+    'ruff', -- python linter & formatter
+    'sonarlint-language-server',
+    'taplo', -- toml lsp
+    'ts_query_ls', -- Treesitter query files
+    'typos-lsp', -- spellchecker for code
+    'yaml-language-server',
+    -- 'typescript-language-server',
+  },
+
+  linters = {
+    'markdownlint', -- efm
+    'shellcheck', -- used by bashls/efm for diagnostics, PENDING https://github.com/bash-lsp/bash-language-server/issues/663
+    'golangci-lint',
+    'hadolint',
+    'luacheck',
+    'ruff',
+    'selene',
+    'sonarlint-language-server',
+    'sqlfluff',
+    'staticcheck',
+    'yamllint',
+  },
+
+  formatters = {
+    'markdown-toc', -- automatic table-of-contents (via efm)
+    'shfmt', -- shell formatter (via bashls)
+    'stylua', -- lua formatter (via efm)
+    'gci',
+    'goimports',
+    'jq',
+    'xmlformatter',
+  },
+
+  debuggers = {
+    'debugpy', -- python debugger (via nvim-dap-python)
+    'codelldb',
+    'delve',
+    'java-debug-adapter',
+    'java-test',
+    'js-debug-adapter',
+    'netcoredbg',
+  },
+}
+
+local nonMasonLsps = {
+  -- Not installed via `mason`, but included in Xcode Command Line Tools (which
+  -- are usually installed on macOS-dev devices as they are needed for `homebrew`)
+  jit.os == 'OSX' and 'sourcekit' or nil,
+}
+
+local function enableLsps()
+  local installedPacks = require('mason-registry').get_installed_packages()
+  local lspConfigNames = vim
+    .iter(installedPacks)
+    :filter(function(pack)
+      return vim.list_contains(pack.spec.categories, 'LSP')
+    end)
+    :map(function(pack)
+      local lspConfigName = pack.spec.neovim and pack.spec.neovim.lspconfig ---@diagnostic disable-line: undefined-field
+      if not lspConfigName then
+        local msg = pack.name .. ' has no `neovim` entry'
+        vim.notify(msg, vim.log.levels.WARN, { title = 'Mason' })
+        return
+      end
+      return lspConfigName
+    end)
+    :totable()
+  vim.lsp.enable(lspConfigNames)
+  vim.lsp.enable(nonMasonLsps)
+end
+
+-- these helper functions are a simplified version of `mason-tool-installer.nvim`
+---@param pack Package
+---@param version? string
+local function installOrUpdate(pack, version)
+  local notifyOpts = { title = 'Mason', icon = '', id = 'mason.install' }
+
+  local preMsg = version and ('[%s] updating to %s…'):format(pack.name, version)
+    or ('[%s] installing…'):format(pack.name)
+  vim.notify(preMsg, nil, notifyOpts)
+
+  pack:install({ version = version }, function(success, result)
+    if success then
+      notifyOpts.icon = ''
+      local mode = version and 'updated' or 'installed'
+      local postMsg = ('[%s] %s.'):format(pack.name, mode)
+      vim.notify(postMsg, nil, notifyOpts)
+    else
+      local mode = version and 'update' or 'install'
+      local postMsg = ('[%s] failed to %s: %s'):format(pack.name, mode, result)
+      vim.notify(postMsg, vim.log.levels.ERROR, notifyOpts)
+    end
+  end)
+end
+
+-- 1. install missing packages
+-- 2. update installed ones
+-- 3. uninstall unused packages
+local function syncPackages()
+  local ensurePacks = vim.iter(vim.tbl_values(ensureInstalled)):flatten():totable()
+  assert(#ensurePacks > 10, '< 10 mason packages, aborting uninstalls.') -- safety net
+
+  local masonReg = require('mason-registry')
+  masonReg.refresh(function(ok, _)
+    if not ok then
+      vim.notify('Could not update mason registries.', vim.log.levels.ERROR, { title = 'Mason' })
+      return
+    end
+    -- auto-install missing packages & auto-update installed ones
+    vim.iter(ensurePacks):each(function(packName)
+      if not masonReg.has_package(packName) then
+        return
+      end
+      local pack = masonReg.get_package(packName)
+      if pack:is_installed() then
+        local latestVersion = pack:get_latest_version()
+        local version = pack:get_installed_version()
+        if latestVersion ~= version then
+          installOrUpdate(pack, latestVersion)
+        end
+      else
+        installOrUpdate(pack)
+      end
+    end)
+
+    -- auto-clean unused packages
+    local installedPackages = masonReg.get_installed_package_names()
+    vim.iter(installedPackages):each(function(packName)
+      if vim.tbl_contains(ensurePacks, packName) then
+        return
+      end
+      masonReg.get_package(packName):uninstall({}, function(success, result)
+        local lvl = success and vim.log.levels.INFO or vim.log.levels.ERROR
+        local msg = success and ('[%s] uninstalled.'):format(packName)
+          or ('[%s] failed to uninstall: %s'):format(packName, result)
+        vim.notify(msg, lvl, { title = 'Mason', icon = '󰅗' })
+      end)
+    end)
+  end)
+end
+
 return {
-  {
-    "williamboman/mason.nvim",
-    cmd = "Mason",
-    keys = { { "<leader>lm", "<cmd>Mason<cr>", desc = "Mason" } },
-    build = ":MasonUpdate",
-    opts = {
-      ui = {
-        border = "rounded",
-        icons = {
-          package_installed = "✓",
-          -- package_pending = "➜",
-          package_pending = "⟳",
-          package_uninstalled = "✗",
-        },
+  'mason-org/mason.nvim',
+  event = 'BufReadPre',
+  keys = {
+    { '<leader>pm', vim.cmd.Mason, desc = ' Mason home' },
+  },
+  config = function(_, opts)
+    vim.env.npm_config_cache = vim.env.HOME .. '/.cache/npm' -- don't crowd $HOME with `/.npm`
+    require('mason').setup(opts)
+    enableLsps()
+    vim.defer_fn(syncPackages, 3000)
+  end,
+  opts = {
+    registries = {
+      -- local one must come first to take priority
+      -- add my own local registry: https://github.com/mason-org/mason-registry/pull/3671#issuecomment-1851976705
+      -- also requires `yq` being available in the system
+      -- ("file:%s/personal-mason-registry"):format(vim.fn.stdpath("config")),
+      'github:mason-org/mason-registry',
+    },
+    ui = {
+      border = 'rounded',
+      icons = {
+        package_installed = '✓',
+        -- package_pending = "➜",
+        package_pending = '⟳',
+        package_uninstalled = '✗',
       },
-      ensure_installed = {
-        'biome',
-        'typos-lsp', -- spellchecker for code
-        'codelldb',
-        'css-lsp',
-        'emmet-ls',
-        'gopls',
-        'html-lsp',
-        'js-debug-adapter',
-        'json-lsp',
-        'lua-language-server',
-        'luacheck',
-        'prettier',
-        'prettierd',
-        'shellcheck',
-        'shfmt',
-        'stylua',
-        'selene',
-        'luacheck',
-        'taplo',
-        'typescript-language-server',
-        'yaml-language-server',
-        'yamllint',
-        'csharpier',
-        'netcoredbg',
-        'sonarlint-language-server',
-        -- Java stuff
-        'jdtls',
-        'java-debug-adapter',
-        'java-test',
+      keymaps = { -- consistent with keymaps for lazy.nvim
+        uninstall_package = 'x',
+        toggle_help = '?',
+        -- toggle_package_expand = 'd',
       },
     },
-    config = function(_, opts)
-      require("mason").setup(opts)
-      local mr = require("mason-registry")
-
-      local function ensure_installed()
-        for _, tool in ipairs(opts.ensure_installed) do
-          local p = mr.get_package(tool)
-          if not p:is_installed() then
-            p:install()
-          end
-        end
-      end
-      if mr.refresh then
-        mr.refresh(ensure_installed)
-      else
-        ensure_installed()
-      end
-    end,
   },
 }

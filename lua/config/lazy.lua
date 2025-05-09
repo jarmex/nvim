@@ -35,7 +35,7 @@ require('lazy').setup({
   checker = {
     enabled = true, -- automatically check for plugin updates
     notify = false, -- done on my own to use minimum condition for less noise
-    frequency = 60 * 60 * 24, -- = 1 day
+    frequency = 60 * 60 * 24 * 2, -- = 2 days
   },
   change_detection = {
     notify = false,
@@ -63,6 +63,24 @@ require('lazy').setup({
       source = ' ',
       start = '',
       task = '  ',
+    },
+    pills = false,
+    backdrop = 60,
+    custom_keys = {
+      ['gi'] = {
+        function(plugin)
+          local repo = plugin.url:gsub('%.git$', '')
+          local line = vim.api.nvim_get_current_line()
+          local issue = line:match('#(%d+)')
+          local commit = line:match(('%x'):rep(6) .. '+') -- `%x` = hex/hash char
+          if not issue and not commit then
+            return
+          end
+          local url = repo .. (issue and '/issues/' .. issue or '/commit/' .. commit)
+          vim.ui.open(url)
+        end,
+        desc = ' Open issue/commit',
+      },
     },
   },
   dev = {
@@ -109,12 +127,14 @@ vim.defer_fn(function()
   vim.notify(('󱧕 %s plugin updates'):format(numberOfUpdates), vim.log.levels.INFO, { title = 'Lazy' })
 end, 5000)
 
--- Autocmds and keymaps can be loaded, lazily, after plugins
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'VeryLazy',
-  callback = function()
-    require('config.autocmds')
-    require('config.commands')
-    require('config.keymaps')
+-- FIX Backdrop
+-- PENDING https://github.com/folke/lazy.nvim/issues/1951
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'User: fix backdrop for lazy window',
+  pattern = 'lazy_backdrop',
+  group = group,
+  callback = function(ctx)
+    local win = vim.fn.win_findbuf(ctx.buf)[1]
+    vim.api.nvim_win_set_config(win, { border = 'none' })
   end,
 })

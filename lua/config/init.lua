@@ -1,13 +1,18 @@
----Try to require the module, and do not error out when one of them cannot be
----loaded, but do notify if there was an error.
----@param module string module to load
+---Try to require the module, but do not throw error when one of them cannot be
+---loaded. This prevents the entire remaining config from not being loaded if
+---just one module has an error.
+---@param module string
 local function safeRequire(module)
-  local success, _ = pcall(require, module)
-  if success then
-    return
+  local success, errmsg = pcall(require, module)
+  if not success then
+    local msg = ('Error loading `%s`: %s'):format(module, errmsg)
+    vim.defer_fn(function()
+      vim.notify(msg, vim.log.levels.ERROR)
+    end, 500)
   end
-  vim.cmd.echomsg(("'Error loading %s'"):format(module))
 end
+
+safeRequire('config.options') -- early, so available for plugins configs
 
 local disable_distribution_plugins = function()
   vim.g.loaded_gzip = 1
@@ -46,6 +51,20 @@ end
 
 local add_filetype = function()
   vim.filetype.add({
+    filename = {
+      Brewfile = 'ruby',
+      ['.bash_aliases'] = 'bash',
+      ['.bash_functions'] = 'bash',
+      ['.bash_profile'] = 'bash',
+      ['.bashrc'] = 'bash',
+      ['.shell_platform'] = 'bash',
+      ['.zprofile'] = 'zsh',
+      ['.zsh_functions'] = 'zsh',
+      ['.zshenv'] = 'zsh',
+      ['.zshrc'] = 'zsh',
+      ['.zsh_copilot'] = 'zsh',
+      ['~/.config/ghostty/config'] = 'toml',
+    },
     pattern = {
       ['*.jsonc'] = 'jsonc',
       ['tsconfig.json'] = 'jsonc',
@@ -65,14 +84,22 @@ local leader_map = function()
   vim.g.mapleader = ' '
 end
 
-local load_core = function()
-  disable_providers()
-  disable_distribution_plugins()
-  leader_map()
-  add_filetype()
+leader_map()
 
-  safeRequire('config.options')
-  safeRequire('config.lazy')
-end
+safeRequire('config.keymaps')
+safeRequire('config.commands')
+safeRequire('config.autocmds')
 
-load_core()
+disable_providers()
+disable_distribution_plugins()
+add_filetype()
+
+safeRequire('config.lazy')
+
+vim.api.nvim_create_autocmd('InsertEnter', {
+  desc = 'User(once): Lazyload spellfixes',
+  once = true,
+  callback = function()
+    safeRequire('config.spellfixes')
+  end,
+})

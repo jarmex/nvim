@@ -22,7 +22,11 @@ return {
       indent = {
         enabled = true,
         char = '▎',
-        animate = { enabled = false },
+        -- animate = { enabled = false },
+        animate = {
+          -- slower for more dramatic effect :o
+          duration = { steps = 200, total = 1000 },
+        },
         indent = {
           only_current = true,
           only_scope = true,
@@ -83,7 +87,7 @@ return {
       statuscolumn = { enabled = true },
       terminal = { enabled = true, win = { wo = { winbar = '' } } },
       rename = { enabled = true },
-      words = { enabled = true, notify_jump = true },
+      words = { enabled = true, notify_jump = true, modes = { 'n' }, debounce = 300 },
     },
     keys = keymaps(),
     init = function()

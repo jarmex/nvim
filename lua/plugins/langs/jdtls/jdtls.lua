@@ -33,9 +33,9 @@ local function get_jdtls_paths()
 
   local jdtls_install = require('mason-registry').get_package('jdtls'):get_install_path()
   -- require custom mason registry
-  local lombok_root = require('mason-registry').get_package('lombok-nightly'):get_install_path()
-
-  path.lombok = lombok_root .. '/lombok.jar'
+  -- local lombok_root = require('mason-registry').get_package('lombok-nightly'):get_install_path()
+  --
+  -- path.lombok = lombok_root .. '/lombok.jar'
   path.launcher_jar = vim.fn.glob(jdtls_install .. '/plugins/org.eclipse.equinox.launcher_*.jar')
 
   if vim.fn.has('mac') == 1 then
@@ -192,7 +192,7 @@ local function jdtls_setup(event)
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
     '-Dlog.protocol=true',
     '-Dlog.level=ALL',
-    '-javaagent:' .. path.lombok,
+    -- '-javaagent:' .. path.lombok,
     '--add-modules=ALL-SYSTEM',
     '--add-opens',
     'java.base/java.util=ALL-UNNAMED',

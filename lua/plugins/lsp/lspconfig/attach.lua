@@ -15,6 +15,11 @@ local function codelens(bufnr, client)
   end
 end
 
+-- Disable the default keybinds {{{
+for _, bind in ipairs({ 'grn', 'gra', 'gri', 'grr' }) do
+  pcall(vim.keymap.del, 'n', bind)
+end
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
   callback = function(ctx)

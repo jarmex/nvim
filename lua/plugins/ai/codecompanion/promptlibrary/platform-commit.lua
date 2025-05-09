@@ -76,7 +76,7 @@ return {
             .. platform_issue_id
             .. '\n\nExample: MOB-'
             .. platform_issue_id
-            .. ' feat: some new feature'
+            .. ': some new feature'
         end
 
         local tech_issue_id = string.match(current_branch, 'TEC%-(%d+)')
@@ -86,7 +86,17 @@ return {
             .. tech_issue_id
             .. '\n\nExample: TEC-'
             .. tech_issue_id
-            .. ' feat: some new feature'
+            .. ': some new feature'
+        end
+
+        local engineering_issue_id = string.match(current_branch, 'ENG%-(%d+)')
+        if engineering_issue_id then
+          template = template
+            .. '\n\nPlease prefix the summary line with the following issue ID: ENG-'
+            .. engineering_issue_id
+            .. '\n\nExample: ENG-'
+            .. engineering_issue_id
+            .. ': some new feature'
         end
 
         return template

@@ -20,6 +20,22 @@ vim.keymap.set('n', 'Y', 'y$', { remap = true })
 keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
+-- Jump history
+-- keymap('n', '<C-h>', '<C-o>', { desc = '󱋿 Jump back' })
+keymap('n', '<C-l>', '<C-i>', { desc = '󱋿 Jump forward', unique = false })
+
+-- Diagnostics
+keymap('n', 'ge', ']d', { desc = '󰋼 Next diagnostic', remap = true })
+keymap('n', 'gE', '[d', { desc = '󰋼 Previous diagnostic', remap = true })
+
+-- Undo
+keymap('n', 'u', '<cmd>silent undo<CR>zv', { desc = '󰜊 Silent undo' })
+keymap('n', 'U', '<cmd>silent redo<CR>zv', { desc = '󰛒 Silent redo' })
+keymap('n', '<leader>ue', ':earlier ', { desc = '󰜊 Undo to earlier' })
+
+-- Spelling
+keymap('n', 'z.', '1z=', { desc = '󰓆 Fix spelling' }) -- works even with `spell=false`
+
 -- Better viewing
 keymap('n', 'n', 'nzzzv')
 keymap('n', 'N', 'Nzzzv')
@@ -107,27 +123,58 @@ keymap('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
 keymap('n', '[<tab>', '<cmd>tabprevious<cr>', { desc = 'Previous Tab', silent = true })
 keymap('n', ']<tab>', '<cmd>tabnext<cr>', { desc = 'Next Tab', silent = true })
 
--- quickfix list
-keymap('n', '<leader>xq', function()
-  local success, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
-  if not success and err then
-    vim.notify(err, vim.log.levels.ERROR)
-  end
-end, { desc = 'Quickfix List' })
-
--- keymap('n', '[q', vim.cmd.cprev, { desc = ' Previous Quickfix' })
--- keymap('n', ']q', vim.cmd.cnext, { desc = ' Next Quickfix' })
-keymap('n', '<C-q>', ':call QuickFixToggle()<CR>')
-keymap('n', 'dQ', function()
+-- QUICKFIX
+keymap('n', 'gq', '<cmd>silent cnext<CR>zv', { desc = '󰴩 Next quickfix' })
+keymap('n', 'gQ', '<cmd>silent cprev<CR>zv', { desc = '󰴩 Prev quickfix' })
+keymap('n', '<leader>qd', function()
   vim.cmd.cexpr('[]')
-end, { desc = ' Delete Quickfix List' })
+end, { desc = '󰚃 Delete qf-list' })
 
--- adapted from
--- https://github.com/rachartier/dotfiles/blob/main/.config/nvim/lua/remap.lua
+keymap('n', '<leader>qq', function()
+  local quickfixWinOpen = vim.fn.getqflist({ winid = true }).winid ~= 0
+  vim.cmd[quickfixWinOpen and 'cclose' or 'copen']()
+end, { desc = ' Toggle quickfix window' })
+
+-- -- FOLDING
+-- keymap('n', 'zz', '<cmd>%foldclose<CR>', { desc = ' Close toplevel folds' })
+-- keymap('n', 'zm', 'zM', { desc = ' Close all folds' })
+-- keymap('n', 'zv', 'zv', { desc = '󰘖 Open until cursor visible' }) -- just for which-key
+-- keymap('n', 'zr', 'zR', { desc = '󰘖 Open all folds' })
+-- keymap('n', 'zo', 'zO', { desc = '󰘖 Open fold recursively' })
+-- stylua: ignore
+keymap("n", "zf", function() vim.opt.foldlevel = vim.v.count1 end, { desc = " Set fold level to {count}" })
+
+keymap('n', '<leader>zs', function()
+  local modeline = vim.bo.commentstring:format('vim foldlevel=' .. vim.o.foldlevel)
+  vim.api.nvim_buf_set_lines(0, 0, 0, false, { modeline })
+  vim.api.nvim_win_set_cursor(0, { 1, #modeline })
+end, { desc = '󰆓 Save foldlevel in modeline' })
+
+-- keep the register clean
+-- keymap({ 'n', 'x' }, 'x', '"_x')
+keymap({ 'n', 'x' }, 'c', '"_c')
+keymap('n', 'C', '"_C')
+keymap('x', 'p', 'P')
 keymap('n', 'dd', function()
-  if vim.api.nvim_get_current_line():match('^%s*$') then
-    return '"_dd'
-  else
-    return 'dd'
-  end
-end, { expr = true, desc = 'Smart dd' })
+  local lineEmpty = vim.trim(vim.api.nvim_get_current_line()) == ''
+  return (lineEmpty and '"_dd' or 'dd')
+end, { expr = true })
+
+--------------------------------------------------------------------------------
+-- LINE & CHARACTER MOVEMENT
+
+keymap('n', '<Down>', [[<cmd>. move +1<CR>==]], { desc = '󰜮 Move line down' })
+keymap('n', '<Up>', [[<cmd>. move -2<CR>==]], { desc = '󰜷 Move line up' })
+keymap('n', '<Right>', [["zx"zp]], { desc = '➡️ Move char right' })
+keymap('n', '<Left>', [["zdh"zph]], { desc = '⬅ Move char left' })
+keymap('x', '<Up>', [[:move '<-2<CR>gv=gv]], { desc = '󰜷 Move selection up', silent = true })
+keymap('x', '<Down>', [[:move '>+1<CR>gv=gv]], { desc = '󰜮 Move selection down', silent = true })
+keymap('x', '<Right>', [["zx"zpgvlolo]], { desc = '➡️ Move selection right' })
+keymap('x', '<left>', [["zxhh"zpgvhoho]], { desc = '⬅ Move selection left' })
+
+--------------------------------------------------------------------------------
+-- INSERT MODE
+keymap('n', 'i', function()
+  local lineEmpty = vim.trim(vim.api.nvim_get_current_line()) == ''
+  return lineEmpty and '"_cc' or 'i'
+end, { expr = true, desc = 'indented i on empty line' })

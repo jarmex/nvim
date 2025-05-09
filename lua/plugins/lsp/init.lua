@@ -4,9 +4,6 @@ return {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' }, -- "BufReadPre",
     dependencies = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-      { 'hrsh7th/cmp-nvim-lsp', enabled = vim.g.cmploader == 'nvim-cmp' },
       { 'saghen/blink.cmp', enabled = vim.g.cmploader == 'blink.cmp' },
     },
     ---@class PluginLspOpts

@@ -57,6 +57,7 @@ return {
     opts = {
       filetypes = filetypes,
       settings = {
+        diagnostics = { ignoredCodes = { 2451 } },
         tsserver_file_preferences = {
           importModuleSpecifierPreference = 'non-relative',
           providePrefixAndSuffixTextForRename = false,

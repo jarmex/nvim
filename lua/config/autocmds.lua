@@ -140,3 +140,60 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.colorcolumn = '120'
   end,
 })
+
+--------------------------------------------------------------------------------
+
+-- AUTO-CLEANUP
+vim.api.nvim_create_autocmd('FocusLost', {
+  desc = 'User: Auto-cleanup. Once a week, on first `FocusLost`, delete older files.',
+  once = true,
+  callback = function()
+    if os.date('%a') ~= 'Mon' or jit.os == 'windows' then
+      return
+    end
+    vim.system({ 'find', vim.o.undodir, '-mtime', '+15d', '-delete' })
+    vim.system({ 'find', vim.lsp.log.get_filename(), '-size', '+50M', '-delete' })
+  end,
+})
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- ADD NOTIFICATION TO LSP RENAME
+local originalRenameHandler = vim.lsp.handlers['textDocument/rename']
+vim.lsp.handlers['textDocument/rename'] = function(err, result, ctx, config)
+  originalRenameHandler(err, result, ctx, config)
+  if err or not result then
+    return
+  end
+
+  -- count changes
+  local changes = result.changes or result.documentChanges or {}
+  local changedFiles = vim
+    .iter(vim.tbl_keys(changes))
+    :filter(function(file)
+      return #changes[file] > 0
+    end)
+    :map(function(file)
+      return '- ' .. vim.fs.basename(file)
+    end)
+    :totable()
+  local changeCount = vim.iter(changes):fold(0, function(sum, _, change)
+    return sum + #(change.edits or change)
+  end)
+
+  -- notification
+  local pluralS = changeCount > 1 and 's' or ''
+  local msg = ('[%d] instance%s'):format(changeCount, pluralS)
+  if #changedFiles > 1 then
+    local fileList = table.concat(changedFiles, '\n')
+    msg = ('**%s in [%d] files**\n%s'):format(msg, #changedFiles, fileList)
+  end
+  vim.notify(msg, nil, { title = 'Renamed with LSP', icon = '󰑕' })
+
+  -- save all
+  if #changedFiles > 1 then
+    vim.cmd('silent! wall')
+  end
+end
+--------------------------------------------------------------------------------
