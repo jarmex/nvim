@@ -23,11 +23,6 @@ return {
         },
       },
 
-      -- but can be also overridden when specified
-      format = {
-        formatting_options = nil,
-        timeout_ms = nil,
-      },
       -- add any global capabilities here
       ---@type lspconfig.options
       servers = {},
