@@ -22,26 +22,28 @@ return {
           },
         },
       },
-
-      -- add any global capabilities here
-      ---@type lspconfig.options
-      servers = {},
-      -- you can do any additional lsp server setup here
-      -- return true if you don't want this server to be setup with lspconfig
-      ---@type table<string, fun(server:string, opts: table):boolean?>
-      setup = {
-        -- example to setup with typescript.nvim
-        -- tsserver = function(_, opts)
-        --   require("typescript").setup({ server = opts })
-        --   return true
-        -- end,
-        -- Specify * to use this function as a fallback for any server
-        -- ["*"] = function(server, opts) end,
-      },
     },
     ---@param opts PluginLspOpts
     config = function(_, opts)
-      require('plugins.lsp.lspconfig.setup').setup(opts)
+      local capabilities = vim.tbl_deep_extend(
+        'force',
+        {},
+        vim.lsp.protocol.make_client_capabilities(),
+        require('blink.cmp').get_lsp_capabilities(),
+        opts.capabilities or {}
+      )
+
+      local default_server_config = {
+        flags = { debounce_text_changes = 150 },
+        single_file_support = true,
+        capabilities = capabilities,
+      }
+
+      vim.lsp.config('*', default_server_config)
+
+      require('lspconfig.ui.windows').default_options.border = vim.g.borderStyle
+
+      require('plugins.lsp.lspconfig.attach')
     end,
   },
 }

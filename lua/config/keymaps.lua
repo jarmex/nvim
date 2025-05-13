@@ -22,7 +22,7 @@ keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
 -- Jump history
 -- keymap('n', '<C-h>', '<C-o>', { desc = '󱋿 Jump back' })
-keymap('n', '<C-l>', '<C-i>', { desc = '󱋿 Jump forward', unique = false })
+-- keymap('n', '<C-l>', '<C-i>', { desc = '󱋿 Jump forward', unique = false })
 
 -- Diagnostics
 keymap('n', 'ge', ']d', { desc = '󰋼 Next diagnostic', remap = true })
@@ -144,15 +144,15 @@ end, { desc = ' Toggle quickfix window' })
 -- stylua: ignore
 keymap("n", "zf", function() vim.opt.foldlevel = vim.v.count1 end, { desc = " Set fold level to {count}" })
 
-keymap('n', '<leader>zs', function()
-  local modeline = vim.bo.commentstring:format('vim foldlevel=' .. vim.o.foldlevel)
-  vim.api.nvim_buf_set_lines(0, 0, 0, false, { modeline })
-  vim.api.nvim_win_set_cursor(0, { 1, #modeline })
-end, { desc = '󰆓 Save foldlevel in modeline' })
+-- keymap('n', '<leader>zs', function()
+--   local modeline = vim.bo.commentstring:format('vim foldlevel=' .. vim.o.foldlevel)
+--   vim.api.nvim_buf_set_lines(0, 0, 0, false, { modeline })
+--   vim.api.nvim_win_set_cursor(0, { 1, #modeline })
+-- end, { desc = '󰆓 Save foldlevel in modeline' })
 
 -- keep the register clean
 -- keymap({ 'n', 'x' }, 'x', '"_x')
-keymap({ 'n', 'x' }, 'c', '"_c')
+-- keymap({ 'n', 'x' }, 'c', '"_c')
 keymap('n', 'C', '"_C')
 keymap('x', 'p', 'P')
 keymap('n', 'dd', function()

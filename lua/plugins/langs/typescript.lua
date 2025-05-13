@@ -1,13 +1,3 @@
-local filetypes = {
-  'javascript',
-  'javascriptreact',
-  'javascript.jsx',
-  'typescript',
-  'typescriptreact',
-  'typescript.tsx',
-  'vue',
-}
-
 return {
   {
     'davidosomething/format-ts-errors.nvim',
