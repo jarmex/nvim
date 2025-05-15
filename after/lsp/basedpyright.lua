@@ -1,13 +1,13 @@
 return {
-  capabilities = {
-    textDocument = {
-      formatting = { dynamicRegistration = false },
-      rangeFormatting = { dynamicRegistration = false },
-    },
-  },
+  filetypes = { 'python' },
+  capabilities = Helpers.lsp.create_capabilities(),
+  workspace_required = false,
   settings = {
     basedpyright = {
       analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = 'openFilesOnly',
         typeCheckingMode = 'standard',
         inlayHints = {
           callArgumentNames = 'all',

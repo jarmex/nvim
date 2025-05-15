@@ -40,8 +40,10 @@ function M.SupportsMethod(method)
 end
 
 ---@param capabilities? vim.lsp.protocol.Method A list a client capabilities for an LSP
+---@return vim.lsp.protocol.ClientCapabilities
 function M.create_capabilities(capabilities)
   local has_blink, blink = pcall(require, 'blink.cmp')
+  ---@diagnostic disable-next-line: return-type-mismatch
   return vim.tbl_deep_extend(
     'force',
     vim.lsp.protocol.make_client_capabilities(),

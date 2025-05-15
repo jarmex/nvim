@@ -1,16 +1,16 @@
 --- adapted from https://github.com/JustBarnt/nvim/
 
----@class lib
----@field lsp lib.lsp
----@field root lib.root
----@field colors lib.colors
----@field jvm lib.jvm
----@field icons lib.icons
+---@class helpers
+---@field lsp helpers.lsp
+---@field root helpers.root
+---@field colors helpers.colors
+---@field jvm helpers.jvm
+---@field icons helpers.icons
 local M = {}
 
 setmetatable(M, {
   __index = function(t, k)
-    t[k] = require('lib.' .. k)
+    t[k] = require('helpers.' .. k)
     return t[k]
   end,
 })

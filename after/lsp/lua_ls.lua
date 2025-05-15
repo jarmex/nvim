@@ -1,4 +1,7 @@
 return {
+  root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'selene.toml', 'selene.yml', '.git' },
+  filetypes = { 'lua' },
+  capabilities = Helpers.lsp.create_capabilities(),
   settings = {
     Lua = {
       runtime = {
@@ -6,6 +9,7 @@ return {
         version = 'LuaJIT',
         special = { reload = 'require' },
       },
+      telemetry = { enable = false },
       workspace = {
         checkThirdParty = false,
         library = {
@@ -22,8 +26,11 @@ return {
         callSnippet = 'Both',
         enable = true,
         showWord = 'Disable',
+        autoRequire = true,
+        displayContext = 2,
       },
       diagnostics = {
+        disable = { 'missing-fields' },
         groupSeverity = {
           strong = 'Warning',
           strict = 'Warning',

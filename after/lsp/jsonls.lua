@@ -4,14 +4,33 @@
 return {
   -- Disable formatting in favor of biome
   init_options = { provideFormatter = false, documentRangeFormattingProvider = false },
-
-  settings = {
-    json = {
-      format = {
-        enable = true,
+  capabilities = Helpers.lsp.create_capabilities({
+    textDocument = {
+      completion = {
+        completionItem = {
+          snippetSupport = true,
+        },
       },
-      validate = { enable = true },
-      schemas = require('schemastore').json.schemas(),
     },
-  },
+  }),
+  on_init = function(client)
+    Helpers.lsp.on_init(client, {
+      json = {
+        format = {
+          enable = true,
+        },
+        schemas = require('schemastore').json.schemas(),
+        validate = { enable = true },
+      },
+    })
+  end,
+  -- settings = {
+  --   json = {
+  --     format = {
+  --       enable = true,
+  --     },
+  --     validate = { enable = true },
+  --     schemas = require('schemastore').json.schemas(),
+  --   },
+  -- },
 }

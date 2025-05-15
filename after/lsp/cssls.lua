@@ -4,9 +4,10 @@
 return {
   -- using `biome` instead (this key overrides `settings.format.enable = true`)
   init_options = { provideFormatter = false },
-
+  filetypes = { 'css', 'scss', 'less' },
   settings = {
     css = {
+      validate = true,
       lint = {
         vendorPrefix = 'ignore', -- needed for scrollbars
         duplicateProperties = 'warning',
@@ -21,5 +22,7 @@ return {
         propertyIgnoredDueToDisplay = 'warning',
       },
     },
+    scss = { validate = false },
+    less = { validate = false },
   },
 }

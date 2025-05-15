@@ -2,6 +2,7 @@ return {
   cmd = { 'gopls' },
   filetypes = { 'go', 'gomod', 'gowork', 'gotmpl', 'gosum' },
   root_markers = { '.git', 'go.mod', 'go.sum' },
+  capabilities = Helpers.lsp.create_capabilities(),
   settings = {
     -- main readme: https://github.com/golang/tools/blob/master/gopls/doc/features/README.md
     --

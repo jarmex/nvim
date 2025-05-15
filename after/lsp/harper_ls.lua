@@ -1,5 +1,6 @@
 return {
   filetypes = { 'gitcommit', 'html', 'markdown' },
+  capabilities = Helpers.lsp.create_capabilities(),
   settings = {
     ['harper-ls'] = {
       codeActions = {

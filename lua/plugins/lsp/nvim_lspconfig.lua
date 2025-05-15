@@ -25,18 +25,18 @@ return {
     },
     ---@param opts PluginLspOpts
     config = function(_, opts)
-      local capabilities = vim.tbl_deep_extend(
-        'force',
-        {},
-        vim.lsp.protocol.make_client_capabilities(),
-        require('blink.cmp').get_lsp_capabilities(),
-        opts.capabilities or {}
-      )
+      -- local capabilities = vim.tbl_deep_extend(
+      --   'force',
+      --   {},
+      --   vim.lsp.protocol.make_client_capabilities(),
+      --   require('blink.cmp').get_lsp_capabilities(),
+      --   opts.capabilities or {}
+      -- )
 
       local default_server_config = {
         flags = { debounce_text_changes = 150 },
         single_file_support = true,
-        capabilities = capabilities,
+        -- capabilities = capabilities,
       }
 
       vim.lsp.config('*', default_server_config)
