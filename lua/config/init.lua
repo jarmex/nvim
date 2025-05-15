@@ -1,18 +1,6 @@
----Try to require the module, but do not throw error when one of them cannot be
----loaded. This prevents the entire remaining config from not being loaded if
----just one module has an error.
----@param module string
-local function safeRequire(module)
-  local success, errmsg = pcall(require, module)
-  if not success then
-    local msg = ('Error loading `%s`: %s'):format(module, errmsg)
-    vim.defer_fn(function()
-      vim.notify(msg, vim.log.levels.ERROR)
-    end, 500)
-  end
-end
+_G.Helpers = require('helpers')
 
-safeRequire('config.options') -- early, so available for plugins configs
+Helpers.safeRequire('config.options') -- early, so available for plugins configs
 
 local disable_distribution_plugins = function()
   vim.g.loaded_gzip = 1
@@ -86,20 +74,20 @@ end
 
 leader_map()
 
-safeRequire('config.keymaps')
-safeRequire('config.commands')
-safeRequire('config.autocmds')
+Helpers.safeRequire('config.keymaps')
+Helpers.safeRequire('config.commands')
+Helpers.safeRequire('config.autocmds')
 
 disable_providers()
 disable_distribution_plugins()
 add_filetype()
 
-safeRequire('config.lazy')
+Helpers.safeRequire('config.lazy')
 
 vim.api.nvim_create_autocmd('InsertEnter', {
   desc = 'User(once): Lazyload spellfixes',
   once = true,
   callback = function()
-    safeRequire('config.spellfixes')
+    Helpers.safeRequire('config.spellfixes')
   end,
 })

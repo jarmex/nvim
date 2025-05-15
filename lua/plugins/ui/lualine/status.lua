@@ -1,8 +1,8 @@
-local color = require('lib.colors')
+local color = require('helpers.colors')
 local colors = require('catppuccin.palettes').get_palette('mocha')
 local companion_lualine = require('plugins.ui.lualine.helper')
 local helper = require('helper')
-local icons = require('lib.icons')
+local icons = require('helpers.icons')
 local lazy_status = require('lazy.status')
 
 local M = {}

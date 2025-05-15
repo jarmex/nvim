@@ -16,7 +16,7 @@ return {
       { '<leader>bc', '<cmd>BufferLinePickClose<cr>',                              desc = 'Select a buffer to close' },
     },
   opts = function()
-    local icons = require('lib.icons')
+    local icons = require('helpers.icons')
     return {
       options = {
         -- stylua: ignore

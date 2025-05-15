@@ -1,5 +1,22 @@
-local helper = require('helper')
-local icons = require('lib.icons')
+local icons = require('helpers.icons')
+
+local function telescopehelper(builtin, opts)
+  local params = { builtin = builtin, opts = opts }
+  return function()
+    builtin = params.builtin
+    opts = params.opts
+    opts = vim.tbl_deep_extend('force', { cwd = M.get_root() }, opts or {})
+    if builtin == 'files' then
+      if vim.loop.fs_stat((opts.cwd or vim.loop.cwd()) .. '/.git') then
+        opts.show_untracked = true
+        builtin = 'git_files'
+      else
+        builtin = 'find_files'
+      end
+    end
+    require('telescope.builtin')[builtin](opts)
+  end
+end
 
 local borderChars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' }
 if vim.g.borderStyle == 'double' then
@@ -56,7 +73,7 @@ return {
       },
       {
         '<leader>sG',
-        helper.telescope('live_grep', { cwd = false }),
+        telescopehelper('live_grep', { cwd = false }),
         desc = 'Find in Files (Grep)',
       },
       {
@@ -66,7 +83,7 @@ return {
       },
       {
         '<leader>sH',
-        helper.telescope('grep_string', { cwd = false }),
+        telescopehelper('grep_string', { cwd = false }),
         desc = 'Search word under cursor (cwd)',
       },
       { '<leader>T', '<cmd>Telescope builtin include_extensions=true<cr>', desc = 'Telescope' },
@@ -229,7 +246,6 @@ return {
       telescope.load_extension('file_browser')
       telescope.load_extension('frecency')
       telescope.load_extension('live_grep_args')
-      -- vim.keymap.set('n', '<space>fg', require('plugins.telescope.multi-ripgrep'))
     end,
   },
 }

@@ -53,7 +53,7 @@ return {
           data_path,
         },
         cmd_env = {
-          JAVA_HOME = require('lib.jvm').home(21),
+          JAVA_HOME = require('helpers.jvm').home(21),
         },
         init_options = {
           bundles = vim.split(vim.fn.glob(vim.env.MASON .. '/share/java-*/*.jar'), '\n'),
@@ -94,19 +94,19 @@ return {
               runtimes = {
                 {
                   name = 'JavaSE-11',
-                  path = require('lib.jvm').home(11),
+                  path = require('helpers.jvm').home(11),
                 },
                 {
                   name = 'JavaSE-17',
-                  path = require('lib.jvm').home(17),
+                  path = require('helpers.jvm').home(17),
                 },
                 {
                   name = 'JavaSE-21',
-                  path = require('lib.jvm').home(21),
+                  path = require('helpers.jvm').home(21),
                 },
                 {
                   name = 'JavaSE-23',
-                  path = require('lib.jvm').home(23),
+                  path = require('helpers.jvm').home(23),
                 },
               },
             },

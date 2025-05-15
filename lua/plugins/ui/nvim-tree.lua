@@ -1,4 +1,4 @@
-local icons = require('lib.icons')
+local icons = require('helpers.icons')
 
 local function on_attach(bufnr)
   local api = require('nvim-tree.api')

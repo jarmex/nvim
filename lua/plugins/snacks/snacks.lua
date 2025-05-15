@@ -1,4 +1,4 @@
-local icons = require('lib.icons')
+local icons = require('helpers.icons')
 local keymaps = require('plugins.snacks.utils.snacks-keymaps')
 ---@diagnostic disable: undefined-global
 return {

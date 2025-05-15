@@ -2,62 +2,9 @@ local M = {}
 
 M.root_patterns = { '.git', '/lua' }
 
-function M.command(name, fn)
-  vim.cmd(string.format('command! %s %s', name, fn))
-end
-
-function M.lua_command(name, fn)
-  M.command(name, 'lua ' .. fn)
-end
-
-function M.is_directory()
-  return vim.fn.isdirectory(vim.api.nvim_buf_get_name(0)) == 1
-end
-
-local get_map_options = function(custom_options)
-  local options = { noremap = true, silent = true }
-  if custom_options then
-    options = vim.tbl_extend('force', options, custom_options)
-  end
-  return options
-end
-
-M.buf_map = function(mode, target, source, opts, bufnr)
-  vim.api.nvim_buf_set_keymap(bufnr or 0, mode, target, source, get_map_options(opts))
-end
-
-M.nmap_buf = function(...)
-  M.buf_map('n', ...)
-end
-
 ---@param plugin string
 function M.has(plugin)
   return require('lazy.core.config').plugins[plugin] ~= nil
-end
-
----get fg from vim
----@param name string
----@return function
-function M.get_fg(name)
-  return function()
-    ---@type {foreground?:number}?
-    local hl = vim.api.nvim_get_hl_by_name(name, true)
-    return hl and hl.foreground and { fg = string.format('#%06x', hl.foreground) }
-  end
-end
-
----@param cmd string command to execute
----@param warn? string|boolean if vim.fn.executable <= 0 then warn with warn
----@return boolean
-function M.executable(cmd, warn)
-  if vim.fn.executable(cmd) > 0 then
-    return true
-  end
-  if warn then
-    local message = type(warn) == 'string' and warn or ('Command `%s` was not executable'):format(cmd)
-    vim.notify(message, vim.log.levels.WARN, { title = 'Executable not found' })
-  end
-  return false
 end
 
 -- returns the root directory based on:
@@ -178,26 +125,6 @@ end
 function M.extend_tbl(default, opts)
   opts = opts or {}
   return default and vim.tbl_deep_extend('force', default, opts) or opts
-end
-
---- A condition function if the current file is in a git repo
----@param bufnr table|integer a buffer number to check the condition for, a table with bufnr property, or nil to get the current buffer
----@return boolean # whether or not the current file is in a git repo
-function M.is_git_repo(bufnr)
-  if type(bufnr) == 'table' then
-    bufnr = bufnr.bufnr
-  end
-  return vim.b[bufnr or 0].gitsigns_head or vim.b[bufnr or 0].gitsigns_status_dict
-end
-
----@param name string
-function M.opts(name)
-  local plugin = require('lazy.core.config').plugins[name]
-  if not plugin then
-    return {}
-  end
-  local Plugin = require('lazy.core.plugin')
-  return Plugin.values(plugin, 'opts', false)
 end
 
 ---send notification

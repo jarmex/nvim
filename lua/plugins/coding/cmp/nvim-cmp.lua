@@ -1,21 +1,6 @@
-local lib_icons = require('lib.icons')
+local lib_icons = require('helpers.icons')
 
 return {
-  -- {
-  --   'L3MON4D3/LuaSnip',
-  --   event = 'InsertEnter',
-  --   enabled = vim.g.cmploader == 'nvim-cmp',
-  --   version = 'v2.*',
-  --   build = 'make install_jsregexp',
-  --   dependencies = {
-  --     {
-  --       'rafamadriz/friendly-snippets',
-  --       config = function()
-  --         require('luasnip.loaders.from_vscode').lazy_load()
-  --       end,
-  --     },
-  --   },
-  -- },
   {
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },

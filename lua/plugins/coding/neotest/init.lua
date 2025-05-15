@@ -1,4 +1,4 @@
-local icons = require('lib.icons')
+local icons = require('helpers.icons')
 
 return {
   {

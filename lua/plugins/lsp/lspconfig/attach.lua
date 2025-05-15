@@ -1,5 +1,5 @@
 ---@diagnostic disable: need-check-nil
-local debounce = require('lib.utils').debounce
+local debounce = require('helpers.utils').debounce
 local autocmd = vim.api.nvim_create_autocmd
 
 local function codelens(bufnr, client)

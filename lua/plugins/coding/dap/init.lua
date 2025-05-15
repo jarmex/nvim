@@ -1,4 +1,4 @@
-local icons = require('lib.icons')
+local icons = require('helpers.icons')
 local keymaps = require('plugins.coding.dap.keymaps')
 
 --------------------------------------------------------------------------------------

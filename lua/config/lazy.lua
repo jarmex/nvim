@@ -12,6 +12,16 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+local function lazy_file()
+  -- Add support for the LazyFile event
+  local Event = require('lazy.core.handler.event')
+
+  Event.mappings.LazyFile = { id = 'LazyFile', event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' } }
+  Event.mappings['User LazyFile'] = Event.mappings.LazyFile
+end
+
+lazy_file()
+
 require('lazy').setup({
   spec = {
     { import = 'plugins.core' },
@@ -126,15 +136,3 @@ vim.defer_fn(function()
   end
   vim.notify(('󱧕 %s plugin updates'):format(numberOfUpdates), vim.log.levels.INFO, { title = 'Lazy' })
 end, 5000)
-
--- FIX Backdrop
--- PENDING https://github.com/folke/lazy.nvim/issues/1951
-vim.api.nvim_create_autocmd('FileType', {
-  desc = 'User: fix backdrop for lazy window',
-  pattern = 'lazy_backdrop',
-  group = group,
-  callback = function(ctx)
-    local win = vim.fn.win_findbuf(ctx.buf)[1]
-    vim.api.nvim_win_set_config(win, { border = 'none' })
-  end,
-})
