@@ -1,7 +1,7 @@
 return {
   'olimorris/codecompanion.nvim',
   version = false,
-  dependencies = { 'j-hui/fidget.nvim' },
+  dependencies = { 'j-hui/fidget.nvim', 'ravitemer/codecompanion-history.nvim' },
   cmd = { 'CodeCompanionChat', 'CodeCompanion', 'CodeCompanionCmd', 'CodeCompanionActions' },
   event = 'VeryLazy',
   keys = require('plugins.ai.codecompanion.keymaps'),
@@ -18,9 +18,8 @@ return {
       strategies = {
         chat = {
           keymaps = {
-            close = {
-              modes = { n = 'q', i = '<C-c>' },
-            },
+            close = { modes = { n = 'q', i = '<C-c>' } },
+            clear = { modes = { n = '<C-x>' } },
             switch_mode = {
               modes = { n = 'gm' },
               description = 'Switch Chat Mode',

@@ -1,6 +1,6 @@
 return {
   'm4xshen/hardtime.nvim',
-  event = 'VeryLazy',
+  lazy = false,
   dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
   keys = {
     { '<leader>hd', '<cmd>Hardtime disable<cr>', desc = 'HardTime Disable' },
@@ -9,6 +9,12 @@ return {
   opts = {
     allow_different_key = true,
     enabled = false,
+    disabled_filetypeis = {
+      lazy = true,
+      ['dapui*'] = true,
+      ['Diff*'] = true,
+      ['*'] = true,
+    },
     disabled_filetypes = {
       'Diffview*',
       'Dressing*',
