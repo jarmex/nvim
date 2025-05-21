@@ -10,7 +10,7 @@ return {
   history = {
     enabled = true,
     opts = {
-      keymap = '<localleader>hh',
+      keymap = 'gh',
       auto_generate_title = true,
       continue_last_chat = false,
       delete_on_clearing_chat = true,
@@ -19,6 +19,11 @@ return {
       dir_to_save = vim.fn.stdpath('data') .. '/codecompanion-history',
       auto_save = false,
       save_chat_keymap = '<localleader>hs',
+    },
+  },
+  vectorcode = {
+    opts = {
+      add_tool = true,
     },
   },
 }

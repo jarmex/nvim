@@ -3,6 +3,7 @@ return {
   ['help'] = { opts = { provider = 'snacks', max_lines = 1000 } },
   ['file'] = { opts = { provider = 'snacks', contains_code = true, max_lines = 1000 } },
   ['symbols'] = { opts = { provider = 'snacks' } },
+  ['image'] = { keymaps = { modes = { i = '<C-i>' } }, opts = { dirs = { '~/Desktop' } } },
 
   ['agent_mode'] = require('plugins.ai.codecompanion.slash_commands.agent_mode'),
   ['codeforces_companion'] = require('plugins.ai.codecompanion.slash_commands.codeforces_companion'),
@@ -18,5 +19,5 @@ return {
   ['restore_session'] = require('plugins.ai.codecompanion.slash_commands.restore_session'),
   ['plan_mode'] = require('plugins.ai.codecompanion.slash_commands.plan_mode'),
   ['terminal'] = require('plugins.ai.codecompanion.slash_commands.terminal'),
-  ['image_url'] = require('plugins.ai.codecompanion.slash_commands.image_url'),
+  -- ['image_url'] = require('plugins.ai.codecompanion.slash_commands.image_url'),
 }
