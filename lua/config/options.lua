@@ -70,6 +70,16 @@ local default_options = {
     foldsep = ' ',
     diff = '╱',
     eob = ' ',
+    stl = ' ',
+    stlnc = ' ',
+    wbr = ' ',
+    horiz = '─',
+    horizup = '┴',
+    horizdown = '┬',
+    vert = '│',
+    vertleft = '┤',
+    vertright = '├',
+    verthoriz = '┼',
   },
   foldlevel = 99,
   winminwidth = 5, -- Minimum window width
@@ -140,32 +150,18 @@ vim.diagnostic.config({
   },
 })
 
--- vim.opt.listchars = {
---   tab = ' ',
---   trail = '·',
---   extends = '',
---   precedes = '',
--- }
---
--- vim.opt.diffopt = {
---   'internal',
---   'filler',
---   'closeoff',
--- }
---
--- vim.opt.fillchars = {
---   diff = '╱',
---   eob = ' ',
---   stl = ' ',
---   stlnc = ' ',
---   wbr = ' ',
---   horiz = '─',
---   horizup = '┴',
---   horizdown = '┬',
---   vert = '│',
---   vertleft = '┤',
---   vertright = '├',
---   verthoriz = '┼',
--- }
+-- vim.o.winborder = 'rounded'
 
--- vim.g.icloudSync = vim.fs.normalize('~/Library/Mobile Documents/com~apple~CloudDocs/Dotfolder/nvim-data')
+vim.opt.listchars = {
+  tab = ' ',
+  trail = '·',
+  extends = '',
+  precedes = '',
+}
+--
+vim.opt.diffopt = {
+  'internal',
+  'filler',
+  'closeoff',
+}
+--

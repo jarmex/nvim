@@ -29,6 +29,7 @@ M.action = setmetatable({}, {
 })
 
 ---@param method vim.lsp.protocol.Method.ClientToServer|vim.lsp.protocol.Method.ServerToClient
+---@return boolean
 function M.SupportsMethod(method)
   local clients = vim.lsp.get_clients({ bufnr = 0 })
   for _, client in pairs(clients) do

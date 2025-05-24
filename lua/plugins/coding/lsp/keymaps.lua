@@ -29,7 +29,7 @@ local go_to_definition = function()
   end
 end
 
-function M.keymap(bufnr)
+function M.keymap(_bufnr)
   local function map(lhs, rhs, opts, mode)
     mode = mode or 'n'
     opts = opts or {}

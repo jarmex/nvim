@@ -8,31 +8,6 @@ return {
       })
     end,
   },
-  -- add typescript to treesitter
-  {
-    'nvim-treesitter/nvim-treesitter',
-    opts = function(_, opts)
-      if type(opts.ensure_installed) == 'table' then
-        vim.list_extend(opts.ensure_installed, { 'typescript', 'tsx' })
-      end
-    end,
-  },
-  -- Configure nvim-lspconfig to install the server automatically via mason, but
-  -- defer actually starting it to our configuration of typescript-tools below.
-  {
-    'neovim/nvim-lspconfig',
-    opts = {
-      -- make sure mason installs the server
-      servers = {
-        ts_ls = {},
-      },
-      setup = {
-        ts_ls = function()
-          return true -- avoid duplicate servers
-        end,
-      },
-    },
-  },
   {
     'nvim-neotest/neotest',
     optional = true,

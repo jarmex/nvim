@@ -7,6 +7,8 @@ vim.g.cmploader = 'blink.cmp' -- blink.cmp, nvim-cmp
 
 vim.g.winborder = 'single'
 
+LazyFile = { 'BufReadPost', 'BufNewFile', 'BufWritePre' }
+
 local enable_border = true
 
 vim.g.border = {
