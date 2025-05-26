@@ -52,7 +52,7 @@ return {
         chat = {
           show_settings = false,
           render_headers = false,
-          auto_scroll = false,
+          auto_scroll = true,
           window = {
             opts = {
               number = false,

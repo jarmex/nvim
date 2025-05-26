@@ -5,7 +5,7 @@ return {
     enabled = true,
     dependencies = { 'nvim-lua/plenary.nvim' },
     cmd = { 'MCPHub' },
-    build = 'pnpm add -g mcp-hub@latest',
+    build = 'npm install -g mcp-hub@latest',
     opts = {
       ui = {
         window = {

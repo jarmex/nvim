@@ -23,6 +23,7 @@ end
 
 return {
   'neovim/nvim-lspconfig',
+  lazy = false,
   event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' }, -- "BufReadPre",
   dependencies = {
     { 'saghen/blink.cmp', enabled = vim.g.cmploader == 'blink.cmp' },
