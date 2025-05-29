@@ -2,6 +2,9 @@ return {
   {
     'max397574/better-escape.nvim',
     event = 'VeryLazy',
+    keys = {
+      { 'jk', desc = 'Better escape' },
+    },
     opts = {
       timeout = 300,
       default_mappings = false,

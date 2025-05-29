@@ -1,5 +1,4 @@
 return {
-  -- todo comments
   {
     'folke/todo-comments.nvim',
     lazy = false,
@@ -9,8 +8,8 @@ return {
     keys = {
       { "]t",         function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
       { "[t",         function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-      { "<leader>xt", function() Snacks.picker.todo_comments() end,                              desc = "Todo Trouble" },
-      { "<leader>xT", function () Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } }) end, desc = "Todo/Fix/Fixme" },
+      { "<leader>xT", function() Snacks.picker.todo_comments() end,                              desc = "Todo Trouble" },
+      { "<leader>xt", function () Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } }) end, desc = "Todo/Fix/Fixme" },
     },
     opts = {
       keywords = {
@@ -24,8 +23,8 @@ return {
         HACK = { icon = ' ', color = 'warning' },
         WARN = { icon = ' ', color = 'warning', alt = { 'WARNING', 'XXX' } },
         PERF = { icon = ' ', color = 'warning', alt = { 'OPTIM', 'PERFORMANCE', 'OPTIMIZE' } },
-        NOTE = { icon = ' ', color = 'hint', alt = { 'INFO' } },
-        TEST = { icon = ' ', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
+        -- NOTE = { icon = ' ', color = 'hint', alt = { 'INFO' } },
+        -- TEST = { icon = ' ', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
       },
       merge_keywords = true, -- when true, custom keywords will be merged with the defaults
       -- list of named colors where we try to extract the guifg from the

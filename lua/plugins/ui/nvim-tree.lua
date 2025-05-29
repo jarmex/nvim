@@ -46,7 +46,11 @@ return {
         show_on_dirs = true,
       },
       disable_netrw = true,
-      filters = { dotfiles = true },
+      filters = { dotfiles = true, custom = { 'node_modules', '^.git$' } },
+      live_filter = {
+        prefix = '[FILTER]: ',
+        always_show_folders = false, -- Turn into false from true by default
+      },
       hijack_cursor = true,
       on_attach = on_attach,
       renderer = {

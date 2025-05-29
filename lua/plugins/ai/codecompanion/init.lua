@@ -20,7 +20,6 @@ return {
           keymaps = {
             close = { modes = { n = 'q', i = '<C-c>' } },
             clear = { modes = { n = '<C-x>' } },
-            send = { modes = { i = { '<C-CR>', '<C-s>' } } },
             completion = { modes = { i = '<C-x>' } },
             switch_mode = {
               modes = { n = 'gm' },

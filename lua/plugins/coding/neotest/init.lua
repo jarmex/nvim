@@ -3,7 +3,7 @@ local icons = require('helpers.icons')
 return {
   {
     'nvim-neotest/neotest',
-    version = false,
+    version = '*',
     event = 'VeryLazy',
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
@@ -123,6 +123,27 @@ return {
         opts.adapters = adapters
       end
       require('neotest').setup(opts)
+
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'neotest-*',
+        callback = function()
+          for _, lhs in pairs({ 'q', '<esc>' }) do
+            vim.keymap.set('n', lhs, function()
+              vim.cmd('quit')
+            end, { buffer = 0 })
+          end
+        end,
+      })
+
+      -- Set up the autocommand for NeotestOutput filetype
+      -- Scroll to the bottom of the output panel
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'neotest-output-panel',
+        group = vim.api.nvim_create_augroup('neotest-scroll', { clear = true }),
+        callback = function()
+          vim.cmd('norm G')
+        end,
+      })
     end,
   },
 }
