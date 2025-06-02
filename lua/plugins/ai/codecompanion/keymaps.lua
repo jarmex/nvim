@@ -9,18 +9,11 @@ return {
   { '<leader>ao', ':CodeCompanionChat openai<CR>', desc = 'Codecompanion OpenAI' },
   { '<leader>ar', ':CodeCompanionChat openrouter<CR>', desc = 'Codecompanion OpenRouter' },
   {
-    '<leader>aS',
+    '<leader>ah',
     function()
-      local name = vim.fn.input('Save as: ')
-      if name and name ~= '' then
-        vim.cmd('CodeCompanionSave ' .. name)
-      end
+      vim.cmd('CodeCompanionHistory')
     end,
-    desc = 'Codecompanion save',
+    mode = 'n',
+    desc = 'View CodeCompanion Chat History',
   },
-  { '<leader>aL', ':CodeCompanionLoad<CR>', desc = 'Codecompanion load' },
-  { '<leader>ap', ':CodeCompanion /pr<cr>', mode = { 'n' }, desc = 'Code Companion PR' },
-  { '<leader>ar', ':CodeCompanion /optimize<cr>', mode = { 'v' }, desc = 'Code Companion Refactor' },
-  { '<leader>as', ':CodeCompanion /spell<cr>', mode = { 'n', 'v' }, desc = 'Code Companion Spell' },
-  { '<leader>ac', ':CodeCompanion /scommit<cr>', mode = { 'n', 'v' }, desc = 'Code Companion Commit' },
 }

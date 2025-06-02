@@ -77,6 +77,9 @@ return {
       schema = {
         temperature = { default = 0.2 },
         num_ctx = { default = 200000 },
+        model = {
+          default = 'gemini-2.5-pro-preview-05-06',
+        },
       },
     }
     return require('codecompanion.adapters').extend('gemini', gemini_config)
