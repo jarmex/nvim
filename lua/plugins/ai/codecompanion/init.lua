@@ -16,6 +16,8 @@ return {
     return {
       adapters = adapters,
       strategies = {
+        inline = { adapter = adapters.openai },
+        cmd = { adapter = adapters.deepseek },
         chat = {
           keymaps = {
             close = { modes = { n = 'q', i = '<C-c>' } },
@@ -36,18 +38,13 @@ return {
           tools = require('plugins.ai.codecompanion.tools'),
           slash_commands = require('plugins.ai.codecompanion.slash_commands'),
         },
-        inline = { adapter = adapters.openai },
-        agent = {
-          adapter = defaultAdapter,
-          tools = { opts = { auto_submit_errors = true } },
-        },
       },
       display = {
         diff = {
           close_chat_at = 240, -- Close an open chat buffer if the total columns of your display are less than...
           layout = 'vertical', -- vertical|horizontal split for default provider
-          -- opts = { 'internal', 'filler', 'closeoff', 'algorithm:patience', 'followwrap', 'linematch:120' },
-          opts = { 'vertical', 'internal', 'filler', 'closeoff', 'algorithm:histogram', 'linematch:120', 'iwhiteall' },
+          opts = { 'internal', 'filler', 'closeoff', 'algorithm:patience', 'followwrap', 'linematch:120' },
+          -- opts = { 'vertical', 'internal', 'filler', 'closeoff', 'algorithm:histogram', 'linematch:120', 'iwhiteall' },
           provider = 'mini_diff', -- default|mini_diff
         },
         inline = { diff = { enabled = true } },

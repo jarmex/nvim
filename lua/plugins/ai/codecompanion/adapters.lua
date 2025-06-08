@@ -90,24 +90,24 @@ return {
     local openrouter_config = {
       name = 'openrouter',
       formatted_name = 'OpenRouter',
-      url = 'https://openrouter.ai/api/v1/chat/completions',
+      -- url = 'https://openrouter.ai/api/v1/chat/completions',
       env = {
-        api_key = os.getenv('OPENROUTER_API_KEY'),
+        url = 'https://openrouter.ai/api',
+        api_key = 'OPENROUTER_API_KEY',
+        chat_url = '/v1/chat/completions',
+        -- api_key = os.getenv('OPENROUTER_API_KEY'),
       },
       schema = {
         temperature = { default = 0.3 },
         maxOutputTokens = { default = 8192 },
         model = {
-          default = 'qwen/qwen-2.5-coder-32b-instruct:free',
+          default = 'mistralai/devstral-small:free',
           choices = {
             ['deepseek/deepseek-r1:free'] = { opts = { can_reason = true } },
             'qwen/qwen-2.5-coder-32b-instruct:free',
-            'deepseek/deepseek-r1-distill-llama-70b:free',
-            'deepseek/deepseek-chat:free',
-            'mistralai/mistral-small-24b-instruct-2501:free',
-            ['google/gemini-2.0-flash-exp:free'] = { opts = { can_reason = true } }, -- context: 1.05M
-            ['google/gemini-2.0-pro-exp-02-05:free'] = { opts = { can_reason = true } }, -- context: 2M
-            ['google/gemini-2.0-flash-thinking-exp-1219:free'] = { opts = { can_reason = true } }, -- context: 40K
+            'mistralai/devstral-small:free',
+            'qwen/qwen3-235b-a22b:free',
+            'qwen/qwen3-30b-a3b:free',
           },
         },
         num_ctx = { default = 200000 },

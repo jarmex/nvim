@@ -3,6 +3,7 @@ return {
   { '<leader>ai', '<cmd>CodeCompanion<cr>', mode = { 'n', 'v' }, desc = 'InlineCode' },
   { '<leader>at', '<cmd>CodeCompanionChat Toggle<CR>', desc = 'AI Toggle', mode = { 'n', 'v' } },
   { '<leader>aa', '<cmd>CodeCompanionActions<CR>', desc = '[A]I [A]ctions', mode = { 'n', 'v' } },
+  { '<leader>ad', ':CodeCompanionChat deepseek<CR>', desc = 'Codecompanion Anthropic' },
   { '<leader>an', ':CodeCompanionChat anthropic<CR>', desc = 'Codecompanion Anthropic' },
   { '<leader>ag', ':CodeCompanionChat gemini<CR>', desc = 'Codecompanion: Gemini' },
   { '<leader>al', ':CodeCompanionChat ollama<CR>', desc = 'Codecompanion Ollama' },
@@ -14,6 +15,6 @@ return {
       vim.cmd('CodeCompanionHistory')
     end,
     mode = 'n',
-    desc = 'View CodeCompanion Chat History',
+    desc = 'AI: Show chat history',
   },
 }

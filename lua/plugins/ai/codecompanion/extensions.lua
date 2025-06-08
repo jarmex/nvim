@@ -11,15 +11,16 @@ return {
     enabled = true,
     opts = {
       keymap = 'gh',
+      save_chat_keymap = 'sc',
       auto_generate_title = true,
       continue_last_chat = false,
       delete_on_clearing_chat = true,
-      -- expiration_days = 30,
       picker = 'snacks',
       enable_logging = false,
       dir_to_save = vim.fn.stdpath('data') .. '/codecompanion-history',
       auto_save = false,
-      save_chat_keymap = '<localleader>hs',
+      -- expiration_days = 30,
+      -- save_chat_keymap = '<localleader>hs',
     },
   },
   vectorcode = {
