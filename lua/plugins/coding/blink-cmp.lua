@@ -8,14 +8,13 @@ return {
     build = 'cargo +nightly build --release',
     dependencies = {
       { 'L3MON4D3/LuaSnip', version = 'v2.*' },
-      { 'saghen/blink.compat', opts = {} },
+      -- { 'saghen/blink.compat', opts = {} },
       'folke/lazydev.nvim',
       {
         'Kaiser-Yang/blink-cmp-dictionary',
         dependencies = { 'nvim-lua/plenary.nvim' },
       },
     },
-
     event = { 'BufReadPost', 'CmdlineEnter' },
     version = '*',
     opts = {
@@ -56,7 +55,7 @@ return {
         },
       },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'dadbod', 'markdown' },
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'dadbod' },
         providers = {
           lsp = {
             name = 'lsp',
@@ -92,11 +91,11 @@ return {
             module = 'vim_dadbod_completion.blink',
             score_offset = 85, -- the higher the number, the higher the priority
           },
-          markdown = {
-            name = 'Render',
-            module = 'render-markdown.integ.blink',
-            fallbacks = { 'lsp' },
-          },
+          -- markdown = {
+          --   name = 'Render',
+          --   module = 'render-markdown.integ.blink',
+          --   fallbacks = { 'lsp' },
+          -- },
           lazydev = {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',
@@ -155,8 +154,8 @@ return {
     opts_extend = {
       'sources.default',
     },
-    config = function(_, opts)
-      require('blink.cmp').setup(opts)
-    end,
+    -- config = function(_, opts)
+    --   require('blink.cmp').setup(opts)
+    -- end,
   },
 }

@@ -14,7 +14,7 @@ return {
         ---@diagnostic disable-next-line: missing-fields
         require('jdtls').setup_dap({ hotcodereplace = 'auto' })
         require('jdtls.dap').setup_dap_main_class_configs()
-        require('plugins.coding.lsp.lspconfig.keymaps').keymap(bufnr)
+        require('plugins.coding.lsp.keymaps').keymap(bufnr)
 
         vim.cmd([[
             command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)

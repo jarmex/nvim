@@ -1,6 +1,9 @@
 local vault = {
   name = 'work',
-  path = '~/vaults/jamesamo',
+  -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+  -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
+  -- refer to `:h file-pattern` for more examples
+  path = vim.fn.expand('~') .. '/vaults/jamesamo',
   -- Optional, override certain settings.
   overrides = {
     notes_subdir = 'notes',
@@ -24,14 +27,13 @@ return {
   'obsidian-nvim/obsidian.nvim',
   enabled = true,
   version = '*',
+  ft = 'markdown',
   event = vault.path and {
     ('BufReadPre %s/**.md'):format(vault.path),
     ('BufNewFile %s/**.md'):format(vault.path),
   } or nil,
   dependencies = {
     'nvim-lua/plenary.nvim',
-    { 'hrsh7th/nvim-cmp', enabled = vim.g.cmploader == 'nvim-cmp' },
-    'nvim-telescope/telescope.nvim',
     'nvim-treesitter/nvim-treesitter',
   },
   cmd = {
@@ -60,8 +62,8 @@ return {
   opts = {
     workspaces = { vault },
     completion = {
-      nvim_cmp = vim.g.cmploader == 'nvim-cmp',
-      blink = vim.g.cmploader == 'nvim-cmp',
+      nvim_cmp = false,
+      blink = true,
       -- Trigger completion at 2 chars.
       min_chars = 2,
     },
@@ -143,12 +145,11 @@ return {
       vim.fn.jobstart({ 'open', url })
     end,
 
-    -- Optional, set to true if you use the Obsidian Advanced URI plugin.
-    -- https://github.com/Vinzent03/obsidian-advanced-uri
-    use_advanced_uri = true,
-
-    -- Optional, set to true to force ':ObsidianOpen' to bring the app to the foreground.
-    open_app_foreground = true,
+    open = {
+      func = function(uri)
+        vim.ui.open(uri, { cmd = { 'open', '-a', '/Applications/Obsidian.app' } })
+      end,
+    },
     ui = {
       enable = false, -- set to false to disable all additional syntax features
       update_debounce = 200, -- update delay after a text change (in milliseconds)
@@ -192,20 +193,29 @@ return {
         end,
         opts = { noremap = false, expr = true, buffer = true },
       },
+      ['<C-]>'] = {
+        action = function()
+          return require('obsidian').util.gf_passthrough()
+        end,
+        opts = { noremap = false, expr = true, buffer = true },
+      },
       -- Toggle check-boxes.
-      ['<leader>ch'] = {
+      ['<leader>cb'] = {
         action = function()
           return require('obsidian').util.toggle_checkbox()
         end,
         opts = { buffer = true },
       },
       -- Smart action depending on context, either follow link or toggle checkbox.
-      ['<cr>'] = {
+      ['<leader>cs'] = {
         action = function()
           return require('obsidian').util.smart_action()
         end,
         opts = { buffer = true, expr = true },
       },
+    },
+    attachments = {
+      img_folder = 'Files',
     },
   },
 

@@ -1,7 +1,7 @@
 return {
   'olimorris/codecompanion.nvim',
   version = false,
-  dependencies = { 'j-hui/fidget.nvim', 'ravitemer/codecompanion-history.nvim' },
+  dependencies = { 'j-hui/fidget.nvim', 'ravitemer/codecompanion-history.nvim', 'hakonharnes/img-clip.nvim' },
   cmd = { 'CodeCompanionChat', 'CodeCompanion', 'CodeCompanionCmd', 'CodeCompanionActions', 'CodeCompanionHistory' },
   event = 'VeryLazy',
   keys = require('plugins.ai.codecompanion.keymaps'),

@@ -2,7 +2,14 @@ return {
   'MeanderingProgrammer/render-markdown.nvim',
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   ft = { 'markdown', 'codecompanion' },
+  ---@module 'render-markdown'
+  ---@type render.md.UserConfig
   opts = {
+    completions = {
+      lsp = {
+        enabled = true,
+      },
+    },
     file_types = { 'markdown', 'codecompanion' },
     latex = { enabled = false },
     render_modes = true, -- Render in ALL modes

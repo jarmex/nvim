@@ -75,7 +75,7 @@ return {
   gemini = function()
     local gemini_config = {
       schema = {
-        temperature = { default = 0.2 },
+        temperature = { default = 0.3 },
         num_ctx = { default = 200000 },
         model = {
           default = 'gemini-2.5-pro-preview-05-06',
@@ -110,7 +110,7 @@ return {
             'qwen/qwen3-30b-a3b:free',
           },
         },
-        num_ctx = { default = 200000 },
+        -- num_ctx = { default = 200000 },
       },
     }
     return require('codecompanion.adapters').extend('openai_compatible', openrouter_config)

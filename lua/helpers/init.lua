@@ -21,6 +21,7 @@ function M.get_plugin(name)
 end
 
 ---@param plugin string
+---@return boolean # Whether the plugin is installed
 function M.has(plugin)
   return M.get_plugin(plugin) ~= nil
 end
