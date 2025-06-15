@@ -25,8 +25,5 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      require('mcphub').setup(opts)
-    end,
   },
 }

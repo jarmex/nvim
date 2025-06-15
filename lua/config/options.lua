@@ -165,3 +165,5 @@ vim.opt.diffopt = {
   'closeoff',
 }
 --
+vim.o.mousemodel = 'extend'
+vim.opt.guicursor:remove({ 't:block-blinkon500-blinkoff500-TermCursor' })

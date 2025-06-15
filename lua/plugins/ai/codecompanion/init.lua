@@ -1,7 +1,12 @@
 return {
   'olimorris/codecompanion.nvim',
   version = false,
-  dependencies = { 'j-hui/fidget.nvim', 'ravitemer/codecompanion-history.nvim', 'hakonharnes/img-clip.nvim' },
+  dependencies = {
+    'j-hui/fidget.nvim',
+    'ravitemer/codecompanion-history.nvim',
+    'hakonharnes/img-clip.nvim',
+    'jinzhongjia/codecompanion-gitcommit.nvim',
+  },
   cmd = { 'CodeCompanionChat', 'CodeCompanion', 'CodeCompanionCmd', 'CodeCompanionActions', 'CodeCompanionHistory' },
   event = 'VeryLazy',
   keys = require('plugins.ai.codecompanion.keymaps'),
@@ -37,6 +42,9 @@ return {
           roles = helper.roles(),
           tools = require('plugins.ai.codecompanion.tools'),
           slash_commands = require('plugins.ai.codecompanion.slash_commands'),
+          opts = {
+            completion_provider = 'blink', -- blink|cmp|coc|default
+          },
         },
       },
       display = {
@@ -56,6 +64,7 @@ return {
           show_token_count = true,
           auto_scroll = true,
           window = {
+            width = 0.65,
             layout = 'vertical',
             opts = {
               number = false,

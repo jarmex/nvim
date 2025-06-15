@@ -66,8 +66,9 @@ return {
           },
           path = {
             name = 'Path',
-            module = 'blink.cmp.sources.path',
-            score_offset = 25,
+            enabled = function()
+              return vim.bo.filetype ~= 'codecompanion'
+            end,
             fallbacks = { 'snippets', 'buffer' },
             opts = {
               trailing_slash = false,

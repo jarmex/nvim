@@ -93,9 +93,9 @@ return {
       -- url = 'https://openrouter.ai/api/v1/chat/completions',
       env = {
         url = 'https://openrouter.ai/api',
-        api_key = 'OPENROUTER_API_KEY',
+        -- api_key = 'OPENROUTER_API_KEY',
         chat_url = '/v1/chat/completions',
-        -- api_key = os.getenv('OPENROUTER_API_KEY'),
+        api_key = os.getenv('OPENROUTER_API_KEY'),
       },
       schema = {
         temperature = { default = 0.3 },

@@ -28,7 +28,7 @@ return vim.tbl_extend('force', promptList.prompt_library(), {
     strategy = 'chat',
     description = 'Edit the current buffer',
     prompts = {
-      { role = 'user', content = '@editor #buffer\n\n' },
+      { role = 'user', content = '@insert_edit_into_file #buffer\n\n' },
     },
     opts = {
       auto_submit = false,
