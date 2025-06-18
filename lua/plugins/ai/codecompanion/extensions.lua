@@ -32,9 +32,9 @@ return {
     callback = 'codecompanion._extensions.gitcommit',
     opts = {
       add_slash_command = true, -- Optional: adds /gitcommit slash command
-      adapter = 'openai', -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
+      -- adapter = 'openai', -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
       -- model = 'gpt-4', -- Optional: specify model (defaults to codecompanion chat model)
-      languages = { 'English' }, -- Optional: list of languages for commit messages
+      -- languages = { 'English' }, -- Optional: list of languages for commit messages
       exclude_files = {
         '*.pb.go',
         '*.min.js',
