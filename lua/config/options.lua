@@ -14,6 +14,7 @@ local default_options = {
   foldmethod = 'indent', -- folding, set to "expr" for treesitter based folding
   foldexpr = '', -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
   foldcolumn = '1',
+  foldlevel = 99,
   hidden = true, -- required to keep multiple buffers and open multiple buffers
   hlsearch = true, -- highlight all matches on previous search pattern
   ignorecase = true, -- ignore case in search patterns
@@ -81,7 +82,6 @@ local default_options = {
     vertright = '├',
     verthoriz = '┼',
   },
-  foldlevel = 99,
   winminwidth = 5, -- Minimum window width
   spelllang = { 'en' },
   splitkeep = 'screen',
@@ -91,66 +91,6 @@ local default_options = {
 for k, v in pairs(default_options) do
   vim.opt[k] = v
 end
-
--- Fix markdown indentation settings
-vim.g.markdown_recommended_style = 0
-
-if vim.fn.has('nvim-0.11.0') == 1 then
-  vim.o.completeopt = 'menuone,noinsert,fuzzy,popup'
-  vim.o.completeitemalign = 'kind,abbr,menu'
-else
-  vim.o.completeopt = 'menuone,noinsert,popup'
-end
-
---------------------------------------------------------------------------------
--- DIAGNOSTICS
-
-vim.diagnostic.config({
-  jump = {
-    float = true,
-  },
-  signs = {
-    text = { '', '▲', '●', '' }, -- Error, Warn, Info, Hint
-  },
-  virtual_text = {
-    spacing = 2,
-    severity = {
-      min = vim.diagnostic.severity.WARN, -- leave out Info & Hint
-    },
-    format = function(diag)
-      local msg = diag.message:gsub('%.$', '')
-      return msg
-    end,
-    suffix = function(diag)
-      if not diag then
-        return ''
-      end
-      local codeOrSource = (tostring(diag.code or diag.source or ''))
-      if codeOrSource == '' then
-        return ''
-      end
-      return (' [%s]'):format(codeOrSource:gsub('%.$', ''))
-    end,
-  },
-  float = {
-    max_width = 70,
-    header = '',
-    prefix = function(_, _, total)
-      return (total > 1 and '• ' or ''), 'Comment'
-    end,
-    suffix = function(diag)
-      local source = (diag.source or ''):gsub(' ?%.$', '')
-      local code = diag.code and ': ' .. diag.code or ''
-      return ' ' .. source .. code, 'Comment'
-    end,
-    format = function(diag)
-      local msg = diag.message:gsub('%.$', '')
-      return msg
-    end,
-  },
-})
-
--- vim.o.winborder = 'rounded'
 
 vim.opt.listchars = {
   tab = ' ',
