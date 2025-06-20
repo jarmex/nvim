@@ -9,6 +9,13 @@ return {
         template = '[Image]($FILE_PATH)',
         use_absolute_path = true,
       },
+      markdown = {
+        relative_to_current_file = true,
+      },
     },
+  },
+  keys = {
+    -- suggested keymap
+    { '<leader>pp', '<cmd>PasteImage<cr>', desc = 'Paste image from system clipboard' },
   },
 }
