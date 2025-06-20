@@ -5,6 +5,7 @@ return {
     'j-hui/fidget.nvim',
     'ravitemer/codecompanion-history.nvim',
     'hakonharnes/img-clip.nvim',
+    'ravitemer/mcphub.nvim',
     'jinzhongjia/codecompanion-gitcommit.nvim',
   },
   cmd = { 'CodeCompanionChat', 'CodeCompanion', 'CodeCompanionCmd', 'CodeCompanionActions', 'CodeCompanionHistory' },

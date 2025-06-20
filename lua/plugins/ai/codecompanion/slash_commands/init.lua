@@ -20,4 +20,5 @@ return {
   ['plan_mode'] = require('plugins.ai.codecompanion.slash_commands.plan_mode'),
   ['terminal'] = require('plugins.ai.codecompanion.slash_commands.terminal'),
   -- ['image_url'] = require('plugins.ai.codecompanion.slash_commands.image_url'),
+  codebase = require('vectorcode.integrations').codecompanion.chat.make_slash_command(),
 }

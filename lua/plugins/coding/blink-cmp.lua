@@ -46,6 +46,21 @@ return {
               columns = { { 'kind_icon', 'label', 'label_description' } },
             },
           },
+          documentation = {
+            auto_show = true,
+            auto_show_delay_ms = 500,
+            window = {
+              winblend = 30,
+            },
+          },
+          trigger = {
+            prefetch_on_insert = true,
+            show_on_keyword = true,
+            show_on_trigger_character = true,
+            show_in_snippet = true,
+            show_on_insert_on_trigger_character = true,
+            show_on_accept_on_trigger_character = true,
+          },
           list = {
             selection = {
               preselect = false,
@@ -53,6 +68,7 @@ return {
             },
           },
         },
+        fuzzy = { implementation = 'lua', sorts = { 'exact', 'score', 'sort_text' } },
       },
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer', 'dadbod' },
