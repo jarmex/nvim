@@ -10,10 +10,6 @@ return {
       { 'L3MON4D3/LuaSnip', version = 'v2.*' },
       -- { 'saghen/blink.compat', opts = {} },
       'folke/lazydev.nvim',
-      {
-        'Kaiser-Yang/blink-cmp-dictionary',
-        dependencies = { 'nvim-lua/plenary.nvim' },
-      },
     },
     event = { 'BufReadPost', 'CmdlineEnter' },
     version = '*',
@@ -117,16 +113,6 @@ return {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',
             score_offset = 100,
-          },
-          dictionary = {
-            module = 'blink-cmp-dictionary',
-            name = 'Dict',
-            -- Make sure this is at least 2.
-            -- 3 is recommended
-            min_keyword_length = 3,
-            opts = {
-              -- options for blink-cmp-dictionary
-            },
           },
         },
       },
