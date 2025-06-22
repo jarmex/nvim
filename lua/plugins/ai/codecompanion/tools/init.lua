@@ -3,6 +3,40 @@ return {
   -- ['code_edit'] = require('plugins.ai.codecompanion.tools.code_edit'),
   -- ['tavily'] = require('plugins.ai.codecompanion.tools.tavily'),
   -- ['code_developer'] = require('plugins.ai.codecompanion.tools.developer'),
+  groups = {
+    ['agent_mcp'] = {
+      description = 'agent mode with mcp support, automatically run tools',
+      tools = {
+        'cmd_runner',
+        'create_file',
+        'file_search',
+        'grep_search',
+        'insert_edit_into_file',
+        'read_file',
+        -- "web_search",
+        'mcp',
+      },
+      opts = {
+        collapse_tools = true,
+      },
+    },
+    ['agent'] = {
+      description = 'agent mode, automatically run tools',
+      tools = {
+        'cmd_runner',
+        'create_file',
+        'file_search',
+        'grep_search',
+        'insert_edit_into_file',
+        'read_file',
+        -- "web_search",
+        -- "mcp",
+      },
+      opts = {
+        collapse_tools = true,
+      },
+    },
+  },
 
   opts = {
     -- system_prompt = string.format([[]]),

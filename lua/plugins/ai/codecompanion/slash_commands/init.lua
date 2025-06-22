@@ -21,4 +21,5 @@ return {
   ['terminal'] = require('plugins.ai.codecompanion.slash_commands.terminal'),
   -- ['image_url'] = require('plugins.ai.codecompanion.slash_commands.image_url'),
   codebase = require('vectorcode.integrations').codecompanion.chat.make_slash_command(),
+  ['meta_prompt'] = require('plugins.ai.codecompanion.slash_commands.meta_prompt'),
 }

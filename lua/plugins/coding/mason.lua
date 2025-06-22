@@ -173,7 +173,7 @@ return {
     vim.env.npm_config_cache = vim.env.HOME .. '/.cache/npm' -- don't crowd $HOME with `/.npm`
     require('mason').setup(opts)
     enableLsps()
-    vim.defer_fn(syncPackages, 3000)
+    -- vim.defer_fn(syncPackages, 3000)
   end,
   opts = {
     registries = {
