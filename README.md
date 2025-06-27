@@ -4,6 +4,18 @@ The entire configuration using lua, don't forget to check every plugin
 documentation for further information, I think each files is pretty
 self-explanatory.
 
+## ✨ Key Features
+
+- 🧠 **AI Integration**: Built-in AI assistance with CodeCompanion and customizable system prompts
+- 🔧 **Built-in LSP**: Native Neovim LSP with comprehensive language support
+- 🎨 **Modern UI**: Beautiful themes (Catppuccin, Kanagawa, Arctic) with enhanced statusline
+- 🔍 **Advanced Search**: Telescope with fuzzy finding, live grep, and frequency-based results
+- 📁 **File Management**: NvimTree with preview and advanced file operations
+- 🐛 **Debugging**: Full DAP integration with virtual text and UI
+- 📊 **Database Tools**: Built-in database client with completion
+- 🎯 **Code Navigation**: Treesitter, outline view, and intelligent code folding
+- 🚀 **Performance**: Optimized startup with lazy loading and early retirement
+
 ![image](https://github.com/jarmex/nvim/blob/main/baseimage.png?raw=true)
 
 ![image](https://github.com/jarmex/nvim/blob/main/ai.png?raw=true)

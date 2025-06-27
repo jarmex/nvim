@@ -52,12 +52,9 @@ return {
   gitcommit = {
     callback = 'codecompanion._extensions.gitcommit',
     opts = {
-      adapter = 'openai',
+      adapter = 'openai', -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
       model = 'gpt-4.1-mini', -- default model for gitcommit
       add_slash_command = true, -- Optional: adds /gitcommit slash command
-      -- adapter = 'openai', -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
-      -- model = 'gpt-4', -- Optional: specify model (defaults to codecompanion chat model)
-      -- languages = { 'English' }, -- Optional: list of languages for commit messages
       exclude_files = {
         '*.pb.go',
         '*.min.js',
@@ -66,10 +63,14 @@ return {
         'vendor/*',
         '*.generated.*',
       }, -- Optional: exclude files from diff analysis
+      add_git_tool = true, -- Optional: add @git_read and @git_edit tools to CodeCompanion (default: true)
+      add_git_commands = true, -- Optional: add :CodeCompanionGit commands (default: true)
+      gitcommit_select_count = 100, -- Optional: number of recent commits for /gitcommit slash command (default: 100)
       buffer = {
         enabled = true, -- Enable gitcommit buffer keymaps
         keymap = '<leader>gc', -- Keymap for generating commit message in gitcommit buffer
-        auto_generate = true,
+        auto_generate = false, -- Automatically generate message on entering gitcommit buffer
+        auto_generate_delay = 100, -- Delay in ms before auto-generating
       },
     },
   },

@@ -2,7 +2,6 @@ return {
   {
     'ravitemer/mcphub.nvim',
     version = '*',
-    enabled = true,
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
       { '<leader>$', '<Cmd>MCPHub<CR>', desc = 'Open MCB Hub' },
