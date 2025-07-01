@@ -26,7 +26,7 @@ return {
         importModuleSpecifierPreference = 'non-relative',
         providePrefixAndSuffixTextForRename = false,
 
-        includeInlayEnumMemberValueHints = false,
+        includeInlayEnumMemberValueHints = true,
         includeInlayFunctionLikeReturnTypeHints = false,
         includeInlayFunctionParameterTypeHints = false,
         includeInlayParameterNameHints = 'all', -- none | literals | all

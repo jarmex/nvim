@@ -11,7 +11,7 @@ return vim.tbl_extend('force', promptList.prompt_library(), {
   ['Fix LSP Diagnostics'] = require('plugins.ai.codecompanion.promptlibrary.fix_lsp'),
   ['Generate Docstring'] = require('plugins.ai.codecompanion.promptlibrary.doc_string'),
   ['Generate a Commit Message for Staged Files'] = require('plugins.ai.codecompanion.promptlibrary.scommit'),
-  ['Git Diff Code Review'] = require('plugins.ai.codecompanion.promptlibrary.git_diff_code_review'),
+  -- ['Git Diff Code Review'] = require('plugins.ai.codecompanion.promptlibrary.git_diff_code_review'),
   ['Naming'] = require('plugins.ai.codecompanion.promptlibrary.naming'),
   ['Platform Commit'] = require('plugins.ai.codecompanion.promptlibrary.platform-commit'),
   ['Proof Read'] = require('plugins.ai.codecompanion.promptlibrary.proofread'),

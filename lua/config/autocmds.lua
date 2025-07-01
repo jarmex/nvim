@@ -114,7 +114,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = { '*.ts', '*.tsx', '*.js', '*.jsx' },
   callback = function(args)
     vim.cmd('TSToolsAddMissingImports sync')
-    vim.cmd('TSToolsRemoveUnusedImports sync')
+    -- vim.cmd('TSToolsRemoveUnusedImports sync')
     if package.loaded['conform'] then
       require('conform').format({ bufnr = args.buf })
     end

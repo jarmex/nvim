@@ -79,7 +79,7 @@ Helpers.safeRequire('config.commands')
 Helpers.safeRequire('config.autocmds')
 
 disable_providers()
-disable_distribution_plugins()
+-- disable_distribution_plugins()
 add_filetype()
 
 Helpers.safeRequire('config.lazy')

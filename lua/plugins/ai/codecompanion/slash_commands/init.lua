@@ -7,9 +7,9 @@ return {
 
   ['agent_mode'] = require('plugins.ai.codecompanion.slash_commands.agent_mode'),
   ['codeforces_companion'] = require('plugins.ai.codecompanion.slash_commands.codeforces_companion'),
-  ['git_commit'] = require('plugins.ai.codecompanion.slash_commands.git_commit'),
-  ['git_files'] = require('plugins.ai.codecompanion.slash_commands.git_files'),
-  ['review_git_diffs'] = require('plugins.ai.codecompanion.slash_commands.review_git_diffs'),
+  -- ['git_commit'] = require('plugins.ai.codecompanion.slash_commands.git_commit'),
+  -- ['git_files'] = require('plugins.ai.codecompanion.slash_commands.git_files'),
+  -- ['review_git_diffs'] = require('plugins.ai.codecompanion.slash_commands.review_git_diffs'),
   ['review_merge_request'] = require('plugins.ai.codecompanion.slash_commands.review_merge_request'),
   ['thinking'] = require('plugins.ai.codecompanion.slash_commands.thinking'),
 

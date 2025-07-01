@@ -1,15 +1,27 @@
 local icons = require('helpers.icons')
 
+local adaptersList = {
+  ['neotest-vitest'] = {},
+  -- ['neotest-jest'] = {
+  --   jestCommand = 'pnpm jest',
+  --   -- jestConfigFile = "jest.config.js",
+  --   env = { CI = true },
+  --   cwd = function(path)
+  --     return require('lspconfig.util').root_pattern('package.json', 'jest.config.js')(path)
+  --   end,
+  -- },
+}
+
 return {
   {
     'nvim-neotest/neotest',
     version = '*',
     event = 'VeryLazy',
     dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-lua/plenary.nvim',
+      'nvim-neotest/nvim-nio',
       'nvim-neotest/neotest-jest',
-      { 'nvim-neotest/nvim-nio' },
+      'marilari88/neotest-vitest',
+      'nvim-neotest/neotest-plenary',
     },
     keys = require('plugins.coding.neotest.keymaps').keymaps(),
     opts = function()
@@ -84,6 +96,7 @@ return {
             return s .. ' '
           end, { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }),
         },
+        adapters = adaptersList,
       }
     end,
     config = function(_, opts)

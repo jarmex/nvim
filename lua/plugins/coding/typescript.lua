@@ -9,36 +9,6 @@ return {
     end,
   },
   {
-    'nvim-neotest/neotest',
-    optional = true,
-    dependencies = {
-      { 'nvim-neotest/neotest-jest' },
-    },
-    keys = {
-      {
-        '<leader>tw',
-        "<cmd>lua require('neotest').run.run({ jestCommand = 'jest --watch ' })<cr>",
-        desc = 'Neotest Watch',
-      },
-    },
-    opts = {
-      adapters = {
-        -- require("neotest-jest")({
-        --    jest_test_discovery = false,
-        --    jestCommand = require("neotest-jest.jest-util").getJestCommand(vim.fn.expand("%:p:h")) .. " --watch",
-        --  }),
-        ['neotest-jest'] = {
-          jestCommand = 'pnpm jest',
-          -- jestConfigFile = "jest.config.js",
-          env = { CI = true },
-          cwd = function(path)
-            return require('lspconfig.util').root_pattern('package.json', 'jest.config.js')(path)
-          end,
-        },
-      },
-    },
-  },
-  {
     'mfussenegger/nvim-dap',
     opts = {
       setup = {
