@@ -99,8 +99,7 @@ return {
       buffer = {
         enabled = true, -- Enable gitcommit buffer keymaps
         keymap = '<leader>gc', -- Keymap for generating commit message in gitcommit buffer
-        auto_generate = true, -- Automatically generate message on entering gitcommit buffer
-        auto_generate_delay = 200, -- Delay in ms before auto-generating
+        auto_generate = false, -- Automatically generate message on entering gitcommit buffer
       },
       add_slash_command = true, -- Add /gitcommit slash command
       add_git_tool = true, -- Add @git_read and @git_edit tools
