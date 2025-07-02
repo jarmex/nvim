@@ -101,11 +101,11 @@ return {
         temperature = { default = 0.3 },
         maxOutputTokens = { default = 8192 },
         model = {
-          default = 'mistralai/devstral-small:free',
+          default = 'openrouter/cypher-alpha:free',
           choices = {
-            ['deepseek/deepseek-r1:free'] = { opts = { can_reason = true } },
-            'qwen/qwen-2.5-coder-32b-instruct:free',
+            'openrouter/cypher-alpha:free',
             'mistralai/devstral-small:free',
+            'qwen/qwen-2.5-coder-32b-instruct:free',
             'qwen/qwen3-235b-a22b:free',
             'qwen/qwen3-30b-a3b:free',
           },
