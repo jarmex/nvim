@@ -1,14 +1,39 @@
+local csv_ft = { 'csv', 'tsv' }
 return {
+  -- {
+  --   'theKnightsOfRohan/csvlens.nvim',
+  --   ft = csv_ft,
+  --   dependencies = {
+  --     'akinsho/toggleterm.nvim',
+  --   },
+  --   cmd = { 'Csvlens' },
+  --   keys = {
+  --     { '<leader>cv', '<cmd>Csvlens "|"<cr>', desc = "CSV Lens with '|' separator", mode = { 'n', 'v' } },
+  --   },
+  --   config = true,
+  -- },
   {
-    'theKnightsOfRohan/csvlens.nvim',
-    ft = { 'csv' },
-    dependencies = {
-      'akinsho/toggleterm.nvim',
-    },
-    cmd = { 'Csvlens' },
+    'hat0uma/csvview.nvim',
+    ft = csv_ft,
     keys = {
-      { '<leader>cv', '<cmd>Csvlens "|"<cr>', desc = "CSV Lens with '|' separator", mode = { 'n', 'v' } },
+      { '<leader>cv', '<cmd>CsvViewToggle<cr>', desc = 'Csv View', ft = csv_ft },
     },
-    config = true,
+    opts = {
+      -- view = { display_mode = "border" },
+    },
+    config = function(_, opts)
+      require('csvview').setup(opts)
+
+      vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('csvview_auto_enable', { clear = true }),
+        pattern = csv_ft,
+        callback = function(event)
+          local csvview = require('csvview')
+          if not csvview.is_enabled(event.buf) then
+            csvview.enable(event.buf)
+          end
+        end,
+      })
+    end,
   },
 }
