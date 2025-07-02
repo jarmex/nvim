@@ -76,7 +76,7 @@ return {
     opts = {
       adapter = 'openai', -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
       model = 'gpt-4.1-mini', -- default model for gitcommit
-      languages = { 'English' },
+      languages = {},
       exclude_files = {
         '*.generated.*',
         '*.lock',
