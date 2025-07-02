@@ -1,6 +1,7 @@
 local promptList = require('plugins.ai.codecompanion.promptlibrary.awesome-prompts')
 
-return vim.tbl_extend('force', promptList.prompt_library(), {
+-- return vim.tbl_extend('force', promptList.prompt_library(), {
+return {
   ['Add DocBlock'] = require('plugins.ai.codecompanion.promptlibrary.docblock'),
   ['Agent Mode'] = require('plugins.ai.codecompanion.promptlibrary.agent_mode'),
   ['Bug Finder'] = require('plugins.ai.codecompanion.promptlibrary.bug_finder'),
@@ -10,7 +11,7 @@ return vim.tbl_extend('force', promptList.prompt_library(), {
   ['Explain code'] = require('plugins.ai.codecompanion.promptlibrary.explain_code'),
   ['Fix LSP Diagnostics'] = require('plugins.ai.codecompanion.promptlibrary.fix_lsp'),
   ['Generate Docstring'] = require('plugins.ai.codecompanion.promptlibrary.doc_string'),
-  ['Generate a Commit Message for Staged Files'] = require('plugins.ai.codecompanion.promptlibrary.scommit'),
+  -- ['Generate a Commit Message for Staged Files'] = require('plugins.ai.codecompanion.promptlibrary.scommit'),
   -- ['Git Diff Code Review'] = require('plugins.ai.codecompanion.promptlibrary.git_diff_code_review'),
   ['Naming'] = require('plugins.ai.codecompanion.promptlibrary.naming'),
   ['Platform Commit'] = require('plugins.ai.codecompanion.promptlibrary.platform-commit'),
@@ -22,13 +23,13 @@ return vim.tbl_extend('force', promptList.prompt_library(), {
   ['Suggest Refactoring'] = require('plugins.ai.codecompanion.promptlibrary.suggest_refactoring'),
   ['Vibe Code'] = require('plugins.ai.codecompanion.promptlibrary.vibe_code'),
   ['inline'] = require('plugins.ai.codecompanion.promptlibrary.inline'),
-  [' Lua Developer'] = require('plugins.ai.codecompanion.promptlibrary.lua_developer'),
-  [' Python Developer'] = require('plugins.ai.codecompanion.promptlibrary.python_dev'),
+  ['Lua Developer'] = require('plugins.ai.codecompanion.promptlibrary.lua_developer'),
+  ['Python Developer'] = require('plugins.ai.codecompanion.promptlibrary.python_dev'),
   ['Edit'] = {
     strategy = 'chat',
     description = 'Edit the current buffer',
     prompts = {
-      { role = 'user', content = '@insert_edit_into_file #buffer\n\n' },
+      { role = 'user', content = '@{insert_edit_into_file} #{buffer}\n\n' },
     },
     opts = {
       auto_submit = false,
@@ -40,7 +41,7 @@ return vim.tbl_extend('force', promptList.prompt_library(), {
     strategy = 'chat',
     description = 'Edit with full tooling',
     prompts = {
-      { role = 'user', content = '@full_stack_dev #buffer\n\n' },
+      { role = 'user', content = '@{full_stack_dev} #{buffer}\n\n' },
     },
     opts = {
       auto_submit = false,
@@ -48,4 +49,4 @@ return vim.tbl_extend('force', promptList.prompt_library(), {
       is_slash_cmd = true,
     },
   },
-})
+}
