@@ -53,6 +53,7 @@ local ensureInstalled = {
     'goimports',
     'jq',
     'xmlformatter',
+    'google-java-format',
   },
 
   debuggers = {

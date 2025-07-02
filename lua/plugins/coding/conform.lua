@@ -44,6 +44,7 @@ return {
       graphql = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
       handlebars = { 'prettier' },
       html = { 'prettierd', 'prettier', stop_after_first = true },
+      java = { 'google-java-format' },
       javascript = { 'biome' },
       javascriptreact = { 'biome' },
       json = { 'biome' },

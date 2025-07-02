@@ -8,7 +8,7 @@ return {
       },
       linters = {
         spell_check = true,
-        spelled_numbers = false,
+        spelled_numbers = true,
         an_a = true,
         sentence_capitalization = false,
         unclosed_quotes = true,
@@ -17,7 +17,7 @@ return {
         repeated_words = true,
         spaces = true,
         matcher = true,
-        linking_verbs = false,
+        linking_verbs = true,
         boring_words = true,
         capitalize_personal_pronouns = true,
         oxford_comma = true,
