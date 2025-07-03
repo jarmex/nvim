@@ -9,7 +9,7 @@ return {
       bt = {},
       ft = { 'TelescopePrompt' },
     },
-    preset = 'modern',
+    preset = 'helix', --  "classic" | "modern" | "helix"
     spec = {
       mode = { 'n', 'v' },
       { '<leader>b', group = '+[buffer]' },

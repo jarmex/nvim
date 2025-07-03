@@ -92,10 +92,9 @@ local routes = {
 return {
   {
     'folke/noice.nvim',
-    event = 'VeryLazy',
+    -- event = 'VeryLazy', -- disable to stop the flickering when nvim starts
     dependencies = {
       'MunifTanjim/nui.nvim',
-      -- 'rcarriga/nvim-notify',
     },
     opts = {
       routes = routes,
