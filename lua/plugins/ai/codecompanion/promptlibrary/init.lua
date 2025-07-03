@@ -1,7 +1,8 @@
-local promptList = require('plugins.ai.codecompanion.promptlibrary.awesome-prompts')
+-- local promptList = require('plugins.ai.codecompanion.promptlibrary.awesome-prompts')
 
--- return vim.tbl_extend('force', promptList.prompt_library(), {
-return {
+local fabric = require('plugins.ai.codecompanion.promptlibrary.fabric').load_fabric_patterns()
+
+local prompt_library = {
   ['Add DocBlock'] = require('plugins.ai.codecompanion.promptlibrary.docblock'),
   ['Agent Mode'] = require('plugins.ai.codecompanion.promptlibrary.agent_mode'),
   ['Bug Finder'] = require('plugins.ai.codecompanion.promptlibrary.bug_finder'),
@@ -50,3 +51,6 @@ return {
     },
   },
 }
+
+-- return vim.tbl_extend('force', promptList.prompt_library(), {
+return vim.tbl_extend('force', {}, fabric, prompt_library)
