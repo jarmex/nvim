@@ -13,6 +13,7 @@ return {
     },
     event = { 'BufReadPost', 'CmdlineEnter' },
     version = '*',
+    lazy = false, -- lazy loading handled internally
     opts = {
       fuzzy = {
         use_frecency = true,
@@ -51,38 +52,43 @@ return {
         },
       },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'dadbod' },
+        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'dadbod' },
+        per_filetype = {
+          sql = { 'dadbod' },
+          -- optionally inherit from the `default` sources
+          lua = { inherit_defaults = true, 'lazydev' },
+        },
         providers = {
-          lsp = {
-            name = 'lsp',
-            enabled = true,
-            module = 'blink.cmp.sources.lsp',
-            fallbacks = { 'snippets', 'buffer' },
-            score_offset = 90, -- the higher the number, the higher the priority
-          },
-          path = {
-            name = 'Path',
-            enabled = function()
-              return vim.bo.filetype ~= 'codecompanion'
-            end,
-            fallbacks = { 'snippets', 'buffer' },
-            opts = {
-              trailing_slash = false,
-              label_trailing_slash = true,
-              get_cwd = function(context)
-                return vim.fn.expand(('#%d:p:h'):format(context.bufnr))
-              end,
-              show_hidden_files_by_default = true,
-            },
-          },
-          buffer = {
-            name = 'Buffer',
-            enabled = true,
-            max_items = 3,
-            module = 'blink.cmp.sources.buffer',
-            min_keyword_length = 4,
-            score_offset = 15, -- the higher the number, the higher the priority
-          },
+          -- lsp = {
+          --   name = 'lsp',
+          --   enabled = true,
+          --   module = 'blink.cmp.sources.lsp',
+          --   fallbacks = { 'snippets', 'buffer' },
+          --   score_offset = 90, -- the higher the number, the higher the priority
+          -- },
+          -- path = {
+          --   name = 'Path',
+          --   enabled = function()
+          --     return vim.bo.filetype ~= 'codecompanion'
+          --   end,
+          --   fallbacks = { 'snippets', 'buffer' },
+          --   opts = {
+          --     trailing_slash = false,
+          --     label_trailing_slash = true,
+          --     get_cwd = function(context)
+          --       return vim.fn.expand(('#%d:p:h'):format(context.bufnr))
+          --     end,
+          --     show_hidden_files_by_default = true,
+          --   },
+          -- },
+          -- buffer = {
+          --   name = 'Buffer',
+          --   enabled = true,
+          --   max_items = 3,
+          --   module = 'blink.cmp.sources.buffer',
+          --   min_keyword_length = 4,
+          --   score_offset = 15, -- the higher the number, the higher the priority
+          -- },
           dadbod = {
             name = 'Dadbod',
             module = 'vim_dadbod_completion.blink',

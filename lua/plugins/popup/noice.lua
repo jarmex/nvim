@@ -1,5 +1,4 @@
 -- noicer lua
--- DOCS https://github.com/folke/noice.nvim#-routes
 local routes = {
   -- REDIRECT TO POPUP
   {
@@ -92,6 +91,7 @@ local routes = {
 return {
   {
     'folke/noice.nvim',
+    lazy = false,
     -- event = 'VeryLazy', -- disable to stop the flickering when nvim starts
     dependencies = {
       'MunifTanjim/nui.nvim',
