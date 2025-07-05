@@ -32,7 +32,7 @@ local ensureInstalled = {
   },
 
   linters = {
-    'markdownlint', -- efm
+    -- 'markdownlint', -- efm
     'shellcheck', -- used by bashls/efm for diagnostics, PENDING https://github.com/bash-lsp/bash-language-server/issues/663
     'golangci-lint',
     'hadolint',

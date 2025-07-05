@@ -1,4 +1,5 @@
 local linterConfig = vim.fn.stdpath('config') .. '/.linter_configs'
+local markdownlintrc = vim.fn.expand(vim.fn.stdpath('config') .. '/.linter_configs/markdownlint.jsonc')
 
 return {
   'stevearc/conform.nvim',
@@ -87,9 +88,17 @@ return {
       -- },
       injected = { options = { ignore_errors = true } },
       markdownlint = {
-        command = 'markdownlint',
+        command = 'markdownlint-cli2',
         stdin = false,
-        args = { '--fix', '--config', linterConfig .. '/markdownlint.yaml', '$FILENAME' },
+        args = { '--fix', '--config', markdownlintrc, '$FILENAME' },
+
+        -- local markdownlintrc = vim.fn.expand(vim.fn.stdpath('config') .. '/.linter_configs/markdownlint.jsonc')
+        -- -- local markdownlintrc = vim.fn.expand('~') .. '/.markdownlint.jsonc'
+        -- local markdownlint = require('lint').linters['markdownlint-cli2']
+        -- markdownlint.args = {
+        --   '--config',
+        --   markdownlintrc,
+        -- }
       },
       sqlfluff = {
         args = { 'format', '--dialect=ansi', '-' },
