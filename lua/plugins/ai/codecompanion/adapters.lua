@@ -29,9 +29,7 @@ return {
       },
       schema = {
         model = {
-          default = function()
-            return 'gpt-4.1'
-          end,
+          default = 'gpt-4.1',
         },
       },
     }

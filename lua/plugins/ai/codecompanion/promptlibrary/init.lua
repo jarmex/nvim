@@ -26,6 +26,7 @@ local prompt_library = {
   ['inline'] = require('plugins.ai.codecompanion.promptlibrary.inline'),
   ['Lua Developer'] = require('plugins.ai.codecompanion.promptlibrary.lua_developer'),
   ['Python Developer'] = require('plugins.ai.codecompanion.promptlibrary.python_dev'),
+  ['Linear Ticket'] = require('plugins.ai.codecompanion.promptlibrary.linear-ticket'),
   ['Edit'] = {
     strategy = 'chat',
     description = 'Edit the current buffer',
