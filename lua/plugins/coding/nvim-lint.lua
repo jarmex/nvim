@@ -1,3 +1,22 @@
+-- List active linters for the current filetype
+local function ListActiveLinters()
+  local ok, lint = pcall(require, 'lint')
+  if not ok then
+    print('nvim-lint is not available.')
+    return
+  end
+
+  local linters = lint.linters_by_ft[vim.bo.filetype]
+  if linters then
+    print("Active linters for filetype '" .. vim.bo.filetype .. "':")
+    for _, linter in ipairs(linters) do
+      print(linter)
+    end
+  else
+    print("No active linters for filetype '" .. vim.bo.filetype .. "'.")
+  end
+end
+
 return {
   {
     'mfussenegger/nvim-lint',
@@ -10,6 +29,7 @@ return {
         end,
         desc = '[L]int buffer',
       },
+      { '<leader>cL', ListActiveLinters, desc = 'Linters' },
     },
     config = function()
       local lint = require('lint')

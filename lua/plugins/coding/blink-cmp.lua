@@ -59,46 +59,36 @@ return {
           lua = { inherit_defaults = true, 'lazydev' },
         },
         providers = {
-          -- lsp = {
-          --   name = 'lsp',
-          --   enabled = true,
-          --   module = 'blink.cmp.sources.lsp',
-          --   fallbacks = { 'snippets', 'buffer' },
-          --   score_offset = 90, -- the higher the number, the higher the priority
-          -- },
-          -- path = {
-          --   name = 'Path',
-          --   enabled = function()
-          --     return vim.bo.filetype ~= 'codecompanion'
-          --   end,
-          --   fallbacks = { 'snippets', 'buffer' },
-          --   opts = {
-          --     trailing_slash = false,
-          --     label_trailing_slash = true,
-          --     get_cwd = function(context)
-          --       return vim.fn.expand(('#%d:p:h'):format(context.bufnr))
-          --     end,
-          --     show_hidden_files_by_default = true,
-          --   },
-          -- },
-          -- buffer = {
-          --   name = 'Buffer',
-          --   enabled = true,
-          --   max_items = 3,
-          --   module = 'blink.cmp.sources.buffer',
-          --   min_keyword_length = 4,
-          --   score_offset = 15, -- the higher the number, the higher the priority
-          -- },
+          lsp = {
+            min_keyword_length = 2, -- Number of characters to trigger provider
+            score_offset = 0, -- Boost/penalize the score of the items
+          },
+          path = {
+            enabled = function()
+              return vim.bo.filetype ~= 'codecompanion'
+            end,
+            min_keyword_length = 0,
+            opts = {
+              trailing_slash = false,
+              label_trailing_slash = true,
+              get_cwd = function(context)
+                return vim.fn.expand(('#%d:p:h'):format(context.bufnr))
+              end,
+              show_hidden_files_by_default = true,
+            },
+          },
+          buffer = {
+            min_keyword_length = 4,
+            max_items = 5,
+          },
+          snippets = {
+            min_keyword_length = 2,
+          },
           dadbod = {
             name = 'Dadbod',
             module = 'vim_dadbod_completion.blink',
             score_offset = 85, -- the higher the number, the higher the priority
           },
-          -- markdown = {
-          --   name = 'Render',
-          --   module = 'render-markdown.integ.blink',
-          --   fallbacks = { 'lsp' },
-          -- },
           lazydev = {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',

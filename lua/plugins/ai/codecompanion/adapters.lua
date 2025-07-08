@@ -24,9 +24,14 @@ return {
   --- OpenAI config for CodeCompanion.
   openai = function()
     local openai_config = {
+      opts = {
+        stream = true,
+      },
       schema = {
         model = {
-          default = 'gpt-4.1-mini',
+          default = function()
+            return 'gpt-4.1'
+          end,
         },
       },
     }

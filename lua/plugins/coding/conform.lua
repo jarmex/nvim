@@ -1,4 +1,4 @@
-local linterConfig = vim.fn.stdpath('config') .. '/.linter_configs'
+-- local linterConfig = vim.fn.stdpath('config') .. '/.linter_configs'
 local markdownlintrc = vim.fn.expand(vim.fn.stdpath('config') .. '/.linter_configs/markdownlint.jsonc')
 
 return {
@@ -61,7 +61,7 @@ return {
       -- yaml = { 'prettier' },
       xml = { 'xmlformatter' },
       -- https://github.com/google/yamlfmt
-      yaml = { 'yamlfmt' },
+      yaml = { 'yamlfmt', 'trim_whitespace' },
       -- ["*"] = { "trim_whitespace" },
     },
     format_on_save = function(bufnr)
@@ -88,17 +88,9 @@ return {
       -- },
       injected = { options = { ignore_errors = true } },
       markdownlint = {
-        command = 'markdownlint-cli2',
+        command = 'markdownlint',
         stdin = false,
         args = { '--fix', '--config', markdownlintrc, '$FILENAME' },
-
-        -- local markdownlintrc = vim.fn.expand(vim.fn.stdpath('config') .. '/.linter_configs/markdownlint.jsonc')
-        -- -- local markdownlintrc = vim.fn.expand('~') .. '/.markdownlint.jsonc'
-        -- local markdownlint = require('lint').linters['markdownlint-cli2']
-        -- markdownlint.args = {
-        --   '--config',
-        --   markdownlintrc,
-        -- }
       },
       sqlfluff = {
         args = { 'format', '--dialect=ansi', '-' },
@@ -128,6 +120,28 @@ return {
           '-formatter',
           'retain_line_breaks_single=true',
           'include_document_start=true',
+        },
+      },
+      prettier = {
+        prepend_args = {
+          '--print-width',
+          '120',
+          '--tab-width',
+          '2',
+          '--use-tabs',
+          'false',
+          '--single-quote',
+          'true',
+          '--trailing-comma',
+          'es5',
+          '--bracket-spacing',
+          'true',
+        },
+      },
+      xmlformatter = {
+        prepend_args = {
+          '--indent',
+          '2',
         },
       },
     },

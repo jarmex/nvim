@@ -58,13 +58,16 @@ return {
           },
           inline = { diff = { enabled = true } },
           chat = {
+            icons = {
+              tool_success = '󰸞',
+            },
             show_settings = false,
             render_headers = false,
             show_header_separator = true,
             show_references = true,
             show_token_count = true,
             auto_scroll = true,
-            start_in_insert_mode = true,
+            -- start_in_insert_mode = true,
             window = {
               width = 0.60,
               -- layout = 'vertical',

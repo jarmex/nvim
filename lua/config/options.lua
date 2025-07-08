@@ -1,3 +1,5 @@
+local g = vim.g
+
 --  ╭─────────────────╮
 --  │ Default plugins │
 --  ╰─────────────────╯
@@ -32,7 +34,6 @@ local default_options = {
   timeoutlen = 300, -- Time in milliseconds to wait for a mapped sequence to complete.
   ttimeoutlen = 10, -- Time in milliseconds to wait for a key code sequence to complete
   updatetime = 280, -- If in this milliseconds nothing is typed, the swap file will be written to disk.
-  wildignore = { '*/.git/*', '*/node_modules/*' }, -- Ignore these files/folders
   writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
   cursorline = true, -- highlight the current line
   number = true, -- set numbered lines
@@ -62,7 +63,7 @@ local default_options = {
   sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' },
   virtualedit = 'block', -- Allow cursor to move where there is no text in visual block mode
   wildmode = 'longest:full,full', -- Command-line completion mode
-  grepprg = 'rg --vimgrep',
+  -- grepprg = 'rg --vimgrep',
   grepformat = '%f:%l:%c:%m',
   fillchars = {
     foldopen = '',
@@ -91,6 +92,30 @@ local default_options = {
 for k, v in pairs(default_options) do
   vim.opt[k] = v
 end
+
+g.borderStyle = 'rounded'
+
+vim.opt.wildignore:append({
+  '*.o',
+  '*.obj',
+  '*.dll',
+  '*.exe',
+  '*.pyc',
+  '*.class',
+  '*.swp',
+  '*.swo',
+  '*.DS_Store',
+  '*/node_modules/*',
+  '*/target/*',
+  '*/build/*',
+  '*/dist/*',
+  '*/.git/*',
+  '*/.svn/*',
+  '*/.venv/*',
+  '*/venv/*',
+})
+
+vim.opt.grepprg = vim.fn.executable('rg') == 1 and 'rg --vimgrep --smart-case --follow' or 'grep -n $* /dev/null'
 
 vim.opt.listchars = {
   tab = ' ',

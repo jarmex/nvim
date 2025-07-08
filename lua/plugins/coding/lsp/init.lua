@@ -25,8 +25,10 @@ return {
   'neovim/nvim-lspconfig',
   lazy = false,
   event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' }, -- "BufReadPre",
+  keys = {
+    { '<leader>cA', '<cmd>LspInfo<CR>', desc = 'LSP Info' },
+  },
   dependencies = {
-    { 'saghen/blink.cmp', enabled = vim.g.cmploader == 'blink.cmp' },
     { 'b0o/SchemaStore.nvim', lazy = true, version = false },
   },
   config = function()
