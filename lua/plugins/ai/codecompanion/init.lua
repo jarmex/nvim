@@ -7,7 +7,7 @@ return {
       'ravitemer/codecompanion-history.nvim',
       'hakonharnes/img-clip.nvim',
       'jinzhongjia/codecompanion-gitcommit.nvim',
-      'franco-ruggeri/codecompanion-spinner.nvim', -- for spinner
+      { 'franco-ruggeri/codecompanion-spinner.nvim', event = 'VeryLazy' }, -- for spinner
     },
     cmd = { 'CodeCompanionChat', 'CodeCompanion', 'CodeCompanionCmd', 'CodeCompanionActions', 'CodeCompanionHistory' },
     event = 'VeryLazy',
