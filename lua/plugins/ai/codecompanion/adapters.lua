@@ -88,7 +88,6 @@ return {
     return require('codecompanion.adapters').extend('gemini', gemini_config)
   end,
 
-  --- Gemini config for CodeCompanion.
   openrouter = function()
     local openrouter_config = {
       name = 'openrouter',
@@ -111,6 +110,7 @@ return {
             'qwen/qwen-2.5-coder-32b-instruct:free',
             'qwen/qwen3-235b-a22b:free',
             'qwen/qwen3-30b-a3b:free',
+            'moonshotai/kimi-k2',
           },
         },
         -- num_ctx = { default = 200000 },

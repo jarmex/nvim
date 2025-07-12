@@ -73,6 +73,7 @@ function M.load_fabric_patterns()
 
   local patterns = scan_patterns_dir(fabric_dir)
   local prompt_library = {}
+  local localIndex = 400
 
   for _, pattern in ipairs(patterns) do
     local system_content = read_file(pattern.path)
@@ -92,6 +93,7 @@ function M.load_fabric_patterns()
           is_slash_cmd = true,
           auto_submit = false,
           user_prompt = false,
+          index = localIndex + 1,
         },
         prompts = {
           {

@@ -2,9 +2,12 @@ return {
   mcphub = {
     callback = 'mcphub.extensions.codecompanion',
     opts = {
-      make_vars = true,
-      make_slash_commands = true,
-      show_result_in_chat = true,
+      make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers.
+      show_server_tools_in_chat = false, -- Show individual tools in chat completion (when make_tools=true).
+      add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`).
+      show_result_in_chat = false, -- Show mcp tool results in chat.
+      make_vars = true, -- Convert resources to #variables.
+      make_slash_commands = true, -- Add prompts as /slash commands.
     },
   },
   history = {
@@ -26,13 +29,20 @@ return {
       dir_to_save = vim.fn.stdpath('data') .. '/codecompanion-history',
       auto_save = true,
       -- Number of days after which chats are automatically deleted (0 to disable)
-      expiration_days = 0,
+      expiration_days = 30,
       save_chat_keymap = '<localleader>hs',
       title_generation_opts = {
         ---Adapter for generating titles (defaults to current chat adapter)
         adapter = 'openai', -- "copilot"
         ---Model for generating titles (defaults to current chat model)
         model = 'gpt-4.1', -- "gpt-4o"
+      },
+      chat_filter = function(chat_data) -- only chats for the cwd
+        return chat_data.cwd == vim.fn.getcwd()
+      end,
+      summary = {
+        create_summary_keymap = '<Leader>csc',
+        browse_summaries_keymap = '<Leader>csb',
       },
     },
   },
@@ -107,6 +117,11 @@ return {
       enable_git_edit = true, -- Enable write-access Git operations
       enable_git_bot = true, -- Enable @git_bot tool group (requires both read/write enabled)
       add_git_commands = true, -- Add :CodeCompanionGitCommit commands
+    },
+  },
+  spinner = {
+    opts = {
+      -- log_level = "debug",
     },
   },
 }

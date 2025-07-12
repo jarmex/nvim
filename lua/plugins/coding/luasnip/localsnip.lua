@@ -62,11 +62,11 @@ local function lorem(_, snp)
   end
 end
 
-vim.filetype.add({
-  pattern = {
-    ['.*.spec.ts'] = 'jest.typescript',
-  },
-})
+-- vim.filetype.add({
+--   pattern = {
+--     ['.*.spec.ts'] = 'jest.typescript',
+--   },
+-- })
 
 ls.add_snippets(nil, {
   jest = {

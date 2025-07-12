@@ -59,10 +59,10 @@ return {
           lua = { inherit_defaults = true, 'lazydev' },
         },
         providers = {
-          lsp = {
-            min_keyword_length = 2, -- Number of characters to trigger provider
-            score_offset = 0, -- Boost/penalize the score of the items
-          },
+          -- lsp = {
+          -- min_keyword_length = 2, -- Number of characters to trigger provider
+          -- score_offset = 0, -- Boost/penalize the score of the items
+          -- },
           path = {
             enabled = function()
               return vim.bo.filetype ~= 'codecompanion'

@@ -7,6 +7,7 @@ return {
       'ravitemer/codecompanion-history.nvim',
       'hakonharnes/img-clip.nvim',
       'jinzhongjia/codecompanion-gitcommit.nvim',
+      'franco-ruggeri/codecompanion-spinner.nvim', -- for spinner
     },
     cmd = { 'CodeCompanionChat', 'CodeCompanion', 'CodeCompanionCmd', 'CodeCompanionActions', 'CodeCompanionHistory' },
     event = 'VeryLazy',
@@ -102,56 +103,56 @@ return {
       require('codecompanion').setup(opts)
       -- Expand `cc` into CodeCompanion in the command line
       vim.cmd([[cab cc CodeCompanion]])
-      vim.cmd([[cab ccb CodeCompanionChat anthropic]])
+      -- vim.cmd([[cab ccb CodeCompanionChat anthropic]])
 
       -- require('plugins.ai.codecompanion.spinner'):init()
     end,
   },
-  {
-    'folke/snacks.nvim',
-    opts = function()
-      -- see:
-      -- - https://github.com/olimorris/codecompanion.nvim/discussions/813#discussioncomment-13081665
-      -- - https://github.com/olimorris/dotfiles/blob/16a503b14e75c9d5dfc973f2ee9e7aa2523e8a97/.config/nvim/lua/plugins/custom/spinner.lua
-      vim.api.nvim_create_autocmd('User', {
-        pattern = { 'CodeCompanionRequestStarted', 'CodeCompanionRequestStreaming', 'CodeCompanionRequestFinished' },
-        group = vim.api.nvim_create_augroup('codecompanion_snacks_notifier', {}),
-        callback = function(ev)
-          local msg
-          if ev.match == 'CodeCompanionRequestStarted' then
-            msg = '  Sending...'
-          elseif ev.match == 'CodeCompanionRequestStreaming' then
-            msg = '  Generating...'
-          elseif ev.data.status == 'success' then
-            msg = '  Completed'
-          elseif ev.data.status == 'error' then
-            msg = '  Failed'
-          else
-            msg = '󰜺  Cancelled'
-          end
-
-          local title
-          local adapter = ev.data.adapter
-          if adapter then
-            title = adapter.formatted_name
-              .. (adapter.model and adapter.model ~= '' and ' (' .. adapter.model .. ')' or '')
-          else
-            title = 'CodeCompanion'
-          end
-
-          vim.notify(msg, vim.log.levels.INFO, {
-            id = 'codecompanion_status',
-            title = title,
-            timeout = 500,
-            keep = function()
-              return ev.match ~= 'CodeCompanionRequestFinished'
-            end,
-            opts = function(notif)
-              notif.icon = ev.match == 'CodeCompanionRequestFinished' and ' ' or Snacks.util.spinner()
-            end,
-          })
-        end,
-      })
-    end,
-  },
+  -- {
+  --   'folke/snacks.nvim',
+  --   opts = function()
+  --     -- see:
+  --     -- - https://github.com/olimorris/codecompanion.nvim/discussions/813#discussioncomment-13081665
+  --     -- - https://github.com/olimorris/dotfiles/blob/16a503b14e75c9d5dfc973f2ee9e7aa2523e8a97/.config/nvim/lua/plugins/custom/spinner.lua
+  --     vim.api.nvim_create_autocmd('User', {
+  --       pattern = { 'CodeCompanionRequestStarted', 'CodeCompanionRequestStreaming', 'CodeCompanionRequestFinished' },
+  --       group = vim.api.nvim_create_augroup('codecompanion_snacks_notifier', {}),
+  --       callback = function(ev)
+  --         local msg
+  --         if ev.match == 'CodeCompanionRequestStarted' then
+  --           msg = '  Sending...'
+  --         elseif ev.match == 'CodeCompanionRequestStreaming' then
+  --           msg = '  Generating...'
+  --         elseif ev.data.status == 'success' then
+  --           msg = '  Completed'
+  --         elseif ev.data.status == 'error' then
+  --           msg = '  Failed'
+  --         else
+  --           msg = '󰜺  Cancelled'
+  --         end
+  --
+  --         local title
+  --         local adapter = ev.data.adapter
+  --         if adapter then
+  --           title = adapter.formatted_name
+  --             .. (adapter.model and adapter.model ~= '' and ' (' .. adapter.model .. ')' or '')
+  --         else
+  --           title = 'CodeCompanion'
+  --         end
+  --
+  --         vim.notify(msg, vim.log.levels.INFO, {
+  --           id = 'codecompanion_status',
+  --           title = title,
+  --           timeout = 500,
+  --           keep = function()
+  --             return ev.match ~= 'CodeCompanionRequestFinished'
+  --           end,
+  --           opts = function(notif)
+  --             notif.icon = ev.match == 'CodeCompanionRequestFinished' and ' ' or Snacks.util.spinner()
+  --           end,
+  --         })
+  --       end,
+  --     })
+  --   end,
+  -- },
 }
