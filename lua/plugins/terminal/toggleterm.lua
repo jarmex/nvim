@@ -17,7 +17,18 @@ return {
       open_mapping = [[<c-\>]],
       shading_factor = 2,
       direction = 'horizontal',
-      size = 20,
+      -- size = 20,
+      size = function(term)
+        if term.direction == 'horizontal' then
+          return 20
+        elseif term.direction == 'vertical' then
+          return math.floor(vim.o.columns * 0.4)
+        end
+      end,
+      autochdir = true,
+      persist_mode = true,
+      insert_mappings = false,
+      start_in_insert = true,
       float_opts = {
         border = 'curved',
         winblend = 0,
@@ -27,5 +38,25 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      require('toggleterm').setup(opts)
+
+      local Terminal = require('toggleterm.terminal').Terminal
+
+      local opencode = Terminal:new({
+        cmd = 'opencode',
+        hidden = true,
+        direction = 'float',
+        on_open = function(term)
+          vim.api.nvim_buf_set_keymap(term.bufnr, 'n', 'q', '<cmd>close<CR>', { noremap = true, silent = true })
+        end,
+      })
+
+      vim.keymap.set('n', '<leader>Ao', function()
+        opencode:toggle()
+      end, {
+        desc = 'ToggleTerm: Open with opencode',
+      })
+    end,
   },
 }
