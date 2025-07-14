@@ -87,7 +87,7 @@ return {
       content = function()
         vim.g.codecompanion_auto_tool_mode = true
 
-        return 'Generate a Linear issue in the Engineering team using @{mcp} for the following feature or task: '
+        return 'Generate a Linear issue in the Engineering team using @{linear} for the following feature or task: '
       end,
       opts = {
         visible = true,

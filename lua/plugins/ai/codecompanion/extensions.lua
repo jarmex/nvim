@@ -3,9 +3,9 @@ return {
     callback = 'mcphub.extensions.codecompanion',
     opts = {
       make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers.
-      show_server_tools_in_chat = false, -- Show individual tools in chat completion (when make_tools=true).
+      show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true).
       add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`).
-      show_result_in_chat = false, -- Show mcp tool results in chat.
+      show_result_in_chat = true, -- Show mcp tool results in chat.
       make_vars = true, -- Convert resources to #variables.
       make_slash_commands = true, -- Add prompts as /slash commands.
     },
@@ -122,6 +122,21 @@ return {
   spinner = {
     opts = {
       -- log_level = "debug",
+    },
+  },
+  ['codecompanion-tools'] = {
+    opts = {
+      rules = {
+        enabled = true,
+        debug = false,
+      },
+      model_toggle = {
+        enabled = true,
+        keymap = '<S-Tab>',
+        sequence = {
+          { adapter = 'openai', model = 'gpt-4.1' },
+        },
+      },
     },
   },
 }
