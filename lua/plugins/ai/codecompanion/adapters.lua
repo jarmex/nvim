@@ -81,7 +81,7 @@ return {
         temperature = { default = 0.3 },
         num_ctx = { default = 200000 },
         model = {
-          default = 'gemini-2.5-pro-preview-05-06',
+          default = 'gemini-2.5-flash',
         },
       },
     }
@@ -103,14 +103,14 @@ return {
         temperature = { default = 0.3 },
         maxOutputTokens = { default = 8192 },
         model = {
-          default = 'openrouter/cypher-alpha:free',
+          default = 'moonshotai/kimi-k2:free',
           choices = {
-            'openrouter/cypher-alpha:free',
             'mistralai/devstral-small:free',
+            'moonshotai/kimi-k2:free',
+            'moonshotai/kimi-k2',
             'qwen/qwen-2.5-coder-32b-instruct:free',
             'qwen/qwen3-235b-a22b:free',
             'qwen/qwen3-30b-a3b:free',
-            'moonshotai/kimi-k2',
           },
         },
         -- num_ctx = { default = 200000 },
