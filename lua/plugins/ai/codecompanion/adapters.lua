@@ -1,3 +1,5 @@
+---@module "codecompanion"
+---@type CodeCompanion.Config
 return {
   --- Anthropic config for CodeCompanion.
   anthropic = function()

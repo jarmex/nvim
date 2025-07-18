@@ -124,19 +124,31 @@ return {
       -- log_level = "debug",
     },
   },
-  ['codecompanion-tools'] = {
-    opts = {
-      rules = {
-        enabled = true,
-        debug = false,
-      },
-      model_toggle = {
-        enabled = true,
-        keymap = '<S-Tab>',
-        sequence = {
-          { adapter = 'openai', model = 'gpt-4.1' },
-        },
-      },
-    },
-  },
+  -- ['codecompanion-tools'] = {
+  --   opts = {
+  --     rules = {
+  --       enabled = true,
+  --       debug = false,
+  --     },
+  --     model_toggle = {
+  --       enabled = true,
+  --       keymap = '<S-Tab>',
+  --       sequence = {
+  --         { adapter = 'openai', model = 'gpt-4.1' },
+  --       },
+  --     },
+  --     dag = {
+  --       enabled = true,
+  --     },
+  --     context_compression = {
+  --       enabled = true,
+  --       auto_trigger = true,
+  --       token_threshold = 8000,
+  --       ui = {
+  --         keymap = '<leader>cc',
+  --         auto_notify = true,
+  --       },
+  --     },
+  --   },
+  -- },
 }

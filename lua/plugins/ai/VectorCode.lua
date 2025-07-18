@@ -1,7 +1,7 @@
 return {
   'Davidyz/VectorCode', -- Index and search code in your repositories
   version = '*',
-  build = 'uv tool upgrade vectorcode',
+  build = 'uv tool install --upgrade vectorcode',
   dependencies = { 'nvim-lua/plenary.nvim' },
   event = 'VeryLazy',
   cmd = 'VectorCode',
