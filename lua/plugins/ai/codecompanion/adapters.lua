@@ -94,10 +94,8 @@ return {
     local openrouter_config = {
       name = 'openrouter',
       formatted_name = 'OpenRouter',
-      -- url = 'https://openrouter.ai/api/v1/chat/completions',
       env = {
         url = 'https://openrouter.ai/api',
-        -- api_key = 'OPENROUTER_API_KEY',
         chat_url = '/v1/chat/completions',
         api_key = os.getenv('OPENROUTER_API_KEY'),
       },
@@ -107,15 +105,14 @@ return {
         model = {
           default = 'moonshotai/kimi-k2:free',
           choices = {
+            'qwen/qwen3-coder',
+            'qwen/qwen3-235b-a22b-07-25:free',
             'mistralai/devstral-small:free',
             'moonshotai/kimi-k2:free',
             'moonshotai/kimi-k2',
-            'qwen/qwen-2.5-coder-32b-instruct:free',
-            'qwen/qwen3-235b-a22b:free',
-            'qwen/qwen3-30b-a3b:free',
+            'qwen/qwen3-235b-a22b-07-25',
           },
         },
-        -- num_ctx = { default = 200000 },
       },
     }
     return require('codecompanion.adapters').extend('openai_compatible', openrouter_config)

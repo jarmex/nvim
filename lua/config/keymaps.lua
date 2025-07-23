@@ -178,3 +178,6 @@ keymap('n', 'i', function()
   local lineEmpty = vim.trim(vim.api.nvim_get_current_line()) == ''
   return lineEmpty and '"_cc' or 'i'
 end, { expr = true, desc = 'indented i on empty line' })
+
+keymap('v', '<leader>64e', "c<c-r>=system('base64 --wrap=0',          @\")<cr><esc>", { desc = 'Base64 encode' })
+keymap('v', '<leader>64d', "c<c-r>=system('base64 --wrap=0 --decode', @\")<cr><esc>", { desc = 'Base64 decode' })
