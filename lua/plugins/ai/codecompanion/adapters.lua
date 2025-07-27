@@ -106,6 +106,7 @@ return {
           default = 'moonshotai/kimi-k2:free',
           choices = {
             'qwen/qwen3-coder',
+            'qwen/qwen3-coder:free',
             'qwen/qwen3-235b-a22b-07-25:free',
             'mistralai/devstral-small:free',
             'moonshotai/kimi-k2:free',

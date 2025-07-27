@@ -85,8 +85,8 @@ return {
     callback = 'codecompanion._extensions.gitcommit',
     opts = {
       adapter = 'openai', -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
-      model = 'gpt-4.1-mini', -- default model for gitcommit
-      languages = {},
+      model = 'gpt-4.1', -- default model for gitcommit
+      languages = { 'English' }, -- Optional: specify languages for diff analysis
       exclude_files = {
         '*.generated.*',
         '*.lock',
@@ -105,18 +105,23 @@ return {
         'vendor/*',
         'yarn.lock',
       }, -- Optional: exclude files from diff analysis
-      gitcommit_select_count = 100, -- Optional: number of recent commits for /gitcommit slash command (default: 100)
       buffer = {
         enabled = true, -- Enable gitcommit buffer keymaps
         keymap = '<leader>gc', -- Keymap for generating commit message in gitcommit buffer
         auto_generate = false, -- Automatically generate message on entering gitcommit buffer
       },
+      -- Feature toggles
       add_slash_command = true, -- Add /gitcommit slash command
       add_git_tool = true, -- Add @git_read and @git_edit tools
       enable_git_read = true, -- Enable read-only Git operations
       enable_git_edit = true, -- Enable write-access Git operations
       enable_git_bot = true, -- Enable @git_bot tool group (requires both read/write enabled)
       add_git_commands = true, -- Add :CodeCompanionGitCommit commands
+      git_tool_auto_submit_errors = false, -- Auto-submit errors to LLM
+      git_tool_auto_submit_success = true, -- Auto-submit success to LLM
+      gitcommit_select_count = 100, -- Number of commits shown in /gitcommit
+      use_commit_history = true, -- Enable commit history context
+      commit_history_count = 10, -- Number of recent commits for context
     },
   },
   spinner = {
