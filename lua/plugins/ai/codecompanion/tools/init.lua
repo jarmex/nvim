@@ -14,6 +14,7 @@ return {
         'insert_edit_into_file',
         'read_file',
         'web_search',
+        'list_code_usages',
         'mcp',
       },
       opts = {
@@ -25,6 +26,7 @@ return {
   opts = {
     auto_submit_success = true, -- Send any successful output to the LLM automatically
     wait_timeout = 300000,
+    -- default_tools = { 'full_stack_dev' },
     --- This is needed when using CodeCompanion's internal tools
     --- (e.g., when @cmd_runner runs tests and they fail),
     --- but with external tools (e.g., @mcp) this might cause issues

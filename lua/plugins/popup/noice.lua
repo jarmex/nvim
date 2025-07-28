@@ -55,7 +55,9 @@ local routes = {
   { filter = { event = 'notify', find = 'All parsers are up%-to%-date' }, view = 'mini' },
 
   -----------------------------------------------------------------------------
-  -- SKIP
+  -- HIDE Deprecated messages
+  -- e.g. vim.tbl_flatten is deprecated. Run ":checkhealth vim.deprecated" for more information
+  { filter = { event = 'msg_show', find = 'is deprecated. Run ' }, skip = true },
 
   -- FIX LSP bugs?
   { filter = { event = 'msg_show', find = 'lsp_signature? handler RPC' }, skip = true },
