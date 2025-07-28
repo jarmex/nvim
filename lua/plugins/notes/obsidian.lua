@@ -1,3 +1,6 @@
+local day_format = '%A'
+local date_format = '%Y-%m-%d'
+local time_format = '%H:%M:%S'
 local vault = {
   name = 'work',
   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
@@ -26,16 +29,14 @@ return {
   -- 'epwalsh/obsidian.nvim',
   'obsidian-nvim/obsidian.nvim',
   enabled = true,
+  lazy = true,
   version = '*',
   ft = 'markdown',
   event = vault.path and {
     ('BufReadPre %s/**.md'):format(vault.path),
     ('BufNewFile %s/**.md'):format(vault.path),
   } or nil,
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-    'nvim-treesitter/nvim-treesitter',
-  },
+  dependencies = { 'nvim-treesitter/nvim-treesitter' },
   cmd = {
     'ObsidianBacklinks',
     'ObsidianDailies',
@@ -58,15 +59,26 @@ return {
     'ObsidianWorkspace',
     'ObsidianYesterday',
   },
-
+  ---@type obsidian.config.ClientOpts|{}
   opts = {
+    legacy_commands = true,
+    checkbox = {
+      order = { 'x', ' ' },
+      create_new = false,
+    },
     workspaces = { vault },
+
+    -- optional, completion of wiki links, local markdown links, and tags using nvim-cmp.
+    ---@type obsidian.config.CompletionOpts|{}
     completion = {
       nvim_cmp = false,
       blink = true,
       -- Trigger completion at 2 chars.
       min_chars = 2,
     },
+
+    -- optional, set preferred picker
+    ---@type obsidian.config.PickerOpts|{}
     picker = {
       -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', 'mini.pick' or 'snacks.pick'.
       name = 'snacks.pick',
@@ -85,6 +97,21 @@ return {
         insert_tag = '<C-l>',
       },
     },
+
+    footer = {
+      -- enabled = true, -- turn it off
+      -- separator = true, -- turn it off
+      -- separator = "", -- insert a blank line
+      format = 'words: {{words}}  ch: {{chars}}  props: {{properties}}  backlinks: {{backlinks}}',
+      -- format = "({{backlinks}} backlinks)", -- limit to backlinks
+      -- hl_group = "@property", -- Use another hl group
+    },
+
+    statusline = {
+      format = 'words: {{words}}  ch: {{chars}}  props: {{properties}}  backlinks: {{backlinks}}',
+    },
+
+    ---@type obsidian.config.DailyNotesOpts|{}
     daily_notes = {
       folder = 'Periodic/Days',
       date_format = '%Y/%Y-%m/%Y-%m-%d',
@@ -93,50 +120,23 @@ return {
       -- Optional, if you want to change the date format of the default alias of daily notes.
       -- alias_format = "%B %-d, %Y",
       template = 'note.md',
+      default_tags = { 'daily-notes' },
+      -- Optional, if you want `Obsidian yesterday` to return the last work day or `Obsidian tomorrow` to return the next work day.
+      workdays_only = false,
     },
 
     notes_subdir = 'inbox',
     new_notes_location = 'notes_subdir',
     disable_frontmatter = true,
 
-    -- Optional, for templates (see below).
+    ---@type obsidian.config.TemplateOpts|{}
     templates = {
       subdir = 'templates',
-      date_format = '%Y-%m-%d-%a',
+      date_format = '%Y-%m-%d',
       time_format = '%H:%M',
       substitutions = {
-        yesterday = function()
-          return os.date('%Y-%m-%d', journal_date_or_now() - 86400)
-        end,
-        tomorrow = function()
-          return os.date('%Y-%m-%d', journal_date_or_now() + 86400)
-        end,
-        yesterday_journal = function()
-          return os.date('Journal/%Y/%Y-%m/%Y-%m-%d', journal_date_or_now() - 86400)
-        end,
-        tomorrow_journal = function()
-          return os.date('Journal/%Y/%Y-%m/%Y-%m-%d', journal_date_or_now() + 86400)
-        end,
-        month_abbr = function()
-          return os.date('%b', journal_date_or_now())
-        end,
-        month = function()
-          return os.date('%B', journal_date_or_now())
-        end,
-        year = function()
-          return os.date('%Y', journal_date_or_now())
-        end,
-        weekday = function()
-          return os.date('%A', journal_date_or_now())
-        end,
-        today_human = function()
-          return os.date('%A, %B %d', journal_date_or_now())
-        end,
-        tomorrow_human = function()
-          return os.date('%A, %B %d', journal_date_or_now() + 86400)
-        end,
-        yesterday_human = function()
-          return os.date('%A, %B %d', journal_date_or_now() - 86400)
+        ['date:dddd'] = function()
+          return tostring(os.date(day_format))
         end,
       },
     },
@@ -154,18 +154,6 @@ return {
       enable = false, -- set to false to disable all additional syntax features
       update_debounce = 200, -- update delay after a text change (in milliseconds)
       -- Define how various check-boxes are displayed
-      checkboxes = {
-        -- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
-        -- [' '] = { char = '󰄱', hl_group = 'ObsidianTodo' },
-        -- ['x'] = { char = '', hl_group = 'ObsidianDone' },
-        -- ['>'] = { char = '', hl_group = 'ObsidianRightArrow' },
-        -- ['~'] = { char = '󰰱', hl_group = 'ObsidianTilde' },
-        -- Replace the above with this if you don't have a patched font:
-        -- [" "] = { char = "☐", hl_group = "ObsidianTodo" },
-        -- ["x"] = { char = "✔", hl_group = "ObsidianDone" },
-
-        -- You can also add more custom ones...
-      },
       bullets = {},
       external_link_icon = { char = '', hl_group = 'ObsidianExtLinkIcon' },
       -- Replace the above with this if you don't have a patched font:
@@ -185,37 +173,17 @@ return {
         ObsidianHighlightText = { bg = '#75662e' },
       },
     },
-    mappings = {
-      -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
-      ['gf'] = {
-        action = function()
-          return require('obsidian').util.gf_passthrough()
-        end,
-        opts = { noremap = false, expr = true, buffer = true },
-      },
-      ['<C-]>'] = {
-        action = function()
-          return require('obsidian').util.gf_passthrough()
-        end,
-        opts = { noremap = false, expr = true, buffer = true },
-      },
-      -- Toggle check-boxes.
-      ['<leader>cb'] = {
-        action = function()
-          return require('obsidian').util.toggle_checkbox()
-        end,
-        opts = { buffer = true },
-      },
-      -- Smart action depending on context, either follow link or toggle checkbox.
-      ['<leader>cs'] = {
-        action = function()
-          return require('obsidian').util.smart_action()
-        end,
-        opts = { buffer = true, expr = true },
-      },
-    },
     attachments = {
-      img_folder = 'Files',
+      confirm_img_paste = false,
+      img_text_func = function(client, path)
+        path = client:vault_relative_path(path) or path
+        local path_string = vim.uri_encode(vim.fs.basename(tostring(path)))
+        return string.format('![%s](%s)', path.name, path_string)
+      end,
+      -- The default folder to place images in via `:ObsidianPasteImg`.
+      -- If this is a relative path it will be interpreted as relative to the vault root.
+      -- You can always override this per image by passing a full path to the command instead of just a filename.
+      img_folder = 'Assets', -- This is the default
     },
   },
 

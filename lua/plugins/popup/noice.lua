@@ -102,11 +102,19 @@ return {
       routes = routes,
       cmdline = {
         format = {
-          search_down = { icon = '  ' },
-          search_up = { icon = '  ' },
+          search_down = { icon = ' 󰶹   ' },
+          search_up = { icon = ' 󰶼   ' },
+          -- search_down = { icon = '  ' },
+          -- search_up = { icon = '  ' },
           filter = { icon = '  ' },
           lua = { icon = '  ' },
-          cmdline = { pattern = '^:', icon = '|>', lang = 'vim', title = '' },
+          -- cmdline = { pattern = '^:', icon = '|>', lang = 'vim', title = '' },
+          calculator = { icon = '   ' },
+          cmdline = { icon = '   ' },
+          -- filter = { icon = '   ' },
+          help = { icon = '    ' },
+          help_vert = { kind = 'Help', pattern = '^:%s*verti?c?a?l? he?l?p?%s+', icon = '    ' },
+          inc_rename = { kind = 'IncRename', pattern = '^:IncRename', icon = ' 󰑕  ' },
         },
       },
       views = {

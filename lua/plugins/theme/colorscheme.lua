@@ -21,6 +21,10 @@ local M = {
     opts = {
       flavour = 'macchiato',
       transparent_background = true,
+      dim_inactive = {
+        enabled = false,
+        percentage = 0.05,
+      },
       term_colors = true,
       compile = {
         compile_path = vim.fn.stdpath('cache') .. '/catppuccin',
@@ -37,7 +41,6 @@ local M = {
           crust = '#000000',
         },
       },
-      dim_inactive = { enabled = false },
       default_integrations = {
         blink_cmp = true,
         diffview = true,

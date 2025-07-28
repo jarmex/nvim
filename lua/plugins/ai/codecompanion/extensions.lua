@@ -47,6 +47,7 @@ return {
     },
   },
   vectorcode = {
+    enabled = true,
     opts = {
       add_tool = true,
       add_slash_command = true,
@@ -129,6 +130,9 @@ return {
       -- log_level = "debug",
     },
   },
+  -- agent_rules = {
+  --   enabled = true,
+  -- },
   -- ['codecompanion-tools'] = {
   --   opts = {
   --     rules = {

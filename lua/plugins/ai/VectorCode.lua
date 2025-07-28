@@ -1,9 +1,9 @@
 return {
   'Davidyz/VectorCode', -- Index and search code in your repositories
+  enabled = true,
   version = '*',
   build = 'uv tool install --upgrade vectorcode',
   dependencies = { 'nvim-lua/plenary.nvim' },
-  event = 'VeryLazy',
   cmd = 'VectorCode',
   opts = function()
     return {

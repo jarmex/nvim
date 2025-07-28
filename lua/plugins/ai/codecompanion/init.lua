@@ -8,6 +8,7 @@ return {
       'hakonharnes/img-clip.nvim',
       -- 'jarmex/codecompanion-gitcommit.nvim',
       'jinzhongjia/codecompanion-gitcommit.nvim',
+      -- 'minusfive/codecompanion-agent-rules',
       -- { 'jinzhongjia/codecompanion-tools.nvim' },
       { 'franco-ruggeri/codecompanion-spinner.nvim', event = 'VeryLazy' }, -- for spinner
     },

@@ -14,7 +14,7 @@ return {
   ['summarize_text'] = require('plugins.ai.codecompanion.slash_commands.summarize_text'),
   ['plan_mode'] = require('plugins.ai.codecompanion.slash_commands.plan_mode'),
   ['meta_prompt'] = require('plugins.ai.codecompanion.slash_commands.meta_prompt'),
-  codebase = require('vectorcode.integrations').codecompanion.chat.make_slash_command(),
+  -- codebase = require('vectorcode.integrations').codecompanion.chat.make_slash_command(),
   -- ['delete_session'] = require('plugins.ai.codecompanion.slash_commands.delete_session'),
   -- ['dump_session'] = require('plugins.ai.codecompanion.slash_commands.dump_session'),
   -- ['restore_session'] = require('plugins.ai.codecompanion.slash_commands.restore_session'),
