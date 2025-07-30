@@ -17,6 +17,7 @@ return {
     opts = {
       fuzzy = {
         use_frecency = true,
+        implementation = 'rust',
       },
       cmdline = {
         enabled = true,
@@ -54,6 +55,7 @@ return {
       sources = {
         default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'dadbod' },
         per_filetype = {
+          codecompanion = { 'codecompanion', 'buffer' },
           sql = { 'dadbod' },
           -- optionally inherit from the `default` sources
           lua = { inherit_defaults = true, 'lazydev' },
@@ -80,6 +82,19 @@ return {
           buffer = {
             min_keyword_length = 4,
             max_items = 5,
+          },
+          codecompanion = {
+            name = 'codecompanion',
+            module = 'codecompanion.providers.completion.blink',
+            transform_items = function(_, items)
+              for _, item in ipairs(items) do
+                item.kind_icon = ' '
+              end
+              return items
+            end,
+            score_offset = function()
+              return 100
+            end,
           },
           snippets = {
             min_keyword_length = 2,
@@ -139,8 +154,24 @@ return {
     opts_extend = {
       'sources.default',
     },
-    -- config = function(_, opts)
-    --   require('blink.cmp').setup(opts)
-    -- end,
+    config = function(_, opts)
+      local blink_cmp = require('blink.cmp')
+      blink_cmp.setup(opts)
+      -- Extend neovim's client capabilities with the completion ones
+      vim.lsp.config('*', { capabilities = require('blink.cmp').get_lsp_capabilities(nil, true) })
+
+      -- Ensure doc window is treated as markdown by treesitter
+      vim.treesitter.language.register('markdown', 'blink-cmp-documentation')
+
+      -- Autocmd settings
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'LuasnipInsertNodeEnter',
+        callback = function()
+          vim.schedule(function()
+            blink_cmp.show()
+          end)
+        end,
+      })
+    end,
   },
 }

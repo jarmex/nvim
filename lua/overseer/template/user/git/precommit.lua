@@ -3,12 +3,13 @@ return {
   builder = function()
     local cmd = { 'pre-commit', 'run' }
     -- TODO: We probably want this for other filetypes too
+    local precommit_root = vim.fs.root(0, '.pre-commit-config.yaml') or vim.uv.cwd()
     local py_files = vim.fs.find(function(name)
       return name:match('.*%.py$')
     end, {
       limit = math.huge,
       type = 'file',
-      path = vim.fn.fnamemodify(vim.fn.findfile('.pre-commit-config.yaml', vim.fn.getcwd() .. ';'), ':p:h'),
+      path = precommit_root,
     })
     return {
       cmd = cmd,
@@ -24,6 +25,6 @@ return {
     }
   end,
   condition = {
-    filetype = { 'python' },
+    filetype = { 'python', 'typescript' },
   },
 }

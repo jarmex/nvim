@@ -32,12 +32,12 @@ return {
     { 'b0o/SchemaStore.nvim', lazy = true, version = false },
   },
   config = function()
-    local default_server_config = {
-      flags = { debounce_text_changes = 150 },
-      single_file_support = true,
-    }
+    -- local default_server_config = {
+    --   flags = { debounce_text_changes = 150 },
+    --   single_file_support = true,
+    -- }
 
-    vim.lsp.config('*', default_server_config)
+    -- vim.lsp.config('*', default_server_config)
 
     require('lspconfig.ui.windows').default_options.border = vim.g.borderStyle
 

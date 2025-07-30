@@ -109,6 +109,15 @@ return {
       -- vim.cmd([[cab ccb CodeCompanionChat anthropic]])
 
       -- require('plugins.ai.codecompanion.spinner'):init()
+      -- Ensure buffer is treated as markdown by treesitter despite being codecompanion filetype
+      vim.treesitter.language.register('markdown', 'codecompanion')
+
+      -- Override the default icon for codecompanion filetype
+      local devicons = require('nvim-web-devicons')
+      devicons.set_icon({
+        codecompanion = { icon = ' ' },
+      })
+      devicons.set_icon_by_filetype({ codecompanion = 'codecompanion' })
     end,
   },
   -- {

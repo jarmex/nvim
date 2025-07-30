@@ -1,6 +1,8 @@
 local just_do_it = function()
   return [[
-### Proactive AssistantYou have gained access to run commands directly from Command Runner Tool!
+### Proactive Assistant
+
+You have gained access to run commands directly from Command Runner Tool!
 
 Your goal is to help complete tasks efficiently and independently.
 
