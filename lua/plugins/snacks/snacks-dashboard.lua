@@ -28,7 +28,7 @@ return {
             icon = '󱕻',
             key = 'o',
             desc = "Today's Daily Note",
-            action = ':ObsidianToday',
+            action = ':Obsidian today',
           },
           {
             icon = '󰭹 ',

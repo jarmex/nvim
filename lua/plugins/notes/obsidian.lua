@@ -37,31 +37,32 @@ return {
     ('BufNewFile %s/**.md'):format(vault.path),
   } or nil,
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  cmd = {
-    'ObsidianBacklinks',
-    'ObsidianDailies',
-    'ObsidianExtractNote',
-    'ObsidianFollowLink',
-    'ObsidianLink',
-    'ObsidianLinkNew',
-    'ObsidianLinks',
-    'ObsidianNew',
-    'ObsidianOpen',
-    'ObsidianPasteImg',
-    'ObsidianQuickSwitch',
-    'ObsidianRename',
-    'ObsidianSearch',
-    'ObsidianTags',
-    'ObsidianTemplate',
-    'ObsidianTitles',
-    'ObsidianToday',
-    'ObsidianTomorrow',
-    'ObsidianWorkspace',
-    'ObsidianYesterday',
-  },
+  cmd = 'Obsidian',
+  -- cmd = {
+  --   'ObsidianBacklinks',
+  --   'ObsidianDailies',
+  --   'ObsidianExtractNote',
+  --   'ObsidianFollowLink',
+  --   'ObsidianLink',
+  --   'ObsidianLinkNew',
+  --   'ObsidianLinks',
+  --   'ObsidianNew',
+  --   'ObsidianOpen',
+  --   'ObsidianPasteImg',
+  --   'ObsidianQuickSwitch',
+  --   'ObsidianRename',
+  --   'ObsidianSearch',
+  --   'ObsidianTags',
+  --   'ObsidianTemplate',
+  --   'ObsidianTitles',
+  --   'ObsidianToday',
+  --   'ObsidianTomorrow',
+  --   'ObsidianWorkspace',
+  --   'ObsidianYesterday',
+  -- },
   ---@type obsidian.config.ClientOpts|{}
   opts = {
-    legacy_commands = true,
+    legacy_commands = false,
     checkbox = {
       order = { 'x', ' ' },
       create_new = false,
@@ -99,7 +100,7 @@ return {
     },
 
     footer = {
-      -- enabled = true, -- turn it off
+      enabled = false, -- turn it off
       -- separator = true, -- turn it off
       -- separator = "", -- insert a blank line
       format = 'words: {{words}}  ch: {{chars}}  props: {{properties}}  backlinks: {{backlinks}}',
@@ -189,11 +190,11 @@ return {
 
   keys = {
     { '<leader>oo', ':cd /Users/jamesamo/vaults<cr>', desc = 'Open parent directory' },
-    { '<leader>on', ':ObsidianTemplate note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>', desc = 'New Note' },
+    { '<leader>on', ':Obsidian template note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>', desc = 'New Note' },
     -- { '<leader>of', ':s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<cr>', desc = 'Fix Headers' },
     -- { '<leader>no', '<cmd>ObsidianOpen<cr>', desc = 'Open Obsidian' },
     -- { '<leader>nn', '<cmd>ObsidianNew<cr>', desc = 'New note' },
-    { '<leader>os', '<cmd>ObsidianSearch<cr>', desc = 'Search notes' },
+    { '<leader>os', '<cmd>Obsidian search<cr>', desc = 'Search notes' },
     -- { '<leader>nt', '<cmd>ObsidianTags<cr>', desc = 'List notes by tags' },
     -- { '<leader>nq', '<cmd>ObsidianQuickSwitch<cr>', desc = 'Quick switch in obsidian workspace' },
     -- { '<leader>nw', '<cmd>ObsidianWorkspace work<cr>', desc = 'Change to workspace work in obsidian' },
@@ -209,17 +210,11 @@ return {
         return 'gd'
       end
     end, { noremap = false, expr = true })
-    -- vim.cmd.delcommand('Rename')
-    -- vim.cmd.cabbrev({ 'Rename', 'ObsidianRename' })
-    vim.cmd.cabbrev({ 'Today', 'ObsidianToday' })
-    vim.cmd.cabbrev({ 'Yesterday', 'ObsidianYesterday' })
-    vim.cmd.cabbrev({ 'Tomorrow', 'ObsidianTomorrow' })
-    vim.cmd.cabbrev({ 'Daily', 'ObsidianTemplate JournalNvim' })
 
     vim.keymap.set(
       'n',
-      '<C-c>',
-      '<Cmd>ObsidianToggleCheckbox<CR>',
+      '<C-space>',
+      '<Cmd>Obsidian toggle_checkbox<CR>',
       { noremap = true, desc = '(Obsidian)Toggle checkbox' }
     )
   end,
