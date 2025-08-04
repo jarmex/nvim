@@ -40,6 +40,10 @@ function M.keymap(_bufnr)
     vim.keymap.set(mode, lhs, rhs, opts)
   end
 
+  map('gf', function()
+    Snacks.picker.diagnostics_buffer()
+  end, { desc = 'Find Diagnostics', nowait = true })
+
   map('gd', go_to_definition, { desc = 'Go to definition' })
 
   map('gr', function()

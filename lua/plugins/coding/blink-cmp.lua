@@ -10,6 +10,7 @@ return {
       { 'L3MON4D3/LuaSnip', version = 'v2.*' },
       -- { 'saghen/blink.compat', opts = {} },
       'folke/lazydev.nvim',
+      'onsails/lspkind.nvim',
     },
     event = { 'BufReadPost', 'CmdlineEnter' },
     version = '*',
@@ -140,7 +141,28 @@ return {
         menu = {
           border = vim.g.borderStyle,
           draw = {
-            columns = { { 'kind_icon', gap = 1 }, { 'label', 'label_description', gap = 1 }, { 'kind' } },
+            columns = { { 'kind_icon', 'label', gap = 1 }, { 'label_description', gap = 1 }, { 'kind' } },
+            components = {
+              kind_icon = {
+                text = function(item)
+                  local kind = require('lspkind').symbol_map[item.kind] or ''
+                  return kind .. ' '
+                end,
+                -- highlight = 'CmpItemKind',
+              },
+              label = {
+                text = function(item)
+                  return item.label
+                end,
+                highlight = 'CmpItemAbbr',
+              },
+              kind = {
+                text = function(item)
+                  return item.kind
+                end,
+                -- highlight = 'CmpItemKind',
+              },
+            },
           },
         },
         documentation = {
@@ -158,7 +180,7 @@ return {
       local blink_cmp = require('blink.cmp')
       blink_cmp.setup(opts)
       -- Extend neovim's client capabilities with the completion ones
-      vim.lsp.config('*', { capabilities = require('blink.cmp').get_lsp_capabilities(nil, true) })
+      -- vim.lsp.config('*', { capabilities = require('blink.cmp').get_lsp_capabilities(nil, true) })
 
       -- Ensure doc window is treated as markdown by treesitter
       vim.treesitter.language.register('markdown', 'blink-cmp-documentation')

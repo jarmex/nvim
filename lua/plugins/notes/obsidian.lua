@@ -189,7 +189,7 @@ return {
   },
 
   keys = {
-    { '<leader>oo', ':cd /Users/jamesamo/vaults<cr>', desc = 'Open parent directory' },
+    -- { '<leader>oo', ':cd /Users/jamesamo/vaults<cr>', desc = 'Open parent directory' },
     { '<leader>on', ':Obsidian template note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>', desc = 'New Note' },
     -- { '<leader>of', ':s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<cr>', desc = 'Fix Headers' },
     -- { '<leader>no', '<cmd>ObsidianOpen<cr>', desc = 'Open Obsidian' },

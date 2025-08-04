@@ -2,6 +2,11 @@
 
 local fabric = require('plugins.ai.codecompanion.promptlibrary.fabric').load_fabric_patterns()
 
+local function chat_filter(chat_data)
+  -- TODO: check to remove this in future
+  return vim.g.project_root == chat_data.project_root or vim.g.project_root == chat_data.cwd
+end
+
 local prompt_library = {
   --- Reserve index intervals:
   ---     - 1-9       System (Chat, Open chats, Custom Prompt, Saved Chats, etc.)
@@ -19,7 +24,7 @@ local prompt_library = {
   ['Edit<->Test workflow'] = { opts = { index = 351 } },
 
   ['Add DocBlock'] = require('plugins.ai.codecompanion.promptlibrary.docblock'),
-  ['Agent Mode'] = require('plugins.ai.codecompanion.promptlibrary.agent_mode'),
+  -- ['Agent Mode'] = require('plugins.ai.codecompanion.promptlibrary.agent_mode'),
   ['Bug Finder'] = require('plugins.ai.codecompanion.promptlibrary.bug_finder'),
   ['Code Expert'] = require('plugins.ai.codecompanion.promptlibrary.code_expert'),
   ['Code review'] = require('plugins.ai.codecompanion.promptlibrary.code_review'),
@@ -113,6 +118,42 @@ local prompt_library = {
         local history = require('codecompanion').extensions.history
         history.browse_chats()
       end,
+    },
+  },
+  ['Agent'] = {
+    strategy = 'chat',
+    description = 'Create a new chat buffer in Agent mode',
+    opts = {
+      index = 6,
+      stop_context_insertion = true,
+      adapter = {
+        name = 'anthropic',
+        model = 'claude-sonnet-4', -- Multiplier = 1.
+      },
+    },
+    prompts = {
+      {
+        role = 'user',
+        content = '#{mcp:neovim://workspace} @{agent} ',
+      },
+    },
+  },
+  ['Free Agent (GPT-4o)'] = {
+    strategy = 'chat',
+    description = 'Create a new chat buffer in Agent mode with GPT-4o',
+    opts = {
+      index = 7,
+      stop_context_insertion = true,
+      adapter = {
+        name = 'openai',
+        model = 'gpt-4o', -- Multiplier = 0 (free).
+      },
+    },
+    prompts = {
+      {
+        role = 'user',
+        content = '#{mcp:neovim://workspace} @{agent} ',
+      },
     },
   },
 }

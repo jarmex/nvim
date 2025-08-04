@@ -1,16 +1,22 @@
 return {
   {
+    'ravitemer/codecompanion-history.nvim', -- Save and load conversation history.
+    cmd = { 'CodeCompanionHistory', 'CodeCompanionSummaries' },
+    config = true,
+  },
+  {
     'olimorris/codecompanion.nvim',
     version = false,
     dependencies = {
       'j-hui/fidget.nvim',
-      'ravitemer/codecompanion-history.nvim',
       'hakonharnes/img-clip.nvim',
-      -- 'jarmex/codecompanion-gitcommit.nvim',
+      'ravitemer/codecompanion-history.nvim', -- Save and load conversation history.
+      'ravitemer/mcphub.nvim', -- Manage MCP servers.
       'jinzhongjia/codecompanion-gitcommit.nvim',
+      { 'franco-ruggeri/codecompanion-spinner.nvim', event = 'VeryLazy' }, -- for spinner
+      -- 'jarmex/codecompanion-gitcommit.nvim',
       -- 'minusfive/codecompanion-agent-rules',
       -- { 'jinzhongjia/codecompanion-tools.nvim' },
-      { 'franco-ruggeri/codecompanion-spinner.nvim', event = 'VeryLazy' }, -- for spinner
     },
     cmd = { 'CodeCompanionChat', 'CodeCompanion', 'CodeCompanionCmd', 'CodeCompanionActions', 'CodeCompanionHistory' },
     event = 'VeryLazy',
@@ -63,7 +69,7 @@ return {
           inline = { diff = { enabled = true } },
           chat = {
             icons = {
-              tool_success = '󰸞',
+              tool_success = '󰸞 ',
             },
             show_settings = false,
             render_headers = false,
@@ -83,6 +89,7 @@ return {
                 statuscolumn = ' ', -- just for padding
               },
             },
+            fold_context = true,
           },
           action_palette = {
             prompt = 'Prompt ', -- Prompt used for interactive LLM calls

@@ -38,6 +38,23 @@ return {
     -- }
 
     -- vim.lsp.config('*', default_server_config)
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+    local has_blink, blink = pcall(require, 'blink.cmp')
+    capabilities = vim.tbl_deep_extend('force', capabilities, has_blink and blink.get_lsp_capabilities() or {}, {
+      textDocument = {
+        foldingRange = {
+          dynamicRegistration = false,
+          lineFoldingOnly = true,
+        },
+      },
+    })
+
+    vim.lsp.config('*', {
+      capabilities = capabilities,
+      -- flags = { debounce_text_changes = 150 },
+      -- single_file_support = true,
+    })
 
     require('lspconfig.ui.windows').default_options.border = vim.g.borderStyle
 

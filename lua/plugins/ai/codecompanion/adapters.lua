@@ -64,7 +64,7 @@ return {
           default = 'qwen2.5-coder:3b',
         },
         num_ctx = {
-          default = 20000,
+          default = 32768,
         },
         temperature = {
           default = 0.3,
@@ -103,8 +103,10 @@ return {
         temperature = { default = 0.3 },
         maxOutputTokens = { default = 8192 },
         model = {
-          default = 'moonshotai/kimi-k2:free',
+          default = 'qwen/qwen3-coder:free',
           choices = {
+            'z-ai/glm-4.5',
+            'z-ai/glm-4.5-air:free',
             'qwen/qwen3-coder',
             'qwen/qwen3-coder:free',
             'qwen/qwen3-235b-a22b-07-25:free',
