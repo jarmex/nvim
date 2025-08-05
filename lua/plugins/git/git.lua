@@ -9,7 +9,7 @@ local function gitsigns_keymaps()
     { '<leader>gr', '<cmd>Gitsigns reset_hunk<cr>', desc = 'Reset Hunk' },
     { '<leader>gR', '<cmd>Gitsigns reset_buffer<cr>', desc = 'Reset Buffer' },
     { '<leader>ga', '<cmd>Gitsigns toggle_current_line_blame<cr>', desc = 'Toggle Git Blame' },
-    { '<leader>hg', '<cmd>Gitsigns diffthis ~<cr>', desc = 'Git Diff This' },
+    { '<leader>hg', '<cmd>Gitsigns diffthis HEAD<cr>', desc = 'Git Diff This' },
   }
 end
 return {
@@ -29,13 +29,38 @@ return {
         topdelete = { text = '契' },
         changedelete = { text = '▎' },
       },
+      signs_staged = {
+        add = { text = '▎' },
+        change = { text = '▎' },
+        delete = { text = '' },
+        topdelete = { text = '' },
+        changedelete = { text = '▎' },
+      },
       watch_gitdir = {
         interval = 1000,
         follow_files = true,
       },
+      attach_to_untracked = true,
+      current_line_blame = true,
       diff_opts = { internal = true },
-      current_line_blame_opts = { delay = 500 },
+      current_line_blame_opts = {
+        virt_text = true,
+        virt_text_pos = 'eol',
+        delay = 1000,
+        ignore_whitespace = false,
+      },
       current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <abbrev_sha> - <summary>',
+      sign_priority = 6,
+      update_debounce = 100,
+      status_formatter = nil,
+      max_file_length = 40000,
+      preview_config = {
+        border = 'rounded',
+        style = 'minimal',
+        relative = 'cursor',
+        row = 0,
+        col = 1,
+      },
     },
   },
 }
