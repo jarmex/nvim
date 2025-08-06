@@ -85,7 +85,6 @@ return {
         end,
       })
     end,
-    dependencies = { 'windwp/nvim-ts-autotag' },
     opts = function()
       return {
         ignore_install = { 'help' },
@@ -276,8 +275,10 @@ return {
       :totable(),
   },
   'JoosepAlviste/nvim-ts-context-commentstring', -- Smart commenting in multi language files - Enabled in Treesitter file
-  'windwp/nvim-ts-autotag', -- Autoclose and autorename HTML and Vue tags
-  --"rrethy/nvim-treesitter-endwise", -- Automatically add end keywords for Ruby, Lua, Python, and more
+  -- Tags
+  -- Autoclose and autorename HTML and Vue tags
+  { 'windwp/nvim-ts-autotag', event = 'InsertEnter', config = true },
+
   {
     'windwp/nvim-autopairs', -- Autopair plugin
     event = 'InsertEnter',

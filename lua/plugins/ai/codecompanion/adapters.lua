@@ -6,17 +6,7 @@ return {
     local anthropic_config = {
       schema = {
         model = {
-          default = 'claude-sonnet-4-20250514',
-        },
-        max_tokens = {
-          default = 8192,
-          -- default = 28000,
-        },
-        extended_output = {
-          default = false,
-        },
-        extended_thinking = {
-          default = false,
+          default = 'claude-sonnet-4-0',
         },
       },
     }
@@ -48,9 +38,9 @@ return {
           default = 'deepseek-chat',
           -- default = 'deepseek-reasoner',
         },
-        temperature = {
-          default = 0.3,
-        },
+        -- temperature = {
+        --   default = 0.3,
+        -- },
       },
     })
   end,
@@ -100,10 +90,10 @@ return {
         api_key = os.getenv('OPENROUTER_API_KEY'),
       },
       schema = {
-        temperature = { default = 0.3 },
-        maxOutputTokens = { default = 8192 },
+        -- temperature = { default = 0.3 },
+        -- maxOutputTokens = { default = 8192 },
         model = {
-          default = 'qwen/qwen3-coder:free',
+          default = 'openrouter/horizon-beta',
           choices = {
             'z-ai/glm-4.5',
             'z-ai/glm-4.5-air:free',

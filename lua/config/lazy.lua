@@ -37,6 +37,7 @@ require('lazy').setup({
     { import = 'plugins.telescope' },
     { import = 'plugins.misc' },
     { import = 'plugins.terminal' },
+    { import = 'plugins.db' },
   },
   defaults = { lazy = true },
   install = { colorscheme = { 'catppuccin', 'habamax' } },

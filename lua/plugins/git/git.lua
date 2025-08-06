@@ -41,7 +41,7 @@ return {
         follow_files = true,
       },
       attach_to_untracked = true,
-      current_line_blame = true,
+      current_line_blame = false,
       diff_opts = { internal = true },
       current_line_blame_opts = {
         virt_text = true,
