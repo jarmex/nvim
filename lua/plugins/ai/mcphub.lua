@@ -7,10 +7,10 @@ return {
       { '<leader>$', '<Cmd>MCPHub<CR>', desc = 'Open MCB Hub' },
     },
     cmd = { 'MCPHub' },
-    -- build = 'npm install -g mcp-hub@latest',
-    build = 'bundled_build.lua',
+    build = 'pnpm install -g mcp-hub@latest',
+    -- build = 'bundled_build.lua',
     opts = {
-      use_bundled_binary = true,
+      -- use_bundled_binary = true,
       auto_toggle_mcp_servers = false,
       ui = {
         window = {
