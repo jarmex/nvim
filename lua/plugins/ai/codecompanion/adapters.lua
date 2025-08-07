@@ -21,7 +21,7 @@ return {
       },
       schema = {
         model = {
-          default = 'gpt-4.1',
+          default = 'gpt-5-mini-2025-08-07',
         },
       },
     }
@@ -93,7 +93,7 @@ return {
         -- temperature = { default = 0.3 },
         -- maxOutputTokens = { default = 8192 },
         model = {
-          default = 'openrouter/horizon-beta',
+          default = 'z-ai/glm-4.5-air:free',
           choices = {
             'z-ai/glm-4.5',
             'z-ai/glm-4.5-air:free',

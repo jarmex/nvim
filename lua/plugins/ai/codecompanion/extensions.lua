@@ -35,7 +35,7 @@ return {
         ---Adapter for generating titles (defaults to current chat adapter)
         adapter = 'openai', -- "copilot"
         ---Model for generating titles (defaults to current chat model)
-        model = 'gpt-4.1', -- "gpt-4o"
+        model = 'gpt-5-nano-2025-08-07', -- "gpt-4o"
       },
       chat_filter = function(chat_data) -- only chats for the cwd
         return chat_data.cwd == vim.fn.getcwd()

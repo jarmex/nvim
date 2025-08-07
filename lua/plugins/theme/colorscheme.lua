@@ -42,19 +42,19 @@ local M = {
         },
       },
       default_integrations = {
-        blink_cmp = true,
+        blink_cmp = { style = 'solid' },
         diffview = true,
         fidget = true,
         fzf = true,
         headlines = true,
         hop = true,
-        lspsaga = true,
+        -- lspsaga = true,
         mason = true,
         mini = { enabled = true },
         native_lsp = { enabled = true },
-        navic = { enabled = true },
-        neotree = true,
-        nvim_surround = true,
+        -- navic = { enabled = true },
+        nvimtree = true,
+        -- nvim_surround = true,
         rainbow_delimiters = true,
         snacks = { enabled = true },
         which_key = true,
@@ -63,7 +63,7 @@ local M = {
         alpha = true,
         lsp_trouble = true,
         mini = true,
-        blink_cmp = true,
+        -- blink_cmp = true,
         native_lsp = {
           enabled = true,
           virtual_text = {
@@ -85,7 +85,7 @@ local M = {
         cmp = true,
         gitsigns = true,
         nvimtree = true,
-        navic = { enabled = false, custom_bg = 'lualine' },
+        -- navic = { enabled = false, custom_bg = 'lualine' },
         mason = true,
         dap = {
           enabled = true,
@@ -102,11 +102,9 @@ local M = {
         notify = true,
         noice = true,
         illuminate = true,
-        telekasten = false,
         telescope = { enabled = true },
         treesitter = true,
         treesitter_context = true,
-        symbols_outline = false,
         snacks = true,
         semantic_tokens = true,
         which_key = true,
@@ -127,6 +125,7 @@ local M = {
       require(plugin.name).setup(opt)
       -- vim.api.nvim_command 'colorscheme catppuccin'
       vim.cmd.colorscheme('catppuccin')
+      vim.api.nvim_set_hl(0, 'CursorColumn', { link = 'CursorLine' })
     end,
   },
 }
