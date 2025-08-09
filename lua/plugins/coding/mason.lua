@@ -167,6 +167,7 @@ end
 return {
   'mason-org/mason.nvim',
   event = 'BufReadPre',
+  lazy = false,
   keys = {
     { '<leader>pm', vim.cmd.Mason, desc = ' Mason home' },
   },
