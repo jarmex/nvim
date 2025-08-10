@@ -1,5 +1,5 @@
 -- FIX https://github.com/MeanderingProgrammer/render-markdown.nvim/issues/488#issuecomment-3154937211
-vim.api.nvim_create_autocmd('Filetype', {
+vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'markdown', 'codecompanion' },
   group = vim.api.nvim_create_augroup('render-markdown-fix', { clear = true }),
   once = true,

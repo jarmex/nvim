@@ -31,12 +31,12 @@ return {
       -- Number of days after which chats are automatically deleted (0 to disable)
       expiration_days = 30,
       save_chat_keymap = '<localleader>hs',
-      title_generation_opts = {
-        ---Adapter for generating titles (defaults to current chat adapter)
-        adapter = 'openai', -- "copilot"
-        ---Model for generating titles (defaults to current chat model)
-        model = 'gpt-5-nano-2025-08-07', -- "gpt-4o"
-      },
+      -- title_generation_opts = {
+      --   ---Adapter for generating titles (defaults to current chat adapter)
+      --   adapter = 'openrouter', -- e.g. copilot, openai
+      --   ---Model for generating titles (defaults to current chat model)
+      --   model = 'qwen/qwen3-coder:free', -- "gpt-5-nano-2025-08-07"
+      -- },
       chat_filter = function(chat_data) -- only chats for the cwd
         return chat_data.cwd == vim.fn.getcwd()
       end,

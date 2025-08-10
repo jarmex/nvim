@@ -30,6 +30,7 @@ return {
   },
   dependencies = {
     { 'b0o/SchemaStore.nvim', lazy = true, version = false },
+    'mason-org/mason-lspconfig.nvim', -- Updated repo URL
   },
   config = function()
     -- local default_server_config = {
