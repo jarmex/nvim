@@ -4,6 +4,7 @@ local keymaps = require('plugins.snacks.utils.snacks-keymaps')
 return {
   {
     'folke/snacks.nvim',
+    event = 'UIEnter',
     priority = 1000,
     lazy = false,
     ---@module 'snacks'

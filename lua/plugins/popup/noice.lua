@@ -110,7 +110,7 @@ return {
           lua = { icon = '  ' },
           -- cmdline = { pattern = '^:', icon = '|>', lang = 'vim', title = '' },
           calculator = { icon = '   ' },
-          cmdline = { icon = '   ' },
+          cmdline = { icon = '   ', title = '' },
           -- filter = { icon = '   ' },
           help = { icon = '    ' },
           help_vert = { kind = 'Help', pattern = '^:%s*verti?c?a?l? he?l?p?%s+', icon = '    ' },
@@ -261,6 +261,14 @@ return {
         vim.cmd([[messages clear]])
       end
       require('noice').setup(opts)
+
+      -- Optional: transparent UI highlights
+      vim.cmd([[
+      highlight NoiceCmdlinePopupBorder guibg=NONE
+      highlight NoiceCmdlinePopup guibg=NONE
+      highlight NoicePopupmenuBorder guibg=NONE
+      highlight NoicePopupmenu guibg=NONE
+      ]])
     end,
   },
 }

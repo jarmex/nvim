@@ -17,11 +17,11 @@ return {
   openai = function()
     local openai_config = {
       opts = {
-        stream = true,
+        stream = false,
       },
       schema = {
         model = {
-          -- default = 'gpt-5-2025-08-07',
+          default = 'gpt-5-2025-08-07',
         },
       },
     }
