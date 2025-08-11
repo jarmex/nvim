@@ -1,4 +1,4 @@
-local filetypes = { 'java', 'python', 'php', 'javascript', 'typescript', 'vue', 'go' }
+local filetypes = { 'java', 'python', 'php', 'javascript', 'typescript', 'vue', 'go', 'cs', 'dockerfile' }
 
 return {
   {
