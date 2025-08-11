@@ -1,0 +1,3 @@
+return {
+  'user.git.precommit',
+}

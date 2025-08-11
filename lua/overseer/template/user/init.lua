@@ -9,6 +9,6 @@ return {
   'user.python',
   'user.node',
   'user.java',
-  'user.runners',
+  'user.runner',
   'user.logs',
 }
