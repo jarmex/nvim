@@ -10,10 +10,7 @@ local filetypes = {
 
 return {
   'pmizio/typescript-tools.nvim',
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-    'neovim/nvim-lspconfig',
-  },
+  dependencies = { 'neovim/nvim-lspconfig' },
   keys = {
     { '<leader>og', '<cmd>TSToolsOrganizeImports<cr>', desc = 'Organize Imports' },
   },

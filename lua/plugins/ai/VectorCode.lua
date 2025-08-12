@@ -3,7 +3,6 @@ return {
   enabled = true,
   version = '*',
   build = 'uv tool install --upgrade vectorcode',
-  dependencies = { 'nvim-lua/plenary.nvim' },
   cmd = 'VectorCode',
   opts = function()
     return {

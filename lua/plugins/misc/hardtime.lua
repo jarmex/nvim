@@ -1,7 +1,7 @@
 return {
   'm4xshen/hardtime.nvim',
   lazy = false,
-  dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
+  dependencies = { 'MunifTanjim/nui.nvim' },
   keys = {
     { '<leader>hd', '<cmd>Hardtime disable<cr>', desc = 'HardTime Disable' },
     { '<leader>he', '<cmd>Hardtime enable<cr>', desc = 'HardTime Enable' },

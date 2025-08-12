@@ -12,7 +12,6 @@ return {
   -- better diffing
   'sindrets/diffview.nvim',
   dependencies = {
-    'nvim-lua/plenary.nvim',
     'nvim-neotest/nvim-nio',
   },
   event = 'VeryLazy',

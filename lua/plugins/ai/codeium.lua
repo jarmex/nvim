@@ -32,9 +32,6 @@ return {
   { ---@type LazyPluginSpec
     'Exafunction/windsurf.nvim',
     event = 'VeryLazy',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
     name = 'codeium.nvim',
     opts = {
       enable_chat = true,

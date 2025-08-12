@@ -32,7 +32,6 @@ return {
     cmd = 'Telescope',
     version = false, -- telescope did only one release, so use HEAD for now
     dependencies = {
-      'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-file-browser.nvim',
       'nvim-telescope/telescope-frecency.nvim',
       { 'nvim-telescope/telescope-fzf-native.nvim', enabled = vim.fn.executable('make') == 1, build = 'make' },

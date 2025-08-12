@@ -17,9 +17,6 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     event = { 'BufNewFile', 'BufReadPost', 'BufWritePre' },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
     keys = gitsigns_keymaps(),
     opts = {
       signs = {
