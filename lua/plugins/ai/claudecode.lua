@@ -107,10 +107,10 @@ return {
       { '<leader>av', '<cmd>ClaudeCodeDiffAccept<cr>', desc = 'Accept diff' },
       { '<leader>ax', '<cmd>ClaudeCodeDiffDeny<cr>', desc = 'Deny diff' },
     },
-    init = function()
-      -- see: https://github.com/coder/claudecode.nvim/issues/52#issuecomment-2993522840
-      vim.env.CLAUDE_CONFIG_DIR = vim.fn.expand('~/.config/claude')
-    end,
+    -- init = function()
+    --   -- see: https://github.com/coder/claudecode.nvim/issues/52#issuecomment-2993522840
+    --   vim.env.CLAUDE_CONFIG_DIR = vim.fn.expand('~/.config/claude')
+    -- end,
     opts = function()
       vim.api.nvim_create_autocmd('TermOpen', {
         pattern = 'term://*:claude*',
@@ -133,9 +133,10 @@ return {
       })
 
       return {
+        terminal_cmd = '~/.claude/local/claude',
         terminal = {
           split_side = 'right', -- "left" or "right"
-          split_width_percentage = 0.40,
+          split_width_percentage = 0.45,
           provider = 'snacks', -- "auto", "snacks", or "native"
           auto_close = true,
         },

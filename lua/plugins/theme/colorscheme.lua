@@ -34,13 +34,6 @@ local M = {
         variables = { 'italic' },
         operators = { 'italic' },
       },
-      color_overrides = {
-        mocha = {
-          base = '#000000',
-          mantle = '#000000',
-          crust = '#000000',
-        },
-      },
       default_integrations = {
         blink_cmp = { style = 'solid' },
         diffview = true,
@@ -117,6 +110,7 @@ local M = {
           WinSeparator = { bg = colors.base, fg = colors.lavender },
           PmenuThumb = { bg = colors.blue },
           DapUIFloatBorder = { link = 'FloatBorder' },
+          CodeiumSuggestion = { fg = colors.green },
         }
       end,
     },

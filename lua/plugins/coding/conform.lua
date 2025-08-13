@@ -55,7 +55,7 @@ return {
         jsonc = { 'biome' },
         lua = { 'stylua' },
         markdown = { 'markdownlint', 'markdown-toc', stop_after_first = true },
-        python = { 'isort', 'black', stop_after_first = true },
+        python = { 'isort', 'black' },
         sh = { 'shfmt' },
         sql = { 'sql_formatter' },
         -- sql = { 'sqlfmt', 'sqlfluff', 'sql_formatter', stop_after_first = true },
