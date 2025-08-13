@@ -63,6 +63,30 @@ return {
       })
 
       require('mini.pairs').setup()
+
+      -- Highlight patterns in text
+      local hipatterns = require('mini.hipatterns')
+      hipatterns.setup({
+        highlighters = {
+          hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
+      })
+
+      -- comments
+      require('mini.comment').setup({
+        options = {
+          custom_commentstring = function()
+            return require('ts_context_commentstring.internal').calculate_commentstring() or vim.bo.commentstring
+          end,
+        },
+      })
+
+      -- Work with diff hunks
+      local diff = require('mini.diff')
+      diff.setup({
+        -- Disabled by default
+        source = diff.gen_source.none(),
+      })
     end,
   },
 }

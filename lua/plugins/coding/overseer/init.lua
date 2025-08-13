@@ -25,6 +25,7 @@ return {
   --  https://github.com/stevearc/overseer.nvim
   {
     'stevearc/overseer.nvim',
+    branch = 'master',
     cmd = { 'OverseerRun', 'OverseerInfo', 'OverseerToggle', 'OverseerFromTerminal' },
     keys = {
       { '<leader>o', '', desc = 'Overseer' },

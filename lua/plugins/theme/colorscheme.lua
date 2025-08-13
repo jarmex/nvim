@@ -110,7 +110,7 @@ local M = {
           WinSeparator = { bg = colors.base, fg = colors.lavender },
           PmenuThumb = { bg = colors.blue },
           DapUIFloatBorder = { link = 'FloatBorder' },
-          CodeiumSuggestion = { fg = colors.green },
+          CodeiumSuggestion = { fg = colors.blue },
         }
       end,
     },
