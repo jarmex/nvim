@@ -20,6 +20,7 @@ return {
   { '<leader>an', ':CodeCompanionChat anthropic<CR>', desc = 'Codecompanion Anthropic' },
   { '<leader>ao', ':CodeCompanionChat openai<CR>', desc = 'Codecompanion OpenAI' },
   { '<leader>au', ':CodeCompanionChat openrouter<CR>', desc = 'Codecompanion OpenRouter' },
+  { '<leader>aq', ':CodeCompanionChat qwen<CR>', desc = 'Codecompanion Qwen' },
   { '<Leader>aA', '<Cmd>lua require("codecompanion.strategies.inline"):stop()<CR>', desc = 'AI: Abort inline request' },
   { '<Leader>ah', '<Cmd>CodeCompanionHistory<CR>', desc = 'AI: Show chat history' },
   { '<Leader>Ac', open_chat, desc = '[A]I CodeCompanion [c]hat' },

@@ -110,4 +110,28 @@ return {
     }
     return require('codecompanion.adapters').extend('openai_compatible', openrouter_config)
   end,
+
+  qwen = function()
+    local qwen_config = {
+      name = 'qwen',
+      formatted_name = 'Qwen',
+      env = {
+        url = 'https://dashscope-intl.aliyuncs.com/compatible-mode',
+        chat_url = '/v1/chat/completions',
+        api_key = os.getenv('QWEN_API_KEY'),
+      },
+      schema = {
+        model = {
+          default = 'qwen3-coder-plus',
+          choices = {
+            'qwen3-coder-plus-2025-07-22',
+          },
+        },
+        num_ctx = {
+          default = 16384,
+        },
+      },
+    }
+    return require('codecompanion.adapters').extend('openai_compatible', qwen_config)
+  end,
 }
