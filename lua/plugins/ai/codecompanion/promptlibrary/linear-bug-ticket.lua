@@ -88,7 +88,7 @@ return {
     short_name = 'bug-linear',
     ignore_system_prompt = true,
     adapter = {
-      name = 'anthropic',
+      name = 'qwen',
     },
   },
   prompts = {

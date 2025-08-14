@@ -68,7 +68,7 @@ return {
     },
     config = function(_, opt)
       require('codeium').setup(opt)
-      vim.keymap.set('n', '<leader>cc', '<cmd>Codeium Chat<cr>', { desc = 'Codeium' })
+      -- vim.keymap.set('n', '<leader>cc', '<cmd>Codeium Chat<cr>', { desc = 'Codeium' })
       -- hl CodeiumSuggestion
     end,
   },

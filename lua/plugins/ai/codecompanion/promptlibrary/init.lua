@@ -164,5 +164,8 @@ prompt_library = vim.tbl_extend('force', prompt_library, living_docs)
 local review_documents = require('plugins.ai.codecompanion.promptlibrary.review_documentation')
 prompt_library = vim.tbl_extend('force', prompt_library, review_documents)
 
+local dailyPlanning = require('plugins.ai.codecompanion.promptlibrary.dailyPlanning')
+prompt_library = vim.tbl_extend('force', prompt_library, dailyPlanning)
+
 -- return vim.tbl_extend('force', promptList.prompt_library(), {
 return vim.tbl_extend('force', {}, fabric, prompt_library)

@@ -74,7 +74,7 @@ return {
     short_name = 'linear',
     ignore_system_prompt = true,
     adapter = {
-      name = 'anthropic',
+      name = 'qwen',
     },
   },
   prompts = {
