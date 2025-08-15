@@ -127,7 +127,7 @@ vim.api.nvim_create_autocmd('FileType', {
     -- set go specific options
     vim.opt_local.tabstop = 2
     vim.opt_local.shiftwidth = 2
-    vim.opt_local.colorcolumn = '120'
+    -- vim.opt_local.colorcolumn = '120'
   end,
 })
 
@@ -189,29 +189,29 @@ end
 --------------------------------------------------------------------------------
 
 -- create cc according to filetype
-local cc_filetypes = {
-  c = '101',
-  cpp = '101',
-  java = '101',
-  javascript = '101',
-  javascriptreact = '101',
-  kotlin = '101',
-  lua = '101',
-  typescript = '101',
-  typescriptreact = '101',
-  rust = '101',
-  haskell = '101',
-  swift = '101',
-  markdown = '81',
-}
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-  group = augroup('colorcolumn'),
-  callback = function(event)
-    local filetype = event.match
-    if cc_filetypes[filetype] then
-      vim.wo.colorcolumn = cc_filetypes[filetype]
-    else
-      vim.wo.colorcolumn = ''
-    end
-  end,
-})
+-- local cc_filetypes = {
+--   c = '101',
+--   cpp = '101',
+--   java = '101',
+--   javascript = '101',
+--   javascriptreact = '101',
+--   kotlin = '101',
+--   lua = '101',
+--   typescript = '101',
+--   typescriptreact = '101',
+--   rust = '101',
+--   haskell = '101',
+--   swift = '101',
+--   markdown = '81',
+-- }
+-- vim.api.nvim_create_autocmd({ 'FileType' }, {
+--   group = augroup('colorcolumn'),
+--   callback = function(event)
+--     local filetype = event.match
+--     if cc_filetypes[filetype] then
+--       vim.wo.colorcolumn = cc_filetypes[filetype]
+--     else
+--       vim.wo.colorcolumn = ''
+--     end
+--   end,
+-- })

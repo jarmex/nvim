@@ -2,7 +2,7 @@ local icons = require('helpers.icons')
 
 local adaptersList = {
   ['neotest-vitest'] = {},
-  ['neotest-jest'] = {},
+  -- ['neotest-jest'] = {},
   -- ['neotest-jest'] = {
   --   jestCommand = 'pnpm jest',
   --   -- jestConfigFile = "jest.config.js",
