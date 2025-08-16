@@ -6,34 +6,29 @@ return {
     keys = {
       { '<leader>r', '', desc = '+refactor', mode = { 'n', 'v' } },
       {
-        '<leader>rs',
-        function()
-          ---@diagnostic disable-next-line: missing-parameter
-          require('refactoring').select_refactor()
-        end,
-        mode = 'v',
-        desc = 'Refactor',
-      },
-      {
         '<leader>ri',
         function()
-          require('refactoring').refactor('Inline Variable')
+          return require('refactoring').refactor('Inline Variable')
         end,
         mode = { 'n', 'v' },
         desc = 'Inline Variable',
+        noremap = true,
+        expr = true,
       },
       {
         '<leader>rb',
         function()
-          require('refactoring').refactor('Extract Block')
+          return require('refactoring').refactor('Extract Block')
         end,
         desc = 'Extract Block',
+        noremap = true,
+        expr = true,
+        mode = { 'n' },
       },
       {
         '<Leader>re',
         function()
-          ---@diagnostic disable-next-line: missing-parameter
-          require('refactoring').select_refactor()
+          return require('refactoring').select_refactor({ prefer_ex_cmd = true })
         end,
         desc = 'Open Refactoring',
         mode = { 'n', 'v', 'x' },
@@ -41,36 +36,50 @@ return {
       {
         '<leader>rP',
         function()
-          require('refactoring').debug.printf({ below = false })
+          return require('refactoring').debug.printf({ below = false })
         end,
         desc = 'Debug Print',
       },
       {
         '<leader>rp',
         function()
-          require('refactoring').debug.print_var({ normal = true })
+          return require('refactoring').debug.print_var({ normal = true })
         end,
         desc = 'Debug Print Variable',
       },
       {
         '<leader>rc',
         function()
-          require('refactoring').debug.cleanup({})
+          return require('refactoring').debug.cleanup({})
         end,
-        desc = 'Debug Cleanup',
+        mode = { 'n' },
+        expr = true,
+        desc = 'Clear debug print statement.',
+      },
+      {
+        '<leader>ro',
+        function()
+          return require('refactoring').refactor('Extract Block To File')
+        end,
+        desc = 'Extract block to file',
+        noremap = true,
+        expr = true,
+        mode = { 'n' },
       },
       {
         '<leader>rf',
         function()
-          require('refactoring').refactor('Extract Function')
+          return require('refactoring').refactor('Extract Function')
         end,
-        mode = 'v',
         desc = 'Extract Function',
+        noremap = true,
+        expr = true,
+        mode = { 'x', 'v' },
       },
       {
         '<leader>rF',
         function()
-          require('refactoring').refactor('Extract Function To File')
+          return require('refactoring').refactor('Extract Function To File')
         end,
         mode = 'v',
         desc = 'Extract Function To File',
@@ -78,7 +87,7 @@ return {
       {
         '<leader>rx',
         function()
-          require('refactoring').refactor('Extract Variable')
+          return require('refactoring').refactor('Extract Variable')
         end,
         mode = 'v',
         desc = 'Extract Variable',
@@ -87,10 +96,11 @@ return {
         '<leader>rp',
         function()
           ---@diagnostic disable-next-line: missing-parameter
-          require('refactoring').debug.print_var()
+          return require('refactoring').debug.print_var()
         end,
-        mode = 'v',
-        desc = 'Debug Print Variable',
+        mode = { 'n' },
+        expr = true,
+        desc = 'Add debug print statement.',
       },
     },
     opts = {

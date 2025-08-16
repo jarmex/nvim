@@ -1,4 +1,4 @@
-local bkeymap = require('lib.utils').bufKeymap
+local bkeymap = require('helpers.utils').bufKeymap
 
 vim.diagnostic.enable(false, { bufnr = 0 })
 -- vim.opt_local.colorcolumn = ''
