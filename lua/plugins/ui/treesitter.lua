@@ -285,6 +285,7 @@ return {
     opts = {
       check_ts = true,
       enable_moveright = true,
+      disable_filetype = { 'TelescopePrompt', 'spectre_panel', 'snacks_picker_input', 'codecompanion' },
       fast_wrap = {
         map = '<c-e>',
       },

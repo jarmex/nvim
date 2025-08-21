@@ -20,9 +20,8 @@ return {
     ---@type render.md.UserConfig
     opts = {
       completions = {
-        lsp = {
-          enabled = true,
-        },
+        blink = { enabled = true },
+        lsp = { enabled = true },
       },
       file_types = { 'markdown', 'codecompanion' },
       latex = { enabled = false },

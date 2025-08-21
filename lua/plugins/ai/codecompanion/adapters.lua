@@ -93,7 +93,7 @@ return {
         -- temperature = { default = 0.3 },
         -- maxOutputTokens = { default = 8192 },
         model = {
-          default = 'z-ai/glm-4.5-air:free',
+          default = 'deepseek/deepseek-chat-v3-0324:free',
           choices = {
             'z-ai/glm-4.5',
             'z-ai/glm-4.5-air:free',
@@ -125,8 +125,11 @@ return {
           default = 'qwen3-coder-plus',
           choices = {
             'qwen3-coder-plus-2025-07-22',
+            'qwen3-coder-plus',
+            'qwen-turbo-2025-04-28',
           },
         },
+        temperature = { default = 0.6 },
         num_ctx = {
           default = 16384,
         },
