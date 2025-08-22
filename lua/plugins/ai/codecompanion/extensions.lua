@@ -16,7 +16,7 @@ return {
       -- Keymap to open history from chat buffer (default: gh)
       keymap = 'gh',
       -- Automatically generate titles for new chats
-      auto_generate_title = false,
+      auto_generate_title = true,
       ---On exiting and entering neovim, loads the last chat on opening chat
       continue_last_chat = false,
       ---When chat is cleared with `gx` delete the chat from history
@@ -27,16 +27,16 @@ return {
       enable_logging = false,
       ---Directory path to save the chats
       dir_to_save = vim.fn.stdpath('data') .. '/codecompanion-history',
-      auto_save = false,
+      auto_save = true,
       -- Number of days after which chats are automatically deleted (0 to disable)
       expiration_days = 0,
       save_chat_keymap = '<localleader>hs',
-      -- title_generation_opts = {
-      --   ---Adapter for generating titles (defaults to current chat adapter)
-      --   adapter = 'openrouter', -- e.g. copilot, openai
-      --   ---Model for generating titles (defaults to current chat model)
-      --   model = 'qwen/qwen3-coder:free', -- "gpt-5-nano-2025-08-07"
-      -- },
+      title_generation_opts = {
+        --   ---Adapter for generating titles (defaults to current chat adapter)
+        -- adapter = 'qwen', -- e.g. copilot, openai
+        --   ---Model for generating titles (defaults to current chat model)
+        --   model = 'qwen/qwen3-coder:free', -- "gpt-5-nano-2025-08-07"
+      },
       chat_filter = function(chat_data) -- only chats for the cwd
         return chat_data.cwd == vim.fn.getcwd()
       end,
@@ -125,11 +125,12 @@ return {
       commit_history_count = 10, -- Number of recent commits for context
     },
   },
-  -- spinner = {
-  --   opts = {
-  --     -- log_level = "debug",
-  --   },
-  -- },
+  spinner = {
+    opts = {
+      -- log_level = "debug",
+      style = 'fidget', -- "spinner", "fidget", or "none"
+    },
+  },
   -- agent_rules = {
   --   enabled = true,
   -- },

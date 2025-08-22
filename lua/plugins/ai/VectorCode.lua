@@ -21,12 +21,6 @@ return {
     }
   end,
   config = function(_, opts)
-    -- vim.lsp.config("vectorcode_server", {
-    --     cmd_env = {
-    --       HTTP_PROXY = os.getenv("HTTP_PROXY"),
-    --       HTTPS_PROXY = os.getenv("HTTPS_PROXY"),
-    --     },
-    --   })
     require('vectorcode').setup(opts)
   end,
 }

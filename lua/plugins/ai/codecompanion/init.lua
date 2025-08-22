@@ -16,9 +16,9 @@ return {
       {
         'franco-ruggeri/codecompanion-spinner.nvim',
         event = 'VeryLazy',
-        opts = {
-          style = 'fidget', -- "spinner", "fidget", or "none"
-        },
+        -- opts = {
+        --   style = 'fidget', -- "spinner", "fidget", or "none"
+        -- },
       }, -- for spinner
       -- 'jarmex/codecompanion-gitcommit.nvim',
       -- 'minusfive/codecompanion-agent-rules',

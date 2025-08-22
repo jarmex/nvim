@@ -38,9 +38,9 @@ return {
           default = 'deepseek-chat',
           -- default = 'deepseek-reasoner',
         },
-        -- temperature = {
-        --   default = 0.3,
-        -- },
+        temperature = {
+          default = 0.2,
+        },
       },
     })
   end,

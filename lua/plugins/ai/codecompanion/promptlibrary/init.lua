@@ -158,17 +158,20 @@ local prompt_library = {
   },
 }
 
-local living_docs = require('plugins.ai.codecompanion.promptlibrary.living_docs')
-prompt_library = vim.tbl_extend('force', prompt_library, living_docs)
-
-local review_documents = require('plugins.ai.codecompanion.promptlibrary.review_documentation')
-prompt_library = vim.tbl_extend('force', prompt_library, review_documents)
-
-local dailyPlanning = require('plugins.ai.codecompanion.promptlibrary.dailyPlanning')
-prompt_library = vim.tbl_extend('force', prompt_library, dailyPlanning)
-
+local beastMode = require('plugins.ai.codecompanion.promptlibrary.beastmode')
 local commit_pull_request = require('plugins.ai.codecompanion.promptlibrary.commit_pull_request')
-prompt_library = vim.tbl_extend('force', prompt_library, commit_pull_request)
+local dailyPlanning = require('plugins.ai.codecompanion.promptlibrary.dailyPlanning')
+local living_docs = require('plugins.ai.codecompanion.promptlibrary.living_docs')
+local review_documents = require('plugins.ai.codecompanion.promptlibrary.review_documentation')
 
--- return vim.tbl_extend('force', promptList.prompt_library(), {
-return vim.tbl_extend('force', {}, fabric, prompt_library)
+return vim.tbl_extend(
+  'force',
+  {},
+  fabric,
+  prompt_library,
+  living_docs,
+  review_documents,
+  dailyPlanning,
+  commit_pull_request,
+  beastMode
+)
