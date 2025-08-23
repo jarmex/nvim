@@ -138,6 +138,17 @@ local function getLspName()
       hash[v] = true
     end
   end
+
+  -- Truncate if more than 3 items
+  if #unique_client_names > 3 then
+    local truncated = {}
+    for i = 1, 3 do
+      table.insert(truncated, unique_client_names[i])
+    end
+    table.insert(truncated, '...')
+    return '  ' .. table.concat(truncated, ', ') .. '...'
+  end
+
   local language_servers = table.concat(unique_client_names, ', ')
 
   return '  ' .. language_servers
