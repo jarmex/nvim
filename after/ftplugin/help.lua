@@ -10,3 +10,6 @@ local ext = vim.api.nvim_buf_get_name(0):match('%.(%w+)$')
 if ext == 'txt' then
   bkeymap('n', 'gs', 'gO', { remap = true })
 end
+
+-- NOTE: enable code highlighting for help
+vim.treesitter.start()
