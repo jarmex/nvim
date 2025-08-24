@@ -68,5 +68,3 @@ vim.api.nvim_create_autocmd('InsertEnter', {
     Helpers.safeRequire('config.spellfixes')
   end,
 })
-
-vim.lsp.enable('gopls')

@@ -3,7 +3,7 @@ vim.o.relativenumber = false
 
 local opt = vim.opt_local
 
-opt.colorcolumn = { '50', '72' }
+opt.colorcolumn = { '60', '82' }
 opt.expandtab = true
 -- opt.formatoptions = opt.formatoptions - 'o' -- don't continue comments on `o` and `O`
 opt.list = false

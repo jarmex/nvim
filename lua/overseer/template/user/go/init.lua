@@ -1,4 +1,5 @@
 return {
+  'user.go.build',
   'user.go.generate',
   'user.go.golangci',
   'user.go.integrationtest',
