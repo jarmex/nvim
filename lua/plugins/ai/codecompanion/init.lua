@@ -28,12 +28,12 @@ return {
     event = 'VeryLazy',
     keys = require('plugins.ai.codecompanion.keymaps'),
     opts = function()
-      local systemPromptModes = require('plugins.ai.codecompanion.systemprompts')
+      -- local systemPromptModes = require('plugins.ai.codecompanion.systemprompts')
       local adapters = require('plugins.ai.codecompanion.adapters')
       local display = require('plugins.ai.codecompanion.display')
       local strategies = require('plugins.ai.codecompanion.strategies')
 
-      systemPromptModes.setup()
+      -- systemPromptModes.setup()
 
       return {
         adapters = adapters,
@@ -50,10 +50,10 @@ return {
         },
         prompt_library = require('plugins.ai.codecompanion.promptlibrary'),
         extensions = require('plugins.ai.codecompanion.extensions'),
-        opts = {
-          -- local system_prompt = require("codecompanion.config").config.opts.system_prompt
-          system_prompt = systemPromptModes.beast_prompt,
-        },
+        -- opts = {
+        -- local system_prompt = require("codecompanion.config").config.opts.system_prompt
+        -- system_prompt = systemPromptModes.beast_prompt,
+        -- },
       }
     end,
     config = function(_, opts)
