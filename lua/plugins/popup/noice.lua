@@ -93,13 +93,14 @@ local routes = {
 return {
   {
     'folke/noice.nvim',
+    enabled = true,
     lazy = false,
     -- event = 'VeryLazy', -- disable to stop the flickering when nvim starts
     dependencies = {
       'MunifTanjim/nui.nvim',
     },
     opts = {
-      routes = routes,
+      -- routes = routes,
       cmdline = {
         format = {
           search_down = { icon = ' 󰶹   ' },
@@ -179,7 +180,7 @@ return {
         override = {
           ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
           ['vim.lsp.util.stylize_markdown'] = true,
-          ['cmp.entry.get_documentation'] = vim.g.cmploader == 'nvim-cmp',
+          ['cmp.entry.get_documentation'] = true,
         },
       },
       presets = {
