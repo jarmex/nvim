@@ -48,6 +48,17 @@ local modecolor = {
   ['!'] = colors.red,
   t = color.red1,
 }
+local special_filetypes = { 'NvimTree', 'Outline', 'grug-far', 'codecompanion', 'snacks_terminal' }
+
+local function is_special_filetype()
+  local ft = vim.bo.filetype
+  for _, special_ft in ipairs(special_filetypes) do
+    if ft == special_ft then
+      return true
+    end
+  end
+  return false
+end
 
 local function quickfixCounter()
   local qf = vim.fn.getqflist({ idx = 0, title = true, items = true })
@@ -197,6 +208,9 @@ function M.branch(opts)
   return helper.extend_tbl({
     'b:gitsigns_head',
     icon = '',
+    cond = function()
+      return not is_special_filetype()
+    end,
     -- icon = "",
     separator = { left = '', right = '' },
     color = { bg = color.purple, fg = color.bg, gui = 'italic,bold' },
@@ -285,6 +299,9 @@ end
 function M.filename(opts)
   return helper.extend_tbl({
     filenameAndIcon,
+    cond = function()
+      return not is_special_filetype()
+    end,
     -- "filename",
     -- path = 1,
     -- shorting_target = 40,
@@ -312,6 +329,9 @@ function M.git_diff(opts)
   return helper.extend_tbl({
     'diff',
     colored = true,
+    cond = function()
+      return not is_special_filetype()
+    end,
     source = function()
       ---@diagnostic disable-next-line: undefined-field
       local gitsigns = vim.b.gitsigns_status_dict

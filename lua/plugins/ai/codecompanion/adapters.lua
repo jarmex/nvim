@@ -8,6 +8,9 @@ return {
         model = {
           default = 'claude-sonnet-4-0',
         },
+        auth_type = {
+          default = 'oauth',
+        },
       },
     }
     return require('codecompanion.adapters').extend('anthropic', anthropic_config)

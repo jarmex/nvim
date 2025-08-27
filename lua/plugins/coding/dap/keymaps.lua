@@ -2,8 +2,8 @@ local M = {}
 
 M.persistent_keymaps = function()
   return {
-    { '<leader>dB', '<cmd>PBSetConditionalBreakpoint<cr>', desc = 'Conditional Breakpoint [dB]' },
-    { '<leader>db', '<cmd>PBToggleBreakpoint<cr>', desc = 'Toggle Breakpoint [db]' },
+    -- { '<leader>dB', '<cmd>PBSetConditionalBreakpoint<cr>', desc = 'Conditional Breakpoint [dB]' },
+    -- { '<leader>db', '<cmd>PBToggleBreakpoint<cr>', desc = 'Toggle Breakpoint [db]' },
     { '<leader>dx', '<cmd>PBClearAllBreakpoints<cr>', desc = 'Clear all Breakpoints [dx]' },
   }
 end
@@ -12,10 +12,12 @@ M.dap_keymaps = function()
   -- stylua: ignore start
   return {
     -- { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
+    { "<leader>dB", function() require("persistent-breakpoints.api").set_conditional_breakpoint(vim.fn.input('Breakpoint condition: ')) end, desc = "Breakpoint Condition" },
+    { "<leader>db", function() require('persistent-breakpoints.api').toggle_breakpoint() end, desc = "Toggle Breakpoint" },
     { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
     { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
     { "<leader>dg", function() require("dap").goto_() end, desc = "Go to line (no execute)" },
-    { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Breakpoint Condition" },
+    -- { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Breakpoint Condition" },
     { "<leader>dj", function() require("dap").down() end, desc = "Down", },
     { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
     { "<leader>dE", "<cmd>lua require('dapui').eval(vim.fn.input '[Expression] > ')<cr>", desc = "Evaluate Input" },
@@ -35,6 +37,7 @@ M.dap_keymaps = function()
     { "<leader>dr", "<cmd>lua require('dap').repl.open()<cr>", desc = "Toggle REPL" },
     { "<leader>dv", "<cmd>lua require('dap.ui.widgets').preview()<cr>", desc = "Preview" },
     { "<leader>dx", "<cmd>lua require('dap').terminate()<cr>", desc = "Terminate" },
+    { "<leader>dn", function () require('persistent-breakpoints.api').clear_all_breakpoints() end , desc = "Clear All BreakPoint"}
   }
 end
 

@@ -3,11 +3,11 @@ return {
   description = 'Refactor the selected code for readability, maintainability and performances',
   opts = {
     index = 17,
-    is_default = false,
+    is_default = true,
     modes = { 'v' },
     short_name = 'refactor',
     is_slash_cmd = true,
-    auto_submit = true,
+    auto_submit = false,
     user_prompt = false,
     stop_context_insertion = true,
   },
@@ -25,7 +25,7 @@ return {
                   - Follows best practices for readability and maintainability.
                   - Is formatted correctly.
 
-                Use Markdown formatting and include the programming language name at the start of the code block.]],
+                Your goal is to provide a cleaner, more efficient version of the code that adheres to modern coding standards..]],
       opts = {
         visible = false,
       },

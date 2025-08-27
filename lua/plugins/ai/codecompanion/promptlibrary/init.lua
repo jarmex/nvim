@@ -1,6 +1,6 @@
 -- local promptList = require('plugins.ai.codecompanion.promptlibrary.awesome-prompts')
 
-local fabric = require('plugins.ai.codecompanion.promptlibrary.fabric').load_fabric_patterns()
+-- local fabric = require('plugins.ai.codecompanion.promptlibrary.fabric').load_fabric_patterns()
 
 local function chat_filter(chat_data)
   -- TODO: check to remove this in future
@@ -167,7 +167,7 @@ local review_documents = require('plugins.ai.codecompanion.promptlibrary.review_
 return vim.tbl_extend(
   'force',
   {},
-  fabric,
+  -- fabric,
   prompt_library,
   living_docs,
   review_documents,
