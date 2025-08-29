@@ -100,7 +100,7 @@ return {
       'MunifTanjim/nui.nvim',
     },
     opts = {
-      -- routes = routes,
+      routes = routes,
       cmdline = {
         format = {
           search_down = { icon = ' 󰶹   ' },

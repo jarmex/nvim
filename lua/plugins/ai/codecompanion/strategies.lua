@@ -1,6 +1,5 @@
 local adapters = require('plugins.ai.codecompanion.adapters')
 local defaultAdapter = os.getenv('NVIM_AI_ADAPTER') or 'openai'
-local helper = require('plugins.ai.codecompanion.helper')
 local systemPromptModes = require('plugins.ai.codecompanion.systemprompts')
 
 --------------------------------------------------------------------------------
@@ -25,7 +24,7 @@ local M = {}
 --------------
 
 M.inline = {
-  adapter = adapters.openai,
+  adapter = adapters.http.openai,
   opts = {
     diff_timeout = 300,
   },
@@ -40,8 +39,18 @@ M.chat = {
   opts = {
     completion_provider = 'blink', -- blink | cmp | coc | default
   },
-
-  roles = helper.roles(),
+  roles = {
+    ---@type string|fun(adapter: CodeCompanion.HTTPAdapter|CodeCompanion.ACPAdapter): string
+    llm = function(adapter)
+      if adapter.model then
+        return string.format('%s (%s)', adapter.formatted_name, adapter.model.name)
+      else
+        return adapter.formatted_name
+      end
+    end,
+    user = ' Jarmex',
+    -- user = ' Jarmex',
+  },
   tools = require('plugins.ai.codecompanion.tools'),
   slash_commands = require('plugins.ai.codecompanion.slash_commands'),
   keymaps = {
@@ -66,7 +75,7 @@ M.chat = {
 ---------------
 
 M.cmd = {
-  adapter = adapters.deepseek,
+  adapter = adapters.http.deepseek,
 }
 
 return M

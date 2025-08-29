@@ -186,6 +186,9 @@ function M.mode(opts)
       local mode_color = modecolor
       return { bg = mode_color[vim.fn.mode()], fg = color.bg_dark, gui = 'bold' }
     end,
+    cond = function()
+      return vim.bo.filetype ~= 'codecompanion'
+    end,
     separator = { right = '' },
     -- separator = { left = '', right = '' },
   }, opts)
@@ -359,6 +362,34 @@ function M.git_diff(opts)
       removed = { fg = colors.red },
     },
   }, opts)
+end
+
+function M.codecompanion_2(opts)
+  return helper.extend_tbl({
+    function()
+      if vim.bo.filetype ~= 'codecompanion' then
+        return ''
+      end
+
+      local bufnr = vim.api.nvim_get_current_buf()
+      local metadata = _G.codecompanion_chat_metadata and _G.codecompanion_chat_metadata[bufnr]
+
+      if not metadata or not metadata.adapter then
+        return ''
+      end
+
+      local adapter_info = metadata.adapter.name or ''
+      if metadata.adapter.model then
+        adapter_info = adapter_info .. ' (' .. metadata.adapter.model .. ')'
+      end
+
+      return '🤖 ' .. adapter_info
+    end,
+    cond = function()
+      return vim.bo.filetype == 'codecompanion'
+    end,
+    color = { fg = '#7aa2f7' },
+  })
 end
 
 function M.codecompanion(opts)

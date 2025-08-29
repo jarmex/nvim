@@ -13,13 +13,10 @@ return {
       'ravitemer/codecompanion-history.nvim', -- Save and load conversation history.
       'ravitemer/mcphub.nvim', -- Manage MCP servers.
       'jinzhongjia/codecompanion-gitcommit.nvim',
-      {
-        'franco-ruggeri/codecompanion-spinner.nvim',
-        event = 'VeryLazy',
-        -- opts = {
-        --   style = 'fidget', -- "spinner", "fidget", or "none"
-        -- },
-      }, -- for spinner
+      -- {
+      --   'franco-ruggeri/codecompanion-spinner.nvim',
+      --   version = false,
+      -- }, -- for spinner
       -- 'jarmex/codecompanion-gitcommit.nvim',
       -- 'minusfive/codecompanion-agent-rules',
       -- { 'jinzhongjia/codecompanion-tools.nvim' },
@@ -28,7 +25,7 @@ return {
     event = 'VeryLazy',
     keys = require('plugins.ai.codecompanion.keymaps'),
     opts = function()
-      local systemPromptModes = require('plugins.ai.codecompanion.systemprompts.try_sys_prompt')
+      -- local systemPromptModes = require('plugins.ai.codecompanion.systemprompts.try_sys_prompt')
       local adapters = require('plugins.ai.codecompanion.adapters')
       local display = require('plugins.ai.codecompanion.display')
       local strategies = require('plugins.ai.codecompanion.strategies')
@@ -51,7 +48,7 @@ return {
         prompt_library = require('plugins.ai.codecompanion.promptlibrary'),
         extensions = require('plugins.ai.codecompanion.extensions'),
         opts = {
-          system_prompt = systemPromptModes.system_prompt,
+          -- system_prompt = systemPromptModes.system_prompt,
           send_code = true,
         },
       }
@@ -61,7 +58,7 @@ return {
       require('codecompanion').setup(opts)
       -- Expand `cc` into CodeCompanion in the command line
       vim.cmd([[cab cc CodeCompanion]])
-      -- vim.cmd([[cab ccb CodeCompanionChat anthropic]])
+      vim.cmd([[cab ccb CodeCompanionChat anthropic]])
 
       -- require('plugins.ai.codecompanion.spinner'):init()
       -- Ensure buffer is treated as markdown by treesitter despite being codecompanion filetype
@@ -75,51 +72,4 @@ return {
       devicons.set_icon_by_filetype({ codecompanion = 'codecompanion' })
     end,
   },
-  -- {
-  --   'folke/snacks.nvim',
-  --   opts = function()
-  --     -- see:
-  --     -- - https://github.com/olimorris/codecompanion.nvim/discussions/813#discussioncomment-13081665
-  --     -- - https://github.com/olimorris/dotfiles/blob/16a503b14e75c9d5dfc973f2ee9e7aa2523e8a97/.config/nvim/lua/plugins/custom/spinner.lua
-  --     vim.api.nvim_create_autocmd('User', {
-  --       pattern = { 'CodeCompanionRequestStarted', 'CodeCompanionRequestStreaming', 'CodeCompanionRequestFinished' },
-  --       group = vim.api.nvim_create_augroup('codecompanion_snacks_notifier', {}),
-  --       callback = function(ev)
-  --         local msg
-  --         if ev.match == 'CodeCompanionRequestStarted' then
-  --           msg = '  Sending...'
-  --         elseif ev.match == 'CodeCompanionRequestStreaming' then
-  --           msg = '  Generating...'
-  --         elseif ev.data.status == 'success' then
-  --           msg = '  Completed'
-  --         elseif ev.data.status == 'error' then
-  --           msg = '  Failed'
-  --         else
-  --           msg = '󰜺  Cancelled'
-  --         end
-  --
-  --         local title
-  --         local adapter = ev.data.adapter
-  --         if adapter then
-  --           title = adapter.formatted_name
-  --             .. (adapter.model and adapter.model ~= '' and ' (' .. adapter.model .. ')' or '')
-  --         else
-  --           title = 'CodeCompanion'
-  --         end
-  --
-  --         vim.notify(msg, vim.log.levels.INFO, {
-  --           id = 'codecompanion_status',
-  --           title = title,
-  --           timeout = 500,
-  --           keep = function()
-  --             return ev.match ~= 'CodeCompanionRequestFinished'
-  --           end,
-  --           opts = function(notif)
-  --             notif.icon = ev.match == 'CodeCompanionRequestFinished' and ' ' or Snacks.util.spinner()
-  --           end,
-  --         })
-  --       end,
-  --     })
-  --   end,
-  -- },
 }
