@@ -71,9 +71,7 @@ local M = {
             warnings = { 'undercurl' },
             information = { 'undercurl' },
           },
-          inlay_hints = {
-            background = true,
-          },
+          inlay_hints = { background = false },
         },
         cmp = true,
         gitsigns = true,
@@ -98,15 +96,21 @@ local M = {
         telescope = { enabled = true },
         treesitter = true,
         treesitter_context = true,
-        snacks = true,
+        snacks = {
+          enabled = true,
+          indent_scope_color = 'surface2',
+        },
         semantic_tokens = true,
         which_key = true,
+        render_markdown = true,
+        flash = false,
       },
       custom_highlights = function(colors)
         return {
           -- FloatBorder = { fg = colors.mantle, bg = colors.mantle },
           -- FloatTitle = { fg = colors.lavender, bg = colors.mantle },
           LspInfoBorder = { fg = colors.mantle, bg = colors.mantle },
+          LspInlayHint = { style = { 'italic' } }, -- italicize lsp inlay hints
           WinSeparator = { bg = colors.base, fg = colors.lavender },
           PmenuThumb = { bg = colors.blue },
           DapUIFloatBorder = { link = 'FloatBorder' },

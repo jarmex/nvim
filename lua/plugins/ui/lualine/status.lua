@@ -293,6 +293,9 @@ function M.filetype(opts)
   return helper.extend_tbl({
     'filetype',
     icon_only = true,
+    cond = function()
+      return vim.bo.filetype ~= 'codecompanion'
+    end,
     padding = { left = 1, right = 0 },
     color = { bg = color.purple, fg = color.bg, gui = 'italic,bold' },
     -- separator = { left = '', right = '' },
@@ -404,6 +407,9 @@ function M.lsp(opts)
   return helper.extend_tbl({
     function()
       return getLspName()
+    end,
+    cond = function()
+      return vim.bo.filetype ~= 'codecompanion'
     end,
     on_click = function()
       vim.api.nvim_command('LspInfo')

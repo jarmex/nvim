@@ -54,7 +54,7 @@ return {
         },
       },
       sources = {
-        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'dadbod' },
+        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
         per_filetype = {
           codecompanion = { 'codecompanion', 'buffer' },
           sql = { 'dadbod' },
@@ -87,24 +87,15 @@ return {
           codecompanion = {
             name = 'codecompanion',
             module = 'codecompanion.providers.completion.blink',
-            transform_items = function(_, items)
-              for _, item in ipairs(items) do
-                item.kind_icon = ' '
-              end
-              return items
-            end,
-            score_offset = function()
-              return 100
-            end,
           },
           snippets = {
             min_keyword_length = 2,
           },
-          dadbod = {
-            name = 'Dadbod',
-            module = 'vim_dadbod_completion.blink',
-            score_offset = 85, -- the higher the number, the higher the priority
-          },
+          -- dadbod = {
+          --   name = 'Dadbod',
+          --   module = 'vim_dadbod_completion.blink',
+          --   score_offset = 85, -- the higher the number, the higher the priority
+          -- },
           lazydev = {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',

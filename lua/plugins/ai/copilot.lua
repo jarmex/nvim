@@ -2,7 +2,7 @@ return {
   {
     'zbirenbaum/copilot.lua',
     cmd = 'Copilot',
-    event = 'InsertEnter',
+    -- event = 'InsertEnter',
     keys = { { '<leader>cp', ':Copilot<CR>', desc = 'Copilot' } },
     build = ':Copilot auth',
     opts = {
