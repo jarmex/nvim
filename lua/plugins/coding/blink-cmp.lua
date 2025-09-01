@@ -57,7 +57,7 @@ return {
         default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
         per_filetype = {
           codecompanion = { 'codecompanion', 'buffer' },
-          sql = { 'dadbod' },
+          -- sql = { 'dadbod' },
           -- optionally inherit from the `default` sources
           lua = { inherit_defaults = true, 'lazydev' },
         },

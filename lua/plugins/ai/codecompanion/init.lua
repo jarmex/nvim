@@ -70,6 +70,9 @@ return {
         codecompanion = { icon = ' ' },
       })
       devicons.set_icon_by_filetype({ codecompanion = 'codecompanion' })
+
+      -- codecompanion yolo mode
+      vim.g.codecompanion_yolo_mode = true
     end,
   },
 }

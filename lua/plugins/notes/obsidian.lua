@@ -1,6 +1,4 @@
 local day_format = '%A'
-local date_format = '%Y-%m-%d'
-local time_format = '%H:%M:%S'
 local vault = {
   name = 'work',
   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
@@ -13,20 +11,7 @@ local vault = {
   },
 }
 
----If the current file is a journal, return the date of the journal as a timestamp
----Otherwise, return the current timestamp (os.time())
-local journal_date_or_now = function()
-  local file = vim.fn.expand('%')
-  local match = vim.regex([[Journal/\d\{4}/\d\{4}-\d\{2}/\d\{4}-\d\{2\}-\d\{2}\.md$]]):match_str(file)
-  if match == nil then
-    return os.time()
-  end
-  local year, month, day = file:match('(%d+)-(%d+)-(%d+)')
-  return os.time({ year = year, month = month, day = day })
-end
-
 return {
-  -- 'epwalsh/obsidian.nvim',
   'obsidian-nvim/obsidian.nvim',
   enabled = true,
   lazy = true,
@@ -38,28 +23,6 @@ return {
   } or nil,
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   cmd = 'Obsidian',
-  -- cmd = {
-  --   'ObsidianBacklinks',
-  --   'ObsidianDailies',
-  --   'ObsidianExtractNote',
-  --   'ObsidianFollowLink',
-  --   'ObsidianLink',
-  --   'ObsidianLinkNew',
-  --   'ObsidianLinks',
-  --   'ObsidianNew',
-  --   'ObsidianOpen',
-  --   'ObsidianPasteImg',
-  --   'ObsidianQuickSwitch',
-  --   'ObsidianRename',
-  --   'ObsidianSearch',
-  --   'ObsidianTags',
-  --   'ObsidianTemplate',
-  --   'ObsidianTitles',
-  --   'ObsidianToday',
-  --   'ObsidianTomorrow',
-  --   'ObsidianWorkspace',
-  --   'ObsidianYesterday',
-  -- },
   ---@type obsidian.config.ClientOpts|{}
   opts = {
     legacy_commands = false,
@@ -69,7 +32,6 @@ return {
     },
     workspaces = { vault },
 
-    -- optional, completion of wiki links, local markdown links, and tags using nvim-cmp.
     ---@type obsidian.config.CompletionOpts|{}
     completion = {
       nvim_cmp = false,
@@ -104,8 +66,6 @@ return {
       -- separator = true, -- turn it off
       -- separator = "", -- insert a blank line
       format = 'words: {{words}}  ch: {{chars}}  props: {{properties}}  backlinks: {{backlinks}}',
-      -- format = "({{backlinks}} backlinks)", -- limit to backlinks
-      -- hl_group = "@property", -- Use another hl group
     },
 
     statusline = {
@@ -189,27 +149,12 @@ return {
   },
 
   keys = {
-    -- { '<leader>oo', ':cd /Users/jamesamo/vaults<cr>', desc = 'Open parent directory' },
     { '<leader>on', ':Obsidian template note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>', desc = 'New Note' },
-    -- { '<leader>of', ':s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<cr>', desc = 'Fix Headers' },
-    -- { '<leader>no', '<cmd>ObsidianOpen<cr>', desc = 'Open Obsidian' },
-    -- { '<leader>nn', '<cmd>ObsidianNew<cr>', desc = 'New note' },
     { '<leader>os', '<cmd>Obsidian search<cr>', desc = 'Search notes' },
-    -- { '<leader>nt', '<cmd>ObsidianTags<cr>', desc = 'List notes by tags' },
-    -- { '<leader>nq', '<cmd>ObsidianQuickSwitch<cr>', desc = 'Quick switch in obsidian workspace' },
-    -- { '<leader>nw', '<cmd>ObsidianWorkspace work<cr>', desc = 'Change to workspace work in obsidian' },
-    -- { '<leader>np', '<cmd>ObsidianWorkspace personal<cr>', desc = 'Change to workspace home in obsidian' },
   },
 
   config = function(_, opts)
     require('obsidian').setup(opts)
-    vim.keymap.set('n', 'gd', function()
-      if require('obsidian').util.cursor_on_markdown_link() then
-        return '<cmd>ObsidianFollowLink<CR>'
-      else
-        return 'gd'
-      end
-    end, { noremap = false, expr = true })
 
     vim.keymap.set(
       'n',

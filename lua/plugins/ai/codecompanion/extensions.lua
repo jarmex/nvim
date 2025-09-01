@@ -1,3 +1,4 @@
+local DEFAULT_COPILOT_MODEL = 'gpt-4.1'
 return {
   mcphub = {
     callback = 'mcphub.extensions.codecompanion',
@@ -32,10 +33,10 @@ return {
       expiration_days = 0,
       save_chat_keymap = '<localleader>hs',
       title_generation_opts = {
-        --   ---Adapter for generating titles (defaults to current chat adapter)
-        -- adapter = 'qwen', -- e.g. copilot, openai
-        --   ---Model for generating titles (defaults to current chat model)
-        --   model = 'qwen/qwen3-coder:free', -- "gpt-5-nano-2025-08-07"
+        ---Adapter for generating titles (defaults to current chat adapter)
+        adapter = 'copilot', -- e.g. copilot, openai
+        ---Model for generating titles (defaults to current chat model)
+        model = DEFAULT_COPILOT_MODEL, -- "gpt-5-nano-2025-08-07"
       },
       chat_filter = function(chat_data) -- only chats for the cwd
         return chat_data.cwd == vim.fn.getcwd()
