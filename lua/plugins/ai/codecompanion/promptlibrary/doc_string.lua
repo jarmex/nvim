@@ -1,9 +1,12 @@
 return {
-  strategy = 'inline',
+  strategy = 'chat',
   description = 'Add appropriate documentation to the selected code',
   opts = {
     short_name = 'docstrings',
+    user_prompt = false,
     auto_submit = true,
+    stop_context_insertion = true,
+    modes = { 'v' },
   },
   prompts = {
     {
@@ -41,7 +44,7 @@ Add appropriate documentation to this code:
 - Do NOT modify any of the actual code - only add documentation
 - Keep any existing documentation style
 - Return the complete code with added documentation
-
+- Also suggest to have better naming to improve readability.\n\n
 ```%s
 %s
 ```]],

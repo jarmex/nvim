@@ -56,6 +56,13 @@ return {
         lua = { 'stylua' },
         markdown = { 'markdownlint', 'markdown-toc', stop_after_first = true },
         python = { 'isort', 'black' },
+        -- python = function()
+        --   if vim.fn.executable('black') == 1 then
+        --     return { 'black' }
+        --   else
+        --     return {}
+        --   end
+        -- end,
         sh = { 'shfmt' },
         sql = { 'sql_formatter' },
         -- sql = { 'sqlfmt', 'sqlfluff', 'sql_formatter', stop_after_first = true },

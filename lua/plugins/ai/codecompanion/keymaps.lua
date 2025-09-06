@@ -24,4 +24,11 @@ return {
   { '<Leader>aA', '<Cmd>lua require("codecompanion.strategies.inline"):stop()<CR>', desc = 'AI: Abort inline request' },
   { '<Leader>ah', '<Cmd>CodeCompanionHistory<CR>', desc = 'AI: Show chat history' },
   { '<Leader>Ac', open_chat, desc = '[A]I CodeCompanion [c]hat' },
+  { '<leader>af', '<cmd>CodeCompanion /fix<cr>', mode = 'v', desc = 'Fix Code (CodeCompanion)' },
+  {
+    '<leader>ay',
+    '<cmd>CodeCompanion /tests<cr>',
+    mode = 'v',
+    desc = 'Generate Tests (CodeCompanion)',
+  },
 }

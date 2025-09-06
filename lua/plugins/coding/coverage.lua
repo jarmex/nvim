@@ -11,6 +11,7 @@ return {
   --  https://github.com/andythigpen/nvim-coverage/blob/main/doc/nvim-coverage.txt
   {
     'andythigpen/nvim-coverage',
+    version = '*',
     lazy = true,
     cmd = {
       'Coverage',

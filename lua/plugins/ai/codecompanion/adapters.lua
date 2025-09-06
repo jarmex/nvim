@@ -2,6 +2,13 @@
 ---@type CodeCompanion.Config
 return {
   acp = {
+    claude_code = function()
+      return require('codecompanion.adapters').extend('claude_code', {
+        env = {
+          CLAUDE_CODE_OAUTH_TOKEN = os.getenv('CLAUDE_CODE_OAUTH_TOKEN'),
+        },
+      })
+    end,
     gemini_cli = function()
       return require('codecompanion.adapters').extend('gemini_cli', {
         commands = {
@@ -111,7 +118,7 @@ return {
           -- temperature = { default = 0.3 },
           -- maxOutputTokens = { default = 8192 },
           model = {
-            default = 'deepseek/deepseek-chat-v3-0324:free',
+            default = 'deepseek/deepseek-chat-v3.1:free',
             choices = {
               'z-ai/glm-4.5',
               'z-ai/glm-4.5-air:free',
@@ -121,7 +128,7 @@ return {
               'mistralai/devstral-small:free',
               'moonshotai/kimi-k2:free',
               'moonshotai/kimi-k2',
-              'qwen/qwen3-235b-a22b-07-25',
+              'deepseek/deepseek-chat-v3.1',
             },
           },
         },

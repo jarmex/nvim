@@ -7,26 +7,18 @@ return {
     cmd = 'ClaudeCode',
     keys = {
       { '<leader>a', nil, desc = 'AI/Claude Code' },
+      { '<leader>ab', '<cmd>ClaudeCodeAdd %<cr>', desc = 'Add current buffer' },
       { '<leader>ac', '<cmd>ClaudeCode<cr>', desc = 'Toggle Claude' },
       { '<leader>af', '<cmd>ClaudeCodeFocus<cr>', desc = 'Focus Claude' },
       { '<leader>ar', '<cmd>ClaudeCode --resume<cr>', desc = 'Resume Claude' },
-      { '<leader>a.', '<cmd>ClaudeCode --continue<cr>', desc = 'Continue Claude' },
+      { '<leader>aC', '<cmd>ClaudeCode --continue<cr>', desc = 'Continue Claude' },
+      { '<leader>am', '<cmd>ClaudeCodeSelectModel<cr>', desc = 'Select Claude model' },
       { '<leader>as', '<cmd>ClaudeCodeSend<cr>', mode = 'v', desc = 'Send to Claude' },
       {
-        '<leader>a=',
+        '<leader>as',
         '<cmd>ClaudeCodeTreeAdd<cr>',
-        desc = 'Add file (Claude)',
-        ft = { 'NvimTree', 'neo-tree', 'oil' },
-      },
-      {
-        '<leader>ab',
-        function()
-          vim.cmd('ClaudeCodeAdd %')
-          vim.schedule(function()
-            vim.cmd('ClaudeCodeFocus')
-          end)
-        end,
-        desc = 'Add Buffer (Claude)',
+        desc = 'Add file',
+        ft = { 'NvimTree', 'neo-tree', 'oil', 'minifiles' },
       },
       -- Diff management
       { '<leader>av', '<cmd>ClaudeCodeDiffAccept<cr>', desc = 'Accept diff' },

@@ -17,7 +17,7 @@ return {
       -- Keymap to open history from chat buffer (default: gh)
       keymap = 'gh',
       -- Automatically generate titles for new chats
-      auto_generate_title = true,
+      auto_generate_title = false,
       ---On exiting and entering neovim, loads the last chat on opening chat
       continue_last_chat = false,
       ---When chat is cleared with `gx` delete the chat from history
