@@ -55,7 +55,6 @@ leader_map()
 Helpers.safeRequire('config.keymaps')
 Helpers.safeRequire('config.commands')
 Helpers.safeRequire('config.autocmds')
-Helpers.safeRequire('config.lsp')
 
 disable_providers()
 add_filetype()

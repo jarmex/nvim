@@ -1,4 +1,6 @@
 ---@diagnostic disable: need-check-nil
+
+local isTsToolOk, typeScriptTools = pcall(require, 'typescript-tools.api')
 local debounce = require('helpers.utils').debounce
 local autocmd = vim.api.nvim_create_autocmd
 
@@ -12,6 +14,13 @@ local function codelens(bufnr, client)
         vim.lsp.codelens.refresh({ bufnr = args0.buf })
       end),
     })
+  end
+end
+
+local function hover_action()
+  local winid = require('ufo').peekFoldedLinesUnderCursor()
+  if not winid then
+    vim.lsp.buf.hover({ border = 'rounded' })
   end
 end
 
@@ -42,7 +51,7 @@ local go_to_definition = function()
   end
 end
 
-function keymap(_bufnr)
+local function keymap(_bufnr)
   local function map(lhs, rhs, opts, mode)
     mode = mode or 'n'
     opts = opts or {}
@@ -52,6 +61,8 @@ function keymap(_bufnr)
     opts.desc = string.format('Lsp: %s', opts.desc)
     vim.keymap.set(mode, lhs, rhs, opts)
   end
+
+  map('K', hover_action, { desc = 'Hover', nowait = true })
 
   map('gf', function()
     Snacks.picker.diagnostics_buffer()
@@ -93,6 +104,7 @@ function keymap(_bufnr)
   -- end
 
   map('<leader>cr', rename, { desc = '[R]ename' })
+  map('<leader>rn', vim.lsp.buf.rename, { desc = '[R]ename' })
 
   map('<leader>ci', '<cmd>LspInfo<cr>', { desc = 'Lsp Info' })
   map('<leader>ch', vim.lsp.codelens.refresh, { desc = 'CodeLens Refresh' })
@@ -116,6 +128,13 @@ function keymap(_bufnr)
       print('No diagnostic on this line')
     end
   end, { desc = '[C]opy [D]iagnostic under cursor' })
+
+  --- TypeScript Tools
+  if not isTsToolOk then
+    return
+  end
+  map('gs', typeScriptTools.organize_imports, { desc = 'Organize imports' })
+  map('gI', typeScriptTools.add_missing_imports, { desc = 'Add missing imports' })
 end
 
 local function disable_global_keymaps()
@@ -123,15 +142,6 @@ local function disable_global_keymaps()
     pcall(vim.keymap.del, 'n', bind)
   end
 end
-
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-  silent = true,
-  border = vim.g.borderStyle,
-})
-
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = vim.g.borderStyle,
-})
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
@@ -163,48 +173,4 @@ vim.api.nvim_create_autocmd('LspAttach', {
     keymap(bufnr)
     codelens(bufnr, client)
   end,
-})
---------------------------------------------------------------------------------
--- DIAGNOSTICS
-
-vim.diagnostic.config({
-  signs = {
-    text = { '', '▲', '●', '' }, -- Error, Warn, Info, Hint
-  },
-  virtual_text = {
-    spacing = 2,
-    severity = {
-      min = vim.diagnostic.severity.WARN, -- leave out Info & Hint
-    },
-    format = function(diag)
-      local msg = diag.message:gsub('%.$', '')
-      return msg
-    end,
-    suffix = function(diag)
-      if not diag then
-        return ''
-      end
-      local codeOrSource = (tostring(diag.code or diag.source or ''))
-      if codeOrSource == '' then
-        return ''
-      end
-      return (' [%s]'):format(codeOrSource:gsub('%.$', ''))
-    end,
-  },
-  float = {
-    max_width = 70,
-    header = '',
-    prefix = function(_, _, total)
-      return (total > 1 and '• ' or ''), 'Comment'
-    end,
-    suffix = function(diag)
-      local source = (diag.source or ''):gsub(' ?%.$', '')
-      local code = diag.code and ': ' .. diag.code or ''
-      return ' ' .. source .. code, 'Comment'
-    end,
-    format = function(diag)
-      local msg = diag.message:gsub('%.$', '')
-      return msg
-    end,
-  },
 })

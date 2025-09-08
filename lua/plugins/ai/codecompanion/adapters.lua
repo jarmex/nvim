@@ -127,7 +127,7 @@ return {
               'qwen/qwen3-235b-a22b-07-25:free',
               'mistralai/devstral-small:free',
               'moonshotai/kimi-k2:free',
-              'moonshotai/kimi-k2',
+              'moonshotai/kimi-k2-0905',
               'deepseek/deepseek-chat-v3.1',
             },
           },

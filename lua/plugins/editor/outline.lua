@@ -4,7 +4,7 @@ return {
     lazy = true,
     cmd = { 'Outline', 'OutlineOpen' },
     keys = {
-      { '<leader>so', '<cmd>Outline<cr>', desc = 'Toggle Outline' },
+      { '<leader>so', '<cmd>Outline<cr>', desc = 'Toggle Symbol Outline' },
     },
     opts = {},
   },
