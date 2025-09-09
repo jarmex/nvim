@@ -1,3 +1,4 @@
+-- adapted from https://github.com/lucobellic/nvim-config/blob/main/lua/plugins/codecompanion/prompts.lua
 return {
   strategy = 'chat',
   description = 'Find potential bugs from the provided diff changes',
@@ -35,7 +36,7 @@ return {
           content = 'git diff content from ' .. path .. ':\n' .. content,
         }, { reference = id, visible = false })
 
-        chat.references:add({
+        chat.context:add({
           id = id,
           path = path,
           source = '',

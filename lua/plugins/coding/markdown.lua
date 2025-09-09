@@ -15,7 +15,7 @@ return {
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    ft = { 'markdown', 'codecompanion' },
+    ft = { 'markdown', 'codecompanion', 'mcphub', 'obsidian' },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
@@ -23,7 +23,8 @@ return {
         blink = { enabled = true },
         lsp = { enabled = true },
       },
-      file_types = { 'markdown', 'codecompanion' },
+      file_types = { 'markdown', 'markdown.floaterm', 'codecompanion', 'codecompanion.floaterm', 'mcphub', 'obsidian' },
+      -- render_modes = { 'n', 'c', 'i' },
       latex = { enabled = false },
       render_modes = true, -- Render in ALL modes
       -- render_modes = { 'n', 'c', 'i' },

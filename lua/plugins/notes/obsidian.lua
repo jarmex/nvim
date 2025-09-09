@@ -136,11 +136,11 @@ return {
     },
     attachments = {
       confirm_img_paste = false,
-      img_text_func = function(client, path)
-        path = client:vault_relative_path(path) or path
-        local path_string = vim.uri_encode(vim.fs.basename(tostring(path)))
-        return string.format('![%s](%s)', path.name, path_string)
-      end,
+      -- img_text_func = function(client, path)
+      --   path = client:vault_relative_path(path) or path
+      --   local path_string = vim.uri_encode(vim.fs.basename(tostring(path)))
+      --   return string.format('![%s](%s)', path.name, path_string)
+      -- end,
       -- The default folder to place images in via `:ObsidianPasteImg`.
       -- If this is a relative path it will be interpreted as relative to the vault root.
       -- You can always override this per image by passing a full path to the command instead of just a filename.
@@ -162,5 +162,20 @@ return {
       '<Cmd>Obsidian toggle_checkbox<CR>',
       { noremap = true, desc = '(Obsidian)Toggle checkbox' }
     )
+
+    --- Create a new note with the name of the current task
+    local function toggle_current_task()
+      -- Get name of the current branch
+      local branch = vim.fn.system('git rev-parse --abbrev-ref HEAD')
+
+      -- Get the task based on regex
+      local task = branch and branch:match('(%w+%-%d+)') or ''
+      if task ~= '' then
+        vim.cmd('Obsidian new ' .. task)
+      else
+        vim.notify('Unable to create note', vim.log.levels.WARN, { title = 'obsidian.nvim' })
+      end
+    end
+    vim.api.nvim_create_user_command('ObsidianTask', toggle_current_task, {})
   end,
 }

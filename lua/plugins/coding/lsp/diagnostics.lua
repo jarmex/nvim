@@ -38,6 +38,12 @@ local diagnostic_config = {
       [vim.diagnostic.severity.INFO] = '',
       [vim.diagnostic.severity.HINT] = '',
     },
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = 'DiagnosticError',
+      [vim.diagnostic.severity.WARN] = 'DiagnosticWarn',
+      [vim.diagnostic.severity.INFO] = 'DiagnosticInfo',
+      [vim.diagnostic.severity.HINT] = 'DiagnosticHint',
+    },
   },
   virtual_text = virtual_text_config,
   -- virtual_text = {
