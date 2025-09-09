@@ -60,3 +60,15 @@ vim.api.nvim_create_user_command('FormatEnable', function()
 end, {
   desc = 'Re-enable autoformat-on-save',
 })
+
+vim.api.nvim_create_user_command('FindAndReplace', function(opts)
+  vim.api.nvim_command(string.format('silent cdo s/%s/%s', opts.fargs[1], opts.fargs[2]))
+  vim.api.nvim_command('silent cfdo update')
+end, {
+  desc = 'Find and Replace (after quickfix)',
+  nargs = '*',
+})
+
+vim.api.nvim_create_user_command('FindAndReplaceUndo', function()
+  vim.api.nvim_command('silent cdo undo')
+end, { desc = 'Undo Find and Replace' })
