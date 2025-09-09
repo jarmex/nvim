@@ -20,8 +20,20 @@ return {
         lineFoldingOnly = true,
       }
 
-      local lspconfig_defaults = require('lspconfig').util.default_config
-      lspconfig_defaults.capabilities = vim.tbl_deep_extend('force', lspconfig_defaults.capabilities, lsp_capabilities)
+      local has_blink, blink = pcall(require, 'blink.cmp')
+      lsp_capabilities =
+        vim.tbl_deep_extend('force', lsp_capabilities, has_blink and blink.get_lsp_capabilities() or {}, {
+          textDocument = {
+            foldingRange = {
+              dynamicRegistration = false,
+              lineFoldingOnly = true,
+            },
+          },
+        })
+
+      vim.lsp.config('*', {
+        capabilities = lsp_capabilities,
+      })
 
       require('plugins.coding.lsp.keymaps')
 

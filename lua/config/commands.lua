@@ -1,3 +1,8 @@
+-- delete current buffer
+vim.api.nvim_create_user_command('Q', function()
+  vim.cmd.bd('%')
+end, {})
+
 -- json
 vim.api.nvim_create_user_command('JsonDemangle', "%!jq '.'", { force = true })
 -- vim.api.nvim_create_user_command('Uuid', 'read !uuidgen', { force = true })

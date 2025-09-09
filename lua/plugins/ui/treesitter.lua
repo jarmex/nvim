@@ -56,7 +56,6 @@ return {
   {
     --- Treesitter
     'nvim-treesitter/nvim-treesitter',
-    -- version = false,
     lazy = false,
     branch = 'main',
     build = ':TSUpdate',
@@ -201,7 +200,7 @@ return {
         .iter({
           select = {
             ['af'] = { query = '@function.outer', desc = 'function outer' },
-            ['if'] = { query = '@function.inner', desc = 'function innner' },
+            ['if'] = { query = '@function.inner', desc = 'function inner' },
             ['ac'] = { query = '@class.outer', desc = 'class outer' },
             ['ic'] = { query = '@class.inner', desc = 'class inner' },
 

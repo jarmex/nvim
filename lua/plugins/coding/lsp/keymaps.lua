@@ -90,8 +90,8 @@ local function keymap(_bufnr)
 
   map('gl', "<cmd>lua vim.diagnostic.open_float(0,{border='rounded'})<CR>", { desc = 'Show diagnostics' })
 
-  map('[d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
-  map(']d', diagnostic_goto(false), { desc = 'Next Diagnostic' })
+  -- map('[d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
+  -- map(']d', diagnostic_goto(false), { desc = 'Next Diagnostic' })
   -- map('<leader>cd', "<cmd>lua vim.diagnostic.open_float({source='if_many'})<cr>", { desc = 'Diagnostic' })
 
   map('<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', { desc = 'Set loclist' })

@@ -1,8 +1,47 @@
 local icons = require('helpers.icons')
+---@return string
+local function get_cwd()
+  return vim.fn.getcwd()
+end
 
 local adaptersList = {
-  ['neotest-vitest'] = {},
-  -- ['neotest-jest'] = {},
+  -- ['neotest-vitest'] = {
+  --   args = { '--coverage' },
+  -- },
+  ['neotest-jest'] = {
+    -- Use yarn test command prefix
+    -- jestCommand = "yarn test --",
+
+    -- Use npm test command prefix
+    jestCommand = 'npm test --',
+    jestConfigFile = function(file_path)
+      --return require("neotest.providers.jest.config").find_config(file_path,
+      --    { 'jest.config.js', 'jest.config.ts', 'jest.config.mjs', 'jest.config.cjs' })
+      -- or return custom path: return vim.fn.getcwd() .. "/jest.config.js"
+      return vim.fn.getcwd() .. '/jest.config.ts'
+    end,
+    -- env = { CI = true }, -- Pass environment variables if needed
+    -- Disable Jest's internal test discovery if Neotest handles it better
+    jest_test_discovery = true,
+    isTestFile = function(file_path)
+      if require('neotest-jest.jest-util').defaultIsTestFile(file_path) then
+        return true
+      end
+
+      local ext = vim.fn.fnamemodify(file_path, ':e:e')
+
+      return ext == 'it.ts' and require('neotest-jest.jest-util').hasJestDependency(file_path)
+    end,
+    cwd = get_cwd,
+    strategy_config = function(default_strategy, _)
+      default_strategy['resolveSourceMapLocations'] = {
+        '${workspaceFolder}/**',
+        '!**/node_modules/**',
+      }
+
+      return default_strategy
+    end,
+  },
   -- ['neotest-jest'] = {
   --   jestCommand = 'pnpm jest',
   --   -- jestConfigFile = "jest.config.js",
@@ -19,10 +58,10 @@ return {
     version = '*',
     event = 'VeryLazy',
     dependencies = {
-      'nvim-neotest/nvim-nio',
-      'nvim-neotest/neotest-jest',
-      'marilari88/neotest-vitest',
-      'nvim-neotest/neotest-plenary',
+      'nvim-neotest/nvim-nio', -- Required dependency
+      'nvim-neotest/neotest-jest', -- Jest (JavaScript/TypeScript)
+      'marilari88/neotest-vitest', -- Vitest (JavaScript/TypeScript)
+      'nvim-neotest/neotest-plenary', -- For testing Lua plugins
     },
     keys = require('plugins.coding.neotest.keymaps').keymaps(),
     opts = function()
@@ -32,6 +71,14 @@ return {
         },
         log_level = vim.log.levels.ERROR,
         status = { enabled = true, virtual_text = true, signs = true },
+        signs = {
+          -- Customize signs used by Neotest
+          passed = { text = '✓', hl = 'NeotestPassed' },
+          failed = { text = '✗', hl = 'NeotestFailed' },
+          skipped = { text = '»', hl = 'NeotestSkipped' },
+          running = { text = '', hl = 'NeotestRunning' },
+          unknown = { text = '?', hl = 'NeotestUnknown' },
+        },
         output = { enabled = true, open_on_run = false },
         discovery = { enabled = false }, -- recommend by neotest-jest
         diagnostic = { enabled = true },
