@@ -146,8 +146,8 @@ return {
         ignore_list = { 'fzf', 'help', 'git', 'snacks' },
       },
       view = {
-        adaptive_size = true,
-        width = 40,
+        adaptive_size = false,
+        width = 38,
         signcolumn = 'no',
       },
     },

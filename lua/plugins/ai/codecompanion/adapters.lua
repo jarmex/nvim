@@ -118,7 +118,7 @@ return {
           -- temperature = { default = 0.3 },
           -- maxOutputTokens = { default = 8192 },
           model = {
-            default = 'deepseek/deepseek-chat-v3.1:free',
+            default = 'moonshotai/kimi-k2-0905',
             choices = {
               'z-ai/glm-4.5',
               'z-ai/glm-4.5-air:free',
@@ -129,6 +129,7 @@ return {
               'moonshotai/kimi-k2:free',
               'moonshotai/kimi-k2-0905',
               'deepseek/deepseek-chat-v3.1',
+              'deepseek/deepseek-chat-v3.1:free',
             },
           },
         },

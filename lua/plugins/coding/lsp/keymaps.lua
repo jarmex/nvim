@@ -64,7 +64,7 @@ local function keymap(_bufnr)
 
   map('K', hover_action, { desc = 'Hover', nowait = true })
 
-  map('gf', function()
+  map('lf', function()
     Snacks.picker.diagnostics_buffer()
   end, { desc = 'Find Diagnostics', nowait = true })
 

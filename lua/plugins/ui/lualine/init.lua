@@ -81,7 +81,8 @@ return {
           },
           lualine_y = {
             status.codecompanion(),
-            status.lsp(),
+            -- status.lsp(),
+            status.LspStatus(),
           },
           lualine_z = {
             status.progress(),
