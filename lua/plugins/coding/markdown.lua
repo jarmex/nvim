@@ -1,21 +1,10 @@
--- FIX https://github.com/MeanderingProgrammer/render-markdown.nvim/issues/488#issuecomment-3154937211
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'markdown', 'codecompanion' },
-  group = vim.api.nvim_create_augroup('render-markdown-fix', { clear = true }),
-  once = true,
-  callback = vim.schedule_wrap(function()
-    vim.treesitter.stop()
-    pcall(vim.treesitter.start)
-  end),
-})
-
 return {
   ---@module "lazy.types"
   ---@type LazyPluginSpec
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    ft = { 'markdown', 'codecompanion', 'mcphub', 'obsidian' },
+    ft = { 'markdown', 'codecompanion', 'obsidian' },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
@@ -23,7 +12,7 @@ return {
         blink = { enabled = true },
         lsp = { enabled = true },
       },
-      file_types = { 'markdown', 'markdown.floaterm', 'codecompanion', 'codecompanion.floaterm', 'mcphub', 'obsidian' },
+      file_types = { 'markdown', 'codecompanion', 'obsidian' },
       -- render_modes = { 'n', 'c', 'i' },
       latex = { enabled = false },
       render_modes = true, -- Render in ALL modes
@@ -45,6 +34,7 @@ return {
           todo = { rendered = '◯ ' },
         },
       },
+      html = { enabled = false },
       overrides = {
         filetype = {
           codecompanion = {
@@ -63,6 +53,7 @@ return {
           },
         },
       },
+      -- restart_highlighter = true,
     },
   },
 }

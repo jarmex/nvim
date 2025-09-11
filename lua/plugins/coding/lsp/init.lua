@@ -226,31 +226,28 @@ return {
           provideFormatter = false,
           documentRangeFormattingProvider = false,
         },
-        on_new_config = function(new_config)
-          new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-          vim.list_extend(new_config.settings.json.schemas, require('schemastore').json.schemas())
-        end,
         settings = {
           json = {
-            format = { enable = true },
             validate = { enable = true },
+            schemas = require('schemastore').json.schemas(),
           },
         },
         filetypes = { 'json', 'jsonc', 'json5' },
       })
 
+      vim.lsp.config('vue_ls', {
+        filetypes = { 'vue' },
+        init_options = {
+          vue = {
+            hybridMode = false,
+          },
+        },
+      })
+
       vim.lsp.config('yamlls', {
-        -- lazy-load schemastore when needed
-        on_new_config = function(new_config)
-          new_config.settings.yaml.schemas = new_config.settings.yaml.schemas or {}
-          vim.list_extend(new_config.settings.yaml.schemas, require('schemastore').yaml.schemas())
-        end,
         settings = {
           redhat = { telemetry = { enabled = false } },
           yaml = {
-            format = {
-              enable = true,
-            },
             schemaStore = {
               -- Must disable built-in schemaStore support to use
               -- schemas from SchemaStore.nvim plugin
@@ -258,6 +255,7 @@ return {
               -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
               url = '',
             },
+            schemas = require('schemastore').yaml.schemas(),
             filetype_exclude = { 'helm' },
           },
         },

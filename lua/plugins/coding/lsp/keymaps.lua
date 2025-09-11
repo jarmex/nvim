@@ -24,13 +24,13 @@ local function hover_action()
   end
 end
 
-local function diagnostic_goto(next, severity)
-  local count = next and 1 or -1
-  severity = severity and vim.diagnostic.severity[severity] or nil
-  return function()
-    vim.diagnostic.jump({ count = count, float = true, severity = severity, wrap = true })
-  end
-end
+-- local function diagnostic_goto(next, severity)
+--   local count = next and 1 or -1
+--   severity = severity and vim.diagnostic.severity[severity] or nil
+--   return function()
+--     vim.diagnostic.jump({ count = count, float = true, severity = severity, wrap = true })
+--   end
+-- end
 
 local function rename()
   if pcall(require, 'inc_rename') then
@@ -51,20 +51,21 @@ local go_to_definition = function()
   end
 end
 
-local function keymap(_bufnr)
+local function keymap(bufnr)
   local function map(lhs, rhs, opts, mode)
     mode = mode or 'n'
     opts = opts or {}
+    -- opts.buffer = bufnr
     opts.silent = opts.silent or true
     opts.noremap = true
-    opts.buffer = true
+    opts.buffer = bufnr or true
     opts.desc = string.format('Lsp: %s', opts.desc)
     vim.keymap.set(mode, lhs, rhs, opts)
   end
 
   map('K', hover_action, { desc = 'Hover', nowait = true })
 
-  map('lf', function()
+  map('gj', function()
     Snacks.picker.diagnostics_buffer()
   end, { desc = 'Find Diagnostics', nowait = true })
 

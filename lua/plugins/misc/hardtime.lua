@@ -8,7 +8,7 @@ return {
   },
   opts = {
     allow_different_key = true,
-    enabled = false,
+    enabled = true,
     disabled_filetypeis = {
       lazy = true,
       ['dapui*'] = true,

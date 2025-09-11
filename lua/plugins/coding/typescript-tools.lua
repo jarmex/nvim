@@ -41,10 +41,11 @@ return {
           includeCompletionsForModuleExports = true,
         },
         tsserver_plugins = { '@vue/typescript-plugin' },
-        tsserver_max_memory = 3072,
+        tsserver_max_memory = 12288,
         separate_diagnostic_server = true,
         publish_diagnostic_on = 'insert_leave',
         expose_as_code_action = 'all',
+        include_completions_with_insert_text = true,
         complete_function_calls = true,
         jsx_close_tag = {
           enable = true,
