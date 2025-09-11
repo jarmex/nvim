@@ -13,10 +13,7 @@ return {
       'ravitemer/codecompanion-history.nvim', -- Save and load conversation history.
       'ravitemer/mcphub.nvim', -- Manage MCP servers.
       'jinzhongjia/codecompanion-gitcommit.nvim',
-      -- {
-      --   'franco-ruggeri/codecompanion-spinner.nvim',
-      --   version = false,
-      -- }, -- for spinner
+      'franco-ruggeri/codecompanion-spinner.nvim', -- for spinner
       -- 'jarmex/codecompanion-gitcommit.nvim',
       -- 'minusfive/codecompanion-agent-rules',
       -- { 'jinzhongjia/codecompanion-tools.nvim' },

@@ -75,7 +75,7 @@ M.chat = {
 ---------------
 
 M.cmd = {
-  adapter = adapters.http.deepseek,
+  adapter = adapters.http.openrouter(),
 }
 
 return M

@@ -126,12 +126,12 @@ return {
       commit_history_count = 10, -- Number of recent commits for context
     },
   },
-  -- spinner = {
-  --   opts = {
-  --     -- log_level = "debug",
-  --     style = 'fidget', -- "spinner", "fidget", or "none"
-  --   },
-  -- },
+  spinner = {
+    opts = {
+      log_level = 'info',
+      -- style = 'fidget', -- "spinner", "fidget", or "none"
+    },
+  },
   -- agent_rules = {
   --   enabled = true,
   -- },
