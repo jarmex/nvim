@@ -1,5 +1,6 @@
 return {
   'folke/edgy.nvim',
+  enabled = false,
   opts = {
     bottom = {
       { ft = 'qf', title = 'QuickFix' },

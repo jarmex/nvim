@@ -1,6 +1,9 @@
 return {
+  -- https://github.com/folke/trouble.nvim/pull/656
+  'h-michael/trouble.nvim',
+  branch = 'fix/decoration-provider-api',
   -- better diagnostics list and others
-  'folke/trouble.nvim',
+  -- 'folke/trouble.nvim',
   event = 'VeryLazy',
   cmd = 'Trouble',
   opts = {
@@ -13,6 +16,7 @@ return {
       type = 'main',
       scratch = false,
     },
+    win = { height = 30 },
     modes = {
       lsp = {
         win = { position = 'right' },

@@ -13,14 +13,14 @@ vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
 })
 
 -- -- resize splits if window got resized
--- vim.api.nvim_create_autocmd({ 'VimResized' }, {
---   group = augroup('resize_splits'),
---   callback = function()
---     local current_tab = vim.fn.tabpagenr()
---     vim.cmd('tabdo wincmd =')
---     vim.cmd('tabnext ' .. current_tab)
---   end,
--- })
+vim.api.nvim_create_autocmd({ 'VimResized' }, {
+  group = augroup('resize_splits'),
+  callback = function()
+    local current_tab = vim.fn.tabpagenr()
+    vim.cmd('tabdo wincmd =')
+    vim.cmd('tabnext ' .. current_tab)
+  end,
+})
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   group = augroup('filetype_settings'),
@@ -127,7 +127,7 @@ vim.api.nvim_create_autocmd('FileType', {
     -- set go specific options
     vim.opt_local.tabstop = 2
     vim.opt_local.shiftwidth = 2
-    -- vim.opt_local.colorcolumn = '120'
+    vim.opt_local.colorcolumn = '120'
   end,
 })
 
@@ -189,29 +189,29 @@ vim.api.nvim_create_autocmd('FocusLost', {
 --------------------------------------------------------------------------------
 
 -- create cc according to filetype
--- local cc_filetypes = {
---   c = '101',
---   cpp = '101',
---   java = '101',
---   javascript = '101',
---   javascriptreact = '101',
---   kotlin = '101',
---   lua = '101',
---   typescript = '101',
---   typescriptreact = '101',
---   rust = '101',
---   haskell = '101',
---   swift = '101',
---   markdown = '81',
--- }
--- vim.api.nvim_create_autocmd({ 'FileType' }, {
---   group = augroup('colorcolumn'),
---   callback = function(event)
---     local filetype = event.match
---     if cc_filetypes[filetype] then
---       vim.wo.colorcolumn = cc_filetypes[filetype]
---     else
---       vim.wo.colorcolumn = ''
---     end
---   end,
--- })
+local cc_filetypes = {
+  c = '120',
+  cpp = '120',
+  java = '120',
+  javascript = '120',
+  javascriptreact = '120',
+  kotlin = '120',
+  lua = '120',
+  typescript = '120',
+  typescriptreact = '120',
+  rust = '120',
+  haskell = '120',
+  swift = '120',
+  markdown = '100',
+}
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  group = augroup('colorcolumn'),
+  callback = function(event)
+    local filetype = event.match
+    if cc_filetypes[filetype] then
+      vim.opt_local.colorcolumn = cc_filetypes[filetype]
+    else
+      vim.opt_local.colorcolumn = ''
+    end
+  end,
+})
