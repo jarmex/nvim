@@ -13,7 +13,8 @@ return {
       'ravitemer/codecompanion-history.nvim', -- Save and load conversation history.
       'ravitemer/mcphub.nvim', -- Manage MCP servers.
       'jinzhongjia/codecompanion-gitcommit.nvim',
-      'franco-ruggeri/codecompanion-spinner.nvim', -- for spinner
+      'lalitmee/codecompanion-spinners.nvim',
+      -- 'franco-ruggeri/codecompanion-spinner.nvim', -- for spinner
       -- 'jarmex/codecompanion-gitcommit.nvim',
       -- 'minusfive/codecompanion-agent-rules',
       -- { 'jinzhongjia/codecompanion-tools.nvim' },
@@ -41,6 +42,13 @@ return {
           inline = { diff = { enabled = true } },
           chat = display.chat,
           action_palette = display.action_palette,
+        },
+        memory = {
+          opts = {
+            chat = {
+              enabled = true,
+            },
+          },
         },
         prompt_library = require('plugins.ai.codecompanion.promptlibrary'),
         extensions = require('plugins.ai.codecompanion.extensions'),

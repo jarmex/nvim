@@ -129,37 +129,8 @@ return {
   spinner = {
     opts = {
       log_level = 'info',
-      -- style = 'fidget', -- "spinner", "fidget", or "none"
+      -- Available options: "cursor-relative", "snacks", "fidget", "lualine", "heirline", "native", "none"
+      style = 'snacks',
     },
   },
-  -- agent_rules = {
-  --   enabled = true,
-  -- },
-  -- ['codecompanion-tools'] = {
-  --   opts = {
-  --     rules = {
-  --       enabled = true,
-  --       debug = false,
-  --     },
-  --     model_toggle = {
-  --       enabled = true,
-  --       keymap = '<S-Tab>',
-  --       sequence = {
-  --         { adapter = 'openai', model = 'gpt-4.1' },
-  --       },
-  --     },
-  --     dag = {
-  --       enabled = true,
-  --     },
-  --     context_compression = {
-  --       enabled = true,
-  --       auto_trigger = true,
-  --       token_threshold = 8000,
-  --       ui = {
-  --         keymap = '<leader>cc',
-  --         auto_notify = true,
-  --       },
-  --     },
-  --   },
-  -- },
 }
