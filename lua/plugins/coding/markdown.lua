@@ -34,23 +34,20 @@ return {
           todo = { rendered = '◯ ' },
         },
       },
-      html = { enabled = false },
-      overrides = {
-        filetype = {
-          codecompanion = {
-            html = {
-              tag = {
-                buf = { icon = ' ', highlight = 'CodeCompanionChatIcon' },
-                file = { icon = ' ', highlight = 'CodeCompanionChatIcon' },
-                group = { icon = ' ', highlight = 'CodeCompanionChatIcon' },
-                help = { icon = '󰘥 ', highlight = 'CodeCompanionChatIcon' },
-                image = { icon = ' ', highlight = 'CodeCompanionChatIcon' },
-                symbols = { icon = ' ', highlight = 'CodeCompanionChatIcon' },
-                tool = { icon = '󰯠 ', highlight = 'CodeCompanionChatIcon' },
-                url = { icon = '󰌹 ', highlight = 'CodeCompanionChatIcon' },
-              },
-            },
-          },
+      html = {
+        enabled = true,
+        tag = {
+          buf = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
+          file = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
+          help = { icon = '󰘥 ', highlight = 'CodeCompanionChatVariable' },
+          image = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
+          symbols = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
+          url = { icon = '󰖟 ', highlight = 'CodeCompanionChatVariable' },
+          var = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
+          tool = { icon = ' ', highlight = 'CodeCompanionChatTool' },
+          user = { icon = ' ', highlight = 'CodeCompanionChatTool' },
+          group = { icon = ' ', highlight = 'CodeCompanionChatToolGroup' },
+          memory = { icon = '󰍛 ', highlight = 'CodeCompanionChatVariable' },
         },
       },
       -- restart_highlighter = true,

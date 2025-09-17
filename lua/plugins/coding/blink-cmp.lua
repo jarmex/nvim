@@ -17,7 +17,9 @@ return {
     lazy = false, -- lazy loading handled internally
     opts = {
       fuzzy = {
-        use_frecency = true,
+        frecency = {
+          enabled = true,
+        },
         implementation = 'rust',
       },
       cmdline = {
