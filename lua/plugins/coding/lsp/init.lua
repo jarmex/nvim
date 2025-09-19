@@ -89,6 +89,10 @@ return {
         'taplo',
         'typos_lsp',
         'yamlls',
+        'cssls',
+        -- 'tsserver',
+        -- 'tailwindcss',
+        -- 'svelte',
         -- 'astro',
         -- 'copilot_ls',
         -- 'postgres_lsp',
@@ -233,15 +237,6 @@ return {
           },
         },
         filetypes = { 'json', 'jsonc', 'json5' },
-      })
-
-      vim.lsp.config('vue_ls', {
-        filetypes = { 'vue' },
-        init_options = {
-          vue = {
-            hybridMode = false,
-          },
-        },
       })
 
       vim.lsp.config('yamlls', {
