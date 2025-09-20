@@ -72,3 +72,7 @@ end, {
 vim.api.nvim_create_user_command('FindAndReplaceUndo', function()
   vim.api.nvim_command('silent cdo undo')
 end, { desc = 'Undo Find and Replace' })
+
+vim.api.nvim_create_user_command('FormatXml', function()
+  vim.cmd('%!tidy -q -i --show-errors 0 -xml')
+end, {})
