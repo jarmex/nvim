@@ -8,8 +8,6 @@ local filetypes = {
   'vue',
 }
 
-local mason_path = vim.fn.stdpath('data') .. '/mason/packages/'
-
 return {
   {
     'davidosomething/format-ts-errors.nvim',
@@ -25,6 +23,23 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     event = 'BufEnter',
     ft = filetypes,
+    cmd = {
+      'TSToolsOrganizeImports',
+      'TSToolsSortImports',
+      'TSToolsRemoveUnusedImports',
+      'TSToolsRemoveUnused',
+      'TSToolsAddMissingImports',
+      'TSToolsFixAll',
+      'TSToolsGoToSourceDefinition',
+      'TSToolsFileReferences',
+    },
+    keys = {
+      { '<localleader>t', '', desc = '+ Typescriptreact tool', ft = filetypes },
+      { '<localleader>ti', '<cmd>TSToolsFixAll<cr>', desc = 'Fix all', ft = filetypes },
+      { '<localleader>ts', '<cmd>TSToolsGoToSourceDefinition<cr>', desc = 'Go to source', ft = filetypes },
+      { '<localleader>tr', '<cmd>TSToolsFileReferences<cr>', desc = 'File reference', ft = filetypes },
+      { '<leader>og', '<cmd>TSToolsOrganizeImports<cr>', desc = 'Organize Imports' },
+    },
     opts = {
       filetypes = filetypes,
       settings = {
@@ -87,9 +102,6 @@ return {
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
       end,
-    },
-    keys = {
-      { '<leader>og', '<cmd>TSToolsOrganizeImports<cr>', desc = 'Organize Imports' },
     },
     config = function(_, opts)
       require('typescript-tools').setup(opts)

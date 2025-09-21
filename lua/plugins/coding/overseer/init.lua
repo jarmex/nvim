@@ -26,7 +26,22 @@ return {
   {
     'stevearc/overseer.nvim',
     branch = 'master',
-    cmd = { 'OverseerRun', 'OverseerInfo', 'OverseerToggle', 'OverseerFromTerminal' },
+    cmd = {
+      'OverseerBuild',
+      'OverseerClearCache',
+      'OverseerClose',
+      'OverseerDeleteBundle',
+      'OverseerFromTerminal',
+      'OverseerInfo',
+      'OverseerLoadBundle',
+      'OverseerOpen',
+      'OverseerQuickAction',
+      'OverseerRun',
+      'OverseerRunCmd',
+      'OverseerSaveBundle',
+      'OverseerTaskAction',
+      'OverseerToggle',
+    },
     keys = {
       { '<leader>o', '', desc = 'Overseer' },
       { '<leader>oR', '<cmd>OverseerRunCmd<cr>', desc = 'Run Command' },
