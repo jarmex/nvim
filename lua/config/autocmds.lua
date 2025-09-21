@@ -13,14 +13,14 @@ vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
 })
 
 -- -- resize splits if window got resized
--- vim.api.nvim_create_autocmd({ 'VimResized' }, {
---   group = augroup('resize_splits'),
---   callback = function()
---     local current_tab = vim.fn.tabpagenr()
---     vim.cmd('tabdo wincmd =')
---     vim.cmd('tabnext ' .. current_tab)
---   end,
--- })
+vim.api.nvim_create_autocmd({ 'VimResized' }, {
+  group = augroup('resize_splits'),
+  callback = function()
+    local current_tab = vim.fn.tabpagenr()
+    vim.cmd('tabdo wincmd =')
+    vim.cmd('tabnext ' .. current_tab)
+  end,
+})
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   group = augroup('filetype_settings'),
@@ -114,7 +114,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = { '*.ts', '*.tsx', '*.js', '*.jsx' },
   callback = function(args)
     vim.cmd('TSToolsAddMissingImports sync')
-    vim.cmd('TSToolsRemoveUnusedImports sync')
+    -- vim.cmd('TSToolsRemoveUnusedImports sync')
     if package.loaded['conform'] then
       require('conform').format({ bufnr = args.buf })
     end
@@ -149,41 +149,69 @@ vim.api.nvim_create_autocmd('FocusLost', {
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
--- ADD NOTIFICATION TO LSP RENAME
-local originalRenameHandler = vim.lsp.handlers['textDocument/rename']
-vim.lsp.handlers['textDocument/rename'] = function(err, result, ctx, config)
-  originalRenameHandler(err, result, ctx, config)
-  if err or not result then
-    return
-  end
-
-  -- count changes
-  local changes = result.changes or result.documentChanges or {}
-  local changedFiles = vim
-    .iter(vim.tbl_keys(changes))
-    :filter(function(file)
-      return #changes[file] > 0
-    end)
-    :map(function(file)
-      return '- ' .. vim.fs.basename(file)
-    end)
-    :totable()
-  local changeCount = vim.iter(changes):fold(0, function(sum, _, change)
-    return sum + #(change.edits or change)
-  end)
-
-  -- notification
-  local pluralS = changeCount > 1 and 's' or ''
-  local msg = ('[%d] instance%s'):format(changeCount, pluralS)
-  if #changedFiles > 1 then
-    local fileList = table.concat(changedFiles, '\n')
-    msg = ('**%s in [%d] files**\n%s'):format(msg, #changedFiles, fileList)
-  end
-  vim.notify(msg, nil, { title = 'Renamed with LSP', icon = '󰑕' })
-
-  -- save all
-  if #changedFiles > 1 then
-    vim.cmd('silent! wall')
-  end
-end
+-- -- ADD NOTIFICATION TO LSP RENAME
+-- local originalRenameHandler = vim.lsp.handlers['textDocument/rename']
+-- vim.lsp.handlers['textDocument/rename'] = function(err, result, ctx, config)
+--   originalRenameHandler(err, result, ctx, config)
+--   if err or not result then
+--     return
+--   end
+--
+--   -- count changes
+--   local changes = result.changes or result.documentChanges or {}
+--   local changedFiles = vim
+--     .iter(vim.tbl_keys(changes))
+--     :filter(function(file)
+--       return #changes[file] > 0
+--     end)
+--     :map(function(file)
+--       return '- ' .. vim.fs.basename(file)
+--     end)
+--     :totable()
+--   local changeCount = vim.iter(changes):fold(0, function(sum, _, change)
+--     return sum + #(change.edits or change)
+--   end)
+--
+--   -- notification
+--   local pluralS = changeCount > 1 and 's' or ''
+--   local msg = ('[%d] instance%s'):format(changeCount, pluralS)
+--   if #changedFiles > 1 then
+--     local fileList = table.concat(changedFiles, '\n')
+--     msg = ('**%s in [%d] files**\n%s'):format(msg, #changedFiles, fileList)
+--   end
+--   vim.notify(msg, nil, { title = 'Renamed with LSP', icon = '󰑕' })
+--
+--   -- save all
+--   if #changedFiles > 1 then
+--     vim.cmd('silent! wall')
+--   end
+-- end
 --------------------------------------------------------------------------------
+
+-- create cc according to filetype
+local cc_filetypes = {
+  c = '120',
+  cpp = '120',
+  java = '120',
+  javascript = '120',
+  javascriptreact = '120',
+  kotlin = '120',
+  lua = '120',
+  typescript = '120',
+  typescriptreact = '120',
+  rust = '120',
+  haskell = '120',
+  swift = '120',
+  markdown = '100',
+}
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  group = augroup('colorcolumn'),
+  callback = function(event)
+    local filetype = event.match
+    if cc_filetypes[filetype] then
+      vim.opt_local.colorcolumn = cc_filetypes[filetype]
+    else
+      vim.opt_local.colorcolumn = ''
+    end
+  end,
+})

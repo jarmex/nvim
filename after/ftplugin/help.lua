@@ -1,7 +1,7 @@
-local bkeymap = require('lib.utils').bufKeymap
+local bkeymap = require('helpers.utils').bufKeymap
 
 vim.diagnostic.enable(false, { bufnr = 0 })
-vim.opt_local.colorcolumn = ''
+-- vim.opt_local.colorcolumn = ''
 vim.opt_local.wrap = true
 
 -- `gO` opens the heading-selection in vim help files. Only used for txt-help
@@ -10,3 +10,6 @@ local ext = vim.api.nvim_buf_get_name(0):match('%.(%w+)$')
 if ext == 'txt' then
   bkeymap('n', 'gs', 'gO', { remap = true })
 end
+
+-- NOTE: enable code highlighting for help
+vim.treesitter.start()

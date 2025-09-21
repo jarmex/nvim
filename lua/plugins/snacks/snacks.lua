@@ -4,6 +4,7 @@ local keymaps = require('plugins.snacks.utils.snacks-keymaps')
 return {
   {
     'folke/snacks.nvim',
+    event = 'UIEnter',
     priority = 1000,
     lazy = false,
     ---@module 'snacks'
@@ -63,9 +64,9 @@ return {
         enabled = true,
         -- style = 'fancy',
         timeout = 3000,
-        width = { min = 40, max = 0.4 },
-        height = { min = 1, max = 0.6 },
-        margin = { top = 0, right = 1, bottom = 0 },
+        -- width = { min = 40, max = 0.4 },
+        -- height = { min = 1, max = 0.6 },
+        -- margin = { top = 0, right = 1, bottom = 0 },
         padding = true,
         -- sort = { 'level', 'added' },
         -- level = vim.log.levels.TRACE,
@@ -77,7 +78,8 @@ return {
           warn = icons.diagnostics.Warning,
         },
         style = 'compact',
-        top_down = true,
+        top_down = false,
+        margin = { bottom = 1 },
         date_format = '%R',
         more_format = ' ↓ %d lines ',
         -- refresh = 50,

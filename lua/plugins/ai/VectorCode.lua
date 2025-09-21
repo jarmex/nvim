@@ -1,9 +1,8 @@
 return {
   'Davidyz/VectorCode', -- Index and search code in your repositories
+  enabled = true,
   version = '*',
-  build = 'pipx upgrade vectorcode',
-  dependencies = { 'nvim-lua/plenary.nvim' },
-  event = 'VeryLazy',
+  build = 'uv tool install --upgrade vectorcode',
   cmd = 'VectorCode',
   opts = function()
     return {
@@ -22,12 +21,6 @@ return {
     }
   end,
   config = function(_, opts)
-    -- vim.lsp.config("vectorcode_server", {
-    --     cmd_env = {
-    --       HTTP_PROXY = os.getenv("HTTP_PROXY"),
-    --       HTTPS_PROXY = os.getenv("HTTPS_PROXY"),
-    --     },
-    --   })
     require('vectorcode').setup(opts)
   end,
 }

@@ -1,12 +1,14 @@
 return {
   'folke/edgy.nvim',
+  enabled = false,
   opts = {
     bottom = {
       { ft = 'qf', title = 'QuickFix' },
       {
         ft = 'snacks_terminal',
         size = { height = 0.4 },
-        title = '%{b:snacks_terminal.id}: %{b:term_title}',
+        -- title = '%{b:snacks_terminal.id}: %{b:term_title}',
+        title = 'Terminal %{b:snacks_terminal.id}',
         filter = function(_buf, win)
           return vim.w[win].snacks_win
             and vim.w[win].snacks_win.position == 'bottom'

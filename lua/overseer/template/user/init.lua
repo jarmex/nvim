@@ -4,6 +4,11 @@ return {
   'user.docker-compose',
   'user.tsc_build',
   'user.go',
+  'user.git',
+  'user.lua',
+  'user.python',
   'user.node',
   'user.java',
+  'user.runner',
+  'user.logs',
 }

@@ -1,6 +1,7 @@
 local M = {}
 -- Store the default prompt from codecompanion config
 M.default_prompt = require('codecompanion.config').opts.system_prompt
+M.beast_prompt = require('plugins.ai.codecompanion.systemprompts.beast').beast_mode
 
 -- Table to store registered modes and prompts
 M.modes = {}

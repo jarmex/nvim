@@ -1,134 +1,263 @@
----@diagnostic disable: need-check-nil
-local debounce = require('helpers.utils').debounce
-local autocmd = vim.api.nvim_create_autocmd
-
-local function codelens(bufnr, client)
-  if client:supports_method('textDocument/codeLens') then
-    vim.lsp.codelens.refresh({ bufnr = bufnr })
-    autocmd({ 'FocusGained', 'WinEnter', 'BufEnter', 'InsertLeave' }, {
-      group = vim.api.nvim_create_augroup('CodeLens', { clear = false }),
-      buffer = bufnr,
-      callback = debounce(500, function(args0)
-        vim.lsp.codelens.refresh({ bufnr = args0.buf })
-      end),
-    })
-  end
-end
-
-local function disable_global_keymaps()
-  for _, bind in ipairs({ 'grn', 'gra', 'gri', 'grr' }) do
-    pcall(vim.keymap.del, 'n', bind)
-  end
-end
-
 return {
-  'neovim/nvim-lspconfig',
-  lazy = false,
-  event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' }, -- "BufReadPre",
-  dependencies = {
-    { 'saghen/blink.cmp', enabled = vim.g.cmploader == 'blink.cmp' },
-    { 'b0o/SchemaStore.nvim', lazy = true, version = false },
-  },
-  config = function()
-    local default_server_config = {
-      flags = { debounce_text_changes = 150 },
-      single_file_support = true,
-    }
+  {
+    'neovim/nvim-lspconfig',
+    cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      'mfussenegger/nvim-dap',
+      'nanotee/sqls.nvim',
+      { 'b0o/SchemaStore.nvim', lazy = true, version = false },
+    },
+    config = function()
+      require('plugins.coding.lsp.lsp_border')
 
-    vim.lsp.config('*', default_server_config)
+      -- This should be executed before you configure any language server
+      --
+      -- Also support UFO: lsp-zero.netlify.app/docs/guide/quick-recipes.html#enable-folds-with-nvim-ufo
+      local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+      lsp_capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
+      }
 
-    require('lspconfig.ui.windows').default_options.border = vim.g.borderStyle
+      local has_blink, blink = pcall(require, 'blink.cmp')
+      lsp_capabilities =
+        vim.tbl_deep_extend('force', lsp_capabilities, has_blink and blink.get_lsp_capabilities() or {}, {
+          textDocument = {
+            foldingRange = {
+              dynamicRegistration = false,
+              lineFoldingOnly = true,
+            },
+          },
+        })
 
-    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-      silent = true,
-      border = vim.g.borderStyle,
-    })
+      vim.lsp.config('*', {
+        capabilities = lsp_capabilities,
+      })
 
-    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-      border = vim.g.borderStyle,
-    })
+      require('plugins.coding.lsp.keymaps')
 
-    vim.api.nvim_create_autocmd('LspAttach', {
-      group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
-      callback = function(ctx)
-        disable_global_keymaps()
+      -- Auto goimports with gopls
+      -- https://github.com/neovim/nvim-lspconfig/issues/115#issuecomment-1128115341
+      -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim-imports
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = { '*.go' },
+        callback = function()
+          local params = vim.lsp.util.make_range_params()
+          local wait_ms = 500
+          params.context = { only = { 'source.organizeImports' } }
+          local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, wait_ms)
+          for cid, res in pairs(result or {}) do
+            for _, r in pairs(res.result or {}) do
+              if r.edit then
+                local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or 'utf-16'
+                vim.lsp.util.apply_workspace_edit(r.edit, enc)
+              end
+            end
+          end
+        end,
+      })
 
-        local bufnr = ctx.buf
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('lsp_attach_server_caps', { clear = true }),
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if client == nil then
+            return
+          end
+          if client.name == 'ruff' then
+            -- Disable hover in favor of Pyright
+            client.server_capabilities.hoverProvider = false
+          end
 
-        local client = vim.lsp.get_client_by_id(ctx.data.client_id)
-        assert(client, 'No client found')
+          if client.name == 'yamlls' then
+            -- Need this so that conform uses LSP to format yaml.* files.
+            client.server_capabilities.documentFormattingProvider = true
+          end
+        end,
+        desc = 'LSP: Disable hover capability from Ruff',
+      })
 
-        if client.name == 'copilot' then
-          return
-        end
+      vim.lsp.enable({
+        'basedpyright',
+        'bashls',
+        'gopls',
+        'harper_ls',
+        'jsonls',
+        'lua_ls',
+        'ruff',
+        'taplo',
+        'typos_lsp',
+        'yamlls',
+        'cssls',
+        -- 'tsserver',
+        -- 'tailwindcss',
+        -- 'svelte',
+        -- 'astro',
+        -- 'copilot_ls',
+        -- 'postgres_lsp',
+        -- 'terraformls',
+        -- 'tflint',
+      })
 
-        if client.name == 'gopls' then
-          if not client.server_capabilities.semanticTokensProvider then
-            local semantic = client.config.capabilities.textDocument.semanticTokens
-            client.server_capabilities.semanticTokensProvider = {
-              full = true,
-              legend = {
-                tokenTypes = semantic.tokenTypes,
-                tokenModifiers = semantic.tokenModifiers,
+      vim.lsp.config('basedpyright', {
+        settings = {
+          basedpyright = {
+            disableOrganizeImports = true,
+            analysis = {
+              diagnosticMode = 'openFilesOnly',
+              inlayHints = {
+                callArgumentNames = true,
               },
-              range = true,
-            }
-          end
-        end
-        require('plugins.coding.lsp.keymaps').keymap(bufnr)
-        codelens(bufnr, client)
-      end,
-    })
-    --------------------------------------------------------------------------------
-    -- DIAGNOSTICS
-
-    vim.diagnostic.config({
-      signs = {
-        text = { '', '▲', '●', '' }, -- Error, Warn, Info, Hint
-      },
-      virtual_text = {
-        spacing = 2,
-        severity = {
-          min = vim.diagnostic.severity.WARN, -- leave out Info & Hint
+            },
+          },
         },
-        format = function(diag)
-          local msg = diag.message:gsub('%.$', '')
-          return msg
-        end,
-        suffix = function(diag)
-          if not diag then
-            return ''
-          end
-          local codeOrSource = (tostring(diag.code or diag.source or ''))
-          if codeOrSource == '' then
-            return ''
-          end
-          return (' [%s]'):format(codeOrSource:gsub('%.$', ''))
-        end,
-      },
-      float = {
-        max_width = 70,
-        header = '',
-        prefix = function(_, _, total)
-          return (total > 1 and '• ' or ''), 'Comment'
-        end,
-        suffix = function(diag)
-          local source = (diag.source or ''):gsub(' ?%.$', '')
-          local code = diag.code and ': ' .. diag.code or ''
-          return ' ' .. source .. code, 'Comment'
-        end,
-        format = function(diag)
-          local msg = diag.message:gsub('%.$', '')
-          return msg
-        end,
-      },
-    })
+      })
 
-    --------------------------------------------------------------------------------
-    local servers = require('plugins.coding.lsp.langs').load_servers()
-    for server, config in pairs(servers) do
-      vim.lsp.config(server, config)
-      vim.lsp.enable(server)
-    end
-  end,
+      vim.lsp.config('gopls', {
+        -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md#settings
+        settings = {
+          gopls = {
+            gofumpt = true,
+            analyses = {
+              unusedparams = true,
+            },
+            staticcheck = true,
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+          },
+        },
+      })
+
+      -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#lua_ls
+      vim.lsp.config('lua_ls', {
+        on_init = function(client)
+          if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if
+              path ~= vim.fn.stdpath('config')
+              and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+            then
+              return
+            end
+          end
+
+          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+            runtime = {
+              -- Tell the language server which version of Lua you're using
+              -- (most likely LuaJIT in the case of Neovim)
+              version = 'LuaJIT',
+            },
+
+            diagnostics = {
+              -- Get the language server to recognize the `vim` global
+              globals = { 'vim' },
+            },
+
+            -- Make the server aware of Neovim runtime files
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+                -- Depending on the usage, you might want to add additional paths here.
+                -- "${3rd}/luv/library"
+                -- "${3rd}/busted/library",
+              },
+              -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+              -- and will cause issues when working on your own configuration
+              -- (see https://github.com/neovim/nvim-lspconfig/issues/3189)
+              -- library = vim.api.nvim_get_runtime_file("", true)
+            },
+          })
+        end,
+        settings = {
+          Lua = {
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+      })
+
+      vim.lsp.config('bashls', {
+        filetypes = { 'bash', 'sh' },
+        settings = {
+          bashIde = {
+            globPattern = '*@(.sh|.inc|.bash|.command)',
+          },
+        },
+      })
+
+      vim.lsp.config('harper_ls', {
+        filetypes = { 'gitcommit', 'html', 'markdown', 'typescriptreact' },
+        settings = {
+          ['harper-ls'] = {
+            codeActions = {
+              forceStable = true,
+            },
+            linters = {
+              spell_check = true,
+              spelled_numbers = true,
+              an_a = true,
+              sentence_capitalization = false,
+              unclosed_quotes = true,
+              wrong_quotes = false,
+              long_sentences = false,
+              repeated_words = true,
+              spaces = true,
+              matcher = true,
+              linking_verbs = true,
+              boring_words = true,
+              capitalize_personal_pronouns = true,
+              oxford_comma = true,
+              avoid_curses = true,
+              merge_words = true,
+              plural_conjugate = true,
+            },
+            -- isolateEnglish = false,
+          },
+        },
+      })
+
+      vim.lsp.config('jsonls', {
+        init_options = {
+          provideFormatter = false,
+          documentRangeFormattingProvider = false,
+        },
+        settings = {
+          json = {
+            validate = { enable = true },
+            schemas = require('schemastore').json.schemas(),
+          },
+        },
+        filetypes = { 'json', 'jsonc', 'json5' },
+      })
+
+      vim.lsp.config('yamlls', {
+        settings = {
+          redhat = { telemetry = { enabled = false } },
+          yaml = {
+            schemaStore = {
+              -- Must disable built-in schemaStore support to use
+              -- schemas from SchemaStore.nvim plugin
+              enable = false,
+              -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+              url = '',
+            },
+            schemas = require('schemastore').yaml.schemas(),
+            filetype_exclude = { 'helm' },
+          },
+        },
+        filetypes = { 'yaml', 'yaml.docker-compose', 'yaml.gitlab', 'yaml.github' },
+      })
+
+      require('plugins.coding.lsp.diagnostics')
+    end,
+  },
 }

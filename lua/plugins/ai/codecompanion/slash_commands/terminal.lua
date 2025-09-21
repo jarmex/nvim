@@ -1,3 +1,4 @@
+-- adapted from https://github.com/lucobellic/nvim-config/blob/main/lua/plugins/codecompanion/slash_commands.lua
 return {
   ---@param chat CodeCompanion.Chat
   callback = function(chat)
@@ -10,7 +11,7 @@ return {
           picker:close()
           local items = picker:selected({ fallback = true })
           vim.iter(items):each(function(item)
-            local id = '<buf>' .. chat.references:make_id_from_buf(item.buf) .. '</buf>'
+            local id = '<buf>' .. chat.context:make_id_from_buf(item.buf) .. '</buf>'
             local lines = vim.api.nvim_buf_get_lines(item.buf, 0, -1, false)
             local content = table.concat(lines, '\n')
 
@@ -19,10 +20,9 @@ return {
               content = 'Terminal content from buffer ' .. item.buf .. ' (' .. item.file .. '):\n' .. content,
             }, { reference = id, visible = false })
 
-            chat.references:add({
+            chat.context:add({
               bufnr = item.buf,
               id = id,
-              path = item.file,
               source = '',
             })
           end)
@@ -34,6 +34,7 @@ return {
           return vim.bo[item.buf].buftype == 'terminal'
         end,
       },
+      main = { file = false },
     })
   end,
   description = 'Insert terminal output',

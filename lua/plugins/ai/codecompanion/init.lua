@@ -1,104 +1,83 @@
 return {
-  'olimorris/codecompanion.nvim',
-  version = false,
-  dependencies = {
-    'j-hui/fidget.nvim',
-    'ravitemer/codecompanion-history.nvim',
-    'hakonharnes/img-clip.nvim',
-    'ravitemer/mcphub.nvim',
-    'jinzhongjia/codecompanion-gitcommit.nvim',
+  {
+    'ravitemer/codecompanion-history.nvim', -- Save and load conversation history.
+    cmd = { 'CodeCompanionHistory', 'CodeCompanionSummaries' },
+    config = true,
   },
-  cmd = { 'CodeCompanionChat', 'CodeCompanion', 'CodeCompanionCmd', 'CodeCompanionActions', 'CodeCompanionHistory' },
-  event = 'VeryLazy',
-  keys = require('plugins.ai.codecompanion.keymaps'),
-  opts = function()
-    local defaultAdapter = os.getenv('NVIM_AI_ADAPTER') or 'gemini'
-    local helper = require('plugins.ai.codecompanion.helper')
-    local systemPromptModes = require('plugins.ai.codecompanion.systemprompts')
-    local adapters = require('plugins.ai.codecompanion.adapters')
+  {
+    'olimorris/codecompanion.nvim',
+    version = false,
+    dependencies = {
+      'j-hui/fidget.nvim',
+      'hakonharnes/img-clip.nvim',
+      'ravitemer/codecompanion-history.nvim', -- Save and load conversation history.
+      'ravitemer/mcphub.nvim', -- Manage MCP servers.
+      'jinzhongjia/codecompanion-gitcommit.nvim',
+      'lalitmee/codecompanion-spinners.nvim',
+      -- 'franco-ruggeri/codecompanion-spinner.nvim', -- for spinner
+      -- 'jarmex/codecompanion-gitcommit.nvim',
+      -- 'minusfive/codecompanion-agent-rules',
+      -- { 'jinzhongjia/codecompanion-tools.nvim' },
+    },
+    cmd = { 'CodeCompanionChat', 'CodeCompanion', 'CodeCompanionCmd', 'CodeCompanionActions', 'CodeCompanionHistory' },
+    event = 'VeryLazy',
+    keys = require('plugins.ai.codecompanion.keymaps'),
+    opts = function()
+      -- local systemPromptModes = require('plugins.ai.codecompanion.systemprompts.try_sys_prompt')
+      local adapters = require('plugins.ai.codecompanion.adapters')
+      local display = require('plugins.ai.codecompanion.display')
+      local strategies = require('plugins.ai.codecompanion.strategies')
 
-    systemPromptModes.setup()
+      -- systemPromptModes.setup()
 
-    return {
-      adapters = adapters,
-      strategies = {
-        inline = { adapter = adapters.openai },
-        cmd = { adapter = adapters.deepseek },
-        chat = {
-          keymaps = {
-            close = { modes = { n = 'q', i = '<C-c>' } },
-            -- clear = { modes = { n = '<C-x>' } },
-            completion = { modes = { i = '<C-x>' } },
-            clear = { modes = { n = 'gcr' } },
-            regenerate = { modes = { n = 'gcR' } },
-            switch_mode = {
-              modes = { n = 'gm' },
-              description = 'Switch Chat Mode',
-              callback = function()
-                systemPromptModes.browse()
-              end,
-            },
-          },
-          adapter = defaultAdapter,
-          roles = helper.roles(),
-          tools = require('plugins.ai.codecompanion.tools'),
-          slash_commands = require('plugins.ai.codecompanion.slash_commands'),
+      return {
+        adapters = adapters,
+        strategies = {
+          inline = strategies.inline,
+          cmd = strategies.cmd,
+          chat = strategies.chat,
+        },
+        display = {
+          diff = display.diff,
+          inline = { diff = { enabled = true } },
+          chat = display.chat,
+          action_palette = display.action_palette,
+        },
+        memory = {
           opts = {
-            completion_provider = 'blink', -- blink|cmp|coc|default
-          },
-        },
-      },
-      display = {
-        diff = {
-          close_chat_at = 240, -- Close an open chat buffer if the total columns of your display are less than...
-          layout = 'vertical', -- vertical|horizontal split for default provider
-          opts = { 'internal', 'filler', 'closeoff', 'algorithm:patience', 'followwrap', 'linematch:120' },
-          -- opts = { 'vertical', 'internal', 'filler', 'closeoff', 'algorithm:histogram', 'linematch:120', 'iwhiteall' },
-          provider = 'mini_diff', -- default|mini_diff
-        },
-        inline = { diff = { enabled = true } },
-        chat = {
-          show_settings = false,
-          render_headers = false,
-          show_header_separator = true,
-          show_references = true,
-          show_token_count = true,
-          auto_scroll = true,
-          window = {
-            width = 0.65,
-            layout = 'vertical',
-            opts = {
-              number = false,
-              relativenumber = false,
-              winbar = '',
-              statuscolumn = ' ', -- just for padding
+            chat = {
+              enabled = false,
             },
           },
         },
-        action_palette = {
-          prompt = 'Prompt ', -- Prompt used for interactive LLM calls
-          provider = 'snacks', -- Can be "default", "telescope", or "mini_pick". If not specified, the plugin will autodetect installed providers.
-          opts = {
-            show_default_actions = true, -- Show the default actions in the action palette?
-            show_default_prompt_library = true, -- Show the default prompt library in the action palette?
-          },
+        prompt_library = require('plugins.ai.codecompanion.promptlibrary'),
+        extensions = require('plugins.ai.codecompanion.extensions'),
+        opts = {
+          -- system_prompt = systemPromptModes.system_prompt,
+          send_code = true,
         },
-      },
-      prompt_library = require('plugins.ai.codecompanion.promptlibrary'),
-      extensions = require('plugins.ai.codecompanion.extensions'),
-      -- opts = {
-      -- local system_prompt = require("codecompanion.config").config.opts.system_prompt
-      --   system_prompt = require('plugins.ai.codecompanion.system_prompt'),
-      -- },
-    }
-  end,
-  config = function(_, opts)
-    -- vim.g.codecompanion_auto_tool_mode = true
-    require('codecompanion').setup(opts)
-    -- Expand `cc` into CodeCompanion in the command line
-    vim.cmd([[cab cc CodeCompanion]])
-    vim.cmd([[cab ccb CodeCompanionChat anthropic]])
+      }
+    end,
+    config = function(_, opts)
+      -- vim.g.codecompanion_auto_tool_mode = true
+      require('codecompanion').setup(opts)
+      -- Expand `cc` into CodeCompanion in the command line
+      vim.cmd([[cab cc CodeCompanion]])
+      vim.cmd([[cab ccb CodeCompanionChat anthropic]])
 
-    require('plugins.ai.codecompanion.spinner'):init()
-  end,
+      -- require('plugins.ai.codecompanion.spinner'):init()
+      -- Ensure buffer is treated as markdown by treesitter despite being codecompanion filetype
+      vim.treesitter.language.register('markdown', 'codecompanion')
+
+      -- Override the default icon for codecompanion filetype
+      local devicons = require('nvim-web-devicons')
+      devicons.set_icon({
+        codecompanion = { icon = ' ' },
+      })
+      devicons.set_icon_by_filetype({ codecompanion = 'codecompanion' })
+
+      -- codecompanion yolo mode
+      vim.g.codecompanion_yolo_mode = true
+    end,
+  },
 }

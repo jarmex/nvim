@@ -1,109 +1,91 @@
 return {
   {
-    'echasnovski/mini.nvim',
-    event = 'VeryLazy',
-    config = function()
-      for _, mini in ipairs({
-        'jump',
-        'align',
-        'move',
-        'splitjoin',
-        'icons',
-      }) do
-        require(('mini.%s'):format(mini)).setup({})
+    'nvim-mini/mini.nvim',
+    version = false,
+    init = function()
+      package.preload['nvim-web-devicons'] = function()
+        require('mini.icons').mock_nvim_web_devicons()
+        return package.loaded['nvim-web-devicons']
       end
-
+    end,
+    config = function()
+      require('mini.icons').setup({
+        file = {
+          ['.go-version'] = { glyph = '', hl = 'MiniIconsBlue' },
+          ['.eslintrc.js'] = { glyph = '󰱺', hl = 'MiniIconsYellow' },
+          ['.node-version'] = { glyph = '', hl = 'MiniIconsGreen' },
+          ['.prettierrc'] = { glyph = '', hl = 'MiniIconsPurple' },
+          ['.yarnrc.yml'] = { glyph = '', hl = 'MiniIconsBlue' },
+          ['eslint.config.js'] = { glyph = '󰱺', hl = 'MiniIconsYellow' },
+          ['package.json'] = { glyph = '', hl = 'MiniIconsGreen' },
+          ['tsconfig.json'] = { glyph = '', hl = 'MiniIconsAzure' },
+          ['tsconfig.build.json'] = { glyph = '', hl = 'MiniIconsAzure' },
+          ['yarn.lock'] = { glyph = '', hl = 'MiniIconsBlue' },
+          ['devcontainer.json'] = { glyph = '', hl = 'MiniIconsAzure' },
+        },
+        filetype = {
+          gotmpl = { glyph = '󰟓', hl = 'MiniIconsGrey' },
+          dotenv = { glyph = '', hl = 'MiniIconsYellow' },
+        },
+      })
+      -- better text-objects
       local ai = require('mini.ai')
-      ai.setup({
+      require('mini.ai').setup({
         n_lines = 500,
         custom_textobjects = {
           o = ai.gen_spec.treesitter({
             a = { '@block.outer', '@conditional.outer', '@loop.outer' },
             i = { '@block.inner', '@conditional.inner', '@loop.inner' },
-          }, {}),
-          f = ai.gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }, {}),
-          c = ai.gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }, {}),
+          }),
+          f = ai.gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }), -- function
+          c = ai.gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }), -- class
+          t = { '<([%p%w]-)%f[^<%w][^<>]->.-</%1>', '^<.->().*()</[^/]->$' }, -- tags
+          d = { '%f[%d]%d+' }, -- digits
+          e = { -- Word with case
+            { '%u[%l%d]+%f[^%l%d]', '%f[%S][%l%d]+%f[^%l%d]', '%f[%P][%l%d]+%f[^%l%d]', '^[%l%d]+%f[^%l%d]' },
+            '^().*()$',
+          },
+          u = ai.gen_spec.function_call(), -- u for "Usage"
+          U = ai.gen_spec.function_call({ name_pattern = '[%w_]' }), -- without dot in function name
         },
       })
 
-      require('mini.icons').mock_nvim_web_devicons()
-
-      require('mini.pairs').setup({
-        modes = { insert = true, command = true, terminal = false },
-        -- skip autopair when next character is one of these
-        skip_next = [=[[%w%%%'%[%"%.%`%$]]=],
-        -- skip autopair when the cursor is inside these treesitter nodes
-        skip_ts = { 'string' },
-        -- skip autopair when next character is closing pair
-        -- and there are more closing pairs than opening pairs
-        skip_unbalanced = true,
-        -- better deal with markdown code blocks
-        markdown = true,
-      })
-
-      -- I'm an old dog, so I keep using tpope's surround keybindings
       require('mini.surround').setup({
         mappings = {
-          add = 'ys',
-          delete = 'ds',
-          find = '',
-          find_left = '',
-          highlight = '',
-          replace = 'cs',
-          update_n_lines = '',
-          -- -- Add this only if you don't want to use extended mappings
-          -- suffix_last = '',
-          -- suffix_next = '',
+          add = 'gsa', -- Add surrounding in Normal and Visual modes
+          delete = 'gsd', -- Delete surrounding
+          find = 'gsf', -- Find surrounding (to the right)
+          find_left = 'gsF', -- Find surrounding (to the left)
+          highlight = 'gsh', -- Highlight surrounding
+          replace = 'gsr', -- Replace surrounding
+          update_n_lines = 'gsn', -- Update `n_lines`
         },
-        search_method = 'cover_or_next',
       })
-      -- Remap adding surrounding to Visual mode selection
-      vim.api.nvim_del_keymap('x', 'ys')
-      vim.api.nvim_set_keymap('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { noremap = true })
-      -- Make special mapping for "add surrounding for line"
-      vim.api.nvim_set_keymap('n', 'yss', 'ys_', { noremap = false })
 
-      require('mini.bracketed').setup({
-        comment = { suffix = 'k' }, -- I use c for changes as diffmode does by default
+      require('mini.pairs').setup()
+
+      -- Highlight patterns in text
+      local hipatterns = require('mini.hipatterns')
+      hipatterns.setup({
+        highlighters = {
+          hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
       })
-      local miniclue = require('mini.clue')
-      miniclue.setup({
-        triggers = {
-          -- Leader triggers
-          { mode = 'n', keys = '<Leader>' },
-          { mode = 'x', keys = '<Leader>' },
 
-          -- `g` key
-          { mode = 'n', keys = 'g' },
-          { mode = 'x', keys = 'g' },
-
-          -- Marks
-          { mode = 'n', keys = "'" },
-          { mode = 'n', keys = '`' },
-          { mode = 'x', keys = "'" },
-          { mode = 'x', keys = '`' },
-
-          -- Registers
-          { mode = 'n', keys = '"' },
-          { mode = 'x', keys = '"' },
-          { mode = 'i', keys = '<C-r>' },
-          { mode = 'c', keys = '<C-r>' },
-
-          -- Window commands
-          { mode = 'n', keys = '<C-w>' },
-
-          -- `z` key
-          { mode = 'n', keys = 'z' },
-          { mode = 'x', keys = 'z' },
+      -- comments
+      require('mini.comment').setup({
+        options = {
+          custom_commentstring = function()
+            return require('ts_context_commentstring.internal').calculate_commentstring() or vim.bo.commentstring
+          end,
         },
+      })
 
-        clues = {
-          miniclue.gen_clues.g(),
-          miniclue.gen_clues.marks(),
-          miniclue.gen_clues.registers(),
-          miniclue.gen_clues.windows(),
-          miniclue.gen_clues.z(),
-        },
+      -- Work with diff hunks
+      local diff = require('mini.diff')
+      diff.setup({
+        -- Disabled by default
+        source = diff.gen_source.none(),
       })
     end,
   },

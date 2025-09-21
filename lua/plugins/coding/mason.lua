@@ -32,7 +32,7 @@ local ensureInstalled = {
   },
 
   linters = {
-    'markdownlint', -- efm
+    -- 'markdownlint', -- efm
     'shellcheck', -- used by bashls/efm for diagnostics, PENDING https://github.com/bash-lsp/bash-language-server/issues/663
     'golangci-lint',
     'hadolint',
@@ -53,6 +53,7 @@ local ensureInstalled = {
     'goimports',
     'jq',
     'xmlformatter',
+    'google-java-format',
   },
 
   debuggers = {
@@ -166,6 +167,7 @@ end
 return {
   'mason-org/mason.nvim',
   event = 'BufReadPre',
+  lazy = false,
   keys = {
     { '<leader>pm', vim.cmd.Mason, desc = ' Mason home' },
   },
@@ -173,7 +175,7 @@ return {
     vim.env.npm_config_cache = vim.env.HOME .. '/.cache/npm' -- don't crowd $HOME with `/.npm`
     require('mason').setup(opts)
     enableLsps()
-    vim.defer_fn(syncPackages, 3000)
+    -- vim.defer_fn(syncPackages, 3000)
   end,
   opts = {
     registries = {

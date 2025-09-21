@@ -1,7 +1,7 @@
 return {
   {
     'nvim-lualine/lualine.nvim',
-    event = 'VeryLazy',
+    event = 'UIEnter',
     init = function()
       vim.g.lualine_laststatus = vim.o.laststatus
       if vim.fn.argc(-1) > 0 then
@@ -81,7 +81,8 @@ return {
           },
           lualine_y = {
             status.codecompanion(),
-            status.lsp(),
+            -- status.lsp(),
+            status.LspStatus(),
           },
           lualine_z = {
             status.progress(),

@@ -14,6 +14,7 @@ return {
         window = {
           max_height = 4,
           normal_hl = 'FidgetNormal',
+          winblend = 0,
         },
       },
     },

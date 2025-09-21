@@ -1,26 +1,16 @@
 local M = {
-  -- {
-  --   'folke/tokyonight.nvim',
-  --   enabled = false,
-  --   lazy = false,
-  --   priority = 1000,
-  --   opts = {
-  --     style = 'storm',
-  --     transparent = true,
-  --     styles = {
-  --       sidebars = 'transparent', -- style for sidebars, see below
-  --       floats = 'transparent', -- style for floating windows
-  --     },
-  --   },
-  -- },
   {
     'catppuccin/nvim',
     name = 'catppuccin',
     lazy = false,
     priority = 1000,
     opts = {
-      flavour = 'macchiato',
+      flavour = 'mocha', -- latte, frappe, macchiato, mocha
       transparent_background = true,
+      dim_inactive = {
+        enabled = false,
+        percentage = 0.05,
+      },
       term_colors = true,
       compile = {
         compile_path = vim.fn.stdpath('cache') .. '/catppuccin',
@@ -30,28 +20,20 @@ local M = {
         variables = { 'italic' },
         operators = { 'italic' },
       },
-      color_overrides = {
-        mocha = {
-          base = '#000000',
-          mantle = '#000000',
-          crust = '#000000',
-        },
-      },
-      dim_inactive = { enabled = false },
       default_integrations = {
-        blink_cmp = true,
+        blink_cmp = { style = 'solid' },
         diffview = true,
         fidget = true,
         fzf = true,
         headlines = true,
         hop = true,
-        lspsaga = true,
+        -- lspsaga = true,
         mason = true,
         mini = { enabled = true },
         native_lsp = { enabled = true },
-        navic = { enabled = true },
-        neotree = true,
-        nvim_surround = true,
+        -- navic = { enabled = true },
+        nvimtree = true,
+        -- nvim_surround = true,
         rainbow_delimiters = true,
         snacks = { enabled = true },
         which_key = true,
@@ -60,7 +42,7 @@ local M = {
         alpha = true,
         lsp_trouble = true,
         mini = true,
-        blink_cmp = true,
+        -- blink_cmp = true,
         native_lsp = {
           enabled = true,
           virtual_text = {
@@ -75,14 +57,12 @@ local M = {
             warnings = { 'undercurl' },
             information = { 'undercurl' },
           },
-          inlay_hints = {
-            background = true,
-          },
+          inlay_hints = { background = false },
         },
         cmp = true,
         gitsigns = true,
         nvimtree = true,
-        navic = { enabled = false, custom_bg = 'lualine' },
+        -- navic = { enabled = false, custom_bg = 'lualine' },
         mason = true,
         dap = {
           enabled = true,
@@ -99,31 +79,36 @@ local M = {
         notify = true,
         noice = true,
         illuminate = true,
-        telekasten = false,
         telescope = { enabled = true },
         treesitter = true,
         treesitter_context = true,
-        symbols_outline = false,
-        snacks = true,
+        snacks = {
+          enabled = true,
+          indent_scope_color = 'surface2',
+        },
         semantic_tokens = true,
         which_key = true,
+        render_markdown = true,
+        flash = false,
       },
       custom_highlights = function(colors)
         return {
           -- FloatBorder = { fg = colors.mantle, bg = colors.mantle },
           -- FloatTitle = { fg = colors.lavender, bg = colors.mantle },
           LspInfoBorder = { fg = colors.mantle, bg = colors.mantle },
+          LspInlayHint = { style = { 'italic' } }, -- italicize lsp inlay hints
           WinSeparator = { bg = colors.base, fg = colors.lavender },
           PmenuThumb = { bg = colors.blue },
-          DapUIFloatBorder = { link = 'FloatBorder' },
+          -- DapUIFloatBorder = { link = 'FloatBorder' },
+          CodeiumSuggestion = { fg = colors.maroon },
         }
       end,
     },
     config = function(plugin, opt)
       vim.opt.background = 'dark'
       require(plugin.name).setup(opt)
-      -- vim.api.nvim_command 'colorscheme catppuccin'
       vim.cmd.colorscheme('catppuccin')
+      vim.api.nvim_set_hl(0, 'CursorColumn', { link = 'CursorLine' })
     end,
   },
 }

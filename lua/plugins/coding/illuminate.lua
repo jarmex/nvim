@@ -2,7 +2,7 @@
 return {
   {
     'RRethy/vim-illuminate',
-    enabled = false,
+    enabled = true,
     event = 'LspAttach',
     opts = {
       delay = 500,

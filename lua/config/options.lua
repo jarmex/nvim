@@ -5,8 +5,8 @@ local default_options = {
   autowrite = true, -- Enable auto write
   backup = false, -- creates a backup file
   clipboard = 'unnamedplus', -- allows neovim to access the system clipboard
-  -- cmdheight = 0, -- more space in the neovim command line for displaying messages
-  colorcolumn = '99999', -- fixes indentline for now
+  cmdheight = 0, -- more space in the neovim command line for displaying messages
+  -- colorcolumn = '99999', -- fixes indentline for now
   completeopt = 'menu,menuone,noselect',
   conceallevel = 2, -- Hide * markup for bold and italic
   fileencoding = 'utf-8', -- the encoding written to a file
@@ -19,7 +19,7 @@ local default_options = {
   hlsearch = true, -- highlight all matches on previous search pattern
   ignorecase = true, -- ignore case in search patterns
   mouse = 'a', -- allow the mouse to be used in neovim
-  pumheight = 12, -- pop up menu height
+  pumheight = 15, -- pop up menu height
   pumwidth = 15, -- min width
   showmode = false, -- we don't need to see things like -- INSERT -- anymore (dont show mode since we have a statusline)
   showtabline = 2, -- always show tabs
@@ -32,7 +32,6 @@ local default_options = {
   timeoutlen = 300, -- Time in milliseconds to wait for a mapped sequence to complete.
   ttimeoutlen = 10, -- Time in milliseconds to wait for a key code sequence to complete
   updatetime = 280, -- If in this milliseconds nothing is typed, the swap file will be written to disk.
-  wildignore = { '*/.git/*', '*/node_modules/*' }, -- Ignore these files/folders
   writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
   cursorline = true, -- highlight the current line
   number = true, -- set numbered lines
@@ -49,7 +48,8 @@ local default_options = {
   sidescrolloff = 8,
   encoding = 'UTF-8', -- Set the encoding type
   incsearch = true, -- Shows the match while typing
-  inccommand = 'split',
+  inccommand = 'split', -- information about all identifiers to be renamed
+  cmdwinheight = 25, --change the height of the preview window
   shiftround = true, -- Round indent
   undofile = true,
   undolevels = 10000,
@@ -62,7 +62,7 @@ local default_options = {
   sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' },
   virtualedit = 'block', -- Allow cursor to move where there is no text in visual block mode
   wildmode = 'longest:full,full', -- Command-line completion mode
-  grepprg = 'rg --vimgrep',
+  -- grepprg = 'rg --vimgrep',
   grepformat = '%f:%l:%c:%m',
   fillchars = {
     foldopen = '',
@@ -82,15 +82,39 @@ local default_options = {
     vertright = '├',
     verthoriz = '┼',
   },
-  winminwidth = 5, -- Minimum window width
+  -- winminwidth = 5, -- Minimum window width
   spelllang = { 'en' },
   splitkeep = 'screen',
   jumpoptions = 'view',
+  -- winborder = 'rounded', -- rounded corners on floating windows
+  autoread = true, -- reload files when changed outside of vim
 }
 
 for k, v in pairs(default_options) do
   vim.opt[k] = v
 end
+
+vim.opt.wildignore:append({
+  '*.o',
+  '*.obj',
+  '*.dll',
+  '*.exe',
+  '*.pyc',
+  '*.class',
+  '*.swp',
+  '*.swo',
+  '*.DS_Store',
+  '*/node_modules/*',
+  '*/target/*',
+  '*/build/*',
+  '*/dist/*',
+  '*/.git/*',
+  '*/.svn/*',
+  '*/.venv/*',
+  '*/venv/*',
+})
+
+vim.opt.grepprg = vim.fn.executable('rg') == 1 and 'rg --vimgrep --smart-case --follow' or 'grep -n $* /dev/null'
 
 vim.opt.listchars = {
   tab = ' ',
@@ -99,11 +123,12 @@ vim.opt.listchars = {
   precedes = '',
 }
 --
-vim.opt.diffopt = {
-  'internal',
-  'filler',
-  'closeoff',
-}
---
-vim.o.mousemodel = 'extend'
-vim.opt.guicursor:remove({ 't:block-blinkon500-blinkoff500-TermCursor' })
+-- set titlestring to $cwd if TERM_PROGRAM=ghostty
+if vim.fn.getenv('TERM_PROGRAM') == 'ghostty' then
+  vim.opt.title = true
+  vim.opt.titlestring = "%{fnamemodify(getcwd(), ':t')}"
+end
+
+-- project specific settings (see lazyrc.lua for .lazy.lua support)
+vim.opt.exrc = true -- allow local .nvim.lua .vimrc .exrc files
+vim.opt.secure = true -- disable shell and write commands in local .nvim.lua .vimrc .exrc files

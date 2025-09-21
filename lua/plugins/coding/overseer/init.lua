@@ -1,3 +1,13 @@
+local run_last_task = function()
+  local overseer = require('overseer')
+  local tasks = overseer.list_tasks({ recent_first = true })
+  if vim.tbl_isempty(tasks) then
+    vim.notify('No tasks found', vim.log.levels.WARN)
+  else
+    overseer.run_action(tasks[1], 'restart')
+  end
+end
+
 local function open_first_failed_task()
   local overseer = require('overseer')
   local constants = require('overseer.constants')
@@ -15,7 +25,23 @@ return {
   --  https://github.com/stevearc/overseer.nvim
   {
     'stevearc/overseer.nvim',
-    cmd = { 'OverseerRun', 'OverseerInfo', 'OverseerToggle', 'OverseerFromTerminal' },
+    branch = 'master',
+    cmd = {
+      'OverseerBuild',
+      'OverseerClearCache',
+      'OverseerClose',
+      'OverseerDeleteBundle',
+      'OverseerFromTerminal',
+      'OverseerInfo',
+      'OverseerLoadBundle',
+      'OverseerOpen',
+      'OverseerQuickAction',
+      'OverseerRun',
+      'OverseerRunCmd',
+      'OverseerSaveBundle',
+      'OverseerTaskAction',
+      'OverseerToggle',
+    },
     keys = {
       { '<leader>o', '', desc = 'Overseer' },
       { '<leader>oR', '<cmd>OverseerRunCmd<cr>', desc = 'Run Command' },
@@ -25,7 +51,7 @@ return {
       { '<leader>od', '<cmd>OverseerDeleteBundle<cr>', desc = 'Delete Bundle' },
       { '<leader>ob', '<cmd>OverseerLoadBundle<cr>', desc = 'Load Bundle' },
       { '<leader>oi', '<cmd>OverseerInfo<cr>', desc = 'Overseer Info' },
-      { '<leader>oo', '<cmd>OverseerOpen<cr>', desc = 'Open' },
+      { '<leader>oo', run_last_task, desc = 'Run the last Overseer task' },
       { '<leader>oq', '<cmd>OverseerQuickAction<cr>', desc = 'Quick Action' },
       { '<leader>or', '<cmd>OverseerRun<cr>', desc = 'Run' },
       { '<leader>os', '<cmd>OverseerSaveBundle<cr>', desc = 'Save Bundle' },

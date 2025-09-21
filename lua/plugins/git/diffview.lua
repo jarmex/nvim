@@ -12,7 +12,6 @@ return {
   -- better diffing
   'sindrets/diffview.nvim',
   dependencies = {
-    'nvim-lua/plenary.nvim',
     'nvim-neotest/nvim-nio',
   },
   event = 'VeryLazy',
@@ -89,27 +88,173 @@ return {
     })
 
     return {
-      enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'
+      enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
+      se_icons = true,
+      watch_index = true,
+      icons = {
+        folder_closed = '',
+        folder_open = '',
+      },
+      signs = {
+        fold_closed = '',
+        fold_open = '',
+        done = '✓',
+      },
+      file_panel = {
+        listing_style = 'tree', -- One of 'list' or 'tree'
+        tree_options = { -- Only applies when listing_style is 'tree'
+          flatten_dirs = true, -- Flatten dirs that only contain one single dir
+          folder_statuses = 'only_folded', -- One of 'never', 'only_folded' or 'always'.
+        },
+        win_config = { -- See ':h diffview-config-win_config'
+          position = 'left',
+          width = 35,
+          win_opts = {},
+        },
+      },
+      file_history_panel = {
+        -- log_options = { -- See ':h diffview-config-log_options'
+        --   single_file = {
+        --     diff_merges = "combined",
+        --   },
+        --   multi_file = {
+        --     diff_merges = "first-parent",
+        --   },
+        -- },
+        win_config = { -- See ':h diffview-config-win_config'
+          position = 'bottom',
+          height = 16,
+          win_opts = {},
+        },
+      },
+      commit_log_panel = {
+        win_config = { -- See ':h diffview-config-win_config'
+          win_opts = {},
+        },
+      },
+      default_args = { -- Default args prepended to the arg-list for the listed commands
+        DiffviewOpen = { '--imply-local' },
+        DiffviewFileHistory = {},
+      },
+      hooks = {}, -- See ':h diffview-config-hooks'
       keymaps = {
-        -- stylua: ignore start
         view = {
+          -- The `view` bindings are active in the diff buffers, only when the current
+          -- tabpage is a Diffview.
+          ['<tab>'] = actions.select_next_entry, -- Open the diff for the next file
+          ['<s-tab>'] = actions.select_prev_entry, -- Open the diff for the previous file
+          ['gf'] = actions.goto_file, -- Open the file in a new split in the previous tabpage
+          ['<C-w><C-f>'] = actions.goto_file_split, -- Open the file in a new split
+          ['<C-w>gf'] = actions.goto_file_tab, -- Open the file in a new tabpage
+          ['<leader>e'] = actions.focus_files, -- Bring focus to the file panel
+          ['<leader>b'] = actions.toggle_files, -- Toggle the file panel.
+          ['g<C-x>'] = actions.cycle_layout, -- Cycle through available layouts.
+          ['[x'] = actions.prev_conflict, -- In the merge_tool: jump to the previous conflict
+          [']x'] = actions.next_conflict, -- In the merge_tool: jump to the next conflict
+          ['<leader>co'] = actions.conflict_choose('ours'), -- Choose the OURS version of a conflict
+          ['<leader>ct'] = actions.conflict_choose('theirs'), -- Choose the THEIRS version of a conflict
+          ['<leader>cb'] = actions.conflict_choose('base'), -- Choose the BASE version of a conflict
+          ['<leader>ca'] = actions.conflict_choose('all'), -- Choose all the versions of a conflict
+          ['dx'] = actions.conflict_choose('none'), -- Delete the conflict region
           { 'n', 'q', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
           { 'n', '<esc>', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
           { 'n', '<c-n>', actions.select_next_entry, { desc = 'Open the diff for the next file' } },
           { 'n', '<c-p>', actions.select_prev_entry, { desc = 'Open the diff for the previous file' } },
           { 'n', '<c-c>', actions.toggle_files, { desc = 'Toggle the file panel' } },
           { 'n', '-', actions.toggle_stage_entry, { desc = 'Stage / unstage the selected entry' } },
-          { 'n', 'gd', function() actions.goto_file_edit() vim.lsp.buf.definition() end, },
           {
-               'n',
-               'gq',
-               function()
-                 require('diffview.actions').toggle_files()
-                 vim.schedule(function() vim.cmd('tabclose') end)
-               end,
-             },
+            'n',
+            'gd',
+            function()
+              actions.goto_file_edit()
+              vim.lsp.buf.definition()
+            end,
+          },
+          {
+            'n',
+            'gq',
+            function()
+              require('diffview.actions').toggle_files()
+              vim.schedule(function()
+                vim.cmd('tabclose')
+              end)
+            end,
+          },
+          {
+            'n',
+            '<leader>cO',
+            actions.conflict_choose_all('ours'),
+            { desc = 'Choose the OURS version of a conflict for the whole file' },
+          },
+          {
+            'n',
+            '<leader>cT',
+            actions.conflict_choose_all('theirs'),
+            { desc = 'Choose the THEIRS version of a conflict for the whole file' },
+          },
+          {
+            'n',
+            '<leader>cB',
+            actions.conflict_choose_all('base'),
+            { desc = 'Choose the BASE version of a conflict for the whole file' },
+          },
+          {
+            'n',
+            '<leader>cA',
+            actions.conflict_choose_all('all'),
+            { desc = 'Choose all the versions of a conflict for the whole file' },
+          },
+          {
+            'n',
+            'dX',
+            actions.conflict_choose_all('none'),
+            { desc = 'Delete the conflict region for the whole file' },
+          },
         },
-        -- stylua: ignore end
+        diff1 = { --[[ Mappings in single window diff layouts ]]
+          { 'n', 'g?', actions.help({ 'view', 'diff1' }), { desc = 'Open the help panel' } },
+        },
+        diff2 = { --[[ Mappings in 2-way diff layouts ]]
+          { 'n', 'g?', actions.help({ 'view', 'diff2' }), { desc = 'Open the help panel' } },
+        },
+        diff3 = {
+          -- Mappings in 3-way diff layouts
+          {
+            { 'n', 'x' },
+            '2do',
+            actions.diffget('ours'),
+            { desc = 'Obtain the diff hunk from the OURS version of the file' },
+          },
+          {
+            { 'n', 'x' },
+            '3do',
+            actions.diffget('theirs'),
+            { desc = 'Obtain the diff hunk from the THEIRS version of the file' },
+          },
+          { 'n', 'g?', actions.help({ 'view', 'diff3' }), { desc = 'Open the help panel' } },
+        },
+        diff4 = {
+          -- Mappings in 4-way diff layouts
+          {
+            { 'n', 'x' },
+            '1do',
+            actions.diffget('base'),
+            { desc = 'Obtain the diff hunk from the BASE version of the file' },
+          },
+          {
+            { 'n', 'x' },
+            '2do',
+            actions.diffget('ours'),
+            { desc = 'Obtain the diff hunk from the OURS version of the file' },
+          },
+          {
+            { 'n', 'x' },
+            '3do',
+            actions.diffget('theirs'),
+            { desc = 'Obtain the diff hunk from the THEIRS version of the file' },
+          },
+          { 'n', 'g?', actions.help({ 'view', 'diff4' }), { desc = 'Open the help panel' } },
+        },
         file_panel = {
           { 'n', 'q', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
           { 'n', '<esc>', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
@@ -158,41 +303,31 @@ return {
             require('diffview.actions').open_in_diffview,
             { desc = 'Open the entry under the cursor in a diffview' },
           },
-          --adapted from https://github.com/lucobellic/nvim-config/blob/main/lua/plugins/git/diffview.lua
-          -- Fixup commit under cursor
-          {
-            'n',
-            '<C-s>',
-            function()
-              local lazy = require('diffview.lazy')
-              ---@type FileHistoryView|LazyModule
-              local FileHistoryView =
-                lazy.access('diffview.scene.views.file_history.file_history_view', 'FileHistoryView')
-              local view = require('diffview.lib').get_current_view()
-              if view and view:instanceof(FileHistoryView.__get()) then
-                ---@cast view DiffView|FileHistoryView
-                local file = view:infer_cur_file()
-                local item = view.panel:get_item_at_cursor()
-
-                if file and item then
-                  local nio = require('nio')
-                  local path = file.absolute_path
-                  nio.run(function()
-                    nio.process.run({ cmd = 'git', args = { 'stash', '--keep-index' } }).result(true)
-                    nio.process
-                      .run({
-                        cmd = 'git',
-                        args = { 'commit', '--fixup=' .. item.commit.hash, '--', path },
-                      })
-                      .result(true)
-                    nio.process.run({ cmd = 'git', args = { 'stash', 'pop', '--index' } }).result(true)
-                    vim.notify('Fixup ' .. item.commit.hash, vim.log.levels.INFO)
-                  end)
-                end
-              end
-            end,
-            { desc = 'Fixup current file staged change' },
-          },
+        },
+      },
+      view = {
+        -- Configure the layout and behavior of different types of views.
+        -- Available layouts:
+        --  'diff1_plain'
+        --    |'diff2_horizontal'
+        --    |'diff2_vertical'
+        --    |'diff3_horizontal'
+        --    |'diff3_vertical'
+        --    |'diff3_mixed'
+        --    |'diff4_mixed'
+        -- For more info, see ':h diffview-config-view.x.layout'.
+        default = {
+          -- Config for changed files, and staged files in diff views.
+          layout = 'diff2_horizontal',
+        },
+        merge_tool = {
+          -- Config for conflicted files in diff views during a merge or rebase.
+          layout = 'diff3_mixed',
+          disable_diagnostics = true, -- Temporarily disable diagnostics for conflict buffers while in the view.
+        },
+        file_history = {
+          -- Config for changed files in file history views.
+          layout = 'diff2_horizontal',
         },
       },
     }

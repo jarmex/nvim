@@ -11,7 +11,7 @@ return {
   --  https://github.com/andythigpen/nvim-coverage/blob/main/doc/nvim-coverage.txt
   {
     'andythigpen/nvim-coverage',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    version = '*',
     lazy = true,
     cmd = {
       'Coverage',

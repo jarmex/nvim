@@ -19,10 +19,10 @@ return {
     local icons = require('helpers.icons')
     return {
       options = {
-        -- stylua: ignore
-        close_command = function(n) Snacks.bufdelete(n) end,
-        -- stylua: ignore
-        right_mouse_command = function(n) Snacks.bufdelete(n) end,
+        -- -- stylua: ignore
+        -- close_command = function(n) Snacks.bufdelete(n) end,
+        -- -- stylua: ignore
+        -- right_mouse_command = function(n) Snacks.bufdelete(n) end,
         numbers = 'none', -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
         show_close_icon = false,
         always_show_bufferline = false,
@@ -30,6 +30,10 @@ return {
         show_buffer_icons = true,
         diagnostics = 'nvim_lsp',
         separator_style = 'thin',
+        show_tab_indicators = true,
+        -- To close the Tab command, use moll/vim-bbye's :Bdelete command here
+        close_command = 'Bdelete! %d',
+        right_mouse_command = 'Bdelete! %d',
         diagnostics_indicator = function(_, _, diag)
           local diagnostic_icons = icons.diagnostics
           local ret = (diag.error and diagnostic_icons.Error .. diag.error .. ' ' or '')
@@ -41,12 +45,14 @@ return {
             filetype = 'NvimTree',
             text = 'File Explorer',
             highlight = 'Directory',
-            text_align = 'left',
+            text_align = 'center',
             padding = 1,
           },
           {
             filetype = 'snacks_layout_box',
           },
+          { filetype = 'codecompanion', text = 'CodeCompanion', text_align = 'center' },
+          { filetype = 'Outline', text = 'OUTLINE', text_align = 'center' },
         },
       },
     }

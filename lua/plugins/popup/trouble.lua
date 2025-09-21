@@ -13,6 +13,7 @@ return {
       type = 'main',
       scratch = false,
     },
+    win = { height = 30 },
     modes = {
       lsp = {
         win = { position = 'right' },

@@ -1,14 +1,36 @@
--- local methods = vim.lsp.protocol.Methods
+---@diagnostic disable: need-check-nil
 
-local M = {}
+local isTsToolOk, typeScriptTools = pcall(require, 'typescript-tools.api')
+local debounce = require('helpers.utils').debounce
+local autocmd = vim.api.nvim_create_autocmd
 
-local function diagnostic_goto(next, severity)
-  local count = next and 1 or -1
-  severity = severity and vim.diagnostic.severity[severity] or nil
-  return function()
-    vim.diagnostic.jump({ count = count, float = true, severity = severity, wrap = true })
+local function codelens(bufnr, client)
+  if client:supports_method('textDocument/codeLens') then
+    vim.lsp.codelens.refresh({ bufnr = bufnr })
+    autocmd({ 'FocusGained', 'WinEnter', 'BufEnter', 'InsertLeave' }, {
+      group = vim.api.nvim_create_augroup('CodeLens', { clear = false }),
+      buffer = bufnr,
+      callback = debounce(500, function(args0)
+        vim.lsp.codelens.refresh({ bufnr = args0.buf })
+      end),
+    })
   end
 end
+
+local function hover_action()
+  local winid = require('ufo').peekFoldedLinesUnderCursor()
+  if not winid then
+    vim.lsp.buf.hover({ border = 'rounded' })
+  end
+end
+
+-- local function diagnostic_goto(next, severity)
+--   local count = next and 1 or -1
+--   severity = severity and vim.diagnostic.severity[severity] or nil
+--   return function()
+--     vim.diagnostic.jump({ count = count, float = true, severity = severity, wrap = true })
+--   end
+-- end
 
 local function rename()
   if pcall(require, 'inc_rename') then
@@ -29,16 +51,23 @@ local go_to_definition = function()
   end
 end
 
-function M.keymap(_bufnr)
+local function keymap(bufnr)
   local function map(lhs, rhs, opts, mode)
     mode = mode or 'n'
     opts = opts or {}
+    -- opts.buffer = bufnr
     opts.silent = opts.silent or true
     opts.noremap = true
-    opts.buffer = true
+    opts.buffer = bufnr or true
     opts.desc = string.format('Lsp: %s', opts.desc)
     vim.keymap.set(mode, lhs, rhs, opts)
   end
+
+  map('K', hover_action, { desc = 'Hover', nowait = true })
+
+  map('gj', function()
+    Snacks.picker.diagnostics_buffer()
+  end, { desc = 'Find Diagnostics', nowait = true })
 
   map('gd', go_to_definition, { desc = 'Go to definition' })
 
@@ -62,8 +91,8 @@ function M.keymap(_bufnr)
 
   map('gl', "<cmd>lua vim.diagnostic.open_float(0,{border='rounded'})<CR>", { desc = 'Show diagnostics' })
 
-  map('[d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
-  map(']d', diagnostic_goto(false), { desc = 'Next Diagnostic' })
+  -- map('[d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
+  -- map(']d', diagnostic_goto(false), { desc = 'Next Diagnostic' })
   -- map('<leader>cd', "<cmd>lua vim.diagnostic.open_float({source='if_many'})<cr>", { desc = 'Diagnostic' })
 
   map('<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', { desc = 'Set loclist' })
@@ -76,6 +105,7 @@ function M.keymap(_bufnr)
   -- end
 
   map('<leader>cr', rename, { desc = '[R]ename' })
+  map('<leader>rn', vim.lsp.buf.rename, { desc = '[R]ename' })
 
   map('<leader>ci', '<cmd>LspInfo<cr>', { desc = 'Lsp Info' })
   map('<leader>ch', vim.lsp.codelens.refresh, { desc = 'CodeLens Refresh' })
@@ -99,6 +129,49 @@ function M.keymap(_bufnr)
       print('No diagnostic on this line')
     end
   end, { desc = '[C]opy [D]iagnostic under cursor' })
+
+  --- TypeScript Tools
+  if not isTsToolOk then
+    return
+  end
+  map('gs', typeScriptTools.organize_imports, { desc = 'Organize imports' })
+  map('gI', typeScriptTools.add_missing_imports, { desc = 'Add missing imports' })
 end
 
-return M
+local function disable_global_keymaps()
+  for _, bind in ipairs({ 'grn', 'gra', 'gri', 'grr' }) do
+    pcall(vim.keymap.del, 'n', bind)
+  end
+end
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
+  callback = function(ctx)
+    disable_global_keymaps()
+
+    local bufnr = ctx.buf
+
+    local client = vim.lsp.get_client_by_id(ctx.data.client_id)
+    assert(client, 'No client found')
+
+    if client.name == 'copilot' then
+      return
+    end
+
+    if client.name == 'gopls' then
+      if not client.server_capabilities.semanticTokensProvider then
+        local semantic = client.config.capabilities.textDocument.semanticTokens
+        client.server_capabilities.semanticTokensProvider = {
+          full = true,
+          legend = {
+            tokenTypes = semantic.tokenTypes,
+            tokenModifiers = semantic.tokenModifiers,
+          },
+          range = true,
+        }
+      end
+    end
+    keymap(bufnr)
+    codelens(bufnr, client)
+  end,
+})

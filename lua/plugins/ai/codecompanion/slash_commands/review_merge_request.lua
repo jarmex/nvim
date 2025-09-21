@@ -9,7 +9,7 @@ I need you to review a merge request. Your task:
    - Also review the design, architecture and implementation
    - Try your best to dig out potential bugs
 
-- Branch merge to: master
+- Branch merge to: main
 - Branch feature: origin/]]) -- wait for manual input
 
   chat:add_buf_message({

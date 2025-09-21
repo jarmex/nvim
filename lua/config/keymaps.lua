@@ -42,8 +42,8 @@ keymap('n', 'N', 'Nzzzv')
 keymap('n', 'g,', 'g,zvzz')
 keymap('n', 'g;', 'g;zvzz')
 keymap('n', 'J', 'mzJ`z')
-keymap('n', '<C-d>', '<C-d>zz')
-keymap('n', '<C-u>', '<C-u>zz')
+-- keymap('n', '<C-d>', '<C-d>zz')
+-- keymap('n', '<C-u>', '<C-u>zz')
 keymap('n', '=ap', "ma=ap'a")
 keymap('n', '<leader>zr', '<cmd>LspRestart<cr>')
 
@@ -130,10 +130,10 @@ keymap('n', '<leader>qd', function()
   vim.cmd.cexpr('[]')
 end, { desc = '󰚃 Delete qf-list' })
 
-keymap('n', '<leader>qq', function()
-  local quickfixWinOpen = vim.fn.getqflist({ winid = true }).winid ~= 0
-  vim.cmd[quickfixWinOpen and 'cclose' or 'copen']()
-end, { desc = ' Toggle quickfix window' })
+-- keymap('n', '<leader>qq', function()
+--   local quickfixWinOpen = vim.fn.getqflist({ winid = true }).winid ~= 0
+--   vim.cmd[quickfixWinOpen and 'cclose' or 'copen']()
+-- end, { desc = ' Toggle quickfix window' })
 
 -- -- FOLDING
 -- keymap('n', 'zz', '<cmd>%foldclose<CR>', { desc = ' Close toplevel folds' })
@@ -178,3 +178,6 @@ keymap('n', 'i', function()
   local lineEmpty = vim.trim(vim.api.nvim_get_current_line()) == ''
   return lineEmpty and '"_cc' or 'i'
 end, { expr = true, desc = 'indented i on empty line' })
+
+keymap('v', '<leader>64e', "c<c-r>=system('base64 --wrap=0',          @\")<cr><esc>", { desc = 'Base64 encode' })
+keymap('v', '<leader>64d', "c<c-r>=system('base64 --wrap=0 --decode', @\")<cr><esc>", { desc = 'Base64 decode' })

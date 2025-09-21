@@ -47,11 +47,24 @@ function M.keymaps()
       desc = 'Attach test',
     },
     {
-      '<leader>ts',
+      '<leader>tc',
       function()
         require('neotest').summary.toggle()
       end,
       desc = 'Toggle Summary',
+    },
+    {
+      '<LocalLeader>ts',
+      function()
+        if vim.bo.filetype == 'lua' then
+          return require('mini.test').run() -- Not configured yet
+        end
+        local neotest = require('neotest')
+        for _, adapter_id in ipairs(neotest.run.adapters()) do
+          neotest.run.run({ suite = true, adapter = adapter_id })
+        end
+      end,
+      desc = 'Neotest: Test suite',
     },
     {
       '<leader>tx',
@@ -61,7 +74,7 @@ function M.keymaps()
     {
       '<leader>to',
       function()
-        require('neotest').output.open({ enter = true, auto_close = true })
+        require('neotest').output.open({ enter = true, auto_close = true, short = true })
       end,
       desc = 'Open output test',
     },
@@ -81,11 +94,25 @@ function M.keymaps()
       desc = 'Neotest toggle',
     },
     {
-      '<leader>tw',
+      '<LocalLeader>twn',
+      function()
+        require('neotest').watch.toggle()
+      end,
+      desc = 'Neotest: Watch nearest test',
+    },
+    {
+      '<leader>twf',
       function()
         require('neotest').watch.toggle(vim.fn.expand('%'))
       end,
       desc = 'Toggle Watch',
+    },
+    {
+      '<LocalLeader>twa',
+      function()
+        require('neotest').watch.toggle({ suite = true })
+      end,
+      desc = 'Neotest: Watch all tests',
     },
   }
 end

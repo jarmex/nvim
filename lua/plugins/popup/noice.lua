@@ -1,5 +1,4 @@
 -- noicer lua
--- DOCS https://github.com/folke/noice.nvim#-routes
 local routes = {
   -- REDIRECT TO POPUP
   {
@@ -56,7 +55,9 @@ local routes = {
   { filter = { event = 'notify', find = 'All parsers are up%-to%-date' }, view = 'mini' },
 
   -----------------------------------------------------------------------------
-  -- SKIP
+  -- HIDE Deprecated messages
+  -- e.g. vim.tbl_flatten is deprecated. Run ":checkhealth vim.deprecated" for more information
+  { filter = { event = 'msg_show', find = 'is deprecated. Run ' }, skip = true },
 
   -- FIX LSP bugs?
   { filter = { event = 'msg_show', find = 'lsp_signature? handler RPC' }, skip = true },
@@ -92,20 +93,29 @@ local routes = {
 return {
   {
     'folke/noice.nvim',
-    event = 'VeryLazy',
+    enabled = true,
+    lazy = false,
+    -- event = 'VeryLazy', -- disable to stop the flickering when nvim starts
     dependencies = {
       'MunifTanjim/nui.nvim',
-      -- 'rcarriga/nvim-notify',
     },
     opts = {
       routes = routes,
       cmdline = {
         format = {
-          search_down = { icon = '  ' },
-          search_up = { icon = '  ' },
+          search_down = { icon = ' 󰶹   ' },
+          search_up = { icon = ' 󰶼   ' },
+          -- search_down = { icon = '  ' },
+          -- search_up = { icon = '  ' },
           filter = { icon = '  ' },
           lua = { icon = '  ' },
-          cmdline = { pattern = '^:', icon = '|>', lang = 'vim', title = '' },
+          -- cmdline = { pattern = '^:', icon = '|>', lang = 'vim', title = '' },
+          calculator = { icon = '   ' },
+          cmdline = { icon = '   ', title = '' },
+          -- filter = { icon = '   ' },
+          help = { icon = '    ' },
+          help_vert = { kind = 'Help', pattern = '^:%s*verti?c?a?l? he?l?p?%s+', icon = '    ' },
+          inc_rename = { kind = 'IncRename', pattern = '^:IncRename', icon = ' 󰑕  ' },
         },
       },
       views = {
@@ -170,14 +180,14 @@ return {
         override = {
           ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
           ['vim.lsp.util.stylize_markdown'] = true,
-          ['cmp.entry.get_documentation'] = vim.g.cmploader == 'nvim-cmp',
+          ['cmp.entry.get_documentation'] = true,
         },
       },
       presets = {
         bottom_search = false,
         command_palette = true,
         long_message_to_split = true,
-        inc_rename = true,
+        inc_rename = false,
         cmdline_output_to_split = false,
         lsp_doc_border = true,
       },
@@ -252,6 +262,14 @@ return {
         vim.cmd([[messages clear]])
       end
       require('noice').setup(opts)
+
+      -- Optional: transparent UI highlights
+      vim.cmd([[
+      highlight NoiceCmdlinePopupBorder guibg=NONE
+      highlight NoiceCmdlinePopup guibg=NONE
+      highlight NoicePopupmenuBorder guibg=NONE
+      highlight NoicePopupmenu guibg=NONE
+      ]])
     end,
   },
 }

@@ -1,20 +1,30 @@
-local filetypes = { 'java', 'python', 'php', 'javascript', 'typescript', 'vue', 'go' }
+local filetypes = {
+  'cs',
+  'dockerfile',
+  'docker',
+  'go',
+  'html',
+  'java',
+  'javascript',
+  'javascriptreact',
+  'php',
+  'python',
+  'typescript',
+  'typescriptreact',
+  'vue',
+}
 
 return {
   {
     'https://gitlab.com/schrieveslaach/sonarlint.nvim',
     ft = filetypes,
-    dependencies = {
-      'neovim/nvim-lspconfig',
-    },
-    config = function()
-      require('sonarlint').setup({
+    dependencies = { 'neovim/nvim-lspconfig' },
+    opts = function()
+      return {
         server = {
           cmd = vim
             .iter({
-              -- '/opt/homebrew/opt/openjdk@17/bin/java',
               require('helpers.jvm').home(17) .. '/bin/java',
-              -- "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005",
               '-jar',
               vim.fn.expand('$MASON/packages/sonarlint-language-server/extension/server/sonarlint-ls.jar'),
               '-stdio',
@@ -26,7 +36,7 @@ return {
         },
 
         filetypes = filetypes,
-      })
+      }
     end,
   },
 }

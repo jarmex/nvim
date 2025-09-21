@@ -1,3 +1,8 @@
+-- delete current buffer
+vim.api.nvim_create_user_command('Q', function()
+  vim.cmd.bd('%')
+end, {})
+
 -- json
 vim.api.nvim_create_user_command('JsonDemangle', "%!jq '.'", { force = true })
 -- vim.api.nvim_create_user_command('Uuid', 'read !uuidgen', { force = true })
@@ -55,3 +60,19 @@ vim.api.nvim_create_user_command('FormatEnable', function()
 end, {
   desc = 'Re-enable autoformat-on-save',
 })
+
+vim.api.nvim_create_user_command('FindAndReplace', function(opts)
+  vim.api.nvim_command(string.format('silent cdo s/%s/%s', opts.fargs[1], opts.fargs[2]))
+  vim.api.nvim_command('silent cfdo update')
+end, {
+  desc = 'Find and Replace (after quickfix)',
+  nargs = '*',
+})
+
+vim.api.nvim_create_user_command('FindAndReplaceUndo', function()
+  vim.api.nvim_command('silent cdo undo')
+end, { desc = 'Undo Find and Replace' })
+
+vim.api.nvim_create_user_command('FormatXml', function()
+  vim.cmd('%!tidy -q -i --show-errors 0 -xml')
+end, {})
