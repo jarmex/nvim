@@ -46,6 +46,7 @@ return {
       'oil',
       'prompt',
       'qf',
+      'snacks_notif_history',
       'snacks_terminal',
       'terminal',
       'trouble',

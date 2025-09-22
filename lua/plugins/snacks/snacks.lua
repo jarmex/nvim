@@ -78,7 +78,7 @@ return {
           warn = icons.diagnostics.Warning,
         },
         style = 'compact',
-        top_down = false,
+        top_down = true, -- show notifications top-down instead of bottom-up
         margin = { bottom = 1 },
         date_format = '%R',
         more_format = ' ↓ %d lines ',

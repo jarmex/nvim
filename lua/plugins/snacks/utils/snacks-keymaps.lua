@@ -104,7 +104,9 @@ return function()
     {
       '<leader>/',
       function()
-        Snacks.picker.grep()
+        ---@class snacks.picker.grep.Config: snacks.picker.proc.Config
+        local opts = { hidden = true, ignored = true, exclude = { '*.pb.go', '.venv/*', '.mypy_cache/*', '.repro/*' } }
+        Snacks.picker.grep(opts)
       end,
       desc = 'Grep',
     },
@@ -206,6 +208,21 @@ return function()
         })
       end,
       desc = 'Find files in current directory',
+    },
+    -- custom pickers
+    {
+      '<leader>sP',
+      function()
+        require('plugins.snacks.utils.picker-helper').pull_requests()
+      end,
+      desc = '[s]earch [P]ull Requests',
+    },
+    {
+      '<leader>sl',
+      function()
+        require('plugins.snacks.utils.picker-helper').neovim_logs()
+      end,
+      desc = '[s]earch [l]ogs',
     },
   }
 end
