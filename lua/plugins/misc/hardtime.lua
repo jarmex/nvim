@@ -39,6 +39,7 @@ return {
       'lspinfo',
       'markdown',
       'mason',
+      'mcphub',
       'neotest-summary',
       'netrw',
       'noice',

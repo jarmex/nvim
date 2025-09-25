@@ -115,8 +115,6 @@ return {
           api_key = os.getenv('OPENROUTER_API_KEY'),
         },
         schema = {
-          -- temperature = { default = 0.3 },
-          -- maxOutputTokens = { default = 8192 },
           model = {
             default = 'moonshotai/kimi-k2-0905',
             choices = {
@@ -128,8 +126,9 @@ return {
               'mistralai/devstral-small:free',
               'moonshotai/kimi-k2:free',
               'moonshotai/kimi-k2-0905',
-              'deepseek/deepseek-chat-v3.1',
-              'deepseek/deepseek-chat-v3.1:free',
+              'deepseek/deepseek-v3.1-terminus',
+              'x-ai/grok-4-fast:free',
+              'openai/gpt-oss-120b:free',
             },
           },
         },

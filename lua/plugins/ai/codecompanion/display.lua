@@ -39,7 +39,7 @@ M.chat = {
   show_token_count = false,
   start_in_insert_mode = false,
   -- auto_scroll = true,
-  fold_context = true,
+  -- fold_context = true,
   -- child_window = { opts = { wrap = true } },
   icons = {
     tool_success = '󰸞 ',
@@ -60,7 +60,7 @@ M.chat = {
     position = nil,
     -- border = 'single',
     -- height = 0.8,
-    relative = 'editor',
+    -- relative = 'editor',
     opts = {
       -- breakindent = true,
       -- cursorcolumn = false,
@@ -76,6 +76,8 @@ M.chat = {
       -- wrap = true,
       winbar = '',
       statuscolumn = ' ',
+      winfixbuf = true,
+      scrolloff = 3,
     },
   },
 }

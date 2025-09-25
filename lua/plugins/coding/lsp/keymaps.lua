@@ -1,21 +1,6 @@
 ---@diagnostic disable: need-check-nil
 
 local isTsToolOk, typeScriptTools = pcall(require, 'typescript-tools.api')
-local debounce = require('helpers.utils').debounce
-local autocmd = vim.api.nvim_create_autocmd
-
-local function codelens(bufnr, client)
-  if client:supports_method('textDocument/codeLens') then
-    vim.lsp.codelens.refresh({ bufnr = bufnr })
-    autocmd({ 'FocusGained', 'WinEnter', 'BufEnter', 'InsertLeave' }, {
-      group = vim.api.nvim_create_augroup('CodeLens', { clear = false }),
-      buffer = bufnr,
-      callback = debounce(500, function(args0)
-        vim.lsp.codelens.refresh({ bufnr = args0.buf })
-      end),
-    })
-  end
-end
 
 local function hover_action()
   local winid = require('ufo').peekFoldedLinesUnderCursor()
@@ -23,14 +8,6 @@ local function hover_action()
     vim.lsp.buf.hover({ border = 'rounded' })
   end
 end
-
--- local function diagnostic_goto(next, severity)
---   local count = next and 1 or -1
---   severity = severity and vim.diagnostic.severity[severity] or nil
---   return function()
---     vim.diagnostic.jump({ count = count, float = true, severity = severity, wrap = true })
---   end
--- end
 
 local function rename()
   if pcall(require, 'inc_rename') then
@@ -171,7 +148,30 @@ vim.api.nvim_create_autocmd('LspAttach', {
         }
       end
     end
+    -- set up codelens
+    if client:supports_method('textDocument/codeLens', ctx.buf) then
+      vim.lsp.codelens.refresh()
+      vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+        buffer = ctx.buf,
+        callback = vim.lsp.codelens.refresh,
+      })
+    end
+
+    -- set up workspace diagnostics
+    if client:supports_method('workspace/diagnostic', ctx.buf) then
+      -- WARNING: not sure if this is the intended use case. Let's see...
+      vim.notify_once(vim.inspect('Setting up workspace diagnostics for ' .. client.name), vim.log.levels.WARN)
+      ---@type vim.lsp.WorkspaceDiagnosticsOpts
+      local opts = { client_id = client.id }
+      vim.lsp.buf.workspace_diagnostics(opts)
+    end
+    -- setup inline completion (only neovim 0.12+)
+    if vim.lsp.inline_completion then
+      if client:supports_method('textDocument/inlineCompletion', ctx.buf) then
+        vim.lsp.inline_completion.enable(true)
+      end
+    end
+
     keymap(bufnr)
-    codelens(bufnr, client)
   end,
 })

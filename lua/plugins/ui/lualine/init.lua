@@ -26,7 +26,7 @@ return {
           component_separators = { left = '', right = '' },
           section_separators = { left = '', right = '' },
           disabled_filetypes = {
-            statusline = { 'lazy', 'alpha', 'snacks_dashboard' },
+            statusline = { 'lazy', 'alpha', 'snacks_dashboard', 'NvimTree', 'toggleterm', 'neo-tree', 'codecompanion' },
             winbar = { 'lazy', 'alpha', 'toggleterm', 'NvimTree', 'Trouble', 'neo-tree', 'codecompanion', 'snacks' },
           },
           globalstatus = true,
