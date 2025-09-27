@@ -53,7 +53,7 @@ return {
         prompt_library = require('plugins.ai.codecompanion.promptlibrary'),
         extensions = require('plugins.ai.codecompanion.extensions'),
         opts = {
-          -- system_prompt = systemPromptModes.system_prompt,
+          system_prompt = require('plugins.ai.codecompanion.systemprompts.my-default').main_system_prompt(),
           send_code = true,
         },
       }

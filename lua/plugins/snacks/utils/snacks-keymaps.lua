@@ -105,7 +105,11 @@ return function()
       '<leader>/',
       function()
         ---@class snacks.picker.grep.Config: snacks.picker.proc.Config
-        local opts = { hidden = true, ignored = true, exclude = { '*.pb.go', '.venv/*', '.mypy_cache/*', '.repro/*' } }
+        local opts = {
+          hidden = true,
+          ignored = true,
+          exclude = { '*.pb.go', '.venv/*', '.mypy_cache/*', '.repro/*', 'node_modules/*' },
+        }
         Snacks.picker.grep(opts)
       end,
       desc = 'Grep',

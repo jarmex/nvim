@@ -18,8 +18,8 @@ return {
           height = 0.9,
         },
         wo = {
-          -- winblend = vim.o.winblend,
-          -- winhl = 'MCPHubMuted:Normal',
+          winblend = vim.o.winblend,
+          winhl = 'MCPHubMuted:Normal',
         },
       },
     },
