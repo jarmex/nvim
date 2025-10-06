@@ -162,6 +162,7 @@ local beastMode = require('plugins.ai.codecompanion.promptlibrary.beastmode')
 local commit_pull_request = require('plugins.ai.codecompanion.promptlibrary.commit_pull_request')
 local dailyPlanning = require('plugins.ai.codecompanion.promptlibrary.dailyPlanning')
 local living_docs = require('plugins.ai.codecompanion.promptlibrary.living_docs')
+local others = require('plugins.ai.codecompanion.promptlibrary.others')
 local review_documents = require('plugins.ai.codecompanion.promptlibrary.review_documentation')
 
 return vim.tbl_extend(
@@ -173,5 +174,6 @@ return vim.tbl_extend(
   review_documents,
   dailyPlanning,
   commit_pull_request,
-  beastMode
+  beastMode,
+  others
 )

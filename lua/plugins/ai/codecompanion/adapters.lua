@@ -28,7 +28,7 @@ return {
       local anthropic_config = {
         schema = {
           model = {
-            default = 'claude-sonnet-4-0',
+            default = 'claude-sonnet-4-5',
           },
           auth_type = {
             default = 'oauth',
@@ -110,16 +110,18 @@ return {
         name = 'openrouter',
         formatted_name = 'OpenRouter',
         env = {
-          url = 'https://openrouter.ai/api',
-          chat_url = '/v1/chat/completions',
+          url = 'https://openrouter.ai/api/v1',
+          chat_url = '/chat/completions',
           api_key = os.getenv('OPENROUTER_API_KEY'),
+          models_endpoint = '/models',
         },
         schema = {
           model = {
-            default = 'moonshotai/kimi-k2-0905',
+            default = 'z-ai/glm-4.6',
             choices = {
-              'z-ai/glm-4.5',
+              'z-ai/glm-4.6',
               'z-ai/glm-4.5-air:free',
+              'deepseek/deepseek-v3.2-exp',
               'qwen/qwen3-coder',
               'qwen/qwen3-coder:free',
               'qwen/qwen3-235b-a22b-07-25:free',

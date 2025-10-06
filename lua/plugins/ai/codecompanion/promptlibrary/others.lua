@@ -49,4 +49,63 @@ When the user asks you to solve a problem, you must follow this exact interactio
       },
     },
   },
+  ['Add documentation to this code or function'] = {
+    strategy = 'chat',
+    description = 'Create documentation for this code and update the buffer',
+    opts = {
+      auto_submit = true,
+      -- ignore_system_prompt = true,
+      is_slash_cmd = true,
+      short_name = 'document',
+      adapter = {
+        name = 'copilot',
+      },
+    },
+    prompts = {
+      {
+        role = 'user',
+        content = [[
+#{buffer}
+@{insert_edit_into_file}
+
+Add documentation to the selected code or function.
+Include argument and return types (but omit types for typescript).
+Be succinct.
+Do not add comments to variables or single line expressions.
+        ]],
+      },
+    },
+  },
+  ['Write tests for this file'] = {
+    strategy = 'chat',
+    description = 'Write tests for this file or module following existing convention.',
+    opts = {
+      auto_submit = true,
+      -- ignore_system_prompt = true,
+      is_slash_cmd = true,
+      short_name = 'write-tests',
+      adapter = {
+        name = 'copilot',
+      },
+    },
+    prompts = {
+      {
+        role = 'user',
+        content = [[
+#{buffer}
+@{full_stack_dev}
+
+Write tests for this file or module.
+
+Follow these additional rules:
+- Check for existing tests under common paths, such as `test/`, `spec/`, or `src/**/*.test.*`.
+- Follow conventions stablished by existing tests, if any.
+- Write minimal tests, covering only the most common logic paths.
+- Use mocks for external libraries.
+- Do not install any new packages.
+- Do not try to run the tests.
+        ]],
+      },
+    },
+  },
 }

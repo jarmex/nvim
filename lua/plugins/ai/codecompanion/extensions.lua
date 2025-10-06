@@ -86,8 +86,8 @@ return {
   gitcommit = {
     callback = 'codecompanion._extensions.gitcommit',
     opts = {
-      adapter = 'openai', -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
-      model = 'gpt-4.1', -- default model for gitcommit
+      adapter = 'openrouter', -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
+      model = 'qwen/qwen3-coder:free', -- default model for gitcommit
       languages = { 'English' }, -- Optional: specify languages for diff analysis
       exclude_files = {
         '*.generated.*',

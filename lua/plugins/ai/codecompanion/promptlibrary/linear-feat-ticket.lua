@@ -1,96 +1,94 @@
 local constants = require('codecompanion.config').constants
 
-local writing_prompt = [[
- You are a senior product owner generating JIRA tickets. Each ticket must follow Agile best practices. Given a feature or task description, output a JIRA ticket with the following sections:
- 1. **Title**: A concise summary of the feature or task.
- 2. **Description**: A high-level explanation of the purpose and context of the ticket. Include background information if necessary.
- 3. **User Story**: Use the format:
-    *As a \[type of user], I want to \[do something] so that \[benefit or value].*
- 4. **Acceptance Criteria**: A bullet list using Gherkin-style where possible (Given/When/Then), clearly defining the definition of done.
- 5. **Technical Notes** (if any): Include implementation hints, links to technical specs or designs, or environment-specific considerations. Mention if frontend/backend/API/DB changes are required.
- Format your response clearly using markdown with proper headings.
+local create_linear_ticket = [[
+Generate a **feature ticket or task** for engineers/developers based on the description provided. The output must follow Agile best practices and be written in **markdown format** for clarity.
 
----
+### Structure to Follow:
 
-**🧠 Example Usage (input):**
+#### Title
 
-> Feature: Enable users to reset their password via email
+Provide a concise, action-oriented summary of the feature or task (5–10 words).
 
----
+#### Description
 
-**💡 Expected Output:**
+Give a high-level explanation of the feature or task:
 
-### Title
+* Purpose and context
+* Background or problem being solved
+* Why this work is necessary
 
-Enable Password Reset via Email
+#### User Story
 
-### Description
+Write in the following format:
+*As a [type of user], I want to [action] so that [benefit/value].*
 
-Currently, users have no way to recover access if they forget their password. This feature enables users to request a password reset link sent to their registered email.
+#### Acceptance Criteria
 
-### User Story
+Choose the appropriate style based on task complexity:
 
-*As a user who forgot my password, I want to receive a reset link in my email so that I can regain access to my account securely.*
+* **For small tasks → Checklist/Rules format**
 
-### Acceptance Criteria
+  * [ ] Condition 1
+  * [ ] Condition 2
+  * [ ] Condition 3
 
-* Given a user is on the login page,
-  When they click "Forgot Password",
-  Then they are prompted to enter their email address.
+* **For complex flows → Scenario-Based or Gherkin format**
 
-* Given a registered email is submitted,
-  When the request is valid,
-  Then a password reset email is sent with a secure link.
+  **Scenario-Based:**
 
-* Given the reset link is used,
-  When the token is valid,
-  Then the user can set a new password.
+  * A user does X, and the system responds with Y
+  * A user attempts invalid input, and the system rejects with error Z
 
-* Given the token is expired or invalid,
-  Then the user sees an error message.
+  **Gherkin-Style (optional):**
 
-### Technical Notes
+  * Given [context]
+  * When [action]
+  * Then [expected outcome]
 
-* Backend:
+#### Technical Notes
 
-  * Generate time-limited reset token (JWT or UUID).
-  * Store token with expiration in DB.
-  * Implement endpoint: `POST /auth/request-reset`, `POST /auth/reset-password`.
-* Frontend:
+Include any relevant technical details:
 
-  * Add "Forgot Password" link on login page.
-  * Create reset form page to accept new password.
-* Email service integration required.
+* Implementation considerations
+* Links to specs, wireframes, or designs
+* Required changes (frontend, backend, API, database, infra, etc.)
+* Environment/dependency notes
 
----
+#### Definition of Done (DoD) Checklist
 
-Let me know if you'd like a version tailored for a specific project, product, or team template.
+Every task is considered complete only when:
+
+* [ ] All acceptance criteria are met
+* [ ] Unit and integration tests are implemented and passing
+* [ ] Code is peer-reviewed and merged into main branch
+* [ ] QA has validated functionality with no critical/blocking issues
+* [ ] Documentation (user-facing and/or technical) is updated
+* [ ] Feature is deployed or ready for deployment in the target environment
+
+IMPORTANT:
+Use the @{linear} tool to create a Linear issue in the Engineering team.
+
+**Feature or Task Description Input:**
+
 ]]
+
 return {
   strategy = 'chat',
   description = 'Generate a Linear issue in the Engineering team',
   opts = {
     auto_submit = false,
-    short_name = 'linear',
-    ignore_system_prompt = true,
+    short_name = 'linear_feat',
+    is_slash_cmd = true,
     adapter = {
-      name = 'qwen',
+      name = 'anthropic',
     },
   },
   prompts = {
     {
-      role = 'system',
-      content = writing_prompt,
-    },
-    {
       role = constants.USER_ROLE,
-      content = function()
-        vim.g.codecompanion_auto_tool_mode = true
-
-        return 'Generate a Linear issue in the Engineering team using @{linear} for the following feature or task: '
-      end,
+      content = create_linear_ticket,
       opts = {
-        visible = true,
+        visible = false,
         auto_submit = false,
       },
     },

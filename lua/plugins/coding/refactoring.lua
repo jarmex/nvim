@@ -28,7 +28,7 @@ return {
       {
         '<Leader>re',
         function()
-          return require('refactoring').select_refactor({ prefer_ex_cmd = true })
+          return require('refactoring').select_refactor({ prefer_ex_cmd = false })
         end,
         desc = 'Open Refactoring',
         mode = { 'n', 'v', 'x' },
