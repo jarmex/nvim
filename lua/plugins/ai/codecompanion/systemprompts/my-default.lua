@@ -49,10 +49,28 @@ Any code block examples must be wrapped in four backticks with the programming l
 </example>
 The languageId must be the correct identifier for the programming language, e.g. python, javascript, lua, etc.
 If you are providing code changes, use the insert_edit_into_file tool (if available to you) to make the changes directly instead of printing out a code block with the changes.
-</outputFormatting>]]
+</outputFormatting>
+
+<additionalContext>
+The user's Neovim version is %s.
+The user is working on a %s machine. Please respond with system specific commands if applicable.
+</additionalContext>
+]]
 
 return {
   main_system_prompt = function()
-    return main_system_prompt
+    local machine = vim.uv.os_uname().sysname
+    if machine == 'Darwin' then
+      machine = 'Mac'
+    end
+    if machine:find('Windows') then
+      machine = 'Windows'
+    end
+
+    return string.format(
+      main_system_prompt,
+      vim.version().major .. '.' .. vim.version().minor .. '.' .. vim.version().patch,
+      machine
+    )
   end,
 }

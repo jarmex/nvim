@@ -26,9 +26,16 @@ return {
     --- Anthropic config for CodeCompanion.
     anthropic = function()
       local anthropic_config = {
+        formatted_name = 'Anthropic Claude Sonnet 4.5',
+        headers = {
+          ['anthropic-beta'] = 'context-1m-2025-08-07',
+        },
         schema = {
           model = {
-            default = 'claude-sonnet-4-5',
+            default = 'claude-sonnet-4-5-20250929',
+          },
+          thinking_budget = {
+            default = 63000,
           },
           auth_type = {
             default = 'oauth',

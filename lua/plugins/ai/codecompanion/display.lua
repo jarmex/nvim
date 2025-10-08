@@ -39,7 +39,7 @@ M.chat = {
   show_token_count = false,
   start_in_insert_mode = false,
   -- auto_scroll = true,
-  -- fold_context = true,
+  fold_context = false,
   -- child_window = { opts = { wrap = true } },
   icons = {
     tool_success = '󰸞 ',
@@ -57,10 +57,8 @@ M.chat = {
   window = {
     width = 0.60,
     layout = vim.o.columns >= 120 and 'vertical' or 'horizontal',
-    position = nil,
-    -- border = 'single',
-    -- height = 0.8,
-    -- relative = 'editor',
+    position = 'right',
+    sticky = true,
     opts = {
       -- breakindent = true,
       -- cursorcolumn = false,
