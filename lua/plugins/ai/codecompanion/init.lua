@@ -55,11 +55,17 @@ return {
         opts = {
           system_prompt = require('plugins.ai.codecompanion.systemprompts.my-default').main_system_prompt(),
           send_code = true,
+          prompt_decorator = function(message, adapter, _)
+            if adapter.model.name == 'qwen3:1.7b' then
+              return string.format([[/no_think %s]], message)
+            else
+              return message
+            end
+          end,
         },
       }
     end,
     config = function(_, opts)
-      -- vim.g.codecompanion_auto_tool_mode = true
       require('codecompanion').setup(opts)
       -- Expand `cc` into CodeCompanion in the command line
       vim.cmd([[cab cc CodeCompanion]])

@@ -108,4 +108,113 @@ Follow these additional rules:
       },
     },
   },
+
+  ['Edit'] = {
+    strategy = 'chat',
+    description = 'Edit the current buffer',
+    prompts = {
+      { role = 'user', content = '@{insert_edit_into_file} #{buffer}\n\n' },
+    },
+    opts = {
+      auto_submit = false,
+      short_name = 'edit',
+      is_slash_cmd = true,
+    },
+  },
+  ['Develop'] = {
+    strategy = 'chat',
+    description = 'Edit with full tooling',
+    prompts = {
+      { role = 'user', content = '@{full_stack_dev} #{buffer}\n\n' },
+    },
+    opts = {
+      auto_submit = false,
+      short_name = 'dev',
+      is_slash_cmd = true,
+    },
+  },
+  ['Saved Project Chats ...'] = {
+    strategy = 'chat',
+    description = 'Browse saved project chats',
+    opts = {
+      index = 4,
+      stop_context_insertion = true,
+    },
+    condition = function()
+      local history = require('codecompanion').extensions.history
+      local have_chats = not vim.tbl_isempty(history.get_chats(chat_filter))
+      local mode = vim.api.nvim_get_mode()
+      return have_chats and (mode.mode == 'n' or mode.mode == 'i')
+    end,
+    prompts = {
+      n = function()
+        local history = require('codecompanion').extensions.history
+        history.browse_chats(chat_filter)
+      end,
+      i = function()
+        local history = require('codecompanion').extensions.history
+        history.browse_chats(chat_filter)
+      end,
+    },
+  },
+  ['Saved Chats ...'] = {
+    strategy = 'chat',
+    description = 'Browse all saved chats',
+    opts = {
+      index = 5,
+      stop_context_insertion = true,
+    },
+    condition = function()
+      local history = require('codecompanion').extensions.history
+      local have_chats = not vim.tbl_isempty(history.get_chats())
+      local mode = vim.api.nvim_get_mode()
+      return have_chats and (mode.mode == 'n' or mode.mode == 'i')
+    end,
+    prompts = {
+      n = function()
+        local history = require('codecompanion').extensions.history
+        history.browse_chats()
+      end,
+      i = function()
+        local history = require('codecompanion').extensions.history
+        history.browse_chats()
+      end,
+    },
+  },
+  ['Agent'] = {
+    strategy = 'chat',
+    description = 'Create a new chat buffer in Agent mode',
+    opts = {
+      index = 6,
+      stop_context_insertion = true,
+      adapter = {
+        name = 'anthropic',
+        model = 'claude-sonnet-4', -- Multiplier = 1.
+      },
+    },
+    prompts = {
+      {
+        role = 'user',
+        content = '#{mcp:neovim://workspace} @{agent} ',
+      },
+    },
+  },
+  ['Free Agent (GPT-4o)'] = {
+    strategy = 'chat',
+    description = 'Create a new chat buffer in Agent mode with GPT-4o',
+    opts = {
+      index = 7,
+      stop_context_insertion = true,
+      adapter = {
+        name = 'openai',
+        model = 'gpt-4o', -- Multiplier = 0 (free).
+      },
+    },
+    prompts = {
+      {
+        role = 'user',
+        content = '#{mcp:neovim://workspace} @{agent} ',
+      },
+    },
+  },
 }

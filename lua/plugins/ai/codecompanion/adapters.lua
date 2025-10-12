@@ -1,42 +1,21 @@
 ---@module "codecompanion"
 ---@type CodeCompanion.Config
 return {
-  acp = {
-    claude_code = function()
-      return require('codecompanion.adapters').extend('claude_code', {
-        env = {
-          CLAUDE_CODE_OAUTH_TOKEN = os.getenv('CLAUDE_CODE_OAUTH_TOKEN'),
-        },
-      })
-    end,
-    gemini_cli = function()
-      return require('codecompanion.adapters').extend('gemini_cli', {
-        commands = {
-          default = { 'gemini', '--experimental-acp' },
-        },
-        defaults = {
-          -- auth_method = "gemini-api-key",
-          mcpServers = require('mcphub').get_hub_instance():get_servers(),
-          timeout = 20000, -- 20 seconds
-        },
-      })
-    end,
-  },
   http = {
     --- Anthropic config for CodeCompanion.
     anthropic = function()
       local anthropic_config = {
         formatted_name = 'Anthropic Claude Sonnet 4.5',
-        headers = {
-          ['anthropic-beta'] = 'context-1m-2025-08-07',
-        },
+        -- headers = {
+        --   ['anthropic-beta'] = 'context-1m-2025-08-07',
+        -- },
         schema = {
           model = {
             default = 'claude-sonnet-4-5-20250929',
           },
-          thinking_budget = {
-            default = 63000,
-          },
+          -- thinking_budget = {
+          --   default = 63000,
+          -- },
           auth_type = {
             default = 'oauth',
           },
@@ -46,6 +25,33 @@ return {
     end,
 
     --- OpenAI config for CodeCompanion.
+    openai_response = function()
+      return require('codecompanion.adapters').extend('openai_responses', {
+        schema = {
+          model = {
+            default = 'gpt-5-codex',
+            choices = {
+              ['gpt-5-codex'] = {
+                opts = {
+                  has_vision = true,
+                  can_reason = true,
+                  stream = true,
+                },
+              },
+              ['gpt-5'] = {
+                opts = {
+                  has_vision = true,
+                  can_reason = true,
+                  stream = true,
+                },
+              },
+            },
+          },
+          ['reasoning.effort'] = { default = 'minimal' },
+        },
+      })
+    end,
+
     openai = function()
       local openai_config = {
         opts = {
@@ -53,11 +59,44 @@ return {
         },
         schema = {
           model = {
-            default = 'gpt-5-codex', -- 'gpt-5-2025-08-07',
+            default = 'gpt-4.1-mini-2025-04-14', -- 'gpt-5-2025-08-07',
           },
         },
       }
       return require('codecompanion.adapters').extend('openai', openai_config)
+    end,
+
+    openrouter = function()
+      local openrouter_config = {
+        name = 'openrouter',
+        formatted_name = 'OpenRouter',
+        env = {
+          url = 'https://openrouter.ai/api/v1',
+          chat_url = '/chat/completions',
+          api_key = os.getenv('OPENROUTER_API_KEY'),
+          models_endpoint = '/models',
+        },
+        schema = {
+          model = {
+            default = 'z-ai/glm-4.6',
+            choices = {
+              'z-ai/glm-4.6',
+              'x-ai/grok-code-fast-1',
+              'deepseek/deepseek-v3.2-exp',
+              'qwen/qwen3-coder',
+              'qwen/qwen3-coder:free',
+              'moonshotai/kimi-k2-0905',
+              'deepseek/deepseek-v3.1-terminus',
+              'mistralai/devstral-small:free',
+              'moonshotai/kimi-k2:free',
+              'openai/gpt-oss-120b:free',
+              'qwen/qwen3-235b-a22b-07-25:free',
+              'x-ai/grok-4-fast:free',
+            },
+          },
+        },
+      }
+      return require('codecompanion.adapters').extend('openai_compatible', openrouter_config)
     end,
 
     deepseek = function()
@@ -112,39 +151,6 @@ return {
       return require('codecompanion.adapters').extend('gemini', gemini_config)
     end,
 
-    openrouter = function()
-      local openrouter_config = {
-        name = 'openrouter',
-        formatted_name = 'OpenRouter',
-        env = {
-          url = 'https://openrouter.ai/api/v1',
-          chat_url = '/chat/completions',
-          api_key = os.getenv('OPENROUTER_API_KEY'),
-          models_endpoint = '/models',
-        },
-        schema = {
-          model = {
-            default = 'z-ai/glm-4.6',
-            choices = {
-              'z-ai/glm-4.6',
-              'z-ai/glm-4.5-air:free',
-              'deepseek/deepseek-v3.2-exp',
-              'qwen/qwen3-coder',
-              'qwen/qwen3-coder:free',
-              'qwen/qwen3-235b-a22b-07-25:free',
-              'mistralai/devstral-small:free',
-              'moonshotai/kimi-k2:free',
-              'moonshotai/kimi-k2-0905',
-              'deepseek/deepseek-v3.1-terminus',
-              'x-ai/grok-4-fast:free',
-              'openai/gpt-oss-120b:free',
-            },
-          },
-        },
-      }
-      return require('codecompanion.adapters').extend('openai_compatible', openrouter_config)
-    end,
-
     qwen = function()
       local qwen_config = {
         name = 'qwen',
@@ -170,6 +176,27 @@ return {
         },
       }
       return require('codecompanion.adapters').extend('openai_compatible', qwen_config)
+    end,
+  },
+  acp = {
+    claude_code = function()
+      return require('codecompanion.adapters').extend('claude_code', {
+        env = {
+          CLAUDE_CODE_OAUTH_TOKEN = os.getenv('CLAUDE_CODE_OAUTH_TOKEN'),
+        },
+      })
+    end,
+    gemini_cli = function()
+      return require('codecompanion.adapters').extend('gemini_cli', {
+        commands = {
+          default = { 'gemini', '--experimental-acp' },
+        },
+        defaults = {
+          -- auth_method = "gemini-api-key",
+          mcpServers = require('mcphub').get_hub_instance():get_servers(),
+          timeout = 20000, -- 20 seconds
+        },
+      })
     end,
   },
 }

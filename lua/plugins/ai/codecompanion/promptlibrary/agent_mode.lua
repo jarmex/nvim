@@ -1,34 +1,19 @@
 return {
   strategy = 'chat',
-  description = 'Agent mode with explicit set of tools',
+  description = 'Already give the current buffer and the agent tools to the chat window',
   opts = {
     index = 21,
     is_default = false,
-    short_name = 'agent',
     is_slash_cmd = true,
     auto_submit = false,
+    short_name = 'agent_mode_current_buffer',
   },
   prompts = {
     {
       role = 'user',
       contains_code = true,
-      content = function()
-        return ([[
-          You are in agent mode:
-          Use tools to answer user request using @cmd_runner
-          - Do NOT use `grep`
-          - Search content and patterns using `fzf`
-          - Do NOT use `find`
-          - Search files with `fd`
-
-          You are an assistant with access to tools. Follow these strict guidelines:
-            1. Call only one tool at a time
-            2. Wait for the tool's response before determining your next action
-            3. Do not plan multiple tool calls in advance
-            4. After each tool call, respond to the user with your observations
-            5. Do not group multiple operations into a single tool call
-          ]]):gsub('^ +', '', 1):gsub('\n +', '\n')
-      end,
+      content = [[You are a @{full_stack_dev} with access to #{buffer}. The current project structure is #{ls} and you can reference project rules via #{rules}.
+      ]],
     },
   },
 }
