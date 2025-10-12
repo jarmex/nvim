@@ -9,8 +9,6 @@ return {
     auto_submit = true,
     adapter = {
       name = 'openai',
-      -- model = "claude-3-7-sonnet-20250219",
-      -- model = 'claude-3-5-haiku-20241022',
     },
   },
   prompts = {
