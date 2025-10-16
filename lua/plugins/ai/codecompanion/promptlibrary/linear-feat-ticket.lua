@@ -1,6 +1,6 @@
 local constants = require('codecompanion.config').constants
 
-local create_linear_ticket = [[
+local system_prompt_feat = [[
 Generate a **feature ticket or task** for engineers/developers based on the description provided. The output must follow Agile best practices and be written in **markdown format** for clarity.
 
 ### Structure to Follow:
@@ -64,11 +64,13 @@ Every task is considered complete only when:
 * [ ] QA has validated functionality with no critical/blocking issues
 * [ ] Documentation (user-facing and/or technical) is updated
 * [ ] Feature is deployed or ready for deployment in the target environment
+]]
 
-IMPORTANT:
+local user_prompt = [[
 Use the @{linear} tool to create a Linear issue in the Engineering team.
 
-**Feature or Task Description Input:**
+Feature or Task Description Input below:
+
 
 ]]
 
@@ -85,10 +87,17 @@ return {
   },
   prompts = {
     {
-      role = constants.USER_ROLE,
-      content = create_linear_ticket,
+      role = 'system',
+      content = system_prompt_feat,
       opts = {
         visible = false,
+      },
+    },
+    {
+      role = constants.USER_ROLE,
+      content = user_prompt,
+      opts = {
+        -- visible = false,
         auto_submit = false,
       },
     },

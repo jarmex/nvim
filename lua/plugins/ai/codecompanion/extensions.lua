@@ -124,6 +124,13 @@ return {
       gitcommit_select_count = 100, -- Number of commits shown in /gitcommit
       use_commit_history = true, -- Enable commit history context
       commit_history_count = 10, -- Number of recent commits for context
+      include_issue_id_from_branch = true, -- Enable automatic issue ID extraction
+      issue_id_patterns = { -- Patterns for extracting issue IDs
+        { pattern = '^bcd%-(%d%d%d%d)', prefix = 'BCD', format = 'BCD-%s' },
+        { pattern = 'MOB%-(%d+)', prefix = 'MOB', format = 'MOB-%s' },
+        { pattern = 'TEC%-(%d+)', prefix = 'TEC', format = 'TEC-%s' },
+        { pattern = 'ENG%-(%d+)', prefix = 'ENG', format = 'ENG-%s' },
+      },
     },
   },
   spinner = {

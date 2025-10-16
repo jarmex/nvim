@@ -1,3 +1,5 @@
+local adapters = require('codecompanion.adapters')
+
 ---@module "codecompanion"
 ---@type CodeCompanion.Config
 return {
@@ -21,12 +23,37 @@ return {
           },
         },
       }
-      return require('codecompanion.adapters').extend('anthropic', anthropic_config)
+      return adapters.extend('anthropic', anthropic_config)
     end,
 
     --- OpenAI config for CodeCompanion.
+    openai_gpt_5 = function()
+      return adapters.extend('openai_responses', {
+        name = 'openai_gpt_5',
+        -- env = { api_key = OPENAI_API_KEY },
+        schema = {
+          model = {
+            default = 'gpt-5',
+            choices = {
+              ['gpt-5'] = {
+                opts = {
+                  has_vision = true,
+                  can_reason = true,
+                  stream = true,
+                },
+              },
+            },
+          },
+          ['reasoning.effort'] = { default = 'minimal' },
+          verbosity = { default = 'low' },
+        },
+      })
+    end,
     openai_response = function()
-      return require('codecompanion.adapters').extend('openai_responses', {
+      return adapters.extend('openai_responses', {
+        opts = {
+          stream = false,
+        },
         schema = {
           model = {
             default = 'gpt-5-codex',
@@ -63,7 +90,7 @@ return {
           },
         },
       }
-      return require('codecompanion.adapters').extend('openai', openai_config)
+      return adapters.extend('openai', openai_config)
     end,
 
     openrouter = function()
@@ -96,11 +123,11 @@ return {
           },
         },
       }
-      return require('codecompanion.adapters').extend('openai_compatible', openrouter_config)
+      return adapters.extend('openai_compatible', openrouter_config)
     end,
 
     deepseek = function()
-      return require('codecompanion.adapters').extend('deepseek', {
+      return adapters.extend('deepseek', {
         env = {
           api_key = os.getenv('DEEPSEEK_API_KEY'),
         },
@@ -118,7 +145,7 @@ return {
 
     --- Ollama config for CodeCompanion.
     ollama = function()
-      return require('codecompanion.adapters').extend('ollama', {
+      return adapters.extend('ollama', {
         name = 'ollama',
         schema = {
           model = {
@@ -148,7 +175,7 @@ return {
           },
         },
       }
-      return require('codecompanion.adapters').extend('gemini', gemini_config)
+      return adapters.extend('gemini', gemini_config)
     end,
 
     qwen = function()
@@ -175,19 +202,19 @@ return {
           },
         },
       }
-      return require('codecompanion.adapters').extend('openai_compatible', qwen_config)
+      return adapters.extend('openai_compatible', qwen_config)
     end,
   },
   acp = {
     claude_code = function()
-      return require('codecompanion.adapters').extend('claude_code', {
+      return adapters.extend('claude_code', {
         env = {
           CLAUDE_CODE_OAUTH_TOKEN = os.getenv('CLAUDE_CODE_OAUTH_TOKEN'),
         },
       })
     end,
     gemini_cli = function()
-      return require('codecompanion.adapters').extend('gemini_cli', {
+      return adapters.extend('gemini_cli', {
         commands = {
           default = { 'gemini', '--experimental-acp' },
         },

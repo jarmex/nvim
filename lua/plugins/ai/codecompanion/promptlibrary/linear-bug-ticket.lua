@@ -86,7 +86,7 @@ return {
   opts = {
     auto_submit = false,
     short_name = 'bug-linear',
-    ignore_system_prompt = true,
+    ignore_system_prompt = false,
     adapter = {
       name = 'qwen',
     },
