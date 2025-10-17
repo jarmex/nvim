@@ -7,13 +7,33 @@ return {
     --- Anthropic config for CodeCompanion.
     anthropic = function()
       local anthropic_config = {
-        formatted_name = 'Anthropic Claude Sonnet 4.5',
+        formatted_name = 'Claude 4.5',
         -- headers = {
         --   ['anthropic-beta'] = 'context-1m-2025-08-07',
         -- },
         schema = {
           model = {
-            default = 'claude-sonnet-4-5-20250929',
+            default = 'claude-haiku-4-5-20251001',
+            choices = {
+              ['claude-sonnet-4-5-20250929'] = {
+                opts = {
+                  can_reason = true,
+                  has_vision = true,
+                  max_output = 64000,
+                  context_window = 1000000,
+                  description = 'High-performance model - Balanced performance and capability',
+                },
+              },
+              ['claude-haiku-4-5-20251001'] = {
+                opts = {
+                  can_reason = true,
+                  has_vision = true,
+                  max_output = 64000,
+                  context_window = 200000,
+                  description = 'Our latest Claude Haiku model - Balanced performance and capability',
+                },
+              },
+            },
           },
           -- thinking_budget = {
           --   default = 63000,

@@ -86,8 +86,8 @@ return {
   gitcommit = {
     callback = 'codecompanion._extensions.gitcommit',
     opts = {
-      adapter = 'deepseek', -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
-      model = 'deepseek-chat', -- default model for gitcommit
+      adapter = 'anthropic', -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
+      -- model = 'deepseek-chat', -- default model for gitcommit
       languages = { 'English' }, -- Optional: specify languages for diff analysis
       exclude_files = {
         '*.generated.*',
