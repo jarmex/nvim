@@ -68,6 +68,17 @@ return {
       machine = 'Windows'
     end
 
+    local root = vim.fs.root(0, { '.git', '.vectorcode' })
+    if root then
+      main_system_prompt = main_system_prompt
+        .. string.format(
+          [[
+The user's currently working in a project located at `%s`. Take this into consideration when replying to user's question or perform tool calls.
+          ]],
+          root
+        )
+    end
+
     return string.format(
       main_system_prompt,
       vim.version().major .. '.' .. vim.version().minor .. '.' .. vim.version().patch,

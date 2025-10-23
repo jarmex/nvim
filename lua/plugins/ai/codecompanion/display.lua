@@ -39,7 +39,7 @@ M.chat = {
   show_token_count = false,
   start_in_insert_mode = false,
   -- auto_scroll = true,
-  fold_context = false,
+  fold_context = true,
   -- child_window = { opts = { wrap = true } },
   icons = {
     tool_success = '󰸞 ',

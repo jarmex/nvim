@@ -19,6 +19,7 @@ return {
         dynamicRegistration = false,
         lineFoldingOnly = true,
       }
+      lsp_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 
       local has_blink, blink = pcall(require, 'blink.cmp')
       lsp_capabilities =
