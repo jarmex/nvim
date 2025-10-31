@@ -12,7 +12,11 @@ return {
     {
       role = 'user',
       contains_code = true,
-      content = [[You are a @{full_stack_dev} with access to #{buffer}. The current project structure is #{ls} and you can reference project rules via #{rules}.
+      content = [[You are a @{full_stack_dev} with access to #{buffer}.
+
+      The current project structure is #{ls} and you can reference project rules via #{rules}.
+
+
       ]],
     },
   },

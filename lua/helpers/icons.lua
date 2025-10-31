@@ -131,6 +131,14 @@ return {
     Skipped = '',
     Running = '',
   },
+  noice = {
+    searchUp = ' 󰶼   ',
+    searchDown = ' 󰶹   ',
+    filter = '  ',
+    cmdline = ' |> ',
+    IncRename = ' 󰑕  ',
+    -- cmdline = '   '
+  },
   ui = {
     Arrow = ' ',
     ArrowClosed = ' ',

@@ -52,12 +52,16 @@ local cot = require('plugins.ai.codecompanion.promptlibrary.chain_of_thought')
 local dailyPlanning = require('plugins.ai.codecompanion.promptlibrary.dailyPlanning')
 local living_docs = require('plugins.ai.codecompanion.promptlibrary.living_docs')
 local others = require('plugins.ai.codecompanion.promptlibrary.others')
+local pr_review_prompt = require('plugins.ai.codecompanion.promptlibrary.review_pull_request')
+local retrieval = require('plugins.ai.codecompanion.promptlibrary.retrieval')
 local review_documents = require('plugins.ai.codecompanion.promptlibrary.review_documentation')
+local vectorcode = require('plugins.ai.codecompanion.promptlibrary.vectorcode')
 
 return vim.tbl_extend(
   'force',
   {},
   -- fabric,
+  vectorcode,
   prompt_library,
   living_docs,
   review_documents,
@@ -65,5 +69,7 @@ return vim.tbl_extend(
   commit_pull_request,
   beastMode,
   others,
-  cot
+  cot,
+  retrieval,
+  pr_review_prompt
 )

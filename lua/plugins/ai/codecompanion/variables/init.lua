@@ -1,4 +1,6 @@
-return {
+local ccvariables = require('plugins.ai.codecompanion.variables.codecompanion-variables')
+
+local default_variables = {
   ['buffer'] = {
     opts = {
       default_params = 'watch',
@@ -52,3 +54,5 @@ return {
   --   },
   -- },
 }
+
+return vim.tbl_deep_extend('force', ccvariables, default_variables)

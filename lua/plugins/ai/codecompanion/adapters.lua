@@ -219,6 +219,25 @@ return {
       }
       return adapters.extend('openai_compatible', qwen_config)
     end,
+    default_copilot = function()
+      require('codecompanion.adapters').extend('copilot', {
+        schema = {
+          model = {
+            order = 1,
+            type = 'enum',
+            desc = 'Select one of your curated Copilot-backed models',
+            -- default = "claude-sonnet-4",
+            default = 'claude-sonnet-4.5',
+            choices = {
+              ['claude-sonnet-4.5'] = { opts = { provider = 'anthropic' } },
+              ['gpt-5-2025-08-07'] = { opts = { provider = 'openai', tier = 'flagship' } },
+              ['o4-mini'] = { opts = { provider = 'openai', can_reason = true, reasoning_tier = 'mini' } },
+              ['gemini-2.5-pro'] = { opts = { provider = 'google', multimodal = true } },
+            },
+          },
+        },
+      })
+    end,
   },
   acp = {
     claude_code = function()

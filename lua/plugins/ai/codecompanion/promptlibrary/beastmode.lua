@@ -30,27 +30,29 @@ Available tools:
 - mcp: Access tools and resources from MCP servers (use_mcp_tool, access_mcp_resource)
 ]]
 return {
-  strategy = 'chat',
-  description = 'Beast Mode - Unleash the beast',
-  opts = {
-    index = 70,
-    is_default = true,
-    short_name = 'beastmode',
-    auto_submit = true,
-  },
-  prompts = {
-    {
-      role = 'system',
-      content = beastMode,
-      opts = {
-        visible = false,
-      },
+  ['Beast Mode'] = {
+    strategy = 'chat',
+    description = 'Beast Mode - Unleash the beast',
+    opts = {
+      index = 70,
+      is_default = true,
+      short_name = 'beastmode',
+      auto_submit = true,
     },
-    {
-      role = 'user',
-      content = '',
-      opts = {
-        auto_submit = false,
+    prompts = {
+      {
+        role = 'system',
+        content = beastMode,
+        opts = {
+          visible = false,
+        },
+      },
+      {
+        role = 'user',
+        content = '',
+        opts = {
+          auto_submit = false,
+        },
       },
     },
   },
