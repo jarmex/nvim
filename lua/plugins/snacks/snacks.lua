@@ -18,6 +18,7 @@ return {
       },
       bufdelete = { enabled = true },
       git = { enabled = true },
+      gh = { enabled = true },
       gitbrowse = { enabled = true },
       scope = { enabled = true },
       indent = {

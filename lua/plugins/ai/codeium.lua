@@ -31,6 +31,7 @@ return {
   -- },
   { ---@type LazyPluginSpec
     'Exafunction/windsurf.nvim',
+    enabled = false,
     event = 'VeryLazy',
     name = 'codeium.nvim',
     opts = {

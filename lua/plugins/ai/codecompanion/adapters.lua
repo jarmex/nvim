@@ -128,6 +128,7 @@ return {
             default = 'z-ai/glm-4.6',
             choices = {
               'z-ai/glm-4.6',
+              'minimax/minimax-m2',
               'x-ai/grok-code-fast-1',
               'deepseek/deepseek-v3.2-exp',
               'qwen/qwen3-coder',

@@ -1,4 +1,6 @@
 local DEFAULT_COPILOT_MODEL = 'gpt-4.1'
+local DEFAULT_ADAPTOR = 'copilot'
+
 return {
   mcphub = {
     callback = 'mcphub.extensions.codecompanion',
@@ -34,7 +36,7 @@ return {
       save_chat_keymap = '<localleader>hs',
       title_generation_opts = {
         ---Adapter for generating titles (defaults to current chat adapter)
-        adapter = 'copilot', -- e.g. copilot, openai
+        adapter = DEFAULT_ADAPTOR, -- e.g. copilot, openai
         ---Model for generating titles (defaults to current chat model)
         model = DEFAULT_COPILOT_MODEL, -- "gpt-5-nano-2025-08-07"
       },
@@ -86,8 +88,8 @@ return {
   gitcommit = {
     callback = 'codecompanion._extensions.gitcommit',
     opts = {
-      -- adapter = 'openai', -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
-      -- model = 'deepseek-chat', -- default model for gitcommit
+      adapter = DEFAULT_ADAPTOR, -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
+      model = DEFAULT_COPILOT_MODEL, -- default model for gitcommit
       languages = { 'English' }, -- Optional: specify languages for diff analysis
       exclude_files = {
         '*.generated.*',

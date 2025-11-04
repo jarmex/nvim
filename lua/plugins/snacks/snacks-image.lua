@@ -21,7 +21,7 @@ return {
         'webm',
         'pdf',
       },
-      force = true, -- try displaying the image, even if the terminal does not support it
+      force = false, -- when true it try displaying the image, even if the terminal does not support it
       doc = {
         -- enable image viewer for documents
         -- a treesitter parser must be available for the enabled languages.

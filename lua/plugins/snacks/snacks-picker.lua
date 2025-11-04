@@ -268,6 +268,10 @@ return {
     ---@type snacks.picker.Config
     picker = {
       ui_select = true,
+      previewers = {
+        diff = { builtin = false },
+        git = { builtin = false },
+      },
       formatters = {
         file = {
           filename_first = true,
