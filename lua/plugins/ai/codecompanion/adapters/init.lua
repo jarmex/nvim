@@ -113,34 +113,7 @@ return {
       return adapters.extend('openai', openai_config)
     end,
 
-    openrouter = function()
-      local openrouter_config = {
-        name = 'openrouter',
-        formatted_name = 'OpenRouter',
-        env = {
-          url = 'https://openrouter.ai/api/v1',
-          chat_url = '/chat/completions',
-          api_key = os.getenv('OPENROUTER_API_KEY'),
-          models_endpoint = '/models',
-        },
-        schema = {
-          model = {
-            default = 'z-ai/glm-4.6',
-            choices = {
-              'z-ai/glm-4.6',
-              'minimax/minimax-m2',
-              'x-ai/grok-code-fast-1',
-              'deepseek/deepseek-v3.2-exp',
-              'qwen/qwen3-coder',
-              'deepseek/deepseek-v3.2-exp',
-              'moonshotai/kimi-k2-0905',
-              'deepseek/deepseek-v3.1-terminus',
-            },
-          },
-        },
-      }
-      return adapters.extend('openai_compatible', openrouter_config)
-    end,
+    openrouter = require('plugins.ai.codecompanion.adapters.openrouter'),
 
     deepseek = function()
       return adapters.extend('deepseek', {
@@ -240,25 +213,5 @@ return {
       })
     end,
   },
-  acp = {
-    claude_code = function()
-      return adapters.extend('claude_code', {
-        env = {
-          CLAUDE_CODE_OAUTH_TOKEN = os.getenv('CLAUDE_CODE_OAUTH_TOKEN'),
-        },
-      })
-    end,
-    gemini_cli = function()
-      return adapters.extend('gemini_cli', {
-        commands = {
-          default = { 'gemini', '--experimental-acp' },
-        },
-        defaults = {
-          -- auth_method = "gemini-api-key",
-          mcpServers = require('mcphub').get_hub_instance():get_servers(),
-          timeout = 20000, -- 20 seconds
-        },
-      })
-    end,
-  },
+  acp = require('plugins.ai.codecompanion.adapters.acp'),
 }

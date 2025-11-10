@@ -50,7 +50,12 @@ return {
         memory = {
           opts = {
             chat = {
-              enabled = false,
+              enabled = true,
+              default_memory = 'default',
+              default_params = 'watch',
+              condition = function(chat)
+                return chat.adapter.type ~= 'acp'
+              end,
             },
           },
         },

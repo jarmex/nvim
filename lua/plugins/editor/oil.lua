@@ -5,6 +5,10 @@ return {
   },
   opts = {
     default_file_explorer = true,
+    buf_options = {
+      buflisted = false,
+      bufhidden = 'hide',
+    },
     keymaps = {
       ['<C-s>'] = false,
       ['<C-h>'] = false,

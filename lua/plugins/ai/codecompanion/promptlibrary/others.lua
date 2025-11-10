@@ -113,7 +113,10 @@ Follow these additional rules:
     strategy = 'chat',
     description = 'Edit the current buffer',
     prompts = {
-      { role = 'user', content = '@{insert_edit_into_file} #{buffer}\n\n' },
+      { role = 'user', content = [[@{insert_edit_into_file}
+      @{cmd_runner}
+      #{buffer}
+      ]] },
     },
     opts = {
       auto_submit = false,

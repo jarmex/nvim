@@ -31,14 +31,22 @@ M.diff = {
     'linematch:120',
   },
   provider = 'inline', -- mini_diff|split|inline
+  provider_opts = {
+    inline = {
+      layout = 'float', -- diff
+      show_keymap_hints = true, --
+      show_removed = true, --
+    },
+  },
 }
 
 -- Chat Window
 M.chat = {
   show_settings = false,
   show_token_count = false,
+  show_reasoning = true,
   start_in_insert_mode = false,
-  -- auto_scroll = true,
+  auto_scroll = false,
   fold_context = true,
   -- child_window = { opts = { wrap = true } },
   icons = {
@@ -62,7 +70,7 @@ M.chat = {
     opts = {
       -- breakindent = true,
       -- cursorcolumn = false,
-      -- cursorline = false,
+      cursorline = true,
       number = false,
       relativenumber = false,
       -- foldcolumn = '0',
@@ -70,7 +78,7 @@ M.chat = {
       -- list = false,
       -- numberwidth = 1,
       signcolumn = 'no',
-      -- spell = false,
+      spell = false,
       -- wrap = true,
       winbar = '',
       statuscolumn = ' ',

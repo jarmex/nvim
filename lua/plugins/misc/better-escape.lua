@@ -1,7 +1,7 @@
 return {
   {
     'max397574/better-escape.nvim',
-    event = 'VeryLazy',
+    event = 'InsertEnter',
     keys = {
       { 'jk', desc = 'Better escape' },
     },
