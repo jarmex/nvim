@@ -28,9 +28,10 @@ return {
       notification_history = {
         border = vim.g.borderStyle,
         zindex = 100,
-        width = 0.6,
-        height = 0.6,
+        width = 0.7,
+        height = 0.7,
         minimal = false,
+        relative = 'editor',
         title = ' Notification History ',
         title_pos = 'center',
         ft = 'markdown',

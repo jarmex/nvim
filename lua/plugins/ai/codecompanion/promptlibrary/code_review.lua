@@ -1,64 +1,52 @@
-local system_prompt = [[Analyze the code for:
-### CODE QUALITY
-* Function and variable naming (clarity and consistency)
-* Code organization and structure
-* Documentation and comments
-* Consistent formatting and style
+-- get_pull_request_diff
+local codeReviewText = [[
+You are conducting a thorough code review focused on security, code conventions, and design patterns.
 
-### RELIABILITY
-* Error handling and edge cases
-* Resource management
-* Input validation
+Please analyze the code changes and provide:
 
-### MAINTAINABILITY
-* Code duplication (but don't overdo it with DRY, some duplication is fine)
-* Single responsibility principle
-* Modularity and dependencies
-* API design and interfaces
-* Configuration management
+## High-Level Assessment
+- Architectural decisions and design pattern usage
+- Adherence to functional programming principles (small functions, composition over inheritance)
+- Overall code organization and maintainability
 
-### PERFORMANCE
-* Algorithmic efficiency
-* Resource usage
-* Caching opportunities
-* Memory management
+## Security & Critical Issues
+- Security vulnerabilities, data validation, authentication/authorization gaps
+- Breaking changes, data integrity concerns
+- Error handling and edge case coverage
 
-### SECURITY
-* Input sanitization
-* Authentication/authorization
-* Data validation
-* Known vulnerability patterns
+## Code Quality & Conventions
+- Idiomatic language/framework usage
+- Function size (target <20 lines), nesting levels (max 3), naming clarity
+- Early returns, explicit over implicit patterns
+- Library choices and deprecation concerns
 
-### TESTING
-* Unit test coverage
-* Integration test needs
-* Edge case testing
-* Error scenario coverage
+## Design Patterns & Architecture
+- Appropriate use of composition, currying/partial application
+- Separation of concerns and single responsibility
+- Integration patterns and API design
 
-### POSITIVE HIGHLIGHTS
-* Note any well-implemented patterns
-* Highlight good practices found
-* Commend effective solutions
+## Positive Highlights
+- Well-implemented solutions, clever approaches, good pattern usage
 
-Format findings as markdown and with:
-- Issue: [description]
-- Impact: [specific impact]
-- Suggestion: [concrete improvement with code example/suggestion]
-    ]]
+## Questions & Discussion Points
+- Areas needing clarification or alternative approaches
+- Context about business requirements or constraints
+
+Focus on being constructive and educational. Explain reasoning behind feedback, especially for architectural decisions.
+
+#{buffer}
+
+]]
 
 return {
   strategy = 'chat',
-  description = 'Review the provided code',
-  prompt = 'Review the provided code and suggest improvements.',
+  description = 'Review some code for me, please',
+  opts = {
+    is_slash_cmd = true,
+    auto_submit = false,
+    short_name = 'code_review',
+  },
   prompts = {
-    {
-      role = 'system',
-      content = system_prompt,
-    },
-    {
-      role = 'user',
-      -- content = 'Please review this code and provide specific, actionable feedback:' .. '\n ',
-      content = 'Please review provided code.\n' .. '#buffer #lsp',
-    },
+    { role = 'user', content = codeReviewText },
   },
 }

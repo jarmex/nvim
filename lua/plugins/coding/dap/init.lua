@@ -123,11 +123,10 @@ return {
     config = function(_, opts)
       local dap, dapui = require('dap'), require('dapui')
       dapui.setup(opts)
-      dap.listeners.before.event_terminated.dapui_config = function()
+
+      local function close()
         dapui.close()
-      end
-      dap.listeners.before.event_exited.dapui_config = function()
-        dapui.close()
+        require('nvim-dap-virtual-text').refresh()
       end
 
       -- Listen for the initialization completion event to ensure that the UI is opened only after a successful connection
@@ -136,18 +135,24 @@ return {
       end
 
       -- Listening for disconnect events
-      dap.listeners.before.disconnect.dapui_config = function()
-        dapui.close()
-      end
+      dap.listeners.before.disconnect['dapui_config'] = close
+      dap.listeners.before.event_terminated['dapui_config'] = close
+      dap.listeners.before.event_exited['dapui_config'] = close
 
       -- Listen for error events and close the UI if startup fails
       dap.listeners.after.event_output.dapui_config = function(_, body)
         if body.category == 'stderr' and body.output:match('Error') then
           vim.defer_fn(function()
             if not dap.session() then
-              dapui.close()
+              close()
             end
           end, 500)
+        end
+      end
+
+      dap.listeners.on_session['dapui_config'] = function(_, new_session)
+        if not new_session then
+          close()
         end
       end
 

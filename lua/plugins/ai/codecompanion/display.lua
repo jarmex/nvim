@@ -31,14 +31,24 @@ M.diff = {
     'linematch:120',
   },
   provider = 'inline', -- mini_diff|split|inline
+  provider_opts = {
+    inline = {
+      layout = 'float', -- diff
+      show_keymap_hints = true, --
+      show_removed = true, --
+    },
+  },
 }
 
 -- Chat Window
 M.chat = {
   show_settings = false,
   show_token_count = false,
+  show_reasoning = false,
+  fold_reasoning = true,
+  show_tools_processing = true,
   start_in_insert_mode = false,
-  -- auto_scroll = true,
+  auto_scroll = false,
   fold_context = true,
   -- child_window = { opts = { wrap = true } },
   icons = {
@@ -57,14 +67,12 @@ M.chat = {
   window = {
     width = 0.60,
     layout = vim.o.columns >= 120 and 'vertical' or 'horizontal',
-    position = nil,
-    -- border = 'single',
-    -- height = 0.8,
-    relative = 'editor',
+    position = 'right',
+    sticky = true,
     opts = {
       -- breakindent = true,
       -- cursorcolumn = false,
-      -- cursorline = false,
+      cursorline = true,
       number = false,
       relativenumber = false,
       -- foldcolumn = '0',
@@ -72,10 +80,12 @@ M.chat = {
       -- list = false,
       -- numberwidth = 1,
       signcolumn = 'no',
-      -- spell = false,
+      spell = false,
       -- wrap = true,
       winbar = '',
       statuscolumn = ' ',
+      winfixbuf = true,
+      scrolloff = 3,
     },
   },
 }

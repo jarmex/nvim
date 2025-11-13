@@ -109,7 +109,8 @@ return {
         },
         show_on_dirs = true,
       },
-      disable_netrw = true,
+      disable_netrw = false, -- Let oil.nvim handle netrw
+      hijack_netrw = false, -- Let oil.nvim handle netrw
       filters = { dotfiles = true, custom = { 'node_modules', '^.git$' } },
       live_filter = {
         prefix = '[FILTER]: ',

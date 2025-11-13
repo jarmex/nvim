@@ -20,6 +20,16 @@ return {
       },
     }
   end,
+  keys = {
+    {
+      '<leader>av',
+      function()
+        return require('vectorcode').update()
+      end,
+      desc = 'Update (VectorCode)',
+      mode = { 'n', 'v' },
+    },
+  },
   config = function(_, opts)
     require('vectorcode').setup(opts)
   end,

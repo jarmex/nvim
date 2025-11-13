@@ -1,6 +1,6 @@
 return {
   'HakonHarnes/img-clip.nvim',
-  enabled = false,
+  enabled = true,
   event = 'VeryLazy',
   cmd = { 'PasteImage' },
   opts = {

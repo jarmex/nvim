@@ -1,4 +1,6 @@
 local DEFAULT_COPILOT_MODEL = 'gpt-4.1'
+local DEFAULT_ADAPTOR = 'copilot'
+
 return {
   mcphub = {
     callback = 'mcphub.extensions.codecompanion',
@@ -34,7 +36,7 @@ return {
       save_chat_keymap = '<localleader>hs',
       title_generation_opts = {
         ---Adapter for generating titles (defaults to current chat adapter)
-        adapter = 'copilot', -- e.g. copilot, openai
+        adapter = DEFAULT_ADAPTOR, -- e.g. copilot, openai
         ---Model for generating titles (defaults to current chat model)
         model = DEFAULT_COPILOT_MODEL, -- "gpt-5-nano-2025-08-07"
       },
@@ -86,8 +88,8 @@ return {
   gitcommit = {
     callback = 'codecompanion._extensions.gitcommit',
     opts = {
-      adapter = 'openai', -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
-      model = 'gpt-4.1', -- default model for gitcommit
+      adapter = DEFAULT_ADAPTOR, -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
+      model = DEFAULT_COPILOT_MODEL, -- default model for gitcommit
       languages = { 'English' }, -- Optional: specify languages for diff analysis
       exclude_files = {
         '*.generated.*',
@@ -124,6 +126,13 @@ return {
       gitcommit_select_count = 100, -- Number of commits shown in /gitcommit
       use_commit_history = true, -- Enable commit history context
       commit_history_count = 10, -- Number of recent commits for context
+      include_issue_id_from_branch = true, -- Enable automatic issue ID extraction
+      issue_id_patterns = { -- Patterns for extracting issue IDs
+        { pattern = '^bcd%-(%d%d%d%d)', prefix = 'BCD', format = 'BCD-%s' },
+        { pattern = 'MOB%-(%d+)', prefix = 'MOB', format = 'MOB-%s' },
+        { pattern = 'TEC%-(%d+)', prefix = 'TEC', format = 'TEC-%s' },
+        { pattern = 'ENG%-(%d+)', prefix = 'ENG', format = 'ENG-%s' },
+      },
     },
   },
   spinner = {

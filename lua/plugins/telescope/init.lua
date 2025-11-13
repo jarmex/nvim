@@ -29,6 +29,7 @@ end
 return {
   {
     'nvim-telescope/telescope.nvim',
+    enabled = false,
     cmd = 'Telescope',
     version = false, -- telescope did only one release, so use HEAD for now
     dependencies = {

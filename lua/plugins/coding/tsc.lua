@@ -1,6 +1,7 @@
 return {
   'dmmulroy/tsc.nvim',
   ft = { 'typescript', 'typescriptreact' },
+  enabled = false,
   opts = {
     auto_open_qflist = true,
     auto_close_qflist = true,

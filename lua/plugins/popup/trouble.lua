@@ -5,6 +5,7 @@ return {
   cmd = 'Trouble',
   opts = {
     focus = true,
+    use_diagnostic_signs = true,
     max_items = 500, -- limit number of items that can be displayed per section
     warn_no_results = false, -- show a warning when there are no results
     open_no_results = true, -- open the trouble window when there are no results

@@ -3,7 +3,7 @@ return {
     'folke/todo-comments.nvim',
     lazy = false,
     cmd = { 'TodoTrouble', 'TodoTelescope', 'TodoQuickFix' },
-    event = 'BufReadPost',
+    event = { 'BufReadPost', 'BufNewFile' },
     -- stylua: ignore
     keys = {
       { "]t",         function() require("todo-comments").jump_next() end, desc = "Next todo comment" },

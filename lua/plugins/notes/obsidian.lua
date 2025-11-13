@@ -88,7 +88,9 @@ return {
 
     notes_subdir = 'inbox',
     new_notes_location = 'notes_subdir',
-    disable_frontmatter = true,
+    frontmatter = {
+      enabled = true,
+    },
 
     ---@type obsidian.config.TemplateOpts|{}
     templates = {

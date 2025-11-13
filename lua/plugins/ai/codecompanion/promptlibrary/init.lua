@@ -24,16 +24,12 @@ local prompt_library = {
   ['Edit<->Test workflow'] = { opts = { index = 351 } },
 
   ['Add DocBlock'] = require('plugins.ai.codecompanion.promptlibrary.docblock'),
-  -- ['Agent Mode'] = require('plugins.ai.codecompanion.promptlibrary.agent_mode'),
-  ['Bug Finder'] = require('plugins.ai.codecompanion.promptlibrary.bug_finder'),
-  ['Code Expert'] = require('plugins.ai.codecompanion.promptlibrary.code_expert'),
+  ['Agent-Mode Current Buffer'] = require('plugins.ai.codecompanion.promptlibrary.agent_mode'),
   ['Code review'] = require('plugins.ai.codecompanion.promptlibrary.code_review'),
   ['Explain architecture'] = require('plugins.ai.codecompanion.promptlibrary.explain_architecture'),
   ['Explain code'] = require('plugins.ai.codecompanion.promptlibrary.explain_code'),
   ['Fix LSP Diagnostics'] = require('plugins.ai.codecompanion.promptlibrary.fix_lsp'),
   ['Document Code'] = require('plugins.ai.codecompanion.promptlibrary.doc_string'),
-  -- ['Generate a Commit Message for Staged Files'] = require('plugins.ai.codecompanion.promptlibrary.scommit'),
-  -- ['Git Diff Code Review'] = require('plugins.ai.codecompanion.promptlibrary.git_diff_code_review'),
   ['Naming'] = require('plugins.ai.codecompanion.promptlibrary.naming'),
   ['Platform Commit'] = require('plugins.ai.codecompanion.promptlibrary.platform-commit'),
   ['Proof Read'] = require('plugins.ai.codecompanion.promptlibrary.proofread'),
@@ -42,136 +38,38 @@ local prompt_library = {
   ['Review'] = require('plugins.ai.codecompanion.promptlibrary.review'),
   ['Spell'] = require('plugins.ai.codecompanion.promptlibrary.spell'),
   ['Suggest Refactoring'] = require('plugins.ai.codecompanion.promptlibrary.suggest_refactoring'),
-  ['Vibe Code'] = require('plugins.ai.codecompanion.promptlibrary.vibe_code'),
+  -- ['Vibe Code'] = require('plugins.ai.codecompanion.promptlibrary.vibe_code'),
   ['inline'] = require('plugins.ai.codecompanion.promptlibrary.inline'),
-  ['Lua Developer'] = require('plugins.ai.codecompanion.promptlibrary.lua_developer'),
-  ['Python Developer'] = require('plugins.ai.codecompanion.promptlibrary.python_dev'),
+  -- ['Lua Developer'] = require('plugins.ai.codecompanion.promptlibrary.lua_developer'),
+  -- ['Python Developer'] = require('plugins.ai.codecompanion.promptlibrary.python_dev'),
   ['Linear Feature Ticket'] = require('plugins.ai.codecompanion.promptlibrary.linear-feat-ticket'),
   ['Linear Bug Ticket'] = require('plugins.ai.codecompanion.promptlibrary.linear-bug-ticket'),
-  ['Edit'] = {
-    strategy = 'chat',
-    description = 'Edit the current buffer',
-    prompts = {
-      { role = 'user', content = '@{insert_edit_into_file} #{buffer}\n\n' },
-    },
-    opts = {
-      auto_submit = false,
-      short_name = 'edit',
-      is_slash_cmd = true,
-    },
-  },
-  ['Develop'] = {
-    strategy = 'chat',
-    description = 'Edit with full tooling',
-    prompts = {
-      { role = 'user', content = '@{full_stack_dev} #{buffer}\n\n' },
-    },
-    opts = {
-      auto_submit = false,
-      short_name = 'dev',
-      is_slash_cmd = true,
-    },
-  },
-  ['Saved Project Chats ...'] = {
-    strategy = 'chat',
-    description = 'Browse saved project chats',
-    opts = {
-      index = 4,
-      stop_context_insertion = true,
-    },
-    condition = function()
-      local history = require('codecompanion').extensions.history
-      local have_chats = not vim.tbl_isempty(history.get_chats(chat_filter))
-      local mode = vim.api.nvim_get_mode()
-      return have_chats and (mode.mode == 'n' or mode.mode == 'i')
-    end,
-    prompts = {
-      n = function()
-        local history = require('codecompanion').extensions.history
-        history.browse_chats(chat_filter)
-      end,
-      i = function()
-        local history = require('codecompanion').extensions.history
-        history.browse_chats(chat_filter)
-      end,
-    },
-  },
-  ['Saved Chats ...'] = {
-    strategy = 'chat',
-    description = 'Browse all saved chats',
-    opts = {
-      index = 5,
-      stop_context_insertion = true,
-    },
-    condition = function()
-      local history = require('codecompanion').extensions.history
-      local have_chats = not vim.tbl_isempty(history.get_chats())
-      local mode = vim.api.nvim_get_mode()
-      return have_chats and (mode.mode == 'n' or mode.mode == 'i')
-    end,
-    prompts = {
-      n = function()
-        local history = require('codecompanion').extensions.history
-        history.browse_chats()
-      end,
-      i = function()
-        local history = require('codecompanion').extensions.history
-        history.browse_chats()
-      end,
-    },
-  },
-  ['Agent'] = {
-    strategy = 'chat',
-    description = 'Create a new chat buffer in Agent mode',
-    opts = {
-      index = 6,
-      stop_context_insertion = true,
-      adapter = {
-        name = 'anthropic',
-        model = 'claude-sonnet-4', -- Multiplier = 1.
-      },
-    },
-    prompts = {
-      {
-        role = 'user',
-        content = '#{mcp:neovim://workspace} @{agent} ',
-      },
-    },
-  },
-  ['Free Agent (GPT-4o)'] = {
-    strategy = 'chat',
-    description = 'Create a new chat buffer in Agent mode with GPT-4o',
-    opts = {
-      index = 7,
-      stop_context_insertion = true,
-      adapter = {
-        name = 'openai',
-        model = 'gpt-4o', -- Multiplier = 0 (free).
-      },
-    },
-    prompts = {
-      {
-        role = 'user',
-        content = '#{mcp:neovim://workspace} @{agent} ',
-      },
-    },
-  },
 }
 
 local beastMode = require('plugins.ai.codecompanion.promptlibrary.beastmode')
 local commit_pull_request = require('plugins.ai.codecompanion.promptlibrary.commit_pull_request')
+local cot = require('plugins.ai.codecompanion.promptlibrary.chain_of_thought')
 local dailyPlanning = require('plugins.ai.codecompanion.promptlibrary.dailyPlanning')
 local living_docs = require('plugins.ai.codecompanion.promptlibrary.living_docs')
+local others = require('plugins.ai.codecompanion.promptlibrary.others')
+local pr_review_prompt = require('plugins.ai.codecompanion.promptlibrary.review_pull_request')
+local retrieval = require('plugins.ai.codecompanion.promptlibrary.retrieval')
 local review_documents = require('plugins.ai.codecompanion.promptlibrary.review_documentation')
+local vectorcode = require('plugins.ai.codecompanion.promptlibrary.vectorcode')
 
 return vim.tbl_extend(
   'force',
   {},
   -- fabric,
+  vectorcode,
   prompt_library,
   living_docs,
   review_documents,
   dailyPlanning,
   commit_pull_request,
-  beastMode
+  beastMode,
+  others,
+  cot,
+  retrieval,
+  pr_review_prompt
 )

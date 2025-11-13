@@ -1,10 +1,28 @@
-return {
+local ccvariables = require('plugins.ai.codecompanion.variables.codecompanion-variables')
+
+local default_variables = {
   ['buffer'] = {
     opts = {
       default_params = 'watch',
     },
   },
   ['automated'] = require('plugins.ai.codecompanion.variables.automated'),
+  ['ls'] = {
+    callback = function()
+      local handle = io.popen('eza -T --git-ignore')
+      if handle then
+        local result = handle:read('*a')
+        handle:close()
+        return result
+      else
+        return 'Unable to load directory structure.'
+      end
+    end,
+    description = 'Recursively lists the directory and file structure of the current working folder.',
+    opts = {
+      contains_code = false,
+    },
+  },
   -- ['explain terminal error'] = {
   --   callback = function()
   --     local overseer = require('overseer')
@@ -36,3 +54,5 @@ return {
   --   },
   -- },
 }
+
+return vim.tbl_deep_extend('force', ccvariables, default_variables)

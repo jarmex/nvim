@@ -68,7 +68,7 @@ return {
   opts = {
     auto_submit_success = true, -- Send any successful output to the LLM automatically
     wait_timeout = 300000,
-    -- default_tools = { 'cmd_runner', 'files' },
+    -- default_tools = { 'cmd_runner' },
     --- This is needed when using CodeCompanion's internal tools
     --- (e.g., when @cmd_runner runs tests and they fail),
     --- but with external tools (e.g., @mcp) this might cause issues
@@ -76,10 +76,10 @@ return {
     --- but may return errors in case of real internal errors
     --- that should be handled by a human, not an LLM.
     auto_submit_errors = true, -- Send any errors to the LLM automatically
-    system_prompt = {
-      enabled = true, -- Enable the tools system prompt?
-      replace_main_system_prompt = true, -- Replace the main system prompt with the tools system prompt?
-    },
+    -- system_prompt = {
+    -- enabled = true, -- Enable the tools system prompt?
+    -- replace_main_system_prompt = false, -- Replace the main system prompt with the tools system prompt?
+    -- },
   },
   plan = {
     callback = require('plugins.ai.codecompanion.tools.plan'),

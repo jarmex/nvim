@@ -68,10 +68,10 @@ local M = {
           enabled = true,
           enable_ui = true,
         },
-        indent_blankline = {
-          enabled = false,
-          colored_indent_levels = true,
-        },
+        -- indent_blankline = {
+        --   enabled = false,
+        --   colored_indent_levels = true,
+        -- },
         dashboard = true,
         bufferline = true,
         markdown = true,

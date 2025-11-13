@@ -28,6 +28,7 @@ M.inline = {
   opts = {
     diff_timeout = 300,
   },
+  variables = require('plugins.ai.codecompanion.variables'),
 }
 
 ------------
@@ -49,12 +50,11 @@ M.chat = {
       end
     end,
     user = ' Jarmex',
-    -- user = ' Jarmex',
   },
   tools = require('plugins.ai.codecompanion.tools'),
   slash_commands = require('plugins.ai.codecompanion.slash_commands'),
+  variables = require('plugins.ai.codecompanion.variables'),
   keymaps = {
-
     close = { modes = { n = 'q', i = '<C-c>' } },
     -- clear = { modes = { n = '<C-x>' } },
     completion = { modes = { i = '<C-x>' } },

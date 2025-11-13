@@ -1,3 +1,4 @@
+local icons = require('helpers.icons')
 -- noicer lua
 local routes = {
   -- REDIRECT TO POPUP
@@ -103,19 +104,20 @@ return {
       routes = routes,
       cmdline = {
         format = {
-          search_down = { icon = ' 󰶹   ' },
-          search_up = { icon = ' 󰶼   ' },
+          search_down = { icon = icons.noice.searchDown },
+          search_up = { icon = icons.noice.searchUp },
           -- search_down = { icon = '  ' },
           -- search_up = { icon = '  ' },
-          filter = { icon = '  ' },
+          filter = { icon = icons.noice.filter },
           lua = { icon = '  ' },
           -- cmdline = { pattern = '^:', icon = '|>', lang = 'vim', title = '' },
           calculator = { icon = '   ' },
-          cmdline = { icon = '   ', title = '' },
+          -- cmdline = { icon = '   ', title = '' },
+          cmdline = { icon = icons.noice.cmdline, title = '' },
           -- filter = { icon = '   ' },
           help = { icon = '    ' },
           help_vert = { kind = 'Help', pattern = '^:%s*verti?c?a?l? he?l?p?%s+', icon = '    ' },
-          inc_rename = { kind = 'IncRename', pattern = '^:IncRename', icon = ' 󰑕  ' },
+          inc_rename = { kind = 'IncRename', pattern = '^:IncRename', icon = icons.noice.IncRename },
         },
       },
       views = {

@@ -25,7 +25,7 @@ return {
   --  https://github.com/stevearc/overseer.nvim
   {
     'stevearc/overseer.nvim',
-    branch = 'master',
+    tag = 'v1.6.0',
     cmd = {
       'OverseerBuild',
       'OverseerClearCache',

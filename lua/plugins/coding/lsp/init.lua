@@ -5,7 +5,6 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'mfussenegger/nvim-dap',
-      'nanotee/sqls.nvim',
       { 'b0o/SchemaStore.nvim', lazy = true, version = false },
     },
     config = function()
@@ -19,6 +18,7 @@ return {
         dynamicRegistration = false,
         lineFoldingOnly = true,
       }
+      lsp_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 
       local has_blink, blink = pcall(require, 'blink.cmp')
       lsp_capabilities =
