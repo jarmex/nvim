@@ -12,7 +12,7 @@ return function()
     },
     schema = {
       model = {
-        default = 'minimax/minimax-m2',
+        default = 'z-ai/glm-4.6',
         choices = {
           'z-ai/glm-4.6',
           'minimax/minimax-m2',

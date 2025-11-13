@@ -11,7 +11,25 @@ return {
   gemini_cli = function()
     return adapters.extend('gemini_cli', {
       commands = {
-        default = { 'gemini', '--experimental-acp' },
+        -- default = { 'gemini', '--experimental-acp' },
+        default = {
+          'gemini',
+          '--experimental-acp',
+          '-m',
+          'gemini-2.5-flash',
+        },
+        flash = {
+          'gemini',
+          '--experimental-acp',
+          '-m',
+          'gemini-2.5-flash',
+        },
+        pro = {
+          'gemini',
+          '--experimental-acp',
+          '-m',
+          'gemini-2.5-pro',
+        },
       },
       defaults = {
         -- auth_method = "gemini-api-key",

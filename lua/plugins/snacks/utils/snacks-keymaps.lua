@@ -1,7 +1,41 @@
 return function()
    -- stylua: ignore
   return {
-    { '<leader>.', function() Snacks.scratch() end, desc = 'Toggle Scratch Buffer', },
+    -- { '<leader>.', function() Snacks.scratch() end, desc = 'Toggle Scratch Buffer', },
+    {
+			'<leader>.',
+			function()
+				vim.ui.input({
+					prompt = 'Enter filetype for the scratch buffer: ',
+					default = 'markdown',
+					completion = 'filetype',
+				}, function(ft)
+					require('snacks').scratch.open {
+						ft = ft,
+						win = {
+							width = 200,
+							height = 100,
+							title = 'Scratch Buffer',
+						},
+					}
+				end)
+			end,
+			{ desc = 'Toggle Scratch Buffer' },
+		},
+    {
+			'<leader>lt',
+			function()
+				local git_root = vim.fs.root(0, '.git')
+				if git_root then
+					local file = git_root .. '/todo.md'
+					require('snacks').scratch.open {
+						ft = 'markdown',
+						file = file,
+					}
+				end
+			end,
+			desc = 'Toggle Scratch Todo',
+		},
     { '<leader>st', function() Snacks.scratch({ icon = ' ', name = 'Todo', ft = 'markdown', file = 'scratch-file.md' }) end, desc = 'Todo List', },
     { '<leader>S', function() Snacks.scratch.select() end, desc = 'Select Scratch Buffer', },
     { '<leader>ns', function() Snacks.notifier.show_history() end, desc = 'Notification History', },

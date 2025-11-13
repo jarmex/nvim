@@ -50,7 +50,7 @@ return {
         memory = {
           opts = {
             chat = {
-              enabled = true,
+              enabled = false,
               default_memory = 'default',
               default_params = 'watch',
               condition = function(chat)

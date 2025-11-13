@@ -5,7 +5,6 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'mfussenegger/nvim-dap',
-      'nanotee/sqls.nvim',
       { 'b0o/SchemaStore.nvim', lazy = true, version = false },
     },
     config = function()
