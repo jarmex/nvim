@@ -98,7 +98,7 @@ return {
       { '<leader>e', '<cmd>NvimTreeToggle<cr>', desc = 'Nvim Tree' },
     },
     opts = {
-      actions = { open_file = { quit_on_open = true } },
+      actions = { open_file = { quit_on_open = true, relative_path = true, resize_window = false } },
       diagnostics = {
         enable = true,
         icons = {
@@ -109,8 +109,17 @@ return {
         },
         show_on_dirs = true,
       },
-      disable_netrw = false, -- Let oil.nvim handle netrw
-      hijack_netrw = false, -- Let oil.nvim handle netrw
+      disable_netrw = true,
+      hijack_netrw = true,
+      filesystem_watchers = {
+        ignore_dirs = {
+          'build',
+          'dist',
+          'node_modules',
+          'target',
+          'vendor',
+        },
+      },
       filters = { dotfiles = true, custom = { 'node_modules', '^.git$' } },
       live_filter = {
         prefix = '[FILTER]: ',
@@ -148,8 +157,9 @@ return {
       },
       view = {
         adaptive_size = false,
-        width = 38,
+        width = '20%',
         signcolumn = 'no',
+        side = 'left',
       },
     },
     config = function(_, opts)

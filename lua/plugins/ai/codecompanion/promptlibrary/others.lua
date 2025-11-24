@@ -113,10 +113,7 @@ Follow these additional rules:
     strategy = 'chat',
     description = 'Edit the current buffer',
     prompts = {
-      { role = 'user', content = [[@{insert_edit_into_file}
-      @{cmd_runner}
-      #{buffer}
-      ]] },
+      { role = 'user', content = '@{insert_edit_into_file} @{cmd_runner} #{buffer} \n\n' },
     },
     opts = {
       auto_submit = false,
@@ -217,6 +214,69 @@ Follow these additional rules:
       {
         role = 'user',
         content = '#{mcp:neovim://workspace} @{agent} ',
+      },
+    },
+  },
+  ['Simplify'] = {
+    strategy = 'inline',
+    opts = {
+      modes = { 'v' },
+      short_name = 'simplify',
+      auto_submit = true,
+      stop_context_insertion = true,
+      user_prompt = false,
+    },
+    prompts = {
+      {
+        role = 'system',
+        content = function(ctx)
+          return ([[
+								I want you to act as a senior %s developer.
+
+								I will send you some code, and I want you to simplify
+								the code while not diminishing its readability.
+
+								Keep the indentation level the same, and do not change
+								for formatting style.
+							]]):format(ctx.filetype)
+        end,
+      },
+      {
+        role = 'user',
+        content = function(ctx)
+							-- stylua: ignore
+							return require("codecompanion.helpers.actions").get_code(ctx.start_line, ctx.end_line)
+        end,
+        opts = { contains_code = true },
+      },
+    },
+  },
+  ['Proofread'] = {
+    strategy = 'inline',
+    opts = {
+      modes = { 'v' },
+      short_name = 'proofread',
+      auto_submit = true,
+      stop_context_insertion = true,
+      user_prompt = false,
+    },
+    prompts = {
+      {
+        role = 'system',
+        content = function(_ctx)
+          return [[
+								You are an editor for the English language.
+								I will send you some text, and I want you to improve the
+								language, without changing the meaning.
+							]]
+        end,
+      },
+      {
+        role = 'user',
+        content = function(ctx)
+							-- stylua: ignore
+							return require("codecompanion.helpers.actions").get_code(ctx.start_line, ctx.end_line)
+        end,
       },
     },
   },

@@ -23,6 +23,7 @@ return function()
           'moonshotai/kimi-k2-0905',
           'deepseek/deepseek-v3.1-terminus',
           'moonshotai/kimi-k2-thinking',
+          ['deepseek/deepseek-r1:free'] = { opts = { can_reason = true } },
         },
       },
     },

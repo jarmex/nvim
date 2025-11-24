@@ -10,6 +10,21 @@ local filetypes = {
 
 return {
   {
+    'dmmulroy/ts-error-translator.nvim',
+    event = 'VeryLazy',
+    opts = {
+      auto_attach = true,
+      servers = {
+        'astro',
+        'svelte',
+        'ts_ls',
+        'typescript-tools',
+        'volar',
+        'vtsls',
+      },
+    },
+  },
+  {
     'davidosomething/format-ts-errors.nvim',
     config = function()
       require('format-ts-errors').setup({
@@ -60,6 +75,7 @@ return {
         },
         tsserver_plugins = { '@vue/typescript-plugin' },
         tsserver_max_memory = 'auto',
+        -- Performance: separate diagnostic server for large projects
         separate_diagnostic_server = true,
         publish_diagnostic_on = 'insert_leave',
         expose_as_code_action = 'all',
@@ -68,6 +84,10 @@ return {
         jsx_close_tag = {
           enable = true,
           filetypes = { 'javascriptreact', 'typescriptreact' },
+        },
+        tsserver_format_options = {
+          insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = true,
+          semicolons = 'insert',
         },
       },
       handlers = {

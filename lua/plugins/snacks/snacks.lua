@@ -78,7 +78,8 @@ return {
           trace = icons.ui.Bookmark,
           warn = icons.diagnostics.Warning,
         },
-        style = 'compact',
+        -- style = 'compact',
+        style = 'fancy',
         top_down = true, -- show notifications top-down instead of bottom-up
         margin = { bottom = 1 },
         date_format = '%R',

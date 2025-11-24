@@ -13,9 +13,13 @@ return {
     enable_progress_notifications = false,
     enable_error_notifications = true,
     hide_progress_notifications_from_history = true,
-    flags = {
-      noEmit = true,
-      watch = true,
-    },
+    -- flags = {
+    --   noEmit = true,
+    --   watch = true,
+    -- },
+    -- bin_path = '~.bun/bin/tsgo',
+    pretty_errors = false,
+    -- bin_path = "~/.bun/bin/tsgo",
+    flags = '--noEmit --pretty false', -- This just works
   },
 }

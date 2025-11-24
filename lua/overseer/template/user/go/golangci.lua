@@ -25,7 +25,6 @@ return {
         },
 
         { 'on_output_quickfix', items_only = true, set_diagnostics = true },
-        'on_output_summarize',
       },
     }
   end,

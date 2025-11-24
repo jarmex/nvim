@@ -19,21 +19,23 @@ M.action_palette = {
 
 M.diff = {
   enabled = true,
-  close_chat_at = 240,
-  layout = 'vertical', -- vertical|horizontal
-  opts = {
-    'internal',
-    'filler',
-    'closeoff',
-    'algorithm:histogram',
-    'indent-heuristic',
-    'followwrap',
-    'linematch:120',
-  },
   provider = 'inline', -- mini_diff|split|inline
   provider_opts = {
+    split = {
+      close_chat_at = 240, -- Close an open chat buffer if the total columns of your display are less than...
+      layout = 'vertical', -- vertical|horizontal split
+      opts = {
+        'internal',
+        'filler',
+        'closeoff',
+        'algorithm:histogram',
+        'indent-heuristic',
+        'followwrap',
+        'linematch:120',
+      },
+    },
     inline = {
-      layout = 'float', -- diff
+      layout = 'float', -- float|buffer - Where to display the diff
       show_keymap_hints = true, --
       show_removed = true, --
     },
@@ -48,7 +50,7 @@ M.chat = {
   fold_reasoning = true,
   show_tools_processing = true,
   start_in_insert_mode = false,
-  auto_scroll = false,
+  auto_scroll = true,
   fold_context = true,
   -- child_window = { opts = { wrap = true } },
   icons = {
@@ -86,6 +88,10 @@ M.chat = {
       statuscolumn = ' ',
       winfixbuf = true,
       scrolloff = 3,
+      -- allow folding codeblocks
+      foldlevel = 1,
+      foldmethod = 'expr',
+      foldexpr = 'v:lua.vim.treesitter.foldexpr()', -- allow folding codeblocks
     },
   },
 }

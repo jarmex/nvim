@@ -82,11 +82,19 @@ return {
   { '<Leader>Ac', open_chat, desc = '[A]I CodeCompanion [c]hat', silent = true },
   { '<leader>af', '<cmd>CodeCompanion /fix<cr>', mode = 'v', desc = 'Fix Code (CodeCompanion)' },
   silent = true,
+  -- {
+  --   '<leader>ay',
+  --   '<cmd>CodeCompanion /tests<cr>',
+  --   mode = 'v',
+  --   desc = 'Generate Tests (CodeCompanion)',
+  --   silent = true,
+  -- },
   {
     '<leader>ay',
-    '<cmd>CodeCompanion /tests<cr>',
-    mode = 'v',
-    desc = 'Generate Tests (CodeCompanion)',
-    silent = true,
+    function()
+      require('codecompanion').prompt('fix')
+    end,
+    mode = 'x',
+    desc = ' Fix',
   },
 }

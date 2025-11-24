@@ -66,7 +66,6 @@ return {
           },
           lualine_x = {
             status.DapStatus(),
-            status.Overseer(),
             status.showMacroRecording(),
             status.filetype(),
             status.LazyUpdates(),

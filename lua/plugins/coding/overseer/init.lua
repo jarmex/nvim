@@ -25,7 +25,7 @@ return {
   --  https://github.com/stevearc/overseer.nvim
   {
     'stevearc/overseer.nvim',
-    tag = 'v1.6.0',
+    -- tag = 'v1.6.0',
     cmd = {
       'OverseerBuild',
       'OverseerClearCache',
@@ -134,15 +134,12 @@ return {
       },
       component_aliases = {
         default = {
-          { 'display_duration', detail_level = 2 },
-          'on_output_summarize',
           'on_exit_set_status',
           { 'on_complete_notify', system = 'unfocused' },
           { 'on_complete_dispose', require_view = { 'SUCCESS', 'FAILURE' } },
         },
         default_neotest = {
           'unique',
-          'on_output_summarize',
           'on_exit_set_status',
           'on_complete_dispose',
         },

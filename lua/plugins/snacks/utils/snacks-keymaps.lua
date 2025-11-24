@@ -54,8 +54,8 @@ return function()
       function()
         ---@class snacks.picker.grep.Config: snacks.picker.proc.Config
         local opts = {
-          hidden = true,
-          ignored = true,
+          hidden = false, -- do not include hidden files
+          ignored = false, -- true = include files from .gitignore
           exclude = { '*.pb.go', '.venv/*', '.mypy_cache/*', '.repro/*', 'node_modules/*' },
         }
         Snacks.picker.grep(opts)
@@ -64,7 +64,16 @@ return function()
     },
     { '<leader>bg', function() Snacks.picker.grep_buffers() end, desc = 'Grep Open Buffers', },
     { '<leader>sh', function() Snacks.picker.grep_word() end, desc = 'Visual selection or word', mode = { 'n', 'x' }, },
-    { '<leader>sk', function() Snacks.picker.keymaps() end, desc = 'Keymaps', },
+    { "<leader>iv", function() require("snacks").picker.help() end, desc = "󰋖 Vim help" },
+    { "<leader>ik", function() require("snacks").picker.keymaps() end, desc = "󰌌 Keymaps (global)" },
+    -- stylua: ignore end
+		{
+			"<leader>iK",
+			function()
+				require("snacks").picker.keymaps { global = false, title = "󰌌 Keymaps (buffer)" }
+			end,
+			desc = "󰌌 Keymaps (buffer)",
+		},
     { '<leader>rr', function() Snacks.picker.resume() end, desc = 'Resume', },
     { '<leader>je', function() Snacks.picker.explorer() end, desc = 'Explorer', },
     { '<leader>ff', function() Snacks.picker.smart({ filter = { cwd = true } }) end, desc = 'Find Files', },

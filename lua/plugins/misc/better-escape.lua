@@ -2,9 +2,9 @@ return {
   {
     'max397574/better-escape.nvim',
     event = 'InsertEnter',
-    keys = {
-      { 'jk', desc = 'Better escape' },
-    },
+    -- keys = {
+    --   { 'jk', desc = 'Better escape' },
+    -- },
     opts = {
       timeout = 300,
       default_mappings = false,

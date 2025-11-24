@@ -16,8 +16,6 @@ return {
           set_diagnostics = true,
           errorformat = require('config.errorformats').go_with_testify,
         },
-
-        'on_output_summarize',
       },
     }
   end,

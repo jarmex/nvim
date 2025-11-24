@@ -1,6 +1,9 @@
 local adapters = require('codecompanion.adapters')
 
 return {
+  opts = {
+    show_defaults = false,
+  },
   claude_code = function()
     return adapters.extend('claude_code', {
       env = {
