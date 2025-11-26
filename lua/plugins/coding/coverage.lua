@@ -11,8 +11,9 @@ return {
   --  https://github.com/andythigpen/nvim-coverage/blob/main/doc/nvim-coverage.txt
   {
     'andythigpen/nvim-coverage',
-    version = '*',
-    lazy = true,
+    event = 'VeryLazy',
+    rocks = { 'lua-xmlreader' },
+    config = true,
     cmd = {
       'Coverage',
       'CoverageLoad',
@@ -33,8 +34,43 @@ return {
     },
 
     keys = {
-      { '<leader>tcc', ':Coverage<CR>', desc = '[t]est [c]overage in gutter' },
-      { '<leader>tcs', ':CoverageLoad<CR>:CoverageSummary<CR>', desc = '[t]est [C]overage summary' },
+      {
+        '<leader>lcc',
+        function()
+          require('coverage').load(true)
+        end,
+        desc = 'Show coverage',
+      },
+      {
+        '<leader>lcl',
+        function()
+          require('coverage').load(false)
+        end,
+        desc = 'Load coverage',
+      },
+      {
+        '<leader>lch',
+        function()
+          require('coverage').hide()
+        end,
+        desc = 'Hide coverage',
+      },
+      {
+        '<leader>lct',
+        function()
+          require('coverage').load(false)
+          require('coverage').toggle()
+        end,
+        desc = 'Toggle coverage',
+      },
+      {
+        '<leader>lcs',
+        function()
+          require('coverage').load(false)
+          require('coverage').summary()
+        end,
+        desc = 'Show coverage summary',
+      },
     },
   },
 }

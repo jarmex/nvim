@@ -89,9 +89,9 @@ M.chat = {
       winfixbuf = true,
       scrolloff = 3,
       -- allow folding codeblocks
-      foldlevel = 1,
-      foldmethod = 'expr',
-      foldexpr = 'v:lua.vim.treesitter.foldexpr()', -- allow folding codeblocks
+      -- foldlevel = 1,
+      -- foldmethod = 'expr',
+      -- foldexpr = 'v:lua.vim.treesitter.foldexpr()', -- allow folding codeblocks
     },
   },
 }

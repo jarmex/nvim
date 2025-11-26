@@ -2,7 +2,7 @@ local M = {}
 
 function M.keymaps()
   return {
-    { '<leader>t', '', desc = '+Neotest' },
+    { '<leader>t', '', desc = '+test' },
     {
       '<leader>tn',
       "<cmd>lua require('neotest').run.run()<cr>",
@@ -54,7 +54,7 @@ function M.keymaps()
       desc = 'Toggle Summary',
     },
     {
-      '<LocalLeader>ts',
+      '<leader>ts',
       function()
         if vim.bo.filetype == 'lua' then
           return require('mini.test').run() -- Not configured yet
@@ -94,7 +94,7 @@ function M.keymaps()
       desc = 'Neotest toggle',
     },
     {
-      '<LocalLeader>twn',
+      '<leader>twn',
       function()
         require('neotest').watch.toggle()
       end,
@@ -108,11 +108,25 @@ function M.keymaps()
       desc = 'Toggle Watch',
     },
     {
-      '<LocalLeader>twa',
+      '<leader>twa',
       function()
         require('neotest').watch.toggle({ suite = true })
       end,
       desc = 'Neotest: Watch all tests',
+    },
+    {
+      ']e',
+      function()
+        require('neotest').jump.next({ status = 'failed' })
+      end,
+      desc = 'Next Failed Test',
+    },
+    {
+      '[e',
+      function()
+        require('neotest').jump.prev({ status = 'failed' })
+      end,
+      desc = 'Previous Failed Test',
     },
   }
 end

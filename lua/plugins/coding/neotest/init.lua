@@ -1,20 +1,22 @@
+local ok, trouble = pcall(require, 'trouble')
+
 local icons = require('helpers.icons')
----@return string
-local function get_cwd()
-  return vim.fn.getcwd()
-end
 
 local adaptersList = {
-  -- ['neotest-vitest'] = {
-  --   args = { '--coverage' },
-  -- },
+  ['neotest-vitest'] = {
+    args = { '--coverage' },
+  },
   ['neotest-jest'] = {
     -- Use yarn test command prefix
     -- jestCommand = "yarn test --",
 
     -- Use npm test command prefix
-    jestCommand = 'npm test --',
-    jestConfigFile = function(file_path)
+    jestCommand = 'npm run test --',
+    env = { CI = true },
+    cwd = function()
+      return vim.fn.getcwd()
+    end,
+    jestConfigFile = function()
       --return require("neotest.providers.jest.config").find_config(file_path,
       --    { 'jest.config.js', 'jest.config.ts', 'jest.config.mjs', 'jest.config.cjs' })
       -- or return custom path: return vim.fn.getcwd() .. "/jest.config.js"
@@ -32,7 +34,6 @@ local adaptersList = {
 
       return ext == 'it.ts' and require('neotest-jest.jest-util').hasJestDependency(file_path)
     end,
-    cwd = get_cwd,
     strategy_config = function(default_strategy, _)
       default_strategy['resolveSourceMapLocations'] = {
         '${workspaceFolder}/**',
@@ -42,111 +43,119 @@ local adaptersList = {
       return default_strategy
     end,
   },
-  -- ['neotest-jest'] = {
-  --   jestCommand = 'pnpm jest',
-  --   -- jestConfigFile = "jest.config.js",
-  --   env = { CI = true },
-  --   cwd = function(path)
-  --     return require('lspconfig.util').root_pattern('package.json', 'jest.config.js')(path)
-  --   end,
-  -- },
+
+  ['neotest-golang'] = {
+    args = { '-coverprofile=' .. vim.fn.getcwd() .. '/coverage.out' },
+    experimental = {
+      test_table = true,
+    },
+  },
 }
 
 return {
   {
     'nvim-neotest/neotest',
-    version = '*',
+    lazy = true,
     event = 'VeryLazy',
     dependencies = {
       'nvim-neotest/nvim-nio', -- Required dependency
       'nvim-neotest/neotest-jest', -- Jest (JavaScript/TypeScript)
       'marilari88/neotest-vitest', -- Vitest (JavaScript/TypeScript)
       'nvim-neotest/neotest-plenary', -- For testing Lua plugins
+      'antoinemadec/FixCursorHold.nvim',
+      {
+        'fredrikaverpil/neotest-golang',
+        -- enabled = false,
+        version = '*',
+        dependencies = {
+          'leoluz/nvim-dap-go',
+        },
+      },
     },
     keys = require('plugins.coding.neotest.keymaps').keymaps(),
-    opts = function()
-      return {
-        consumers = {
-          overseer = require('neotest.consumers.overseer'),
+    opts = {
+      -- consumers = {
+      --   overseer = require('neotest.consumers.overseer'),
+      -- },
+      log_level = vim.log.levels.ERROR,
+      status = { enabled = true, virtual_text = true, signs = true },
+      signs = {
+        -- Customize signs used by Neotest
+        passed = { text = '✓', hl = 'NeotestPassed' },
+        failed = { text = '✗', hl = 'NeotestFailed' },
+        skipped = { text = '»', hl = 'NeotestSkipped' },
+        running = { text = '', hl = 'NeotestRunning' },
+        unknown = { text = '?', hl = 'NeotestUnknown' },
+      },
+      output = { enabled = true, open_on_run = false },
+      discovery = { enabled = false }, -- recommend by neotest-jest
+      diagnostic = { enabled = true },
+      floating = {
+        border = 'rounded',
+        max_height = 0.90,
+        max_width = 0.90,
+      },
+      quickfix = {
+        open = function()
+          if not ok then
+            vim.cmd('copen')
+            return
+          end
+          trouble.open({ mode = 'quickfix', focus = false })
+        end,
+      },
+      output_panel = {
+        open = 'rightbelow vsplit | resize 40',
+      },
+      strategies = {
+        integrated = {
+          width = 180,
         },
-        log_level = vim.log.levels.ERROR,
-        status = { enabled = true, virtual_text = true, signs = true },
-        signs = {
-          -- Customize signs used by Neotest
-          passed = { text = '✓', hl = 'NeotestPassed' },
-          failed = { text = '✗', hl = 'NeotestFailed' },
-          skipped = { text = '»', hl = 'NeotestSkipped' },
-          running = { text = '', hl = 'NeotestRunning' },
-          unknown = { text = '?', hl = 'NeotestUnknown' },
+      },
+      summary = {
+        open = 'botright vsplit | vertical resize 60',
+        enabled = true,
+        expand_errors = true,
+        follow = true,
+        mappings = {
+          attach = 'a',
+          expand = { '<Space>', '<2-LeftMouse>' },
+          expand_all = '<tab>',
+          jumpto = { 'i', '<cr>' },
+          mark = 'm',
+          next_failed = 'J',
+          output = 'o',
+          prev_failed = 'K',
+          run = 'r',
+          debug = 'd',
+          run_marked = 'R',
+          debug_marked = 'D',
+          short = 'O',
+          stop = 's',
+          target = 't',
+          clear_marked = 'M',
+          clear_target = 'T',
         },
-        output = { enabled = true, open_on_run = false },
-        discovery = { enabled = false }, -- recommend by neotest-jest
-        diagnostic = { enabled = true },
-        floating = {
-          border = 'rounded',
-          max_height = 0.90,
-          max_width = 0.90,
-        },
-        quickfix = {
-          enabled = false,
-          -- open = false,
-          open = function()
-            require('trouble').open({ mode = 'quickfix', focus = false })
-          end,
-        },
-        output_panel = {
-          open = 'rightbelow vsplit | resize 40',
-        },
-        strategies = {
-          integrated = {
-            width = 180,
-          },
-        },
-        summary = {
-          open = 'botright vsplit | vertical resize 60',
-          enabled = true,
-          expand_errors = true,
-          follow = true,
-          mappings = {
-            attach = 'a',
-            expand = { '<Space>', '<2-LeftMouse>' },
-            expand_all = '<tab>',
-            jumpto = { 'i', '<cr>' },
-            mark = 'm',
-            next_failed = 'J',
-            output = 'o',
-            prev_failed = 'K',
-            run = 'r',
-            debug = 'd',
-            run_marked = 'R',
-            debug_marked = 'D',
-            short = 'O',
-            stop = 's',
-            target = 't',
-            clear_marked = 'M',
-            clear_target = 'T',
-          },
-        },
+      },
 
-        icons = {
-          passed = icons.testing.Success,
-          running = '',
-          failed = icons.testing.Failed,
-          unknown = '',
-          expanded = '',
-          child_prefix = '',
-          child_indent = '',
-          final_child_prefix = '',
-          non_collapsible = '',
-          collapsed = '',
+      icons = {
+        passed = icons.testing.Success,
+        running = '',
+        failed = icons.testing.Failed,
+        unknown = '',
+        expanded = '',
+        child_prefix = '',
+        child_indent = '',
+        final_child_prefix = '',
+        non_collapsible = '',
+        collapsed = '',
 
-          running_animated = vim.tbl_map(function(s)
-            return s .. ' '
-          end, { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }),
-        },
-        adapters = adaptersList,
-      }
-    end,
+        running_animated = vim.tbl_map(function(s)
+          return s .. ' '
+        end, { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }),
+      },
+      adapters = adaptersList,
+    },
     config = function(_, opts)
       local neotest_ns = vim.api.nvim_create_namespace('neotest')
       vim.diagnostic.config({
@@ -157,6 +166,36 @@ return {
           end,
         },
       }, neotest_ns)
+
+      if ok then
+        opts.consumers = opts.consumers or {}
+        -- Refresh and auto close trouble after running tests
+        ---@type neotest.Consumer
+        opts.consumers.trouble = function(client)
+          client.listeners.results = function(adapter_id, results, partial)
+            if partial then
+              return
+            end
+            local tree = assert(client:get_position(nil, { adapter = adapter_id }))
+
+            local failed = 0
+            for pos_id, result in pairs(results) do
+              if result.status == 'failed' and tree:get_key(pos_id) then
+                failed = failed + 1
+              end
+            end
+            vim.schedule(function()
+              if trouble.is_open() then
+                trouble.refresh()
+                if failed == 0 then
+                  trouble.close()
+                end
+              end
+            end)
+            return {}
+          end
+        end
+      end
 
       if opts.adapters then
         local adapters = {}
@@ -183,6 +222,7 @@ return {
         end
         opts.adapters = adapters
       end
+
       require('neotest').setup(opts)
 
       vim.api.nvim_create_autocmd('FileType', {
@@ -206,38 +246,5 @@ return {
         end,
       })
     end,
-  },
-  {
-    'nvim-neotest/neotest',
-    optional = true,
-    dependencies = {
-      -- { 'jarmex/neotest-ginkgo' },
-      {
-        'fredrikaverpil/neotest-golang',
-        -- enabled = false,
-        version = '*',
-        dependencies = {
-          'leoluz/nvim-dap-go',
-        },
-      },
-    },
-    opts = {
-      adapters = {
-        -- ['neotest-ginkgo'] = {
-        --   -- Here we can set options for neotest-go, e.g.
-        --   -- args = { "-tags=integration" }
-        --   --   args = { "-count=1", "-timeout=60s", "-race", "-cover" },
-        --   experimental = {
-        --     test_table = true,
-        --   },
-        -- },
-        ['neotest-golang'] = {
-          args = { '-coverprofile=' .. vim.fn.getcwd() .. '/coverage.out' },
-          experimental = {
-            test_table = true,
-          },
-        },
-      },
-    },
   },
 }
