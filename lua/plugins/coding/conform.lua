@@ -55,7 +55,7 @@ return {
         jsonc = { 'biome' },
         lua = { 'stylua' },
         markdown = { 'markdownlint', 'markdown-toc', stop_after_first = true },
-        python = { 'isort', 'black' },
+        python = { 'black', 'isort' },
         -- python = function()
         --   if vim.fn.executable('black') == 1 then
         --     return { 'black' }

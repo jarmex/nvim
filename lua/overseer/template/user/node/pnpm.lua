@@ -5,7 +5,7 @@ local util = require('overseer.util')
 ---@type table<string, string[]>
 local mgr_lockfiles = {
   npm = { 'package-lock.json' },
-  pnpm = { 'pnpm-lock.yaml' },
+  pnpm = { 'pnpm-lock.yaml', 'package.json' },
   yarn = { 'yarn.lock' },
   bun = { 'bun.lockb', 'bun.lock' },
 }

@@ -14,10 +14,7 @@ return {
       'ravitemer/mcphub.nvim', -- Manage MCP servers.
       -- 'jinzhongjia/codecompanion-gitcommit.nvim',
       'lalitmee/codecompanion-spinners.nvim',
-      -- 'franco-ruggeri/codecompanion-spinner.nvim', -- for spinner
       'jarmex/codecompanion-gitcommit.nvim',
-      -- 'minusfive/codecompanion-agent-rules',
-      -- { 'jinzhongjia/codecompanion-tools.nvim' },
     },
     cmd = {
       'CodeCompanionChat',
@@ -47,18 +44,18 @@ return {
           chat = display.chat,
           action_palette = display.action_palette,
         },
-        memory = {
-          opts = {
-            chat = {
-              enabled = false,
-              default_memory = 'default',
-              default_params = 'watch',
-              condition = function(chat)
-                return chat.adapter.type ~= 'acp'
-              end,
-            },
-          },
-        },
+        -- rules = {
+        --   opts = {
+        --     chat = {
+        --       enabled = false,
+        --       default_memory = 'default',
+        --       default_params = 'watch',
+        --       condition = function(chat)
+        --         return chat.adapter.type ~= 'acp'
+        --       end,
+        --     },
+        --   },
+        -- },
         prompt_library = require('plugins.ai.codecompanion.promptlibrary'),
         extensions = require('plugins.ai.codecompanion.extensions'),
         opts = {

@@ -62,7 +62,7 @@ return {
       { '<leader>op', open_first_failed_task, desc = 'Overseer Open Failed Task' },
     },
     opts = {
-      templates = { 'make', 'user', 'vscode', 'task', 'shell' },
+      templates = { 'make', 'user', 'vscode', 'task', 'shell'  },
       dap = false,
       strategy = { 'jobstart', preserve_output = true, use_terminal = true, use_shell = true },
       -- strategy = {

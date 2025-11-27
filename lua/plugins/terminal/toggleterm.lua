@@ -11,6 +11,7 @@ end
 return {
   {
     'akinsho/toggleterm.nvim',
+    enabled = false,
     event = 'VeryLazy',
     keys = terminal_keymaps(),
     opts = {

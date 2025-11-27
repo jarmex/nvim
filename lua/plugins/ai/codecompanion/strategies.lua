@@ -1,6 +1,8 @@
 local adapters = require('plugins.ai.codecompanion.adapters')
 local defaultAdapter = os.getenv('NVIM_AI_ADAPTER') or 'openai'
 local systemPromptModes = require('plugins.ai.codecompanion.systemprompts')
+local DEFAULT_ADAPTER = 'copilot'
+local DEFAULT_MODEL = 'gpt-5-mini'
 
 --------------------------------------------------------------------------------
 --                                                                            --
@@ -24,7 +26,7 @@ local M = {}
 --------------
 
 M.inline = {
-  adapter = adapters.http.openai,
+  adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL },
   opts = {
     diff_timeout = 300,
   },
@@ -75,7 +77,7 @@ M.chat = {
 ---------------
 
 M.cmd = {
-  adapter = adapters.http.openrouter(),
+  adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL },
 }
 
 return M
