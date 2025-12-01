@@ -36,7 +36,6 @@ return {
   {
     'pmizio/typescript-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    event = 'BufEnter',
     ft = filetypes,
     cmd = {
       'TSToolsOrganizeImports',
@@ -49,10 +48,10 @@ return {
       'TSToolsFileReferences',
     },
     keys = {
-      { '<localleader>t', '', desc = '+ Typescriptreact tool', ft = filetypes },
-      { '<localleader>ti', '<cmd>TSToolsFixAll<cr>', desc = 'Fix all', ft = filetypes },
-      { '<localleader>ts', '<cmd>TSToolsGoToSourceDefinition<cr>', desc = 'Go to source', ft = filetypes },
-      { '<localleader>tr', '<cmd>TSToolsFileReferences<cr>', desc = 'File reference', ft = filetypes },
+      { '<leader>tt', '', desc = '+ Typescriptreact tool', ft = filetypes },
+      { '<leader>ttf', '<cmd>TSToolsFixAll<cr>', desc = 'Fix all', ft = filetypes },
+      { '<leader>tts', '<cmd>TSToolsGoToSourceDefinition<cr>', desc = 'Go to source', ft = filetypes },
+      { '<leader>ttr', '<cmd>TSToolsFileReferences<cr>', desc = 'File reference', ft = filetypes },
       { '<leader>og', '<cmd>TSToolsOrganizeImports<cr>', desc = 'Organize Imports' },
     },
     opts = {

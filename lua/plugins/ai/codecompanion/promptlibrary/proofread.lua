@@ -12,8 +12,15 @@ When you do offer edits, first explain how they improve the document.
 
 ]]
 return {
-  strategy = 'chat',
+  strategy = 'inline',
   description = 'proofread for style',
+  opts = {
+    modes = { 'v' },
+    auto_submit = true,
+    short_name = 'proofread',
+    ignore_system_prompt = true,
+    user_prompt = false,
+  },
   prompts = {
     {
       role = 'system',
@@ -21,13 +28,9 @@ return {
     },
     {
       role = 'user',
-      content = 'could you give me some advice on improving this text?',
+      content = function(ctx)
+        return require('codecompanion.helpers.actions').get_code(ctx.start_line, ctx.end_line)
+      end,
     },
-  },
-  opts = {
-    modes = { 'v' },
-    auto_submit = true,
-    short_name = 'proofread',
-    ignore_system_prompt = true,
   },
 }

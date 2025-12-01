@@ -44,31 +44,9 @@ return {
           chat = display.chat,
           action_palette = display.action_palette,
         },
-        -- rules = {
-        --   opts = {
-        --     chat = {
-        --       enabled = false,
-        --       default_memory = 'default',
-        --       default_params = 'watch',
-        --       condition = function(chat)
-        --         return chat.adapter.type ~= 'acp'
-        --       end,
-        --     },
-        --   },
-        -- },
         prompt_library = require('plugins.ai.codecompanion.promptlibrary'),
         extensions = require('plugins.ai.codecompanion.extensions'),
-        opts = {
-          system_prompt = require('plugins.ai.codecompanion.systemprompts.my-default').main_system_prompt(),
-          send_code = true,
-          prompt_decorator = function(message, adapter, _)
-            if adapter.model.name == 'qwen3:1.7b' then
-              return string.format([[/no_think %s]], message)
-            else
-              return message
-            end
-          end,
-        },
+        opts = require('plugins.ai.codecompanion.systemprompts.default'),
       }
     end,
     config = function(_, opts)

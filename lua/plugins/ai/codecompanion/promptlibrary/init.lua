@@ -2,11 +2,11 @@
 
 -- local fabric = require('plugins.ai.codecompanion.promptlibrary.fabric').load_fabric_patterns()
 
-local function chat_filter(chat_data)
-  -- TODO: check to remove this in future
-  return vim.g.project_root == chat_data.project_root or vim.g.project_root == chat_data.cwd
-end
-
+-- local function chat_filter(chat_data)
+--   -- TODO: check to remove this in future
+--   return vim.g.project_root == chat_data.project_root or vim.g.project_root == chat_data.cwd
+-- end
+--
 local prompt_library = {
   --- Reserve index intervals:
   ---     - 1-9       System (Chat, Open chats, Custom Prompt, Saved Chats, etc.)
@@ -38,38 +38,41 @@ local prompt_library = {
   ['Review'] = require('plugins.ai.codecompanion.promptlibrary.review'),
   ['Spell'] = require('plugins.ai.codecompanion.promptlibrary.spell'),
   ['Suggest Refactoring'] = require('plugins.ai.codecompanion.promptlibrary.suggest_refactoring'),
-  -- ['Vibe Code'] = require('plugins.ai.codecompanion.promptlibrary.vibe_code'),
-  ['inline'] = require('plugins.ai.codecompanion.promptlibrary.inline'),
-  -- ['Lua Developer'] = require('plugins.ai.codecompanion.promptlibrary.lua_developer'),
-  -- ['Python Developer'] = require('plugins.ai.codecompanion.promptlibrary.python_dev'),
   ['Linear Feature Ticket'] = require('plugins.ai.codecompanion.promptlibrary.linear-feat-ticket'),
   ['Linear Bug Ticket'] = require('plugins.ai.codecompanion.promptlibrary.linear-bug-ticket'),
+  -- ['Vibe Code'] = require('plugins.ai.codecompanion.promptlibrary.vibe_code'),
+  -- ['inline'] = require('plugins.ai.codecompanion.promptlibrary.inline'),
+  -- ['Lua Developer'] = require('plugins.ai.codecompanion.promptlibrary.lua_developer'),
+  -- ['Python Developer'] = require('plugins.ai.codecompanion.promptlibrary.python_dev'),
 }
 
-local beastMode = require('plugins.ai.codecompanion.promptlibrary.beastmode')
+-- local beastMode = require('plugins.ai.codecompanion.promptlibrary.beastmode')
+-- local cot = require('plugins.ai.codecompanion.promptlibrary.chain_of_thought')
+-- local dailyPlanning = require('plugins.ai.codecompanion.promptlibrary.dailyPlanning')
+-- local living_docs = require('plugins.ai.codecompanion.promptlibrary.living_docs')
 local commit_pull_request = require('plugins.ai.codecompanion.promptlibrary.commit_pull_request')
-local cot = require('plugins.ai.codecompanion.promptlibrary.chain_of_thought')
-local dailyPlanning = require('plugins.ai.codecompanion.promptlibrary.dailyPlanning')
-local living_docs = require('plugins.ai.codecompanion.promptlibrary.living_docs')
+local linearReleaseNote = require('plugins.ai.codecompanion.promptlibrary.linear_release_notes')
 local others = require('plugins.ai.codecompanion.promptlibrary.others')
 local pr_review_prompt = require('plugins.ai.codecompanion.promptlibrary.review_pull_request')
 local retrieval = require('plugins.ai.codecompanion.promptlibrary.retrieval')
 local review_documents = require('plugins.ai.codecompanion.promptlibrary.review_documentation')
+local testgenerator = require('plugins.ai.codecompanion.promptlibrary.test_generator')
 local vectorcode = require('plugins.ai.codecompanion.promptlibrary.vectorcode')
 
 return vim.tbl_extend(
   'force',
   {},
-  -- fabric,
   vectorcode,
   prompt_library,
-  living_docs,
   review_documents,
-  dailyPlanning,
+  -- fabric,
+  -- dailyPlanning,
+  -- beastMode,
+  -- cot,
   commit_pull_request,
-  beastMode,
   others,
-  cot,
   retrieval,
-  pr_review_prompt
+  pr_review_prompt,
+  testgenerator,
+  linearReleaseNote
 )

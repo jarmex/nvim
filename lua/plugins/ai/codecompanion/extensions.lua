@@ -1,4 +1,4 @@
-local DEFAULT_COPILOT_MODEL = 'gpt-4.1'
+local DEFAULT_COPILOT_MODEL = 'gpt-5-mini' -- grok-code-fast-1
 local DEFAULT_ADAPTOR = 'copilot'
 
 return {

@@ -9,6 +9,7 @@ return {
       'copilotlsp-nvim/copilot-lsp',
     },
     opts = {
+      -- copilot_node_command = {"mise", "x", "node@lts", "--", "node" },
       panel = { enabled = false },
       server_opts_overrides = {
         settings = {
@@ -43,17 +44,6 @@ return {
       },
       filetypes = {
         ['*'] = true,
-        -- lua = true,
-        -- go = true,
-        -- zig = true,
-        -- typescript = true,
-        -- javascript = true,
-        -- vue = true,
-        -- c = true,
-        -- cpp = true,
-        -- proto = true,
-        -- markdown = true,
-        -- yaml = true,
       },
     },
   },

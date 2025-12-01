@@ -114,6 +114,15 @@ return {
         },
       })
 
+      vim.lsp.config('copilot', {
+        settings = {
+          telemetry = {
+            -- doesn't work, seems to be a vscode setting
+            telemetryLevel = 'off',
+          },
+        },
+      })
+
       vim.lsp.config('gopls', {
         -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md#settings
         settings = {

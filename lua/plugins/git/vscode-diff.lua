@@ -34,6 +34,7 @@ return {
       })
     end,
     keys = {
+      { '<leader>gdc', '<cmd>CodeDiff<cr>', desc = 'Diff file explorer' },
       { '<leader>gdj', '<cmd>CodeDiff file HEAD<cr>', desc = 'Diff with HEAD' },
       { '<leader>gdk', '<cmd>CodeDiff file HEAD~1<cr>', desc = 'Diff with HEAD~1' },
       { '<leader>gdl', '<cmd>CodeDiff<cr>', desc = 'Diff file explorer' },

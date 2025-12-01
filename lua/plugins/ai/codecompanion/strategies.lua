@@ -1,5 +1,5 @@
-local adapters = require('plugins.ai.codecompanion.adapters')
-local defaultAdapter = os.getenv('NVIM_AI_ADAPTER') or 'openai'
+-- local adapters = require('plugins.ai.codecompanion.adapters')
+local defaultAdapter = os.getenv('NVIM_AI_ADAPTER') or 'copilot'
 local systemPromptModes = require('plugins.ai.codecompanion.systemprompts')
 local DEFAULT_ADAPTER = 'copilot'
 local DEFAULT_MODEL = 'gpt-5-mini'

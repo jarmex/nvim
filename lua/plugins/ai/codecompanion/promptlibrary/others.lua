@@ -76,44 +76,22 @@ Do not add comments to variables or single line expressions.
       },
     },
   },
-  ['Write tests for this file'] = {
-    strategy = 'chat',
-    description = 'Write tests for this file or module following existing convention.',
-    opts = {
-      auto_submit = true,
-      -- ignore_system_prompt = true,
-      is_slash_cmd = true,
-      short_name = 'write-tests',
-      adapter = {
-        name = 'copilot',
-      },
-    },
-    prompts = {
-      {
-        role = 'user',
-        content = [[
-#{buffer}
-@{full_stack_dev}
 
-Write tests for this file or module.
-
-Follow these additional rules:
-- Check for existing tests under common paths, such as `test/`, `spec/`, or `src/**/*.test.*`.
-- Follow conventions stablished by existing tests, if any.
-- Write minimal tests, covering only the most common logic paths.
-- Use mocks for external libraries.
-- Do not install any new packages.
-- Do not try to run the tests.
-        ]],
-      },
-    },
-  },
-
-  ['Edit'] = {
+  ['Edit Current Buffer'] = {
     strategy = 'chat',
     description = 'Edit the current buffer',
     prompts = {
-      { role = 'user', content = '@{insert_edit_into_file} @{cmd_runner} #{buffer} \n\n' },
+      {
+        role = 'system',
+        content = [[You are an experienced developer. You will be requested to make some changes to a provided buffer. Keep
+your responses concise and to the point. Don't include next-step suggestions. When the user asks you a question about
+the buffer, edit it with your suggestions using your editor tool unless the user asks you to do otherwise.]],
+      },
+      {
+        role = 'user',
+        -- content = '@{insert_edit_into_file} @{cmd_runner} #{buffer} \n\n'
+        content = 'Here is the current buffer: #{buffer}\n\nUsing your @{insert_edit_into_file} and @{cmd_runner} tool, make the following change(s):\n\n',
+      },
     },
     opts = {
       auto_submit = false,
@@ -131,30 +109,6 @@ Follow these additional rules:
       auto_submit = false,
       short_name = 'dev',
       is_slash_cmd = true,
-    },
-  },
-  ['Saved Project Chats ...'] = {
-    strategy = 'chat',
-    description = 'Browse saved project chats',
-    opts = {
-      index = 4,
-      stop_context_insertion = true,
-    },
-    condition = function()
-      local history = require('codecompanion').extensions.history
-      local have_chats = not vim.tbl_isempty(history.get_chats(chat_filter))
-      local mode = vim.api.nvim_get_mode()
-      return have_chats and (mode.mode == 'n' or mode.mode == 'i')
-    end,
-    prompts = {
-      n = function()
-        local history = require('codecompanion').extensions.history
-        history.browse_chats(chat_filter)
-      end,
-      i = function()
-        local history = require('codecompanion').extensions.history
-        history.browse_chats(chat_filter)
-      end,
     },
   },
   ['Saved Chats ...'] = {
@@ -248,35 +202,6 @@ Follow these additional rules:
 							return require("codecompanion.helpers.actions").get_code(ctx.start_line, ctx.end_line)
         end,
         opts = { contains_code = true },
-      },
-    },
-  },
-  ['Proofread'] = {
-    strategy = 'inline',
-    opts = {
-      modes = { 'v' },
-      short_name = 'proofread',
-      auto_submit = true,
-      stop_context_insertion = true,
-      user_prompt = false,
-    },
-    prompts = {
-      {
-        role = 'system',
-        content = function(_ctx)
-          return [[
-								You are an editor for the English language.
-								I will send you some text, and I want you to improve the
-								language, without changing the meaning.
-							]]
-        end,
-      },
-      {
-        role = 'user',
-        content = function(ctx)
-							-- stylua: ignore
-							return require("codecompanion.helpers.actions").get_code(ctx.start_line, ctx.end_line)
-        end,
       },
     },
   },
