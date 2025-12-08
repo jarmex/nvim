@@ -11,4 +11,7 @@ return {
   'user.java',
   'user.runner',
   'user.logs',
+  'user.fullstack',
+  'user.kubectl',
+  'user.nx',
 }

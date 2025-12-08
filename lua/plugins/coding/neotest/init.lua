@@ -73,89 +73,91 @@ return {
       },
     },
     keys = require('plugins.coding.neotest.keymaps').keymaps(),
-    opts = {
-      -- consumers = {
-      --   overseer = require('neotest.consumers.overseer'),
-      -- },
-      log_level = vim.log.levels.ERROR,
-      status = { enabled = true, virtual_text = true, signs = true },
-      signs = {
-        -- Customize signs used by Neotest
-        passed = { text = '✓', hl = 'NeotestPassed' },
-        failed = { text = '✗', hl = 'NeotestFailed' },
-        skipped = { text = '»', hl = 'NeotestSkipped' },
-        running = { text = '', hl = 'NeotestRunning' },
-        unknown = { text = '?', hl = 'NeotestUnknown' },
-      },
-      output = { enabled = true, open_on_run = false },
-      discovery = { enabled = false }, -- recommend by neotest-jest
-      diagnostic = { enabled = true },
-      floating = {
-        border = 'rounded',
-        max_height = 0.90,
-        max_width = 0.90,
-      },
-      quickfix = {
-        open = function()
-          if not ok then
-            vim.cmd('copen')
-            return
-          end
-          trouble.open({ mode = 'quickfix', focus = false })
-        end,
-      },
-      output_panel = {
-        open = 'rightbelow vsplit | resize 40',
-      },
-      strategies = {
-        integrated = {
-          width = 180,
+    opts = function()
+      return {
+        consumers = {
+          overseer = require('neotest.consumers.overseer'),
         },
-      },
-      summary = {
-        open = 'botright vsplit | vertical resize 60',
-        enabled = true,
-        expand_errors = true,
-        follow = true,
-        mappings = {
-          attach = 'a',
-          expand = { '<Space>', '<2-LeftMouse>' },
-          expand_all = '<tab>',
-          jumpto = { 'i', '<cr>' },
-          mark = 'm',
-          next_failed = 'J',
-          output = 'o',
-          prev_failed = 'K',
-          run = 'r',
-          debug = 'd',
-          run_marked = 'R',
-          debug_marked = 'D',
-          short = 'O',
-          stop = 's',
-          target = 't',
-          clear_marked = 'M',
-          clear_target = 'T',
+        log_level = vim.log.levels.ERROR,
+        status = { enabled = true, virtual_text = true, signs = true },
+        signs = {
+          -- Customize signs used by Neotest
+          passed = { text = '✓', hl = 'NeotestPassed' },
+          failed = { text = '✗', hl = 'NeotestFailed' },
+          skipped = { text = '»', hl = 'NeotestSkipped' },
+          running = { text = '', hl = 'NeotestRunning' },
+          unknown = { text = '?', hl = 'NeotestUnknown' },
         },
-      },
+        output = { enabled = true, open_on_run = false },
+        discovery = { enabled = false }, -- recommend by neotest-jest
+        diagnostic = { enabled = true },
+        floating = {
+          border = 'rounded',
+          max_height = 0.90,
+          max_width = 0.90,
+        },
+        quickfix = {
+          open = function()
+            if not ok then
+              vim.cmd('copen')
+              return
+            end
+            trouble.open({ mode = 'quickfix', focus = false })
+          end,
+        },
+        output_panel = {
+          open = 'rightbelow vsplit | resize 40',
+        },
+        strategies = {
+          integrated = {
+            width = 180,
+          },
+        },
+        summary = {
+          open = 'botright vsplit | vertical resize 60',
+          enabled = true,
+          expand_errors = true,
+          follow = true,
+          mappings = {
+            attach = 'a',
+            expand = { '<Space>', '<2-LeftMouse>' },
+            expand_all = '<tab>',
+            jumpto = { 'i', '<cr>' },
+            mark = 'm',
+            next_failed = 'J',
+            output = 'o',
+            prev_failed = 'K',
+            run = 'r',
+            debug = 'd',
+            run_marked = 'R',
+            debug_marked = 'D',
+            short = 'O',
+            stop = 's',
+            target = 't',
+            clear_marked = 'M',
+            clear_target = 'T',
+          },
+        },
 
-      icons = {
-        passed = icons.testing.Success,
-        running = '',
-        failed = icons.testing.Failed,
-        unknown = '',
-        expanded = '',
-        child_prefix = '',
-        child_indent = '',
-        final_child_prefix = '',
-        non_collapsible = '',
-        collapsed = '',
+        icons = {
+          passed = icons.testing.Success,
+          running = '',
+          failed = icons.testing.Failed,
+          unknown = '',
+          expanded = '',
+          child_prefix = '',
+          child_indent = '',
+          final_child_prefix = '',
+          non_collapsible = '',
+          collapsed = '',
 
-        running_animated = vim.tbl_map(function(s)
-          return s .. ' '
-        end, { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }),
-      },
-      adapters = adaptersList,
-    },
+          running_animated = vim.tbl_map(function(s)
+            return s .. ' '
+          end, { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }),
+        },
+        adapters = adaptersList,
+      }
+    end,
     config = function(_, opts)
       local neotest_ns = vim.api.nvim_create_namespace('neotest')
       vim.diagnostic.config({
@@ -248,3 +250,4 @@ return {
     end,
   },
 }
+-- check this https://github.com/sudo-tee/dots/blob/main/apps/nvim/config/lua/custom/plugins/neotest.lua

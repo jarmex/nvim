@@ -62,7 +62,9 @@ return {
       { '<leader>op', open_first_failed_task, desc = 'Overseer Open Failed Task' },
     },
     opts = {
-      templates = { 'make', 'user', 'vscode', 'task', 'shell'  },
+      templates = { 'make', 'user', 'vscode', 'task', 'shell' },
+      -- Auto-detect task files
+      auto_detect_success_color = true,
       dap = false,
       strategy = { 'jobstart', preserve_output = true, use_terminal = true, use_shell = true },
       -- strategy = {
@@ -147,8 +149,9 @@ return {
     },
     config = function(_, opts)
       local overseer = require('overseer')
-      local task_list = require('overseer.task_list')
       local util = require('overseer.util')
+
+      local otherCommands = require('plugins.coding.overseer.commands')
 
       -- Override run_in_cwd to prevent fullscreen terminal execution and output flickering
       ---@diagnostic disable-next-line: duplicate-set-field
@@ -159,31 +162,7 @@ return {
 
       overseer.setup(opts)
 
-      -- Close overseer window when all buffers are closed
-      vim.api.nvim_create_autocmd({ 'BufWinLeave' }, {
-        pattern = '*',
-        callback = function(ev)
-          local is_terminal = vim.bo[ev.buf].buftype == 'terminal'
-          local is_toggleterm_buffer = vim.fn.bufname(ev.buf):find('toggleterm')
-          local is_toggleterm_task = is_terminal and is_toggleterm_buffer
-          local is_toggleterm = vim.bo[ev.buf].filetype == 'toggleterm'
-
-          if is_toggleterm or is_toggleterm_task then
-            vim.defer_fn(function()
-              local tasks_with_buffer = task_list.list_tasks({
-                filter = function(task)
-                  return task:get_bufnr() ~= nil
-                end,
-              })
-              if #tasks_with_buffer == 0 then
-                overseer.close()
-              end
-            end, 200)
-          end
-        end,
-      })
-
-      require('plugins.coding.overseer.commands')
+      otherCommands.setup(overseer)
     end,
   },
 }

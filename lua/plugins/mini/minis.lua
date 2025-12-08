@@ -82,11 +82,11 @@ return {
       })
 
       -- Work with diff hunks
-      local diff = require('mini.diff')
-      diff.setup({
-        -- Disabled by default
-        source = diff.gen_source.none(),
-      })
+      -- local diff = require('mini.diff')
+      -- diff.setup({
+      --   -- Disabled by default
+      --   source = diff.gen_source.none(),
+      -- })
     end,
   },
 }

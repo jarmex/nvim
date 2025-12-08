@@ -5,5 +5,6 @@ return {
   'user.go.integrationtest',
   'user.go.testcacheclean',
   'user.go.tidy',
+  'user.go.go',
   'user.go.unittest',
 }
