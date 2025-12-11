@@ -29,6 +29,7 @@ return {
       disable_insert_on_commit = true,
       fetch_after_checkout = false,
       graph_style = 'unicode',
+      process_spinner = true,
       commit_editor = {
         kind = 'tab',
         show_staged_diff = true,

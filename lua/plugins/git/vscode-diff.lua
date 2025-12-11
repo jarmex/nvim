@@ -2,37 +2,36 @@ return {
   {
     'esmuellert/vscode-diff.nvim',
     dependencies = { 'MunifTanjim/nui.nvim' },
+    branch = 'next',
     cmd = 'CodeDiff',
-    config = function()
-      require('vscode-diff').setup({
-        highlights = {
-          line_insert = 'DiffAdd',
-          line_delete = 'DiffDelete',
+    opts = {
+      highlights = {
+        line_insert = 'DiffAdd',
+        line_delete = 'DiffDelete',
 
-          char_insert = nil,
-          char_delete = nil,
-        },
+        char_insert = nil,
+        char_delete = nil,
+      },
 
-        diff = {
-          disable_inlay_hints = true,
-          max_computation_time_ms = 5000,
-        },
+      diff = {
+        disable_inlay_hints = true,
+        max_computation_time_ms = 5000,
+      },
 
-        keymaps = {
-          view = {
-            next_hunk = ']c',
-            prev_hunk = '[c',
-            next_file = ']f',
-            prev_file = '[f',
-          },
-          explorer = {
-            select = '<CR>',
-            hover = 'K',
-            refresh = 'R',
-          },
+      keymaps = {
+        view = {
+          next_hunk = ']c',
+          prev_hunk = '[c',
+          next_file = ']f',
+          prev_file = '[f',
         },
-      })
-    end,
+        explorer = {
+          select = '<CR>',
+          hover = 'K',
+          refresh = 'R',
+        },
+      },
+    },
     keys = {
       { '<leader>gdc', '<cmd>CodeDiff<cr>', desc = 'Diff file explorer' },
       { '<leader>gdj', '<cmd>CodeDiff file HEAD<cr>', desc = 'Diff with HEAD' },
