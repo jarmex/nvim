@@ -1,6 +1,6 @@
 -- If available, open the last chat, otherwise open a new chat
 local function open_chat()
-  local chat = require('codecompanion.strategies.chat').last_chat()
+  local chat = require('codecompanion.interactions.chat').last_chat()
   if chat then
     chat.ui:open()
     vim.api.nvim_set_current_win(chat.ui.winnr)
@@ -64,37 +64,37 @@ return {
     silent = true,
   },
   { '<leader>aa', '<cmd>CodeCompanionActions<CR>', desc = '[A]I [A]ctions', mode = { 'n', 'v' }, silent = true },
-  { '<leader>ad', ':CodeCompanionChat deepseek<CR>', desc = 'Codecompanion DeepSeek', silent = true },
-  { '<leader>ag', ':CodeCompanionChat gemini<CR>', desc = 'Codecompanion: Gemini', silent = true },
-  { '<leader>al', ':CodeCompanionChat ollama<CR>', desc = 'Codecompanion Ollama', silent = true },
-  { '<leader>an', ':CodeCompanionChat anthropic<CR>', desc = 'Codecompanion Anthropic', silent = true },
-  { '<leader>ao', ':CodeCompanionChat openai<CR>', desc = 'Codecompanion OpenAI', silent = true },
-  { '<leader>au', ':CodeCompanionChat openrouter<CR>', desc = 'Codecompanion OpenRouter', silent = true },
-  { '<leader>aq', ':CodeCompanionChat qwen<CR>', desc = 'Codecompanion Qwen', silent = true },
+  { '<leader>ad', ':CodeCompanionChat adapter=deepseek<CR>', desc = 'Codecompanion DeepSeek', silent = true },
+  { '<leader>ag', ':CodeCompanionChat adapter=gemini<CR>', desc = 'Codecompanion: Gemini', silent = true },
+  { '<leader>al', ':CodeCompanionChat adapter=ollama<CR>', desc = 'Codecompanion Ollama', silent = true },
+  { '<leader>an', ':CodeCompanionChat adapter=anthropic<CR>', desc = 'Codecompanion Anthropic', silent = true },
+  { '<leader>ao', ':CodeCompanionChat adapter=openai<CR>', desc = 'Codecompanion OpenAI', silent = true },
+  { '<leader>au', ':CodeCompanionChat adapter=openrouter<CR>', desc = 'Codecompanion OpenRouter', silent = true },
+  { '<leader>aq', ':CodeCompanionChat adapter=qwen<CR>', desc = 'Codecompanion Qwen', silent = true },
   {
     '<Leader>aA',
-    '<Cmd>lua require("codecompanion.strategies.inline"):stop()<CR>',
+    '<Cmd>lua require("codecompanion.interactions.inline"):stop()<CR>',
     desc = 'AI: Abort inline request',
     silent = true,
   },
   { '<Leader>ah', '<Cmd>CodeCompanionHistory<CR>', desc = 'AI: Show chat history', silent = true },
   { '<leader>aj', ask_selection, mode = { 'n', 'v' }, desc = 'Code Companion Inline Prompt', silent = true },
-  { '<Leader>Ac', open_chat, desc = '[A]I CodeCompanion [c]hat', silent = true },
-  { '<leader>af', '<cmd>CodeCompanion /fix<cr>', mode = 'v', desc = 'Fix Code (CodeCompanion)' },
-  silent = true,
-  -- {
-  --   '<leader>ay',
-  --   '<cmd>CodeCompanion /tests<cr>',
-  --   mode = 'v',
-  --   desc = 'Generate Tests (CodeCompanion)',
-  --   silent = true,
-  -- },
+  { '<Leader>ae', open_chat, desc = '[A]I CodeCompanion [c]hat', silent = true },
   {
-    '<leader>ay',
+    '<leader>as',
+    function()
+      require('codecompanion').prompt('tests')
+    end,
+    mode = 'v',
+    desc = 'Generate Tests (CodeCompanion)',
+    silent = true,
+  },
+  {
+    '<leader>af',
     function()
       require('codecompanion').prompt('fix')
     end,
-    mode = 'x',
-    desc = ' Fix',
+    mode = { 'x', 'v' },
+    desc = ' Fix Code (CodeCompanion)',
   },
 }

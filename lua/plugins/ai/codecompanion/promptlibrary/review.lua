@@ -6,7 +6,7 @@ return {
     -- is_default = true,
     modes = { 'v' },
     is_slash_cmd = true,
-    short_name = 'review',
+    alias = 'review',
     stop_context_insertion = true, -- selected text is already sent
     user_prompt = false, -- user input is not required
     auto_submit = true,

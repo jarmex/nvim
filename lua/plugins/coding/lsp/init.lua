@@ -248,6 +248,14 @@ return {
         filetypes = { 'json', 'jsonc', 'json5' },
       })
 
+      vim.lsp.config('helm_ls', {
+        yamlls = {
+          path = 'yaml-language-server',
+        },
+      })
+
+      vim.lsp.enable({ 'helm_ls' })
+
       vim.lsp.config('yamlls', {
         settings = {
           redhat = { telemetry = { enabled = false } },
@@ -267,6 +275,17 @@ return {
       })
 
       require('plugins.coding.lsp.diagnostics')
+
+      -- disable lsp for .env files
+      local group = vim.api.nvim_create_augroup('__env', { clear = true })
+      vim.api.nvim_create_autocmd('BufEnter', {
+        pattern = { '*.env', '.env*' },
+        group = group,
+        callback = function(args)
+          vim.cmd([[set filetype=sh]]) -- set ft to sh to enable syntax highlighting
+          vim.diagnostic.enable(false, { bufnr = args.buf })
+        end,
+      })
     end,
   },
 }

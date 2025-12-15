@@ -2,7 +2,7 @@ return {
   strategy = 'chat',
   description = 'Add appropriate documentation to the selected code',
   opts = {
-    short_name = 'docstrings',
+    alias = 'docstrings',
     user_prompt = false,
     auto_submit = true,
     stop_context_insertion = true,

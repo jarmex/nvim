@@ -37,6 +37,13 @@ return {
           inline = strategies.inline,
           cmd = strategies.cmd,
           chat = strategies.chat,
+          background = {
+            chat = {
+              opts = {
+                enabled = true,
+              },
+            },
+          },
         },
         display = {
           diff = display.diff,
@@ -46,7 +53,6 @@ return {
         },
         prompt_library = require('plugins.ai.codecompanion.promptlibrary'),
         extensions = require('plugins.ai.codecompanion.extensions'),
-        opts = require('plugins.ai.codecompanion.systemprompts.default'),
       }
     end,
     config = function(_, opts)

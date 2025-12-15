@@ -29,7 +29,7 @@ local function add_buf_message(chat, data, opts)
     chat.last_role = data.role
     table.insert(lines, '')
     table.insert(lines, '')
-    chat.ui:set_header(lines, config.strategies.chat.roles[data.role])
+    chat.ui:set_header(lines, config.interactions.chat.roles[data.role])
   end
 
   -- Add data to the chat buffer

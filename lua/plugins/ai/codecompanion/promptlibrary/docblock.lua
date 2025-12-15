@@ -5,7 +5,7 @@ return {
     -- index = 3,
     -- is_default = true,
     is_slash_cmd = true,
-    short_name = 'doc',
+    alias = 'doc',
     user_prompt = false,
   },
   prompts = {

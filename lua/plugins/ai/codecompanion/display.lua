@@ -10,7 +10,7 @@ M.action_palette = {
   prompt = 'Prompt ',
   provider = 'snacks', -- default|telescope|mini_pick
   opts = {
-    show_default_actions = true,
+    show_preset_actions = true,
     show_default_prompt_library = true,
   },
 }
@@ -52,7 +52,7 @@ M.chat = {
   start_in_insert_mode = false,
   auto_scroll = true,
   fold_context = true,
-  -- child_window = { opts = { wrap = true } },
+  -- floating_window = { opts = { wrap = true } },
   icons = {
     tool_success = '󰸞 ',
     pinned_buffer = ' ',

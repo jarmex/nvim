@@ -6,7 +6,7 @@ return {
     is_default = false,
     is_slash_cmd = true,
     auto_submit = false,
-    short_name = 'agent_mode_current_buffer',
+    alias = 'agent_mode_current_buffer',
   },
   prompts = {
     {

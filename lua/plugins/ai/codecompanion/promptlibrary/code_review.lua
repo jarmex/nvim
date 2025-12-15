@@ -44,7 +44,7 @@ return {
   opts = {
     is_slash_cmd = true,
     auto_submit = false,
-    short_name = 'code_review',
+    alias = 'code_review',
   },
   prompts = {
     { role = 'user', content = codeReviewText },

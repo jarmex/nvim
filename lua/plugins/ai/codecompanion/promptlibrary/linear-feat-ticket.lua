@@ -79,7 +79,7 @@ return {
   description = 'Generate a Linear issue in the Engineering team',
   opts = {
     auto_submit = false,
-    short_name = 'linear_feat',
+    alias = 'linear_feat',
     is_slash_cmd = true,
     adapter = {
       name = 'anthropic',

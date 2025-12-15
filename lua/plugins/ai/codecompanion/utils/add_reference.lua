@@ -1,7 +1,7 @@
 local config = require('codecompanion.config')
-local helpers = require('codecompanion.strategies.chat.helpers')
+local helpers = require('codecompanion.interactions.chat.helpers')
 
-local user_role = config.strategies.chat.roles.user
+local user_role = config.interactions.chat.roles.user
 local api = vim.api
 
 ---Add a reference to the chat buffer

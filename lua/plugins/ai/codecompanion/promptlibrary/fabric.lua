@@ -22,7 +22,7 @@ local function read_file(path)
   return content
 end
 -- Create a short name for slash commands
-local function create_short_name(name)
+local function create_alias(name)
   return name:gsub('[^%w]', ''):lower()
 end
 
@@ -82,14 +82,14 @@ function M.load_fabric_patterns()
       system_content = system_content:gsub('^%s+', ''):gsub('%s+$', '')
 
       local formatted_name = format_pattern_name(pattern.name)
-      local short_name = create_short_name(pattern.name)
+      local alias = create_alias(pattern.name)
 
       -- Create the prompt entry for CodeCompanion
       prompt_library['Fabric: ' .. formatted_name] = {
         strategy = 'chat',
         description = 'Fabric pattern: ' .. pattern.name,
         opts = {
-          short_name = short_name,
+          alias = alias,
           is_slash_cmd = true,
           auto_submit = false,
           user_prompt = false,

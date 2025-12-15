@@ -4,7 +4,7 @@ return {
   opts = {
     index = 19,
     is_default = false,
-    short_name = 'spell',
+    alias = 'spell',
     is_slash_cmd = true,
     auto_submit = true,
   },

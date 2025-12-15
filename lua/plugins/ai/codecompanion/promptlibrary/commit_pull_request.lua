@@ -5,7 +5,7 @@ return {
     strategy = 'workflow',
     description = 'Generate a commit, push the branch and create a PR.',
     opts = {
-      short_name = 'commit-and-pr',
+      alias = 'commit-and-pr',
       adapter = 'copilot',
     },
     context = {

@@ -24,7 +24,7 @@ return {
   strategy = 'chat',
   description = 'Review code and provide suggestions for improvement.',
   opts = {
-    short_name = 'review-code',
+    alias = 'review-code',
     auto_submit = false,
     is_slash_cmd = true,
   },

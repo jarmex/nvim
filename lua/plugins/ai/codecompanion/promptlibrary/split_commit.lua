@@ -6,7 +6,7 @@ return {
     opts = {
       index = 21,
       is_default = false,
-      short_name = 'commits',
+      alias = 'commits',
       is_slash_cmd = true,
       auto_submit = false,
     },
@@ -38,7 +38,7 @@ return {
     opts = {
       index = 23,
       is_default = false,
-      short_name = 'qflist',
+      alias = 'qflist',
       is_slash_cmd = true,
       auto_submit = false,
     },
@@ -72,7 +72,7 @@ return {
     opts = {
       index = 24,
       is_default = false,
-      short_name = 'agent',
+      alias = 'agent',
       is_slash_cmd = false,
       auto_submit = true,
       user_prompt = true,

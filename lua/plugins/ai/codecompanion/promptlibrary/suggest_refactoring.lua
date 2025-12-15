@@ -3,7 +3,7 @@ return {
   description = 'Suggest refactoring for provided piece of code.',
   opts = {
     modes = { 'v' },
-    short_name = 'refactor',
+    alias = 'refactor',
     auto_submit = false,
     stop_context_insertion = true,
     user_prompt = false,

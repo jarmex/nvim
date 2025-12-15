@@ -86,7 +86,7 @@ return {
   ['DailyPlanning'] = {
     strategy = 'chat',
     description = "Plan out your day based on yesterday's notes and current tasks",
-    opts = { index = 3, is_slash_cmd = true, auto_submit = false, short_name = 'plan_today' },
+    opts = { index = 3, is_slash_cmd = true, auto_submit = false, alias = 'plan_today' },
     prompts = { { role = 'user', content = dailyPlanningText } },
   },
 
@@ -97,7 +97,7 @@ return {
       index = 1,
       is_slash_cmd = true,
       auto_submit = false,
-      short_name = 'review_notes_daily',
+      alias = 'review_notes_daily',
     },
     prompts = {
       { role = 'user', content = dailyReviewText },
@@ -110,7 +110,7 @@ return {
       index = 2,
       is_slash_cmd = true,
       auto_submit = false,
-      short_name = 'review_notes_weekly',
+      alias = 'review_notes_weekly',
     },
     prompts = {
       { role = 'user', content = weeklyReviewText },

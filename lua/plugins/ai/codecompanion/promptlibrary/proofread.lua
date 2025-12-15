@@ -17,7 +17,7 @@ return {
   opts = {
     modes = { 'v' },
     auto_submit = true,
-    short_name = 'proofread',
+    alias = 'proofread',
     ignore_system_prompt = true,
     user_prompt = false,
   },

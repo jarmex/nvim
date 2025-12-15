@@ -27,7 +27,7 @@ M['Review Documentation'] = {
   strategy = 'chat',
   description = 'Analyze codebase and suggest documentation updates',
   opts = {
-    short_name = 'review_docs',
+    alias = 'review_docs',
     auto_submit = false,
   },
   context = {

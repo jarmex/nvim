@@ -2,7 +2,7 @@ return {
   strategy = 'chat',
   description = 'Act as an expert Lua developer.',
   opts = {
-    short_name = 'lua_role',
+    alias = 'lua_role',
     is_slash_cmd = true,
     auto_submit = false,
     ignore_system_prompt = true,

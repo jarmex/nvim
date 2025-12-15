@@ -30,7 +30,7 @@ M['Initialize Living Docs'] = {
   strategy = 'chat',
   description = 'Initialize living documentation workflow for a new project',
   opts = {
-    short_name = 'init_docs',
+    alias = 'init_docs',
     auto_submit = false,
   },
   prompts = {

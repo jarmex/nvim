@@ -85,7 +85,7 @@ return {
   description = 'Generate a Linear Bug issue in the Engineering team',
   opts = {
     auto_submit = false,
-    short_name = 'linear-bug',
+    alias = 'linear-bug',
     ignore_system_prompt = false,
     is_slash_cmd = true,
     adapter = {

@@ -5,7 +5,7 @@ return {
   description = 'Fix the LSP diagnostics',
   opts = {
     default_prompt = true,
-    short_name = 'lsp-fix',
+    alias = 'lsp-fix',
     modes = { 'n', 'v' },
     slash_cmd = 'lsp-fix',
     auto_submit = true,

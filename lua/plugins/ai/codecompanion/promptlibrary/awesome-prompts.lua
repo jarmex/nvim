@@ -99,7 +99,7 @@ function AwesomePrompt:prompt_library()
       strategy = 'chat',
       description = string.format('Act as an expert %s', act),
       opts = {
-        short_name = shortName,
+        alias = shortName,
         is_slash_cmd = true,
         auto_submit = false,
         ignore_system_prompt = true,
@@ -131,7 +131,7 @@ function AwesomePrompt:prompt_library_online()
       strategy = 'chat',
       description = string.format('Act as an expert %s', act),
       opts = {
-        short_name = shortName,
+        alias = shortName,
         is_slash_cmd = true,
         auto_submit = false,
         ignore_system_prompt = true,

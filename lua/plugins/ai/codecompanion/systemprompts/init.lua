@@ -58,7 +58,7 @@ function M.switch_mode(mode_name)
   vim.g.cc_mode = mode_name
 
   -- Update existing chat if present
-  local chat = require('codecompanion.strategies.chat').last_chat()
+  local chat = require('codecompanion.interactions.chat').last_chat()
   if chat then
     M.update_chat_prompt(chat, mode_name)
     vim.notify('Switched to ' .. mode_name .. ' mode')

@@ -55,7 +55,7 @@ return {
     description = 'Generate executive-level release notes from Linear tickets.',
     opts = {
       auto_submit = false,
-      short_name = 'linear_release_notes',
+      alias = 'linear_release_notes',
       is_slash_cmd = true,
       adapter = {
         name = 'anthropic',

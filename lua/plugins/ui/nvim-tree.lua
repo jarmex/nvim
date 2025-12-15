@@ -14,7 +14,7 @@ local function on_attach(bufnr)
     }
   end
   local function add_reference(chat, path)
-    local filemod = require('codecompanion.strategies.chat.slash_commands.file')
+    local filemod = require('codecompanion.interactions.chat.slash_commands.file')
     local slash_command = filemod.new({
       Chat = chat,
       config = {},

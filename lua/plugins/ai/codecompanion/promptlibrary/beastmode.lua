@@ -36,7 +36,7 @@ return {
     opts = {
       index = 70,
       is_default = true,
-      short_name = 'beastmode',
+      alias = 'beastmode',
       auto_submit = true,
     },
     prompts = {

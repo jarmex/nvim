@@ -81,7 +81,7 @@ return {
   strategy = 'chat',
   description = 'Write Request for Comments (RFC)',
   opts = {
-    short_name = 'rfc',
+    alias = 'rfc',
     contains_code = true,
     user_prompt = false,
     is_slash_cmd = true,

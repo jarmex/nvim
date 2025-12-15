@@ -38,6 +38,9 @@ return {
         auth_type = {
           default = 'oauth',
         },
+        extended_thinking = {
+          default = true,
+        },
       },
     }
     return adapters.extend('anthropic', anthropic_config)

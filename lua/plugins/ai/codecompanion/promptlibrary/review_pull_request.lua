@@ -181,7 +181,7 @@ return {
     opts = {
       is_slash_cmd = true,
       auto_submit = false,
-      short_name = 'pr_code_review',
+      alias = 'pr_code_review',
     },
     prompts = {
       { role = 'user', content = get_pull_request_diff },

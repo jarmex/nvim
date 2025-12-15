@@ -431,8 +431,8 @@ local M = {
 
       -- Determine majority filetype and call the prompt for that filetype
       local ft = get_majority_filetype(abs_files)
-      local prompt_short_name = ft_prompt_map[ft] or 'assistant_role'
-      codecompanion.prompt(prompt_short_name)
+      local prompt_alias = ft_prompt_map[ft] or 'assistant_role'
+      codecompanion.prompt(prompt_alias)
       -- Since prompt generates a new chat we need to get the new handle
       -- and ignore the one passed as argument
       local chat = get_or_create_chat()

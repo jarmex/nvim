@@ -56,7 +56,7 @@ When the user asks you to solve a problem, you must follow this exact interactio
       auto_submit = true,
       -- ignore_system_prompt = true,
       is_slash_cmd = true,
-      short_name = 'document',
+      alias = 'document',
       adapter = {
         name = 'copilot',
       },
@@ -95,7 +95,7 @@ the buffer, edit it with your suggestions using your editor tool unless the user
     },
     opts = {
       auto_submit = false,
-      short_name = 'edit',
+      alias = 'edit',
       is_slash_cmd = true,
     },
   },
@@ -107,7 +107,7 @@ the buffer, edit it with your suggestions using your editor tool unless the user
     },
     opts = {
       auto_submit = false,
-      short_name = 'dev',
+      alias = 'dev',
       is_slash_cmd = true,
     },
   },
@@ -175,7 +175,7 @@ the buffer, edit it with your suggestions using your editor tool unless the user
     strategy = 'inline',
     opts = {
       modes = { 'v' },
-      short_name = 'simplify',
+      alias = 'simplify',
       auto_submit = true,
       stop_context_insertion = true,
       user_prompt = false,

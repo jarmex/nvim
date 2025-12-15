@@ -6,7 +6,7 @@ return {
       auto_submit = true,
       -- ignore_system_prompt = true,
       is_slash_cmd = true,
-      short_name = 'write-tests',
+      alias = 'write-tests',
       adapter = {
         name = 'copilot',
         model = 'claude-haiku-4.5',

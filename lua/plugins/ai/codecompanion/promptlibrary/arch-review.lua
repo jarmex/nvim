@@ -39,7 +39,7 @@ return {
   opts = {
     is_slash_cmd = true,
     auto_submit = false,
-    short_name = 'arch_review',
+    alias = 'arch_review',
   },
   prompts = {
     { role = 'user', content = archReviewText },

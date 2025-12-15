@@ -5,7 +5,7 @@ return {
     index = 17,
     is_default = true,
     modes = { 'v' },
-    short_name = 'refactor',
+    alias = 'refactor',
     is_slash_cmd = true,
     auto_submit = false,
     user_prompt = false,

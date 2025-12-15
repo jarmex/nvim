@@ -50,7 +50,7 @@ return {
     },
   },
   vectorcode = {
-    enabled = true,
+    enabled = false,
     opts = {
       add_tool = true,
       add_slash_command = true,

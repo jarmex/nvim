@@ -1,9 +1,10 @@
 return {
   'Davidyz/VectorCode', -- Index and search code in your repositories
-  enabled = true,
-  version = '*',
-  build = 'uv tool install --upgrade vectorcode',
+  enabled = false,
+  -- version = '*',
+  event = 'VeryLazy',
   cmd = 'VectorCode',
+  build = 'uv tool install --upgrade vectorcode',
   opts = function()
     return {
       async_backend = 'lsp',

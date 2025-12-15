@@ -3,7 +3,7 @@ return {
   description = 'Nextjs Agent',
   opts = {
     is_default = false,
-    short_name = 'nextjs',
+    alias = 'nextjs',
     ignore_system_prompt = true,
     adapter = 'gemini',
   },

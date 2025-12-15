@@ -5,7 +5,7 @@ return {
     index = 10,
     is_default = true,
     is_slash_cmd = true,
-    short_name = 'pcommit',
+    alias = 'pcommit',
     auto_submit = true,
     adapter = {
       name = 'openai',

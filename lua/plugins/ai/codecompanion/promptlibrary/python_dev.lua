@@ -2,7 +2,7 @@ return {
   strategy = 'chat',
   description = 'Act as an expert Python developer.',
   opts = {
-    short_name = 'python_role',
+    alias = 'python_role',
     is_slash_cmd = true,
     auto_submit = false,
     ignore_system_prompt = true,
