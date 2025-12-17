@@ -3,7 +3,9 @@ local ccvariables = require('plugins.ai.codecompanion.variables.codecompanion-va
 local default_variables = {
   ['buffer'] = {
     opts = {
-      default_params = 'watch',
+      -- Always sync the buffer by sharing its "diff"
+      -- Or choose "all" to share the entire buffer
+      default_params = 'diff',
     },
   },
   ['automated'] = require('plugins.ai.codecompanion.variables.automated'),

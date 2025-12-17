@@ -54,9 +54,18 @@ M.chat = {
   fold_context = true,
   -- floating_window = { opts = { wrap = true } },
   icons = {
-    tool_success = '󰸞 ',
+    -- tool_success = '󰸞 ',
     pinned_buffer = ' ',
     watched_buffer = '👀 ',
+    chat_context = '📎️',
+    buffer_sync_all = '󰪴 ',
+    buffer_sync_diff = ' ',
+    -- chat_context = " ",
+    chat_fold = ' ',
+    tool_pending = '  ',
+    tool_in_progress = '  ',
+    tool_failure = '  ',
+    tool_success = '  ',
   },
 
   debug_window = {

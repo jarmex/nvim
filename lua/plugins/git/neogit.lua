@@ -33,7 +33,7 @@ return {
       commit_editor = {
         kind = 'tab',
         show_staged_diff = true,
-        staged_diff_split_kind = 'split',
+        staged_diff_split_kind = 'vsplit',
         spell_check = true,
       },
       remember_settings = true,

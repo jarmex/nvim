@@ -33,7 +33,7 @@ return {
 
       return {
         adapters = adapters,
-        strategies = {
+        interactions = {
           inline = strategies.inline,
           cmd = strategies.cmd,
           chat = strategies.chat,

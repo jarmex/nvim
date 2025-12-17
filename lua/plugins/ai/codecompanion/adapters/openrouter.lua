@@ -25,13 +25,12 @@ return function()
     },
     schema = {
       model = {
-        default = 'z-ai/glm-4.6',
+        default = 'kwaipilot/kat-coder-pro:free',
         choices = {
           'z-ai/glm-4.6',
           'minimax/minimax-m2',
           'x-ai/grok-code-fast-1',
-          'mistralai/devstral-2512:free',
-          'mistralai/devstral-2512',
+          'kwaipilot/kat-coder-pro:free',
           'qwen/qwen3-coder',
           'moonshotai/kimi-k2-0905',
           ['deepseek/deepseek-r1:free'] = { opts = { can_reason = true } },

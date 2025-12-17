@@ -39,7 +39,8 @@ return {
         tag = {
           buf = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
           file = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
-          help = { icon = '󰘥 ', highlight = 'CodeCompanionChatVariable' },
+          -- help = { icon = '󰘥 ', highlight = 'CodeCompanionChatVariable' },
+          -- help = { icon = '󰾚 ', highlight = 'CodeCompanionChatVariable' },
           image = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
           symbols = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
           url = { icon = '󰖟 ', highlight = 'CodeCompanionChatVariable' },
@@ -48,6 +49,17 @@ return {
           user = { icon = ' ', highlight = 'CodeCompanionChatTool' },
           group = { icon = ' ', highlight = 'CodeCompanionChatToolGroup' },
           memory = { icon = '󰍛 ', highlight = 'CodeCompanionChatVariable' },
+          help = { icon = '󰱼 ', highlight = 'CodeCompanionChatVariable' },
+          rules = { icon = '󰺾 ', highlight = 'CodeCompanionChatVariable' },
+        },
+      },
+      overrides = {
+        buftype = {
+          nofile = {
+            render_modes = true,
+            sign = { enabled = false },
+            padding = { highlight = 'NormalFloat' },
+          },
         },
       },
       -- restart_highlighter = true,

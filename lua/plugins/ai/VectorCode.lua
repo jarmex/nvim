@@ -1,7 +1,7 @@
 return {
   'Davidyz/VectorCode', -- Index and search code in your repositories
   enabled = false,
-  -- version = '*',
+  version = '*',
   event = 'VeryLazy',
   cmd = 'VectorCode',
   build = 'uv tool install --upgrade vectorcode',
