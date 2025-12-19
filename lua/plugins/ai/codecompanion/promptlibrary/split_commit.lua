@@ -1,7 +1,7 @@
 -- adated from https://github.com/lucobellic/nvim-config/blob/main/lua/plugins/codecompanion/prompts.lua
 return {
   ['Split Commits'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'agent mode with explicit set of tools',
     opts = {
       index = 21,
@@ -33,7 +33,7 @@ return {
     },
   },
   ['qflist'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Send errors to qflist and diagnostics',
     opts = {
       index = 23,
@@ -67,7 +67,7 @@ return {
     },
   },
   ['agent'] = {
-    strategy = 'inline',
+    interaction = 'inline',
     description = 'Ask agent',
     opts = {
       index = 24,

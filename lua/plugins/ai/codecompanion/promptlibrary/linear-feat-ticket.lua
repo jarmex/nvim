@@ -75,7 +75,7 @@ Feature or Task Description Input below:
 ]]
 
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Generate a Linear issue in the Engineering team',
   opts = {
     auto_submit = false,

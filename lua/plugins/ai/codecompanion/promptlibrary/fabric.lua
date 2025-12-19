@@ -86,7 +86,7 @@ function M.load_fabric_patterns()
 
       -- Create the prompt entry for CodeCompanion
       prompt_library['Fabric: ' .. formatted_name] = {
-        strategy = 'chat',
+        interaction = 'chat',
         description = 'Fabric pattern: ' .. pattern.name,
         opts = {
           alias = alias,

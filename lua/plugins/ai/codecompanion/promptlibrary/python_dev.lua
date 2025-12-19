@@ -1,5 +1,5 @@
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Act as an expert Python developer.',
   opts = {
     alias = 'python_role',

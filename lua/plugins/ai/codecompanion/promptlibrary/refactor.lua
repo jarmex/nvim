@@ -1,5 +1,5 @@
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Refactor the selected code for readability, maintainability and performances',
   opts = {
     index = 17,

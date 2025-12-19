@@ -34,7 +34,7 @@ Focus on building team-maintainable architecture through consistent patterns, te
 ]]
 
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Architecture and code review partner for maintainable patterns',
   opts = {
     is_slash_cmd = true,

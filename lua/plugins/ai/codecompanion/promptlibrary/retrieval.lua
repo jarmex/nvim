@@ -23,7 +23,7 @@ Guidelines:
 
 return {
   ['Fetch Webpage and Summarize'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Fetch webpage and summarize',
     opts = {
       auto_submit = false,

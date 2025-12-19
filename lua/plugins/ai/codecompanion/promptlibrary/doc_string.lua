@@ -1,5 +1,5 @@
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Add appropriate documentation to the selected code',
   opts = {
     alias = 'docstrings',

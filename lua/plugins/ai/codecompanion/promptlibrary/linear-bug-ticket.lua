@@ -81,7 +81,7 @@ Form submission fails and a 500 Internal Server Error is returned.
 `console_error_log.txt`
 ]]
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Generate a Linear Bug issue in the Engineering team',
   opts = {
     auto_submit = false,

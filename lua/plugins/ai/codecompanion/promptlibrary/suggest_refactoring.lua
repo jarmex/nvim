@@ -1,5 +1,5 @@
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Suggest refactoring for provided piece of code.',
   opts = {
     modes = { 'v' },

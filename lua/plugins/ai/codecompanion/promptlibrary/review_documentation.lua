@@ -24,7 +24,7 @@ local M = {}
 --------------------------------------------------------------------------------
 
 M['Review Documentation'] = {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Analyze codebase and suggest documentation updates',
   opts = {
     alias = 'review_docs',

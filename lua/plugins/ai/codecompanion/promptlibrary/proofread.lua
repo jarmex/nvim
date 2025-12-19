@@ -12,7 +12,7 @@ When you do offer edits, first explain how they improve the document.
 
 ]]
 return {
-  strategy = 'inline',
+  interaction = 'inline',
   description = 'proofread for style',
   opts = {
     modes = { 'v' },

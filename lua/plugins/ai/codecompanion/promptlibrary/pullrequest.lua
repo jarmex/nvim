@@ -23,7 +23,7 @@ Create a new branch, commit changes, and submit a pull request.
 ]]
 
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Generate a Pull Request message description',
   opts = {
     index = 18,

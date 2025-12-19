@@ -1,5 +1,5 @@
 return {
-  strategy = 'inline',
+  interaction = 'inline',
   description = 'Correct grammar and reformulate',
   opts = {
     index = 19,

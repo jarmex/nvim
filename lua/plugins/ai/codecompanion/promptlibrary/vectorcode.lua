@@ -42,7 +42,7 @@ Summary:
 ]]
 
 local vc_extract_keywords = {
-  strategy = 'inline',
+  interaction = 'inline',
   description = 'VectorCode: Extract keywords from selection and query',
   opts = { placement = 'new' },
   prompts = {
@@ -62,7 +62,7 @@ local vc_search_summary_text = 'Search for relevant context based on my query.\n
   .. sources_format
 
 local vc_search_summary = {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'VectorCode: Search with summary and sources',
   opts = {
     adapter = remote_adapter,
@@ -83,7 +83,7 @@ local vc_search_raw_text = 'Search for files and return a minimal listing (no su
   .. sources_format
 
 local vc_search_raw = {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'VectorCode: Raw file listing',
   opts = {
     adapter = remote_adapter,

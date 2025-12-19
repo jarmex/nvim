@@ -27,7 +27,7 @@ local M = {}
 --------------------------------------------------------------------------------
 
 M['Initialize Living Docs'] = {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Initialize living documentation workflow for a new project',
   opts = {
     alias = 'init_docs',

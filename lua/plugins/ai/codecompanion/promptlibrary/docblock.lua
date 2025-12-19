@@ -1,5 +1,5 @@
 return {
-  strategy = 'inline',
+  interaction = 'inline',
   description = 'Add a docblock to the selected code',
   opts = {
     -- index = 3,

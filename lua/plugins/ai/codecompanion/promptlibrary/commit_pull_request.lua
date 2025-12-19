@@ -2,7 +2,7 @@ local pull_request_path = vim.fn.stdpath('config') .. '/.pull_request/'
 
 return {
   ['Commit and PR'] = {
-    strategy = 'workflow',
+    interaction = 'workflow',
     description = 'Generate a commit, push the branch and create a PR.',
     opts = {
       alias = 'commit-and-pr',

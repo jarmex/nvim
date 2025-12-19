@@ -1,6 +1,6 @@
 return {
   ['Write tests for this file'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Write tests for this file or module following existing convention.',
     opts = {
       auto_submit = true,

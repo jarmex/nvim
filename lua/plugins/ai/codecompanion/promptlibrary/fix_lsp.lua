@@ -1,7 +1,7 @@
 -- https://github.com/d7omdev/nvim/blob/master/lua/plugins/codecompanion.lua
 
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Fix the LSP diagnostics',
   opts = {
     default_prompt = true,

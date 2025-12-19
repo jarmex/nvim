@@ -1,5 +1,5 @@
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Act as an expert Lua developer.',
   opts = {
     alias = 'lua_role',

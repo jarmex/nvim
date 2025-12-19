@@ -96,7 +96,7 @@ function AwesomePrompt:prompt_library()
   for act, prompt in pairs(prompts) do
     local shortName = act:match('^(%w+)'):lower()
     prompt_lists[act] = {
-      strategy = 'chat',
+      interaction = 'chat',
       description = string.format('Act as an expert %s', act),
       opts = {
         alias = shortName,
@@ -128,7 +128,7 @@ function AwesomePrompt:prompt_library_online()
   for act, prompt in pairs(prompts) do
     local shortName = act:match('^(%w+)'):lower()
     prompt_lists[act] = {
-      strategy = 'chat',
+      interaction = 'chat',
       description = string.format('Act as an expert %s', act),
       opts = {
         alias = shortName,

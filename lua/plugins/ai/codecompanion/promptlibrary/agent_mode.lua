@@ -1,5 +1,5 @@
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Already give the current buffer and the agent tools to the chat window',
   opts = {
     index = 21,

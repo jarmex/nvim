@@ -1,5 +1,5 @@
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Generate a commit message to match the Conventional Commit specification',
   opts = {
     index = 10,

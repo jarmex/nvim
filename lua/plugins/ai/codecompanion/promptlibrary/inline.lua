@@ -1,5 +1,5 @@
 return {
-  strategy = 'inline',
+  interaction = 'inline',
   description = 'The default inline with nice context',
   opts = {
     alias = 'inline',

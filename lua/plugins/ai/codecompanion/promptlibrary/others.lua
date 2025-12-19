@@ -1,6 +1,6 @@
 return {
   ['Personal tutor'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Chat with your personal tutor',
     opts = {
       adapter = {
@@ -50,7 +50,7 @@ When the user asks you to solve a problem, you must follow this exact interactio
     },
   },
   ['Add documentation to this code or function'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Create documentation for this code and update the buffer',
     opts = {
       auto_submit = true,
@@ -78,7 +78,7 @@ Do not add comments to variables or single line expressions.
   },
 
   ['Edit Current Buffer'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Edit the current buffer',
     prompts = {
       {
@@ -100,7 +100,7 @@ the buffer, edit it with your suggestions using your editor tool unless the user
     },
   },
   ['Develop'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Edit with full tooling',
     prompts = {
       { role = 'user', content = '@{full_stack_dev} #{buffer}\n\n' },
@@ -112,7 +112,7 @@ the buffer, edit it with your suggestions using your editor tool unless the user
     },
   },
   ['Saved Chats ...'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Browse all saved chats',
     opts = {
       index = 5,
@@ -136,7 +136,7 @@ the buffer, edit it with your suggestions using your editor tool unless the user
     },
   },
   ['Agent'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Create a new chat buffer in Agent mode',
     opts = {
       index = 6,
@@ -154,7 +154,7 @@ the buffer, edit it with your suggestions using your editor tool unless the user
     },
   },
   ['Free Agent (GPT-4o)'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Create a new chat buffer in Agent mode with GPT-4o',
     opts = {
       index = 7,
@@ -168,40 +168,6 @@ the buffer, edit it with your suggestions using your editor tool unless the user
       {
         role = 'user',
         content = '#{mcp:neovim://workspace} @{agent} ',
-      },
-    },
-  },
-  ['Simplify'] = {
-    strategy = 'inline',
-    opts = {
-      modes = { 'v' },
-      alias = 'simplify',
-      auto_submit = true,
-      stop_context_insertion = true,
-      user_prompt = false,
-    },
-    prompts = {
-      {
-        role = 'system',
-        content = function(ctx)
-          return ([[
-								I want you to act as a senior %s developer.
-
-								I will send you some code, and I want you to simplify
-								the code while not diminishing its readability.
-
-								Keep the indentation level the same, and do not change
-								for formatting style.
-							]]):format(ctx.filetype)
-        end,
-      },
-      {
-        role = 'user',
-        content = function(ctx)
-							-- stylua: ignore
-							return require("codecompanion.helpers.actions").get_code(ctx.start_line, ctx.end_line)
-        end,
-        opts = { contains_code = true },
       },
     },
   },

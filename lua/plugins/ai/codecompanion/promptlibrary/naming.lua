@@ -1,5 +1,5 @@
 return {
-  strategy = 'inline',
+  interaction = 'inline',
   description = 'Give betting naming for the provided code snippet.',
   opts = {
     modes = { 'v' },

@@ -1,5 +1,5 @@
 return {
-  strategy = 'workflow',
+  interaction = 'workflow',
   description = 'Nextjs Agent',
   opts = {
     is_default = false,

@@ -1,6 +1,6 @@
 return {
   ['Chain-of-Thought'] = {
-    strategy = 'workflow',
+    interaction = 'workflow',
     description = 'Use a CoT workflow to plan and write code',
     opts = {
       adapter = {

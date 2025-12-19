@@ -1,9 +1,3 @@
-local markdown = {
-  dirs = {
-    vim.fn.getcwd() .. '/.prompts',
-    '~/.dotfiles/.config/prompts',
-  },
-}
 local prompt_library = {
   ['Add DocBlock'] = require('plugins.ai.codecompanion.promptlibrary.docblock'),
   ['Agent-Mode Current Buffer'] = require('plugins.ai.codecompanion.promptlibrary.agent_mode'),
@@ -18,6 +12,12 @@ local prompt_library = {
   ['Suggest Refactoring'] = require('plugins.ai.codecompanion.promptlibrary.suggest_refactoring'),
   ['Linear Feature Ticket'] = require('plugins.ai.codecompanion.promptlibrary.linear-feat-ticket'),
   ['Linear Bug Ticket'] = require('plugins.ai.codecompanion.promptlibrary.linear-bug-ticket'),
+  markdown = {
+    dirs = {
+      vim.fn.getcwd() .. '/.prompts',
+      vim.fn.stdpath('config') .. '/prompts',
+    },
+  },
 }
 
 local commit_pull_request = require('plugins.ai.codecompanion.promptlibrary.commit_pull_request')
@@ -38,6 +38,5 @@ return vim.tbl_extend(
   retrieval,
   pr_review_prompt,
   testgenerator,
-  linearReleaseNote,
-  markdown -- experimental
+  linearReleaseNote
 )

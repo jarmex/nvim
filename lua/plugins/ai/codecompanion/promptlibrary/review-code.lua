@@ -21,7 +21,7 @@ If the code snippet has no readability issues, simply confirm that the code is c
 ]]
 )
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Review code and provide suggestions for improvement.',
   opts = {
     alias = 'review-code',

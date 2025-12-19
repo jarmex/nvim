@@ -84,14 +84,14 @@ If any context is unclear, ask for clarification.
 
 return {
   ['DailyPlanning'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = "Plan out your day based on yesterday's notes and current tasks",
     opts = { index = 3, is_slash_cmd = true, auto_submit = false, alias = 'plan_today' },
     prompts = { { role = 'user', content = dailyPlanningText } },
   },
 
   ['ReviewNotesDaily'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Summarize and review notes for daily reflection',
     opts = {
       index = 1,
@@ -104,7 +104,7 @@ return {
     },
   },
   ['ReviewNotesWeekly'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Summarize and review notes for weekly reflection',
     opts = {
       index = 2,

@@ -1,11 +1,11 @@
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Vibe Code Some Changes',
   prompts = {
     {
       role = 'user',
       content = [[
-Use @editor on #buffer{watch} to perform the following tasks:
+Use @editor on #buffer{diff} to perform the following tasks:
 -
  ]],
     },

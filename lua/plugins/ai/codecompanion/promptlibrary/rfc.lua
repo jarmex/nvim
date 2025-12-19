@@ -78,7 +78,7 @@ TODO
 ]]
 
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Write Request for Comments (RFC)',
   opts = {
     alias = 'rfc',

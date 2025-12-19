@@ -1,5 +1,5 @@
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Review the provided code snippet.',
   opts = {
     -- index = 3,

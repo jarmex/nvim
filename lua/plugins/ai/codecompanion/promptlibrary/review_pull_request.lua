@@ -176,7 +176,7 @@ Then I'll use that info to:
 
 return {
   ['Review Pull Request With Linear'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Review a Pull Request with referenced Linear ticket',
     opts = {
       is_slash_cmd = true,

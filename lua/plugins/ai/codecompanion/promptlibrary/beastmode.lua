@@ -31,7 +31,7 @@ Available tools:
 ]]
 return {
   ['Beast Mode'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Beast Mode - Unleash the beast',
     opts = {
       index = 70,

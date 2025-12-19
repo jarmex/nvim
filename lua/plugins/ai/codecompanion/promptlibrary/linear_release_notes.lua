@@ -51,7 +51,7 @@ Use the @{linear} tool to get the list of Linear tickets for the upcoming releas
 
 return {
   ['Linear Release Notes'] = {
-    strategy = 'chat',
+    interaction = 'chat',
     description = 'Generate executive-level release notes from Linear tickets.',
     opts = {
       auto_submit = false,

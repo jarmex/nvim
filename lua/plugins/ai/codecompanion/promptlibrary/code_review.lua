@@ -39,7 +39,7 @@ Focus on being constructive and educational. Explain reasoning behind feedback, 
 ]]
 
 return {
-  strategy = 'chat',
+  interaction = 'chat',
   description = 'Review some code for me, please',
   opts = {
     is_slash_cmd = true,
