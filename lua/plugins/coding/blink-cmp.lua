@@ -8,7 +8,6 @@ return {
     build = 'cargo +nightly build --release',
     dependencies = {
       { 'L3MON4D3/LuaSnip', version = 'v2.*' },
-      -- { 'saghen/blink.compat', opts = {} },
       'folke/lazydev.nvim',
       'onsails/lspkind.nvim',
     },
@@ -93,11 +92,6 @@ return {
           snippets = {
             min_keyword_length = 2,
           },
-          -- dadbod = {
-          --   name = 'Dadbod',
-          --   module = 'vim_dadbod_completion.blink',
-          --   score_offset = 85, -- the higher the number, the higher the priority
-          -- },
           lazydev = {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',

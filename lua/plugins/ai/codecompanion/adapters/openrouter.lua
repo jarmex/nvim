@@ -25,10 +25,10 @@ return function()
     },
     schema = {
       model = {
-        default = 'kwaipilot/kat-coder-pro:free',
+        default = 'z-ai/glm-4.7',
         choices = {
-          'z-ai/glm-4.6',
-          'minimax/minimax-m2',
+          'z-ai/glm-4.7',
+          'minimax/minimax-m2.1',
           'x-ai/grok-code-fast-1',
           'kwaipilot/kat-coder-pro:free',
           'qwen/qwen3-coder',

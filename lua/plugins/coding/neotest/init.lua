@@ -4,6 +4,7 @@ local icons = require('helpers.icons')
 
 local adaptersList = {
   ['neotest-vitest'] = {
+    -- vitestCommand = "pnpm vitest",
     args = { '--coverage' },
   },
   ['neotest-jest'] = {
@@ -97,6 +98,7 @@ return {
           max_width = 0.90,
         },
         quickfix = {
+          enabled = false,
           open = function()
             if not ok then
               vim.cmd('copen')

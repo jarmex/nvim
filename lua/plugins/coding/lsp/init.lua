@@ -40,6 +40,7 @@ return {
       -- Auto goimports with gopls
       -- https://github.com/neovim/nvim-lspconfig/issues/115#issuecomment-1128115341
       -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim-imports
+      --[[
       vim.api.nvim_create_autocmd('BufWritePre', {
         pattern = { '*.go' },
         callback = function()
@@ -57,6 +58,7 @@ return {
           end
         end,
       })
+      ]]
 
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('lsp_attach_server_caps', { clear = true }),
@@ -126,20 +128,69 @@ return {
       vim.lsp.config('gopls', {
         -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md#settings
         settings = {
+          env = {
+            GOEXPERIMENT = 'rangefunc',
+          },
           gopls = {
-            gofumpt = true,
-            analyses = {
-              unusedparams = true,
+            codelenses = {
+              gc_details = true, -- Show a code lens toggling the display of gc's choices.
+              generate = true, -- show the `go generate` lens.
+              regenerate_cgo = true,
+              run_govulncheck = true,
+              test = true,
+              tidy = true,
+              upgrade_dependency = true,
+              vendor = true,
             },
-            staticcheck = true,
-            hints = {
+            hints = { -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
               assignVariableTypes = true,
               compositeLiteralFields = true,
+              compositeLiteralTypes = true,
               constantValues = true,
               functionTypeParameters = true,
               parameterNames = true,
               rangeVariableTypes = true,
             },
+            -- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
+            -- check if this works?
+            ['ui.inlayhint.hints'] = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeValuesTypes = true,
+            },
+            analyses = {
+              fieldalignment = false,
+              nilness = true,
+              unusedparams = true,
+              unusedwrite = true,
+              useany = true,
+              shadow = true,
+              unusedvariable = true,
+              fillreturns = true,
+              nonewvars = true,
+              undeclaredname = true,
+              unreachable = true,
+              ST1000 = false,
+            },
+            usePlaceholders = true,
+            completeUnimported = true,
+            directoryFilters = { '-**/node_modules', '-**/.git', '-.vscode', '-.idea', '-.vscode-test' },
+            -- https://github.com/golang/tools/blob/master/gopls/internal/settings/settings.go
+            semanticTokens = false, -- disabling this enables treesitter injections (for sql, json etc)
+            symbolMatcher = 'fuzzy',
+            buildFlags = { '-tags', 'integration' },
+            diagnosticsDelay = '500ms',
+            matcher = 'Fuzzy',
+
+            -- diagnostic options
+            -- https://github.com/golang/tools/blob/master/gopls/internal/settings/settings.go
+            staticcheck = true,
+            vulncheck = 'imports',
+            analysisProgressReporting = true,
           },
         },
       })
@@ -167,13 +218,15 @@ return {
             diagnostics = {
               -- Get the language server to recognize the `vim` global
               globals = { 'vim' },
+              disable = { 'missing-fields' },
             },
 
             -- Make the server aware of Neovim runtime files
             workspace = {
               checkThirdParty = false,
               library = {
-                vim.env.VIMRUNTIME,
+                vim.env.VIMRUNTIME, -- The base directory (fast)
+                vim.fn.stdpath('config'), -- Your config dir (fast)
                 -- Depending on the usage, you might want to add additional paths here.
                 -- "${3rd}/luv/library"
                 -- "${3rd}/busted/library",

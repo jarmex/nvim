@@ -1,5 +1,8 @@
 local adapters = require('codecompanion.adapters')
 
+-- local adapter = { name = "openai_responses", model = "gpt-5-mini" }
+local reasoningEffort = 'minimal' -- minimal|low|medium|high https://platform.openai.com/docs/api-reference/responses/create#responses_create-reasoning
+
 return {
   --- Anthropic config for CodeCompanion.
   anthropic = function()
@@ -71,30 +74,22 @@ return {
   end,
   openai_response = function()
     return adapters.extend('openai_responses', {
-      opts = {
-        stream = false,
-      },
+      opts = { stream = false },
       schema = {
         model = {
-          default = 'gpt-5-codex',
           choices = {
-            ['gpt-5-codex'] = {
-              opts = {
-                has_vision = true,
-                can_reason = true,
-                stream = true,
-              },
-            },
-            ['gpt-5'] = {
-              opts = {
-                has_vision = true,
-                can_reason = true,
-                stream = true,
-              },
-            },
+            ['gpt-5-mini'] = { opts = { can_reason = true } },
+            ['gpt-5-nano'] = { opts = { can_reason = true } },
           },
         },
-        ['reasoning.effort'] = { default = 'minimal' },
+        ['reasoning.effort'] = { default = reasoningEffort },
+
+        -- PENDING https://github.com/olimorris/codecompanion.nvim/pull/2561
+        ['reasoning.summary'] = {
+          enabled = function()
+            return false
+          end,
+        }, -- requires organizational access
       },
     })
   end,

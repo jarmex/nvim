@@ -37,13 +37,7 @@ return {
           inline = strategies.inline,
           cmd = strategies.cmd,
           chat = strategies.chat,
-          background = {
-            chat = {
-              opts = {
-                enabled = true,
-              },
-            },
-          },
+          background = strategies.background,
         },
         display = {
           diff = display.diff,

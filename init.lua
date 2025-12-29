@@ -1,4 +1,12 @@
--- CONFIG
+vim.loader.enable()
+
+-- require('vim._extui').enable({
+--   msg = {
+--     target = 'msg',
+--     timeout = 4000,
+--   },
+-- })
+
 vim.g.borderStyle = 'rounded' ---@type "single"|"double"|"rounded"|"solid"
 
 vim.g.linterConfigs = vim.fs.normalize('~/.config/nvim/.linter-configs/')
@@ -17,5 +25,7 @@ vim.g.border = {
   borderchars = enable_border and { '─', '│', '─', '│', '┌', '┐', '┘', '└' }
     or { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
 }
+
+require('helpers.global')
 
 require('config')

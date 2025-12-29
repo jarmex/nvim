@@ -2,7 +2,8 @@
 -- local defaultAdapter = os.getenv('NVIM_AI_ADAPTER') or 'copilot'
 local systemPromptModes = require('plugins.ai.codecompanion.systemprompts')
 local DEFAULT_ADAPTER = 'copilot'
-local DEFAULT_MODEL = 'gpt-5-mini'
+local DEFAULT_MODEL = 'claude-haiku-4.5'
+local COPILOT_GPTMODEL = 'gpt-4.1'
 
 --------------------------------------------------------------------------------
 --                                                                            --
@@ -21,12 +22,28 @@ local DEFAULT_MODEL = 'gpt-5-mini'
 
 local M = {}
 
+----------------
+-- Background --
+----------------
+
+M.background = {
+  adapter = {
+    name = DEFAULT_ADAPTER,
+    model = COPILOT_GPTMODEL,
+  },
+  chat = {
+    opts = {
+      enabled = true,
+    },
+  },
+}
+
 --------------
 --  Inline  --
 --------------
 
 M.inline = {
-  adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL },
+  adapter = { name = DEFAULT_ADAPTER, model = 'gpt-4.1' },
   opts = {
     diff_timeout = 300,
   },
@@ -36,6 +53,7 @@ M.inline = {
 ------------
 --  Chat  --
 ------------
+
 local extras = [[
   When replying with code, the code must:
 - Follow idiomatic patterns and current best practices for the language/framework
@@ -56,8 +74,8 @@ Extra information:
 M.chat = {
   -- adapter = defaultAdapter,
   adapter = {
-    name = 'copilot',
-    model = 'claude-haiku-4.5',
+    name = DEFAULT_ADAPTER,
+    model = DEFAULT_MODEL,
   },
   opts = {
     completion_provider = 'blink', -- blink | cmp | coc | default

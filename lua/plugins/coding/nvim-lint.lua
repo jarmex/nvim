@@ -133,18 +133,6 @@ return {
         end,
       }
 
-      -- TODO: 2025-07-31 - Do we need to do this?
-      lint.linters.golangcilint.args = {
-        'run',
-        '--output.json.path=stdout',
-        '--show-stats=false',
-        '--output.text.print-issued-lines=false',
-        '--output.text.print-linter-name=false',
-        function()
-          return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':h')
-        end,
-      }
-
       function M.lint()
         -- Use nvim-lint's logic first:
         -- * checks if linters exist for the full filetype first

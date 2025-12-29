@@ -59,8 +59,9 @@ return {
       settings = {
         diagnostics = { ignoredCodes = { 2451 } },
         tsserver_file_preferences = {
-          importModuleSpecifierPreference = 'non-relative',
+          importModuleSpecifierPreference = 'relative', -- relative | non-relative | project-relative
           providePrefixAndSuffixTextForRename = false,
+          quotePreference = 'auto',
 
           includeInlayEnumMemberValueHints = true,
           includeInlayFunctionLikeReturnTypeHints = false,
@@ -87,6 +88,8 @@ return {
         tsserver_format_options = {
           insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = true,
           semicolons = 'insert',
+          allowIncompleteCompletions = false,
+          allowRenameOfImportPath = false,
         },
       },
       handlers = {

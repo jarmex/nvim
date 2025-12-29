@@ -5,6 +5,13 @@ vim.filetype.add({
     ['clearml.conf'] = 'hocon',
     ['.gitlab-ci.yml'] = 'yaml.gitlab',
     ['.gitlab-ci.yaml'] = 'yaml.gitlab',
+    ['.stow-global-ignore'] = 'gitignore',
+    ['.stow-local-ignore'] = 'gitignore',
+    ['dot-bashrc'] = 'sh',
+    ['dot-gitconfig'] = 'gitconfig',
+    ['xhtml'] = 'html',
+    ['dap.log'] = 'sh',
+    ['conform.log'] = 'gitconfig',
   },
   extension = {
     ezi = 'ezi',
@@ -27,5 +34,7 @@ vim.filetype.add({
     ['tasks.json'] = 'jsonc',
     ['launch.json'] = 'jsonc',
     ['settings.json'] = 'jsonc',
+    ['.*/requirements.*%.txt'] = 'requirements',
+    ['%.env.*'] = 'sh',
   },
 })

@@ -3,4 +3,5 @@ return {
   'user.node.pnpm-run-dev',
   'user.node.pnpm-run-lint',
   'user.node.tsc_watch',
+  'user.node.tsc_build',
 }

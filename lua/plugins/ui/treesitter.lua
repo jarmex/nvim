@@ -121,10 +121,10 @@ return {
           'ninja',
           'proto',
           'python',
-          'query',
           'regex',
           'rst',
           'ron',
+          'ruby', -- used by `Brewfile`
           'rust',
           'scss',
           'sql',
@@ -133,10 +133,21 @@ return {
           'tsx',
           'typescript',
           'vue',
-          'vim',
-          'vimdoc',
           'yaml',
           'svelte',
+          -- SPECIAL FILETYPES
+          'diff',
+          'editorconfig',
+          'git_config',
+          'git_rebase',
+          'gitattributes',
+          'gitcommit',
+          'gitignore',
+          'just',
+          'query', -- treesitter query files (.scm)
+          'requirements', -- python's `requirements.txt`
+          'vimdoc', -- `:help` files
+          'vim',
         },
 
         auto_install = true, -- install missing parsers when entering a buffer

@@ -1,4 +1,5 @@
 -- Kubernetes port-forwarding and common kubectl tasks
+---@type overseer.TemplateFileDefinition
 return {
   name = 'kubectl',
   builder = function(params)

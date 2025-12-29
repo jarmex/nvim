@@ -62,6 +62,12 @@ return {
       { '<leader>op', open_first_failed_task, desc = 'Overseer Open Failed Task' },
     },
     opts = {
+      output = {
+        -- Use a terminal buffer to display output. If false, a normal buffer is used
+        use_terminal = true,
+        -- If true, don't clear the buffer when a task restarts
+        preserve_output = false,
+      },
       templates = { 'make', 'user', 'vscode', 'task', 'shell' },
       -- Auto-detect task files
       auto_detect_success_color = true,

@@ -1,49 +1,41 @@
-local tsc_errorformat = {
-  '%E%f:%l:%c: error %m', -- Error: file, line, column, message
-  '%E%f:%l:%c - error %m', -- Another common error format (seen in newer versions)
-  '%C%m', -- Continued error messages
-  '%-G%.%#', -- Ignore any other lines
-}
+local javascript_aliases = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' }
+local overseer = require('overseer')
+local typescript_provider = require('overseer.template.vscode.provider.typescript')
 
+local task_name = 'vscode-tasks-tsc-watch'
+
+---@type overseer.TemplateDefinition
 return {
-  name = 'pnpm-tsc-watch',
+  name = task_name,
+  desc = "Watch a typescript project using the tsconfig.json from the current buffer's directory",
   builder = function()
+    local tsconfig = vim.fs.find('tsconfig.json', {
+      stop = vim.fn.getcwd() .. '/..',
+      type = 'file',
+      upward = true,
+      path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)),
+    })
+
+    local task_opts = typescript_provider.get_task_opts({
+      tsconfig = vim.tbl_count(tsconfig) ~= 0 and tsconfig[1] or nil,
+      option = 'watch',
+    })
     return {
-      cmd = 'pnpm',
-      args = { 'tsc-watch' },
-      cwd = vim.fn.getcwd(),
-      name = 'pnpm-tsc-watch',
+      name = task_name,
+      cmd = task_opts.cmd,
+      args = { '--pretty', 'false' },
+      env = {
+        NO_COLOR = '1',
+      },
       components = {
-        {
-          'on_output_quickfix',
-          set_diagnostics = true,
-          open = false,
-          errorformat = table.concat(tsc_errorformat, ','),
-          open_on_match = true,
-          close = true,
-        },
-        {
-          'on_result_diagnostics',
-          remove_on_restart = true,
-        },
-        {
-          'on_result_diagnostics_quickfix',
-          close = true,
-          open = true,
-          set_empty_result = true,
-        },
-        {
-          'on_result_notify',
-          system = 'unfocused',
-        },
+        { 'on_output_parse', problem_matcher = '$tsc-watch' },
+        'on_result_diagnostics_quickfix',
         'default',
       },
     }
   end,
-  desc = 'Run TypeScript compiler in watch mode (pnpm tsc-watch)',
+  tags = { overseer.TAG.BUILD },
   condition = {
-    callback = function()
-      return vim.fn.filereadable('package.json') == 1
-    end,
+    filetype = javascript_aliases,
   },
 }

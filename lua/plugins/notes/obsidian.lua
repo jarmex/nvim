@@ -104,10 +104,6 @@ return {
       },
     },
 
-    follow_url_func = function(url)
-      vim.fn.jobstart({ 'open', url })
-    end,
-
     open = {
       func = function(uri)
         vim.ui.open(uri, { cmd = { 'open', '-a', '/Applications/Obsidian.app' } })
@@ -146,7 +142,7 @@ return {
       -- The default folder to place images in via `:ObsidianPasteImg`.
       -- If this is a relative path it will be interpreted as relative to the vault root.
       -- You can always override this per image by passing a full path to the command instead of just a filename.
-      img_folder = 'Assets', -- This is the default
+      folder = './', -- This is the default
     },
   },
 
