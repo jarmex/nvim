@@ -31,12 +31,12 @@ local testgenerator = require('plugins.ai.codecompanion.promptlibrary.test_gener
 return vim.tbl_extend(
   'force',
   {},
-  prompt_library,
   review_documents,
   commit_pull_request,
   others,
   retrieval,
   pr_review_prompt,
   testgenerator,
-  linearReleaseNote
+  linearReleaseNote,
+  prompt_library
 )

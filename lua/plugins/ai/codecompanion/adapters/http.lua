@@ -213,4 +213,28 @@ return {
       },
     })
   end,
+  ['zai'] = function()
+    return require('codecompanion.adapters').extend('openai_compatible', {
+      name = 'zai',
+      formatted_name = 'Z.ai',
+      env = {
+        api_key = 'ZAI_API_KEY',
+        url = 'https://open.bigmodel.cn/api/paas/v4',
+        models_endpoint = '/models',
+        chat_url = '/chat/completions',
+      },
+      handlers = {
+        parse_message_meta = function(_, data)
+          local extra = data.extra
+          if extra and extra.reasoning_content then
+            data.output.reasoning = { content = extra.reasoning_content }
+          end
+          if data.output.content == '' then
+            data.output.content = nil
+          end
+          return data
+        end,
+      },
+    })
+  end,
 }

@@ -47,6 +47,9 @@ return {
         },
         prompt_library = require('plugins.ai.codecompanion.promptlibrary'),
         extensions = require('plugins.ai.codecompanion.extensions'),
+        opts = {
+          log_level = 'DEBUG',
+        },
       }
     end,
     config = function(_, opts)

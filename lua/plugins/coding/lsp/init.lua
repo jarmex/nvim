@@ -12,7 +12,6 @@ return {
 
       -- This should be executed before you configure any language server
       --
-      -- Also support UFO: lsp-zero.netlify.app/docs/guide/quick-recipes.html#enable-folds-with-nvim-ufo
       local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
       lsp_capabilities.textDocument.foldingRange = {
         dynamicRegistration = false,
@@ -175,6 +174,8 @@ return {
               undeclaredname = true,
               unreachable = true,
               ST1000 = false,
+              -- Variable naming convention check
+              ST1003 = true,
             },
             usePlaceholders = true,
             completeUnimported = true,
@@ -337,6 +338,18 @@ return {
         callback = function(args)
           vim.cmd([[set filetype=sh]]) -- set ft to sh to enable syntax highlighting
           vim.diagnostic.enable(false, { bufnr = args.buf })
+        end,
+      })
+
+      -- Prevent LSP from attaching to virtual buffers such as diffview.
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(args)
+          local bufname = vim.api.nvim_buf_get_name(args.buf)
+          if bufname:match('^diffview://') then
+            vim.schedule(function()
+              vim.lsp.buf_detach_client(args.buf, args.data.client_id)
+            end)
+          end
         end,
       })
     end,

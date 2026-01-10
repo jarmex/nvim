@@ -8,6 +8,9 @@ return {
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
+      quote = {
+        repeat_linebreak = true, -- full border on soft-wrap
+      },
       completions = {
         blink = { enabled = true },
         lsp = { enabled = true },
@@ -34,8 +37,28 @@ return {
           todo = { rendered = '◯ ' },
         },
       },
+      pipe_table = {
+        border_enabled = true,
+        border_virtual = true, -- borders not on empty lines -> preserves blank lines
+      },
+      heading = {
+        position = 'inline', -- = remove indentation of headings
+        width = 'block', -- = not full width
+        min_width = vim.o.textwidth,
+        icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' }, -- `numeric_x` glyphs
+        -- icons = { "󰲠 ", "󰲢 ", "󰲤 ", "󰲦 ", "󰲨 ", "󰲪 " },
+      },
       html = {
         enabled = true,
+        comment = {
+          text = function(ctx)
+            local text = ctx.text:match('^<!%-%-%s*(.-)%s*%-%->$')
+            if not text then
+              return ''
+            end
+            return '󰆈 ' .. text:gsub('\n.*', '…')
+          end,
+        },
         tag = {
           buf = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
           file = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
@@ -59,6 +82,7 @@ return {
             render_modes = true,
             sign = { enabled = false },
             padding = { highlight = 'NormalFloat' },
+            code = { border = 'hide', style = 'normal' },
           },
         },
       },

@@ -3,10 +3,10 @@
 local isTsToolOk, typeScriptTools = pcall(require, 'typescript-tools.api')
 
 local function hover_action()
-  local winid = require('ufo').peekFoldedLinesUnderCursor()
-  if not winid then
-    vim.lsp.buf.hover({ border = 'rounded' })
-  end
+  -- local winid = require('ufo').peekFoldedLinesUnderCursor()
+  -- if not winid then
+  vim.lsp.buf.hover({ border = 'rounded' })
+  -- end
 end
 
 local function rename()

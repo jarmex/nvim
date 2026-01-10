@@ -44,10 +44,6 @@ return {
       formatters_by_ft = {
         css = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
         go = { 'goimports', 'gci', 'gofumpt', 'golines' },
-        -- go = {
-        --             "goimports",
-        --             "goimports-reviser",
-        --         },
         graphql = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
         handlebars = { 'prettier' },
         html = { 'prettierd', 'prettier', stop_after_first = true },
@@ -59,23 +55,19 @@ return {
         jsonc = { 'biome' },
         lua = { 'stylua' },
         markdown = { 'markdownlint', 'markdown-toc', stop_after_first = true },
-        python = { 'black', 'isort' },
-        -- python = function()
-        --   if vim.fn.executable('black') == 1 then
-        --     return { 'black' }
-        --   else
-        --     return {}
-        --   end
-        -- end,
+        -- python = { 'black', 'isort' },
+        python = { 'ruff_fix', 'ruff_organize_imports' },
         sh = { 'shfmt' },
         sql = { 'sql_formatter' },
         -- sql = { 'sqlfmt', 'sqlfluff', 'sql_formatter', stop_after_first = true },
-        typescript = { 'biome' },
+        -- typescript = { 'biome' },
+        typescript = { 'ts-add-missing-imports', 'ts-remove-unused-imports', 'biome-organize-imports', 'biome' },
         typescriptreact = { 'biome' },
         -- yaml = { 'prettier' },
         xml = { 'xmlformatter' },
         -- https://github.com/google/yamlfmt
         yaml = { 'yamlfmt', 'trim_whitespace' },
+        zsh = { 'shell-home', 'shellcheck' },
         ['*'] = { 'trim_whitespace' },
       },
       format_on_save = function(bufnr)
@@ -96,10 +88,20 @@ return {
         return { timeout_ms = 500, lsp_format = 'fallback' }
       end,
       formatters = {
-        -- biome = {
-        --   -- https://biomejs.dev/formatter/
-        --   args = { 'format', '--indent-style', 'space', '--stdin-file-path', '$FILENAME' },
-        -- },
+        shellcheck = {
+          -- add `--shell=bash` to force to work with `zsh`
+          args = "'$FILENAME' --format=diff --shell=bash | patch -p1 '$FILENAME'",
+        },
+        ['shell-home'] = { -- replace `/Users/…` or `~` with `$HOME/`
+          format = function(_self, _ctx, lines, callback)
+            local updated = vim.tbl_map(function(line)
+              return line
+                :gsub('/Users/%a+', '$HOME') -- /Users/name
+                :gsub('([^/\\])~/', '%1$HOME/') -- ~/
+            end, lines)
+            callback(nil, updated)
+          end,
+        },
         injected = { options = { ignore_errors = true } },
         markdownlint = {
           command = 'markdownlint',
@@ -136,27 +138,37 @@ return {
             'include_document_start=true',
           },
         },
-        prettier = {
-          prepend_args = {
-            '--print-width',
-            '120',
-            '--tab-width',
-            '2',
-            '--use-tabs',
-            'false',
-            '--single-quote',
-            'true',
-            '--trailing-comma',
-            'es5',
-            '--bracket-spacing',
-            'true',
-          },
-        },
         xmlformatter = {
           prepend_args = {
             '--indent',
             '2',
           },
+        },
+        ['ts-add-missing-imports'] = {
+          format = function(_self, ctx, _lines, callback)
+            -- PENDING https://github.com/stevearc/conform.nvim/issues/795
+            vim.lsp.buf.code_action({
+              context = { only = { 'source.addMissingImports.ts' } }, ---@diagnostic disable-line: missing-fields, assign-type-mismatch
+              apply = true,
+            })
+            -- works better without undoing changes, probably due to race?
+            vim.defer_fn(function() -- deferred for code action to update buffer
+              local formattedLines = vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, true)
+              callback(nil, formattedLines)
+            end, 100)
+          end,
+        },
+        ['ts-remove-unused-imports'] = {
+          format = function(_self, ctx, _lines, callback)
+            vim.lsp.buf.code_action({
+              context = { only = { 'source.removeUnusedImports.ts' } }, ---@diagnostic disable-line: missing-fields, assign-type-mismatch
+              apply = true,
+            })
+            vim.defer_fn(function()
+              local formattedLines = vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, true)
+              callback(nil, formattedLines)
+            end, 100)
+          end,
         },
       },
     })
