@@ -1,6 +1,6 @@
 return {
   {
-    'mfussenegger/nvim-jdtls',
+    'https://codeberg.org/mfussenegger/nvim-jdtls',
     ft = { 'java' },
     config = function()
       local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')

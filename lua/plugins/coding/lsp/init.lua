@@ -4,7 +4,7 @@ return {
     cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
-      'mfussenegger/nvim-dap',
+      'https://codeberg.org/mfussenegger/nvim-dap',
       { 'b0o/SchemaStore.nvim', lazy = true, version = false },
     },
     config = function()

@@ -20,7 +20,7 @@ end
 
 return {
   {
-    'mfussenegger/nvim-lint',
+    'https://codeberg.org/mfussenegger/nvim-lint',
     event = 'BufReadPost',
     -- event = { 'BufReadPre', 'BufNewFile' },
     keys = {

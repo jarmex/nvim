@@ -88,6 +88,9 @@ return {
     })
 
     return {
+      default = {
+        disable_diagnostics = false,
+      },
       enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
       se_icons = true,
       watch_index = true,

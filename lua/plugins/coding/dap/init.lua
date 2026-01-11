@@ -44,7 +44,7 @@ end
 
 return {
   {
-    'mfussenegger/nvim-dap',
+    'https://codeberg.org/mfussenegger/nvim-dap',
     event = 'VeryLazy',
     keys = keymaps.dap_keymaps(),
     dependencies = {

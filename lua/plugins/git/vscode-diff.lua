@@ -1,6 +1,6 @@
 return {
   {
-    'esmuellert/vscode-diff.nvim',
+    'esmuellert/codediff.nvim',
     dependencies = { 'MunifTanjim/nui.nvim' },
     cmd = 'CodeDiff',
     opts = {
@@ -11,12 +11,20 @@ return {
         char_insert = nil,
         char_delete = nil,
       },
-
+      -- Diff view behavior
       diff = {
         disable_inlay_hints = true,
         max_computation_time_ms = 5000,
       },
 
+      -- Explorer panel configuration
+      explorer = {
+        view_mode = 'tree',
+        file_filter = {
+          ignore = { '*.pb.go' },
+        },
+      },
+      -- Keymaps in diff view
       keymaps = {
         view = {
           next_hunk = ']c',

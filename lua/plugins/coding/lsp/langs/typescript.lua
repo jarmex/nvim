@@ -26,7 +26,7 @@ return {
     },
   },
   {
-    'mfussenegger/nvim-dap',
+    'https://codeberg.org/mfussenegger/nvim-dap',
     opts = {
       setup = {
         vscode_js_debug = function()
