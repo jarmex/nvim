@@ -33,9 +33,7 @@ require('lazy').setup({
     { import = 'plugins.snacks' },
     { import = 'plugins.notes' },
     { import = 'plugins.popup' },
-    { import = 'plugins.telescope' },
     { import = 'plugins.misc' },
-    { import = 'plugins.terminal' },
     { import = 'plugins.db' },
     { import = 'plugins.mini' },
     { import = 'plugins.theme' },
@@ -76,22 +74,6 @@ require('lazy').setup({
     },
     pills = false,
     backdrop = 60,
-    custom_keys = {
-      ['gi'] = {
-        function(plugin)
-          local repo = plugin.url:gsub('%.git$', '')
-          local line = vim.api.nvim_get_current_line()
-          local issue = line:match('#(%d+)')
-          local commit = line:match(('%x'):rep(6) .. '+') -- `%x` = hex/hash char
-          if not issue and not commit then
-            return
-          end
-          local url = repo .. (issue and '/issues/' .. issue or '/commit/' .. commit)
-          vim.ui.open(url)
-        end,
-        desc = ' Open issue/commit',
-      },
-    },
   },
   dev = {
     path = '~/Projects/lua',

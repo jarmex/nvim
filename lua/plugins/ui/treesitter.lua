@@ -78,8 +78,11 @@ return {
         callback = function(args)
           local filetype = args.match
           local lang = vim.treesitter.language.get_lang(filetype)
+          ---@diagnostic disable-next-line: param-type-mismatch
           if vim.treesitter.language.add(lang) then
             vim.treesitter.start()
+            vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+            vim.wo.foldmethod = 'expr'
           end
         end,
       })

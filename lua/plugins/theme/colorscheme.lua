@@ -79,7 +79,7 @@ local M = {
         notify = true,
         noice = true,
         illuminate = true,
-        telescope = { enabled = true },
+        -- telescope = { enabled = true },
         treesitter = true,
         treesitter_context = true,
         snacks = {
