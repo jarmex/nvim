@@ -60,7 +60,7 @@ function M.keymaps()
           return require('mini.test').run() -- Not configured yet
         end
         local neotest = require('neotest')
-        for _, adapter_id in ipairs(neotest.run.adapters()) do
+        for _, adapter_id in ipairs(neotest.state.adapter_ids()) do
           neotest.run.run({ suite = true, adapter = adapter_id })
         end
       end,

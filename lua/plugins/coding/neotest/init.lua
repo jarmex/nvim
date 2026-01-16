@@ -58,6 +58,7 @@ return {
     'nvim-neotest/neotest',
     lazy = true,
     event = 'VeryLazy',
+    version = '*',
     dependencies = {
       'nvim-neotest/nvim-nio', -- Required dependency
       'nvim-neotest/neotest-jest', -- Jest (JavaScript/TypeScript)
@@ -231,11 +232,11 @@ return {
 
       vim.api.nvim_create_autocmd('FileType', {
         pattern = 'neotest-*',
-        callback = function()
+        callback = function(opt)
           for _, lhs in pairs({ 'q', '<esc>' }) do
             vim.keymap.set('n', lhs, function()
               vim.cmd('quit')
-            end, { buffer = 0 })
+            end, { buffer = opt.buf })
           end
         end,
       })
