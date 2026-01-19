@@ -116,6 +116,14 @@ return {
         \end{document}]],
         },
       },
+      -- resolve attachment paths for specific note types
+      -- from - https://github.com/obsidian-nvim/obsidian.nvim/wiki/Images#change-image-save-location
+      resolve = function(path, src)
+        local api = require('obsidian.api')
+        if api.path_is_note(path) then
+          return api.resolve_attachment_path(src)
+        end
+      end,
     },
   },
 }
