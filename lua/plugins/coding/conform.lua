@@ -58,7 +58,7 @@ return {
         -- python = { 'black', 'isort' },
         python = { 'ruff_fix', 'ruff_organize_imports' },
         sh = { 'shfmt' },
-        sql = { 'sql_formatter' },
+        sql = { 'sleek' }, -- https://github.com/nrempel/sleek
         -- sql = { 'sqlfmt', 'sqlfluff', 'sql_formatter', stop_after_first = true },
         -- typescript = { 'biome' },
         typescript = { 'ts-add-missing-imports', 'ts-remove-unused-imports', 'biome-organize-imports', 'biome' },

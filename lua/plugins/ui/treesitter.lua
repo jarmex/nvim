@@ -1,57 +1,65 @@
---- Register parsers from opts.ensure_installed
-local function register(ensure_installed)
-  for filetype, parser in pairs(ensure_installed) do
-    local filetypes = vim.treesitter.language.get_filetypes(parser)
-    if not vim.tbl_contains(filetypes, filetype) then
-      table.insert(filetypes, filetype)
-    end
-
-    -- register and start parsers for filetypes
-    vim.treesitter.language.register(parser, filetypes)
-  end
-end
-
---- Install and start parsers for nvim-treesitter.
-local function install_and_start()
-  -- Auto-install and start treesitter parser for any buffer with a registered filetype
-  vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
-    callback = function(event)
-      local bufnr = event.buf
-      local filetype = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
-
-      -- Skip if no filetype
-      if filetype == '' then
-        return
-      end
-
-      -- Get parser name based on filetype
-      local parser_name = vim.treesitter.language.get_lang(filetype) -- might return filetype (not helpful)
-      if not parser_name then
-        return
-      end
-      -- Try to get existing parser (helpful check if filetype was returned above)
-      local parser_configs = require('nvim-treesitter.parsers')
-      if not parser_configs[parser_name] then
-        return -- Parser not available, skip silently
-      end
-
-      local parser_installed = pcall(vim.treesitter.get_parser, bufnr, parser_name)
-
-      if not parser_installed then
-        -- If not installed, install parser synchronously
-        require('nvim-treesitter').install({ parser_name }):wait(30000)
-      end
-
-      -- let's check again
-      parser_installed = pcall(vim.treesitter.get_parser, bufnr, parser_name)
-
-      if parser_installed then
-        -- Start treesitter for this buffer
-        vim.treesitter.start(bufnr, parser_name)
-      end
-    end,
-  })
-end
+local ensure_installed = {
+  'awk',
+  'bash',
+  'c',
+  'c_sharp',
+  'cpp',
+  'css',
+  'diff',
+  'dockerfile',
+  'fennel',
+  'graphql',
+  'go',
+  'gomod',
+  'gosum',
+  'gowork',
+  'html',
+  'http',
+  'hurl',
+  'java',
+  'javascript',
+  'jsdoc',
+  'json',
+  -- 'jsonc',
+  'json5',
+  'ledger',
+  'lua',
+  'luap', -- lua patterns
+  'luadoc', -- lua annotations
+  'make',
+  'markdown',
+  'markdown_inline',
+  'ninja',
+  'proto',
+  'python',
+  'regex',
+  'rst',
+  'ron',
+  'ruby', -- used by `Brewfile`
+  'rust',
+  'scss',
+  'sql',
+  -- 'teal',
+  'toml',
+  'tsx',
+  'typescript',
+  'vue',
+  'yaml',
+  'svelte',
+  -- SPECIAL FILETYPES
+  'diff',
+  'editorconfig',
+  'git_config',
+  'git_rebase',
+  'gitattributes',
+  'gitcommit',
+  'gitignore',
+  'just',
+  'query', -- treesitter query files (.scm)
+  'requirements', -- python's `requirements.txt`
+  'vimdoc', -- `:help` files
+  'vim',
+}
 return {
   {
     --- Treesitter
@@ -69,10 +77,6 @@ return {
       'TSInstallSync',
       'TSInstallFromGrammar',
     },
-    keys = {
-      { '<c-space>', desc = 'Increment selection' },
-      { '<bs>', desc = 'Decrement selection', mode = 'x' },
-    },
     init = function()
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)
@@ -87,106 +91,33 @@ return {
         end,
       })
     end,
-    opts = function()
-      return {
-        ignore_install = { 'help' },
-        ensure_installed = {
-          'awk',
-          'bash',
-          'c',
-          'c_sharp',
-          'cpp',
-          'css',
-          'diff',
-          'dockerfile',
-          'fennel',
-          'graphql',
-          'go',
-          'gomod',
-          'gosum',
-          'gowork',
-          'html',
-          'http',
-          'hurl',
-          'java',
-          'javascript',
-          'jsdoc',
-          'json',
-          'jsonc',
-          'json5',
-          'ledger',
-          'lua',
-          'luap', -- lua patterns
-          'luadoc', -- lua annotations
-          'make',
-          'markdown',
-          'markdown_inline',
-          'ninja',
-          'proto',
-          'python',
-          'regex',
-          'rst',
-          'ron',
-          'ruby', -- used by `Brewfile`
-          'rust',
-          'scss',
-          'sql',
-          -- 'teal',
-          'toml',
-          'tsx',
-          'typescript',
-          'vue',
-          'yaml',
-          'svelte',
-          -- SPECIAL FILETYPES
-          'diff',
-          'editorconfig',
-          'git_config',
-          'git_rebase',
-          'gitattributes',
-          'gitcommit',
-          'gitignore',
-          'just',
-          'query', -- treesitter query files (.scm)
-          'requirements', -- python's `requirements.txt`
-          'vimdoc', -- `:help` files
-          'vim',
-        },
+    config = function()
+      local treesitter = require('nvim-treesitter')
+      treesitter.install(ensure_installed)
 
-        auto_install = true, -- install missing parsers when entering a buffer
-        highlight = {
-          enable = vim.g.vscode ~= 1,
-          use_languagetree = true,
-          -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-          --  If you are experiencing weird indenting issues, add the language to
-          --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-          additional_vim_regex_highlighting = {
-            'python',
-            'vim',
-          },
-        },
-        indent = { enable = true },
-        -- context_commentstring = { enable = true, enable_autocmd = false },
-        autopairs = { enable = true },
-        -- playground = { enable = true},
-        matchup = { enable = true },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = '<C-space>',
-            node_incremental = '<C-space>',
-            scope_incremental = '<nop>',
-            node_decremental = '<bs>',
-          },
-        },
-      }
-    end,
-    config = function(_, opts)
-      -- require('nvim-treesitter').update()
-      -- Register parsers from opts.ensure_installed
-      register(opts.ensure_installed)
-      -- Create autocmd which installs and starts parsers.
-      install_and_start()
+      vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('dotfiles.treesitter', { clear = true }),
+        callback = function(args)
+          if not treesitter then
+            return
+          end
+
+          local ignored_fts = {
+            'codecompanion',
+            'csv',
+            'prompt',
+            'snacks_dashboard',
+            'snacks_input',
+            'snacks_picker_input',
+          }
+
+          if vim.tbl_contains(ignored_fts, args.match) then
+            return
+          end
+
+          pcall(vim.treesitter.start, args.buf)
+        end,
+      })
     end,
   },
   {
@@ -299,9 +230,7 @@ return {
       check_ts = true,
       enable_moveright = true,
       disable_filetype = { 'TelescopePrompt', 'spectre_panel', 'snacks_picker_input', 'codecompanion' },
-      fast_wrap = {
-        map = '<c-e>',
-      },
+      fast_wrap = { map = '<c-e>' },
     },
     config = function(_, opts)
       local autopairs = require('nvim-autopairs')

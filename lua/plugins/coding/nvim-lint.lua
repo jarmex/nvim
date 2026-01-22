@@ -50,6 +50,7 @@ return {
         scss = { 'stylelint' },
         less = { 'stylelint' },
         sql = { 'sqlfluff' },
+        ['yaml.ghaction'] = { 'actionlint' },
         yaml = { 'yamllint' },
       },
     },

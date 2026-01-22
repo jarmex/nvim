@@ -4,7 +4,7 @@ return {
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    ft = { 'markdown', 'codecompanion', 'obsidian' },
+    ft = { 'markdown', 'codecompanion', 'obsidian', 'copilot-chat', 'opencode_output' },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
@@ -22,9 +22,6 @@ return {
       -- render_modes = { 'n', 'c', 'i' },
       sign = {
         enabled = false, -- Turn off in the status column
-        exclude = {
-          buftypes = { 'nofile' },
-        },
       },
       checkbox = {
         enabled = true,

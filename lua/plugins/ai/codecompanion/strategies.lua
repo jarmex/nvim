@@ -43,7 +43,7 @@ M.background = {
 --------------
 
 M.inline = {
-  adapter = { name = DEFAULT_ADAPTER, model = 'gpt-4.1' },
+  adapter = { name = DEFAULT_ADAPTER, model = 'gpt-5.1-codex' },
   opts = {
     diff_timeout = 300,
   },
@@ -75,7 +75,7 @@ M.chat = {
   -- adapter = defaultAdapter,
   adapter = {
     name = DEFAULT_ADAPTER,
-    model = DEFAULT_MODEL,
+    model = 'claude-haiku-4.5',
   },
   opts = {
     completion_provider = 'blink', -- blink | cmp | coc | default
@@ -85,7 +85,6 @@ M.chat = {
     send_code = true,
   },
   roles = {
-    ---@type string|fun(adapter: CodeCompanion.HTTPAdapter|CodeCompanion.ACPAdapter): string
     llm = function(adapter)
       if adapter.model then
         return string.format('%s (%s)', adapter.formatted_name, adapter.model.name)

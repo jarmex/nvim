@@ -59,48 +59,6 @@ return {
       })
       ]]
 
-      vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('lsp_attach_server_caps', { clear = true }),
-        callback = function(args)
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if client == nil then
-            return
-          end
-          if client.name == 'ruff' then
-            -- Disable hover in favor of Pyright
-            client.server_capabilities.hoverProvider = false
-          end
-
-          if client.name == 'yamlls' then
-            -- Need this so that conform uses LSP to format yaml.* files.
-            client.server_capabilities.documentFormattingProvider = true
-          end
-        end,
-        desc = 'LSP: Disable hover capability from Ruff',
-      })
-
-      vim.lsp.enable({
-        'basedpyright',
-        'bashls',
-        'gopls',
-        'harper_ls',
-        'jsonls',
-        'lua_ls',
-        'ruff',
-        'taplo',
-        'typos_lsp',
-        'yamlls',
-        'cssls',
-        -- 'tsserver',
-        -- 'tailwindcss',
-        -- 'svelte',
-        -- 'astro',
-        -- 'copilot_ls',
-        -- 'postgres_lsp',
-        -- 'terraformls',
-        -- 'tflint',
-      })
-
       vim.lsp.config('basedpyright', {
         settings = {
           basedpyright = {
@@ -308,8 +266,6 @@ return {
         },
       })
 
-      vim.lsp.enable({ 'helm_ls' })
-
       vim.lsp.config('yamlls', {
         settings = {
           redhat = { telemetry = { enabled = false } },
@@ -328,6 +284,22 @@ return {
         filetypes = { 'yaml', 'yaml.docker-compose', 'yaml.gitlab', 'yaml.github' },
       })
 
+      vim.lsp.enable({
+        'basedpyright',
+        'bashls',
+        'biome',
+        'cssls',
+        'gopls',
+        'harper_ls',
+        'helm_ls',
+        'jsonls',
+        'lua_ls',
+        'ruff',
+        'taplo',
+        'typos_lsp',
+        'yamlls',
+      })
+
       require('plugins.coding.lsp.diagnostics')
 
       -- disable lsp for .env files
@@ -341,9 +313,24 @@ return {
         end,
       })
 
-      -- Prevent LSP from attaching to virtual buffers such as diffview.
       vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('lsp_attach_server_caps', { clear = true }),
         callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if client == nil then
+            return
+          end
+          if client.name == 'ruff' then
+            -- Disable hover in favor of Pyright
+            client.server_capabilities.hoverProvider = false
+          end
+
+          if client.name == 'yamlls' then
+            -- Need this so that conform uses LSP to format yaml.* files.
+            client.server_capabilities.documentFormattingProvider = true
+          end
+
+          -- Prevent LSP from attaching to virtual buffers such as diffview.
           local bufname = vim.api.nvim_buf_get_name(args.buf)
           if bufname:match('^diffview://') then
             vim.schedule(function()

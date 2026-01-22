@@ -98,7 +98,7 @@ return {
       { '<leader>e', '<cmd>NvimTreeToggle<cr>', desc = 'Nvim Tree' },
     },
     opts = {
-      actions = { open_file = { quit_on_open = true, relative_path = true, resize_window = false } },
+      actions = { open_file = { quit_on_open = true, relative_path = true, resize_window = true } },
       diagnostics = {
         enable = true,
         icons = {
@@ -156,7 +156,7 @@ return {
         ignore_list = { 'fzf', 'help', 'git', 'snacks' },
       },
       view = {
-        adaptive_size = false,
+        adaptive_size = true,
         width = '20%',
         signcolumn = 'no',
         side = 'left',

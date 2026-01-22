@@ -1,0 +1,52 @@
+return
+--- @type LazySpec
+{
+  {
+    'sudo-tee/opencode.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'MeanderingProgrammer/render-markdown.nvim',
+      'saghen/blink.cmp',
+      'folke/snacks.nvim',
+    },
+    opts = {
+      preferred_picker = 'snacks',
+      preferred_completion = 'blink',
+      render = {
+        enabled = true,
+      },
+      keymap = {
+        input_window = {
+          ['<S-Tab>'] = { 'switch_mode', mode = { 'n', 'i' } },
+        },
+      },
+
+      ui = {
+        input = {
+          text = {
+            wrap = true, -- Wraps text inside input window
+          },
+        },
+      },
+
+      context = {
+        enabled = true,
+        cursor_data = {
+          enabled = false,
+        },
+        diagnostics = {
+          info = false,
+          warn = false,
+          error = true,
+        },
+        current_file = {
+          enabled = true,
+        },
+        selection = {
+          enabled = true,
+        },
+      },
+    },
+  },
+}

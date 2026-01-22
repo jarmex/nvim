@@ -25,10 +25,10 @@ return function()
     },
     schema = {
       model = {
-        default = 'z-ai/glm-4.7',
+        default = 'z-ai/glm-4.7-flash',
         choices = {
           'z-ai/glm-4.7',
-          'minimax/minimax-m2.1',
+          ['minimax/minimax-m2.1'] = { opts = { can_reason = true } },
           'x-ai/grok-code-fast-1',
           'kwaipilot/kat-coder-pro:free',
           'qwen/qwen3-coder',
