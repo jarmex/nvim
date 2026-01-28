@@ -4,7 +4,15 @@ local M = {}
 ---Useful way of organizing some common filetypes
 M.c_aliases = { 'c' }
 M.python_aliases = { 'python' }
-M.javascript_aliases = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'html' }
+M.javascript_aliases = {
+  'typescript',
+  'javascript',
+  'javascriptreact',
+  'typescriptreact',
+  'typescript.tsx',
+  'javascript.jsx',
+  'vue',
+}
 M.lua_aliases = { 'lua' }
 M.markdown_aliases = { 'markdown' }
 M.json_aliases = { 'json', 'jsonc' }
