@@ -43,6 +43,9 @@ return {
       },
       formatters_by_ft = {
         css = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        -- TODO: Re-enable once this is fixed: https://github.com/antham/ghokin/issues/76#issuecomment-3474465409
+        -- cucumber = { "ghokin" },
+        cucumber = { 'reformat-gherkin' },
         go = { 'goimports', 'gci', 'gofumpt', 'golines' },
         graphql = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
         handlebars = { 'prettier' },
@@ -53,8 +56,10 @@ return {
         json = { 'biome' },
         json5 = { 'biome' },
         jsonc = { 'biome' },
+        less = { 'prettierd' },
         lua = { 'stylua' },
         markdown = { 'markdownlint', 'markdown-toc', stop_after_first = true },
+        scss = { 'prettierd' },
         -- python = { 'black', 'isort' },
         python = { 'ruff_fix', 'ruff_organize_imports' },
         sh = { 'shfmt' },

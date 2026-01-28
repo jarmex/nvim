@@ -58,7 +58,7 @@ return {
       alias = 'linear_release_notes',
       is_slash_cmd = true,
       adapter = {
-        name = 'anthropic',
+        name = 'copilot',
       },
     },
     prompts = {

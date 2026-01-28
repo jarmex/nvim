@@ -64,13 +64,61 @@ return {
           basedpyright = {
             disableOrganizeImports = true,
             analysis = {
-              diagnosticMode = 'openFilesOnly',
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = 'workspace',
+              typeCheckingMode = 'standard',
+              -- diagnosticMode = 'openFilesOnly',
               inlayHints = {
                 callArgumentNames = true,
               },
             },
           },
         },
+      })
+
+      vim.lsp.config('cucumber_language_server', {
+        settings = {
+          cucumber = {
+            glue = {
+              -- DEFAULTS
+              -- Cucumber-JVM
+              'src/test/**/*.java',
+              -- Cucumber-Js
+              'features/**/*.ts',
+              'features/**/*.tsx',
+              'features/**/*.js',
+              'features/**/*.jsx',
+              'step-definitions/**/*.ts',
+              -- TODO: Modify regex pattern to match `feature(s)`
+              'test/feature/**/*.ts',
+              'test/features/**/*.ts',
+              -- Behat
+              'features/**/*.php',
+              -- Behave
+              'features/**/*.py',
+              -- Pytest-BDD
+              'tests/**/*.py',
+              -- Cucumber Rust
+              'tests/**/*.rs',
+              'features/**/*.rs',
+              -- Cucumber-Ruby
+              'features/**/*.rb',
+              -- SpecFlow
+              '*specs*/**/*.cs',
+              -- Godog
+              'features/**/*_test.go',
+              -- MY SETTINGS
+              -- TODO: Refactor directory structure of redstone-sidecar so tests aren't placed here, but in test/ instead
+              'modules/**/*steps.ts',
+            },
+          },
+        },
+      })
+
+      vim.lsp.config('vue_ls', {
+        filetypes = { 'vue' },
+        init_options = {},
       })
 
       vim.lsp.config('copilot', {
@@ -284,12 +332,105 @@ return {
         filetypes = { 'yaml', 'yaml.docker-compose', 'yaml.gitlab', 'yaml.github' },
       })
 
+      vim.lsp.config('cssls', {
+        settings = {
+          css = {
+            validate = true,
+            lint = {
+              unknownAtRules = 'ignore',
+            },
+          },
+          scss = {
+            validate = true,
+            lint = {
+              unknownAtRules = 'ignore',
+            },
+          },
+          less = {
+            validate = true,
+            lint = {
+              unknownAtRules = 'ignore',
+            },
+          },
+        },
+      })
+      local tsserver_filetypes = {
+        'typescript',
+        'javascript',
+        'javascriptreact',
+        'typescriptreact',
+        'typescript.tsx',
+        'javascript.jsx',
+        'vue',
+      }
+      local vls_bin = vim.fn.exepath('vue-language-server')
+      local vls_dir = vls_bin:gsub('/bin/vue%-language%-server', '/lib/node_modules/@vue/language-server')
+
+      local vue_plugin = {
+        name = '@vue/typescript-plugin',
+        location = vls_dir,
+        languages = { 'vue' },
+        configNamespace = 'typescript',
+      }
+
+      vim.lsp.config('vtsls', {
+        settings = {
+          complete_function_calls = true,
+          vtsls = {
+            enableMoveToFileCodeAction = true,
+            autoUseWorkspaceTsdk = true,
+            experimental = {
+              maxInlayHintLength = 30,
+              completion = {
+                enableServerSideFuzzyMatch = true,
+              },
+            },
+            tsserver = {
+              globalPlugins = {
+                vue_plugin,
+              },
+            },
+          },
+          typescript = {
+            updateImportsOnFileMove = { enabled = 'always' },
+            suggest = {
+              completeFunctionCalls = true,
+            },
+            inlayHints = {
+              enumMemberValues = { enabled = true },
+              functionLikeReturnTypes = { enabled = true },
+              parameterNames = { enabled = 'literals' },
+              parameterTypes = { enabled = true },
+              propertyDeclarationTypes = { enabled = true },
+              variableTypes = { enabled = false },
+            },
+          },
+        },
+        filetypes = tsserver_filetypes,
+      })
+
+      vim.lsp.config('ts_ls', {
+        init_options = {
+          plugins = {
+            vue_plugin,
+          },
+        },
+        filetypes = tsserver_filetypes,
+      })
+
+      -- vim.lsp.config('emmet_language_server', {})
+
       vim.lsp.enable({
         'basedpyright',
         'bashls',
         'biome',
         'cssls',
+        'cucumber_language_server',
+        'docker_compose_language_service',
+        'dockerls',
+        'emmet_language_server',
         'gopls',
+        'golangci_lint_ls',
         'harper_ls',
         'helm_ls',
         'jsonls',
@@ -297,7 +438,9 @@ return {
         'ruff',
         'taplo',
         'typos_lsp',
+        'vue_ls',
         'yamlls',
+        -- 'ts_ls',
       })
 
       require('plugins.coding.lsp.diagnostics')

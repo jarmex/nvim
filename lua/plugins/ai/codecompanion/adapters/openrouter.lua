@@ -25,7 +25,7 @@ return function()
     },
     schema = {
       model = {
-        default = 'z-ai/glm-4.7-flash',
+        default = 'moonshotai/kimi-k2.5',
         choices = {
           'z-ai/glm-4.7',
           ['minimax/minimax-m2.1'] = { opts = { can_reason = true } },

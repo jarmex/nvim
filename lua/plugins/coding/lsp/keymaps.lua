@@ -46,9 +46,9 @@ local function keymap(bufnr)
     Snacks.picker.diagnostics_buffer()
   end, { desc = 'Find Diagnostics', nowait = true })
 
-  map('gd', go_to_definition, { desc = 'Go to definition' })
+  map('grd', go_to_definition, { desc = 'Go to definition' })
 
-  map('gr', function()
+  map('grr', function()
     Snacks.picker.lsp_references()
   end, { desc = 'References', nowait = true })
 
@@ -56,7 +56,7 @@ local function keymap(bufnr)
     Snacks.picker.lsp_implementations()
   end, { desc = 'Goto Implementation' })
 
-  map('gy', function()
+  map('grt', function()
     Snacks.picker.lsp_type_definitions()
   end, { desc = 'Goto Type Definition' })
 
@@ -66,13 +66,13 @@ local function keymap(bufnr)
 
   map('gK', vim.lsp.buf.signature_help, { desc = 'Signature Help' })
 
-  map('gl', "<cmd>lua vim.diagnostic.open_float(0,{border='rounded'})<CR>", { desc = 'Show diagnostics' })
+  map('gl', vim.diagnostic.open_float, { desc = 'View current diagnostic' })
 
   -- map('[d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
   -- map(']d', diagnostic_goto(false), { desc = 'Next Diagnostic' })
   -- map('<leader>cd', "<cmd>lua vim.diagnostic.open_float({source='if_many'})<cr>", { desc = 'Diagnostic' })
 
-  map('<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', { desc = 'Set loclist' })
+  map('<leader>ld', vim.diagnostic.setloclist, { desc = 'List diagnostics' })
 
   map('<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', { desc = '[W]orkspace [A]dd Folder' })
   map('<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', { desc = '[W]orkspace [R]emove Folder' })
@@ -82,9 +82,8 @@ local function keymap(bufnr)
   -- end
 
   map('<leader>cr', rename, { desc = '[R]ename' })
-  map('<leader>rn', vim.lsp.buf.rename, { desc = '[R]ename' })
+  map('grn', vim.lsp.buf.rename, { desc = '[R]ename' })
 
-  map('<leader>ci', '<cmd>LspInfo<cr>', { desc = 'Lsp Info' })
   map('<leader>ch', vim.lsp.codelens.refresh, { desc = 'CodeLens Refresh' })
   map('<leader>cl', vim.lsp.codelens.run, { desc = '[C]ode[L]ens Run' })
   map('<leader>th', function()

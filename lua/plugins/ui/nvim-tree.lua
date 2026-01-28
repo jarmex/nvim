@@ -95,7 +95,7 @@ return {
     -- lazy = false,
     event = 'UIEnter',
     keys = {
-      { '<leader>e', '<cmd>NvimTreeToggle<cr>', desc = 'Nvim Tree' },
+      { '<leader>ee', '<cmd>NvimTreeToggle<cr>', desc = 'Nvim Tree' },
     },
     opts = {
       actions = { open_file = { quit_on_open = true, relative_path = true, resize_window = true } },
