@@ -82,6 +82,9 @@ return {
         callback = function(args)
           local filetype = args.match
           local lang = vim.treesitter.language.get_lang(filetype)
+          if not lang then
+            return
+          end
           ---@diagnostic disable-next-line: param-type-mismatch
           if vim.treesitter.language.add(lang) then
             vim.treesitter.start()

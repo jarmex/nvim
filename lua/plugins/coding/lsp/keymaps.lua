@@ -46,7 +46,7 @@ local function keymap(bufnr)
     Snacks.picker.diagnostics_buffer()
   end, { desc = 'Find Diagnostics', nowait = true })
 
-  map('grd', go_to_definition, { desc = 'Go to definition' })
+  map('gd', go_to_definition, { desc = 'Go to definition' })
 
   map('grr', function()
     Snacks.picker.lsp_references()
@@ -91,7 +91,7 @@ local function keymap(bufnr)
   end, { desc = 'Toggle inlay hints' })
 
   map('<leader>gD', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
-  map('grD', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
+  map('grd', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
 
   -- Copy the diagnostic message under your cursor to the clipboard
   map('<leader>cd', function()

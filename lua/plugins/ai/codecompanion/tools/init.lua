@@ -5,59 +5,25 @@ return {
   -- ['code_developer'] = require('plugins.ai.codecompanion.tools.developer'),
   groups = {
     ['agent'] = {
-      description = 'Agent tools',
-      tools = {
-        --- Web search and browsing tools.
-        'search_web',
-        'fetch_webpage',
-        'context7__get-library-docs',
-        'context7__resolve-library-id',
-        'tavily-mcp__tavily-crawl',
-        'tavily-mcp__tavily-extract',
-        'tavily-mcp__tavily-map',
-        'tavily-mcp__tavily-search',
-        --- File analysis tools.
-        'list_code_usages',
-        'filesystem__get_file_info',
-        'filesystem__list_allowed_directories',
-        'filesystem__list_directory',
-        'filesystem__list_directory_with_sizes',
-        'filesystem__read_file',
-        'filesystem__read_multiple_files',
-        'filesystem__search_files',
-        --- File modification tools.
-        'filesystem__create_directory',
-        'filesystem__edit_file',
-        'filesystem__move_file',
-        'filesystem__write_file',
-        --- Shell tools.
-        'shell__shell_exec',
-        --- Git tools.
-        'git__git_branch',
-        'git__git_diff',
-        'git__git_diff_staged',
-        'git__git_diff_unstaged',
-        'git__git_init',
-        'git__git_log',
-        'git__git_show',
-        'git__git_status',
-      },
-      opts = {
-        collapse_tools = true,
-      },
-    },
-    ['agent_old'] = {
       description = 'agent mode with mcp support, automatically run tools',
+      prompt = "I'm giving you access to the ${tools} to help you perform coding tasks",
       tools = {
         'cmd_runner',
         'create_file',
+        'delete_file',
+        'fetch_webpage',
+        'files',
         'file_search',
+        'full_stack_dev',
+        'get_changed_files',
         'grep_search',
         'insert_edit_into_file',
-        'read_file',
-        'web_search',
         'list_code_usages',
         'mcp',
+        'memory',
+        'next_edit_suggestion',
+        'read_file',
+        'web_search',
       },
       opts = {
         collapse_tools = true,
@@ -67,7 +33,7 @@ return {
 
   opts = {
     auto_submit_success = true, -- Send any successful output to the LLM automatically
-    wait_timeout = 300000,
+    -- wait_timeout = 300000,
     -- default_tools = { 'cmd_runner' },
     --- This is needed when using CodeCompanion's internal tools
     --- (e.g., when @cmd_runner runs tests and they fail),

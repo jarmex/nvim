@@ -111,7 +111,7 @@ return {
       }, -- Optional: exclude files from diff analysis
       buffer = {
         enabled = true, -- Enable gitcommit buffer keymaps
-        keymap = '<leader>gc', -- Keymap for generating commit message in gitcommit buffer
+        keymap = '<leader>gcc', -- Keymap for generating commit message in gitcommit buffer
         auto_generate = false, -- Automatically generate message on entering gitcommit buffer
       },
       -- Feature toggles

@@ -9,12 +9,6 @@ return {
   opts = {
     allow_different_key = true,
     enabled = true,
-    disabled_filetypeis = {
-      lazy = true,
-      ['dapui*'] = true,
-      ['Diff*'] = true,
-      ['*'] = true,
-    },
     disabled_filetypes = {
       'Diffview*',
       'Dressing*',
@@ -24,6 +18,7 @@ return {
       'alpha',
       'checkhealth',
       'codecompanion',
+      ['dapui*'] = true,
       'dapui*',
       'dapui-repl',
       'dapui_breakpoints',
@@ -52,6 +47,7 @@ return {
       'terminal',
       'trouble',
       'undotree',
+      'codediff-explorer',
     },
     hints = {
       ['[dcyvV][ia]%('] = {

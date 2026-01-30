@@ -14,6 +14,9 @@ local config = {
         },
       },
     },
+    python = {
+      pythonPath = vim.fn.getcwd() .. '/venv/bin/python',
+    },
   },
 }
 return config
