@@ -49,6 +49,15 @@ local config = {
       suggest = {
         completeFunctionCalls = true,
       },
+      implicitProjectConfig = {
+        checkJs = true,
+        strictNullChecks = false,
+        strictFunctionTypes = false,
+      },
+      lib = {
+        'ES2020',
+        'DOM',
+      },
     },
   },
   filetypes = constants.javascript_aliases,

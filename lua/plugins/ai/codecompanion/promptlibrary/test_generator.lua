@@ -22,13 +22,12 @@ return {
 Write tests for this file or module.
 
 Follow these additional rules:
-- Check for existing tests under common paths, such as `test/`, `spec/`, or `src/**/*.test.*`.
+- Check for existing tests under common paths, such as `__tests__/`, `spec/`, or `src/**/*.test.*`.
 - Follow conventions stablished by existing tests, if any.
 - Write minimal tests, covering only the most common logic paths.
 - Use mocks for external libraries.
 - Do not install any new packages.
-- Do not try to run the tests.
-        ]],
+- Do not try to run the tests. ]],
       },
     },
   },

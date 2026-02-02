@@ -37,7 +37,7 @@ return {
       ---@type table<string,table>
       linters = {},
       linters_by_ft = {
-        -- python = { "ruff" },
+        python = { 'ruff' },
         dockerfile = { 'hadolint' },
         go = { 'golangcilint' },
         -- go = { 'golangcilint', 'fieldalignment', 'staticcheck' },

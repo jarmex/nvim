@@ -21,7 +21,7 @@ local ensureInstalled = {
     'lua-language-server',
     'marksman', -- Markdown lsp
     -- 'omnisharp',
-    'pyright',
+    -- 'pyright',
     'ruff', -- python linter & formatter
     'sonarlint-language-server',
     'taplo', -- toml lsp
