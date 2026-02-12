@@ -28,8 +28,10 @@ return function()
         default = 'moonshotai/kimi-k2.5',
         choices = {
           'z-ai/glm-4.7',
+          'z-ai/glm-5',
           'x-ai/grok-code-fast-1',
           'qwen/qwen3-coder-next',
+          'minimax/minimax-m2.5',
           ['moonshotai/kimi-k2.5'] = { opts = { can_reason = true } },
           ['minimax/minimax-m2.1'] = { opts = { can_reason = true } },
           ['deepseek/deepseek-r1:free'] = { opts = { can_reason = true } },

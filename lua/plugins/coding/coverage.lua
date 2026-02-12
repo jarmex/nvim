@@ -12,8 +12,6 @@ return {
   {
     'andythigpen/nvim-coverage',
     event = 'VeryLazy',
-    rocks = { 'lua-xmlreader' },
-    config = true,
     cmd = {
       'Coverage',
       'CoverageLoad',
@@ -28,6 +26,9 @@ return {
       auto_reload = true,
       lang = {
         go = {
+          coverage_file = vim.fn.getcwd() .. '/coverage.out',
+        },
+        python = {
           coverage_file = vim.fn.getcwd() .. '/coverage.out',
         },
       },

@@ -8,7 +8,8 @@ return {
     config = function()
       require('blame').setup({
         date_format = '%Y-%m-%d',
-        format_fn = require('blame.formats.default_formats').date_message,
+        format_fn = require('blame.formats.default_formats').commit_date_author_fn,
+        -- format_fn = require('blame.formats.default_formats').date_message,
         blame_options = {
           '-w', -- skip blame which adjust white space only
         },

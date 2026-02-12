@@ -49,6 +49,12 @@ return {
     keys = keymaps.dap_keymaps(),
     dependencies = {
       { 'theHamsta/nvim-dap-virtual-text', opts = { virt_text_pos = 'eol' } },
+      {
+        'https://codeberg.org/mfussenegger/nvim-dap-python',
+        config = function(_, opts)
+          require('dap-python').setup('uv', opts)
+        end,
+      },
     },
     init = function()
       vim.api.nvim_set_hl(0, 'DapBreakpoint', { ctermbg = 0, fg = '#993939', bg = '#31353f' })

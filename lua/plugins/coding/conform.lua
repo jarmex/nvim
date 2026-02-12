@@ -177,9 +177,9 @@ return {
         },
       },
     })
-    if vim.fn.executable('black') == 1 then
-      vim.list_extend(opts.formatters_by_ft.python, { 'black' })
-    end
+    -- if vim.fn.executable('black') == 1 then
+    --   vim.list_extend(opts.formatters_by_ft.python, { 'black' })
+    -- end
     return opts
   end,
   init = function()

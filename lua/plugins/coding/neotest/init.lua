@@ -2,6 +2,8 @@ local ok, trouble = pcall(require, 'trouble')
 
 local icons = require('helpers.icons')
 
+local tags = '-tags=wireinject,integration'
+
 local adaptersList = {
   ['neotest-vitest'] = {
     -- vitestCommand = "pnpm vitest",
@@ -46,10 +48,30 @@ local adaptersList = {
   },
 
   ['neotest-golang'] = {
-    args = { '-coverprofile=' .. vim.fn.getcwd() .. '/coverage.out' },
-    experimental = {
-      test_table = true,
+    go_list_args = { tags },
+    go_test_args = {
+      '-v',
+      '-count=1',
+      '-race',
+      '-coverprofile=' .. vim.fn.getcwd() .. '/coverage.out',
+      -- "-p=1",
+      '-parallel=1',
+      tags,
     },
+    runner = 'gotestsum',
+    gotestsum_args = { '--format=standard-verbose' },
+    -- testify_enabled = true,
+    -- sanitize_output = true,
+    -- log_level = vim.log.levels.TRACE,
+
+    -- experimental
+    dev_notifications = true,
+  },
+  ['neotest-python'] = {
+    runner = 'pytest',
+    -- TODO: write coverage...
+    args = { '--log-level', 'INFO', '--color', 'yes', '-vv', '-s' },
+    dap = { justMyCode = false },
   },
 }
 
@@ -65,12 +87,14 @@ return {
       'marilari88/neotest-vitest', -- Vitest (JavaScript/TypeScript)
       'nvim-neotest/neotest-plenary', -- For testing Lua plugins
       'antoinemadec/FixCursorHold.nvim',
+      'nvim-neotest/neotest-python',
       {
         'fredrikaverpil/neotest-golang',
         -- enabled = false,
         version = '*',
         dependencies = {
           'leoluz/nvim-dap-go',
+          'uga-rosa/utf8.nvim', -- required for sanitization feature
         },
       },
     },

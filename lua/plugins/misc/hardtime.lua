@@ -8,7 +8,7 @@ return {
   },
   opts = {
     allow_different_key = true,
-    enabled = true,
+    enabled = false,
     disabled_filetypes = {
       'Diffview*',
       'Dressing*',
