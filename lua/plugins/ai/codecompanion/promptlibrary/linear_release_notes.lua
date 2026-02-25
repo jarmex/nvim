@@ -59,6 +59,7 @@ return {
       is_slash_cmd = true,
       adapter = {
         name = 'copilot',
+        model = 'claude-sonnet-4.6',
       },
     },
     prompts = {

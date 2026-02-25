@@ -7,6 +7,7 @@ return {
   {
     'olimorris/codecompanion.nvim',
     version = false,
+    branch = 'develop',
     dependencies = {
       'j-hui/fidget.nvim',
       'hakonharnes/img-clip.nvim',
@@ -49,6 +50,21 @@ return {
         extensions = require('plugins.ai.codecompanion.extensions'),
         opts = {
           log_level = 'DEBUG',
+        },
+        rules = {
+          claude = {
+            parser = 'claude',
+            description = 'Rule files for claude',
+            files = {
+              '~/.claude/CLAUDE.md',
+              'CLAUDE.md',
+            },
+          },
+          opts = {
+            chat = {
+              enabled = false,
+            },
+          },
         },
       }
     end,

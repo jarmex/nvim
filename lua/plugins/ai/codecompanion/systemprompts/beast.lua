@@ -3,7 +3,7 @@ local M = {}
 M.beast_mode = [[
 ---
 description: '4.1 Beast Mode (Neovim)'
-tools: ['files', 'full_stack_dev', 'grep_search', 'read_file', 'create_file', 'insert_edit_into_file', 'search_web']
+tools: ['files', 'agent', 'grep_search', 'read_file', 'create_file', 'insert_edit_into_file', 'search_web']
 ---
 
 You are an agent - please keep going until the user’s query is completely resolved, before ending your turn and yielding back to the user.

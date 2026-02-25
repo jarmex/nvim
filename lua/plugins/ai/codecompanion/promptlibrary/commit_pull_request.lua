@@ -31,7 +31,7 @@ return {
           role = 'user',
           content = function()
             return string.format(
-              [[I want you to use the @{cmd_runner} tool to create a commit using the conventional commit format. Make sure to:
+              [[I want you to use the @{run_command} tool to create a commit using the conventional commit format. Make sure to:
 1. Use the provided diff to generate a commit message.
 2. Write only the header (no detailed description and no scope).
 3. Ensure the message is clear, relevant, and properly formatted.

@@ -17,7 +17,7 @@ return {
         role = 'user',
         content = [[
 #{buffer}
-@{full_stack_dev}
+@{agent}
 
 Write tests for this file or module.
 

@@ -3,18 +3,27 @@ return {
   -- ['code_edit'] = require('plugins.ai.codecompanion.tools.code_edit'),
   -- ['tavily'] = require('plugins.ai.codecompanion.tools.tavily'),
   -- ['code_developer'] = require('plugins.ai.codecompanion.tools.developer'),
+  ['insert_edit_into_file'] = {
+    description = 'Insert code into an existing file',
+    opts = {
+      requires_approval = { -- Require approval before the tool is executed?
+        requires_approval_before = false,
+      },
+      require_confirmation_after = false,
+    },
+  },
   groups = {
-    ['agent'] = {
+    ['myagent'] = {
       description = 'agent mode with mcp support, automatically run tools',
       prompt = "I'm giving you access to the ${tools} to help you perform coding tasks",
       tools = {
-        'cmd_runner',
+        'run_command',
         'create_file',
         'delete_file',
         'fetch_webpage',
         'files',
         'file_search',
-        'full_stack_dev',
+        'agent',
         'get_changed_files',
         'grep_search',
         'insert_edit_into_file',
@@ -29,14 +38,26 @@ return {
         collapse_tools = true,
       },
     },
+    ['my_agent'] = {
+      description = 'My custom agent',
+      system_prompt = function(group, ctx)
+        return string.format('You are a coding agent. The date is %s. The user is on %s.', ctx.date, ctx.os)
+      end,
+      tools = { 'read_file', 'insert_edit_into_file', 'run_command' },
+      opts = {
+        collapse_tools = true,
+        ignore_system_prompt = true, -- Remove the chat's default system prompt
+        ignore_tool_system_prompt = true, -- Remove the default tool system prompt
+      },
+    },
   },
 
   opts = {
     auto_submit_success = true, -- Send any successful output to the LLM automatically
     -- wait_timeout = 300000,
-    -- default_tools = { 'cmd_runner' },
+    -- default_tools = { 'run_command' },
     --- This is needed when using CodeCompanion's internal tools
-    --- (e.g., when @cmd_runner runs tests and they fail),
+    --- (e.g., when @{run_command} runs tests and they fail),
     --- but with external tools (e.g., @mcp) this might cause issues
     --- because external tools do not return errors in such cases
     --- but may return errors in case of real internal errors

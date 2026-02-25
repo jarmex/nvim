@@ -87,7 +87,7 @@ return {
         contains_code = true,
         content = function(context)
           local buffer = '#{buffer}\n'
-          local tools = '@{cmd_runner} @{files} @{insert_edit_into_file}\n'
+          local tools = '@{run_command} @{files} @{insert_edit_into_file}\n'
           return buffer
             .. tools
             .. require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)

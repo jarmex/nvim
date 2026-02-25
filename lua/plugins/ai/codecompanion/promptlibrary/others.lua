@@ -90,24 +90,12 @@ the buffer, edit it with your suggestions using your editor tool unless the user
       {
         role = 'user',
         -- content = '@{insert_edit_into_file} @{cmd_runner} #{buffer} \n\n'
-        content = 'Here is the current buffer: #{buffer}\n\nUsing your @{insert_edit_into_file} and @{cmd_runner} tool, make the following change(s):\n\n',
+        content = 'Here is the current buffer: #{buffer}\n\nUsing your @{insert_edit_into_file} and @{run_command} tool, make the following change(s):\n\n',
       },
     },
     opts = {
       auto_submit = false,
       alias = 'edit',
-      is_slash_cmd = true,
-    },
-  },
-  ['Develop'] = {
-    interaction = 'chat',
-    description = 'Edit with full tooling',
-    prompts = {
-      { role = 'user', content = '@{full_stack_dev} #{buffer}\n\n' },
-    },
-    opts = {
-      auto_submit = false,
-      alias = 'dev',
       is_slash_cmd = true,
     },
   },
@@ -133,42 +121,6 @@ the buffer, edit it with your suggestions using your editor tool unless the user
         local history = require('codecompanion').extensions.history
         history.browse_chats()
       end,
-    },
-  },
-  ['Agent'] = {
-    interaction = 'chat',
-    description = 'Create a new chat buffer in Agent mode',
-    opts = {
-      index = 6,
-      stop_context_insertion = true,
-      adapter = {
-        name = 'anthropic',
-        model = 'claude-sonnet-4', -- Multiplier = 1.
-      },
-    },
-    prompts = {
-      {
-        role = 'user',
-        content = '#{mcp:neovim://workspace} @{agent} ',
-      },
-    },
-  },
-  ['Free Agent (GPT-4o)'] = {
-    interaction = 'chat',
-    description = 'Create a new chat buffer in Agent mode with GPT-4o',
-    opts = {
-      index = 7,
-      stop_context_insertion = true,
-      adapter = {
-        name = 'openai',
-        model = 'gpt-4o', -- Multiplier = 0 (free).
-      },
-    },
-    prompts = {
-      {
-        role = 'user',
-        content = '#{mcp:neovim://workspace} @{agent} ',
-      },
     },
   },
 }

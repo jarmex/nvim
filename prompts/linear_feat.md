@@ -1,9 +1,23 @@
-local constants = require('codecompanion.config').constants
+---
+name: Linear Feature Ticket
+description: Generate a Linear issue in the Engineering team
+interaction: chat
+tools:
+  - linear
+opts:
+  auto_submit: false
+  alias: linear_feat
+  is_slash_cmd: true
+  adapter:
+    name: copilot
+    model: claude-sonnet-4.6
+---
 
-local system_prompt_feat = [[
+## system
+
 Generate a **feature ticket or task** for engineers/developers based on the description provided. The output must follow Agile best practices and be written in **markdown format** for clarity.
 
-### Structure to Follow:
+### Structure to Follow
 
 #### Title
 
@@ -20,7 +34,7 @@ Give a high-level explanation of the feature or task:
 #### User Story
 
 Write in the following format:
-*As a [type of user], I want to [action] so that [benefit/value].*
+As a [type of user], I want to [action] so that [benefit/value].
 
 #### Acceptance Criteria
 
@@ -28,22 +42,22 @@ Choose the appropriate style based on task complexity:
 
 * **For small tasks → Checklist/Rules format**
 
-  * [ ] Condition 1
-  * [ ] Condition 2
-  * [ ] Condition 3
+    * [ ] Condition 1
+    * [ ] Condition 2
+    * [ ] Condition 3
 
 * **For complex flows → Scenario-Based or Gherkin format**
 
   **Scenario-Based:**
 
-  * A user does X, and the system responds with Y
-  * A user attempts invalid input, and the system rejects with error Z
+    * A user does X, and the system responds with Y
+    * A user attempts invalid input, and the system rejects with error Z
 
   **Gherkin-Style (optional):**
 
-  * Given [context]
-  * When [action]
-  * Then [expected outcome]
+    * Given [context]
+    * When [action]
+    * Then [expected outcome]
 
 #### Technical Notes
 
@@ -64,43 +78,9 @@ Every task is considered complete only when:
 * [ ] QA has validated functionality with no critical/blocking issues
 * [ ] Documentation (user-facing and/or technical) is updated
 * [ ] Feature is deployed or ready for deployment in the target environment
-]]
 
-local user_prompt = [[
+## user
+
 Use the @{linear} tool to create a Linear issue in the Engineering team.
 
 Feature or Task Description Input below:
-
-
-]]
-
-return {
-  interaction = 'chat',
-  description = 'Generate a Linear issue in the Engineering team',
-  opts = {
-    auto_submit = false,
-    alias = 'linear_feat',
-    is_slash_cmd = true,
-    adapter = {
-      name = 'copilot',
-      model = 'claude-sonnet-4.6',
-    },
-  },
-  prompts = {
-    {
-      role = 'system',
-      content = system_prompt_feat,
-      opts = {
-        visible = false,
-      },
-    },
-    {
-      role = constants.USER_ROLE,
-      content = user_prompt,
-      opts = {
-        -- visible = false,
-        auto_submit = false,
-      },
-    },
-  },
-}

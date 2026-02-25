@@ -62,7 +62,7 @@ return {
 1. @files Create the corresponding component folder and files in the components folder using appropriate naming.
 2. @files Create a test page in the `app/playground/ + component folder name` directory and import the component. And adjust the layout and styling to make it visually appealing and user-friendly. The page will adopt a clean and simple design.
 3. Print the test URL for the user to view the result. The URL is typically `http://localhost:3000/playground/ + component name`.
-4. I'm using mac, so @cmd_runner just call `open + URL` to open the browser.
+4. I'm using mac, so @{run_command} just call `open + URL` to open the browser.
 
 Don't help me install dependencies, just remind me that I need them, and I'll install them by myself.
 ]]
