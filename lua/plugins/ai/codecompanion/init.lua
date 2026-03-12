@@ -7,7 +7,6 @@ return {
   {
     'olimorris/codecompanion.nvim',
     version = false,
-    branch = 'develop',
     dependencies = {
       'j-hui/fidget.nvim',
       'hakonharnes/img-clip.nvim',
@@ -16,6 +15,7 @@ return {
       -- 'jinzhongjia/codecompanion-gitcommit.nvim',
       'lalitmee/codecompanion-spinners.nvim',
       'jarmex/codecompanion-gitcommit.nvim',
+      'cairijun/codecompanion-agentskills.nvim',
     },
     cmd = {
       'CodeCompanionChat',

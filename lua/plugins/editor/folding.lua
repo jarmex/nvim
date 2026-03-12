@@ -60,7 +60,7 @@ return {
     ---@module "origami"
     ---@type Origami.config
     opts = {
-      foldtext = { enabled = true, padding = 2, lineCount = { template = '󰘖 %d' } },
+      foldtext = { enabled = true, padding = { width = 2 }, lineCount = { template = '󰘖 %d' } },
       useLspFoldsWithTreesitterFallback = { enabled = true },
       pauseFoldsOnSearch = true,
       autoFold = { enabled = true },

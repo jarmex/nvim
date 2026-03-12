@@ -44,26 +44,28 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   group = augroup('buffer_mappings'),
   pattern = {
-    'spectre_panel',
-    'qf',
-    'help',
-    'man',
-    'floaterm',
-    'lspinfo',
-    'lir',
-    'lsp-installer',
-    'null-ls-info',
-    'tsplayground',
     'DressingSelect',
     'Jaq',
+    'OverseerList',
+    'PlenaryTestPopup',
+    'dropbar_menu',
+    'floaterm',
+    'help',
+    'lir',
+    'lsp-installer',
+    'lspinfo',
+    'man',
     'neotest-output',
     'neotest-summary',
-    'OverseerList',
-    'dropbar_menu',
+    'null-ls-info',
+    'qf',
+    'spectre_panel',
+    'startuptime',
+    'tsplayground',
   },
-  callback = function()
-    vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = true })
-    vim.opt_local.buflisted = false
+  callback = function(event)
+    vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = event.buf, silent = true })
+    vim.bo[event.buf].buflisted = false
   end,
 })
 
@@ -74,14 +76,6 @@ vim.api.nvim_create_autocmd('BufEnter', {
     vim.diagnostic.enable(false, { bufnr = args.buf })
   end,
 })
-
--- vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
---   pattern = '*.graphql,*.graphqls,*.gql',
---   callback = function()
---     vim.bo.filetype = 'graphql'
---   end,
---   once = false,
--- })
 
 -- Define local variables
 local autocmd = vim.api.nvim_create_autocmd
@@ -147,49 +141,7 @@ vim.api.nvim_create_autocmd('FocusLost', {
   end,
 })
 
---------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------
--- -- ADD NOTIFICATION TO LSP RENAME
--- local originalRenameHandler = vim.lsp.handlers['textDocument/rename']
--- vim.lsp.handlers['textDocument/rename'] = function(err, result, ctx, config)
---   originalRenameHandler(err, result, ctx, config)
---   if err or not result then
---     return
---   end
---
---   -- count changes
---   local changes = result.changes or result.documentChanges or {}
---   local changedFiles = vim
---     .iter(vim.tbl_keys(changes))
---     :filter(function(file)
---       return #changes[file] > 0
---     end)
---     :map(function(file)
---       return '- ' .. vim.fs.basename(file)
---     end)
---     :totable()
---   local changeCount = vim.iter(changes):fold(0, function(sum, _, change)
---     return sum + #(change.edits or change)
---   end)
---
---   -- notification
---   local pluralS = changeCount > 1 and 's' or ''
---   local msg = ('[%d] instance%s'):format(changeCount, pluralS)
---   if #changedFiles > 1 then
---     local fileList = table.concat(changedFiles, '\n')
---     msg = ('**%s in [%d] files**\n%s'):format(msg, #changedFiles, fileList)
---   end
---   vim.notify(msg, nil, { title = 'Renamed with LSP', icon = '󰑕' })
---
---   -- save all
---   if #changedFiles > 1 then
---     vim.cmd('silent! wall')
---   end
--- end
---------------------------------------------------------------------------------
-
--- create cc according to filetype
+-- create colorcolumn according to filetype
 local cc_filetypes = {
   c = '120',
   cpp = '120',

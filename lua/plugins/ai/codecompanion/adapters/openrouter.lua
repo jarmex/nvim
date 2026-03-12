@@ -25,7 +25,7 @@ return function()
     },
     schema = {
       model = {
-        default = 'minimax/minimax-m2.5',
+        default = 'google/gemini-3.1-flash-lite-preview',
         -- default = 'moonshotai/kimi-k2.5',
         choices = {
           'z-ai/glm-4.7',
@@ -33,7 +33,7 @@ return function()
           'x-ai/grok-code-fast-1',
           'qwen/qwen3-coder-next',
           'minimax/minimax-m2.5',
-          ['google/gemini-3.1-pro-preview'] = { opts = { can_reason = true } },
+          ['google/gemini-3.1-flash-lite-preview'] = { opts = { can_reason = true } },
           ['moonshotai/kimi-k2.5'] = { opts = { can_reason = true } },
           ['minimax/minimax-m2.1'] = { opts = { can_reason = true } },
           ['deepseek/deepseek-r1:free'] = { opts = { can_reason = true } },

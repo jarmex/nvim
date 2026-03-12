@@ -72,7 +72,7 @@ local function keymap(bufnr)
   -- map(']d', diagnostic_goto(false), { desc = 'Next Diagnostic' })
   -- map('<leader>cd', "<cmd>lua vim.diagnostic.open_float({source='if_many'})<cr>", { desc = 'Diagnostic' })
 
-  map('<leader>ld', vim.diagnostic.setloclist, { desc = 'List diagnostics' })
+  map('<leader>ql', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix [l]ist' })
 
   map('<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', { desc = '[W]orkspace [A]dd Folder' })
   map('<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', { desc = '[W]orkspace [R]emove Folder' })
@@ -84,7 +84,9 @@ local function keymap(bufnr)
   map('<leader>cr', rename, { desc = '[R]ename' })
   map('grn', vim.lsp.buf.rename, { desc = '[R]ename' })
 
-  map('<leader>ch', vim.lsp.codelens.refresh, { desc = 'CodeLens Refresh' })
+  map('<leader>ch', function()
+    vim.lsp.codelens.enable(true)
+  end, { desc = 'CodeLens Refresh' })
   map('<leader>cl', vim.lsp.codelens.run, { desc = '[C]ode[L]ens Run' })
   map('<leader>th', function()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
@@ -149,11 +151,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
     -- set up codelens
     if client:supports_method('textDocument/codeLens', ctx.buf) then
-      vim.lsp.codelens.refresh()
-      vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
-        buffer = ctx.buf,
-        callback = vim.lsp.codelens.refresh,
-      })
+      vim.lsp.codelens.enable(true)
     end
 
     -- set up workspace diagnostics

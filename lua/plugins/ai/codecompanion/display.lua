@@ -18,7 +18,7 @@ M.action_palette = {
 -- Diff Provider
 
 M.diff = {
-  enabled = true,
+  enabled = false,
   provider = 'inline', -- mini_diff|split|inline
   provider_opts = {
     split = {
@@ -48,6 +48,7 @@ M.chat = {
   show_token_count = false,
   show_reasoning = false,
   fold_reasoning = true,
+  show_context = true,
   show_tools_processing = true,
   start_in_insert_mode = false,
   auto_scroll = true,

@@ -15,6 +15,8 @@ return {
   },
   history = {
     enabled = true,
+    auto_save = true,
+    expiration_days = 45,
     opts = {
       -- Keymap to open history from chat buffer (default: gh)
       keymap = 'gh',
@@ -32,13 +34,18 @@ return {
       dir_to_save = vim.fn.stdpath('data') .. '/codecompanion-history',
       auto_save = true,
       -- Number of days after which chats are automatically deleted (0 to disable)
-      expiration_days = 0,
+      expiration_days = 45,
       save_chat_keymap = '<localleader>hs',
       title_generation_opts = {
         ---Adapter for generating titles (defaults to current chat adapter)
         adapter = DEFAULT_ADAPTOR, -- e.g. copilot, openai
         ---Model for generating titles (defaults to current chat model)
         model = DEFAULT_COPILOT_MODEL, -- "gpt-5-nano-2025-08-07"
+      },
+      picker_keymaps = {
+        rename = { n = 'gr', i = '<C-r>' },
+        delete = { n = 'dd', i = '<C-d>' },
+        duplicate = { n = 'yyp', i = '<C-y>' },
       },
       chat_filter = function(chat_data) -- only chats for the cwd
         return chat_data.cwd == vim.fn.getcwd()
@@ -96,6 +103,15 @@ return {
         { pattern = 'MOB%-(%d+)', prefix = 'MOB', format = 'MOB-%s' },
         { pattern = 'TEC%-(%d+)', prefix = 'TEC', format = 'TEC-%s' },
         { pattern = 'ENG%-(%d+)', prefix = 'ENG', format = 'ENG-%s' },
+        { pattern = 'INF%-(%d+)', prefix = 'INF', format = 'INF-%s' },
+      },
+    },
+  },
+  agentskills = {
+    opts = {
+      paths = {
+        '~/my-agent-skills', -- Single directory (non-recursive)
+        { '~/.config/nvim/skills', recursive = true }, -- Recursive search
       },
     },
   },

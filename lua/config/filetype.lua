@@ -36,5 +36,7 @@ vim.filetype.add({
     ['settings.json'] = 'jsonc',
     ['.*/requirements.*%.txt'] = 'requirements',
     ['%.env.*'] = 'sh',
+    ['.*/templates/.*%.yaml'] = 'helm',
+    ['.*Chart%.yaml'] = 'helm',
   },
 })
