@@ -120,5 +120,16 @@ M.chat = {
 M.cmd = {
   adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL },
 }
+M.cli = {
+  agent = 'claude_code',
+  agents = {
+    claude_code = {
+      cmd = 'claude',
+      args = {},
+      description = 'Claude Code CLI',
+      provider = 'terminal',
+    },
+  },
+}
 
 return M

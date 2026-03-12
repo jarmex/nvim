@@ -11,7 +11,7 @@ return {
       'j-hui/fidget.nvim',
       'hakonharnes/img-clip.nvim',
       'ravitemer/codecompanion-history.nvim', -- Save and load conversation history.
-      'ravitemer/mcphub.nvim', -- Manage MCP servers.
+      -- 'ravitemer/mcphub.nvim', -- Manage MCP servers.
       -- 'jinzhongjia/codecompanion-gitcommit.nvim',
       'lalitmee/codecompanion-spinners.nvim',
       'jarmex/codecompanion-gitcommit.nvim',
@@ -34,6 +34,7 @@ return {
 
       return {
         adapters = adapters,
+
         interactions = {
           inline = strategies.inline,
           cmd = strategies.cmd,
@@ -48,6 +49,7 @@ return {
         },
         prompt_library = require('plugins.ai.codecompanion.promptlibrary'),
         extensions = require('plugins.ai.codecompanion.extensions'),
+        mcp = require('plugins.ai.codecompanion.mcp').mcpServers,
         opts = {
           log_level = 'DEBUG',
         },
@@ -87,6 +89,19 @@ return {
 
       -- codecompanion yolo mode
       vim.g.codecompanion_yolo_mode = true
+
+      -- CodeCompanion executes 'checktime' only for the @insert_edit_into_file tool,
+      -- but files may also be modified by other tools.
+      vim.api.nvim_create_autocmd('WinLeave', {
+        desc = 'Reload buffers when leaving CodeCompanion Chat window',
+        pattern = '*',
+        group = vim.api.nvim_create_augroup('user.cc_checktime', { clear = true }),
+        callback = function()
+          if vim.bo.filetype == 'codecompanion' then
+            vim.cmd('checktime')
+          end
+        end,
+      })
     end,
   },
 }

@@ -2,17 +2,17 @@ local DEFAULT_COPILOT_MODEL = 'gpt-4.1' -- grok-code-fast-1, gpt-4.1
 local DEFAULT_ADAPTOR = 'copilot'
 
 return {
-  mcphub = {
-    callback = 'mcphub.extensions.codecompanion',
-    opts = {
-      make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers.
-      show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true).
-      add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`).
-      show_result_in_chat = true, -- Show mcp tool results in chat.
-      make_vars = true, -- Convert resources to #variables.
-      make_slash_commands = true, -- Add prompts as /slash commands.
-    },
-  },
+  -- mcphub = {
+  --   callback = 'mcphub.extensions.codecompanion',
+  --   opts = {
+  --     make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers.
+  --     show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true).
+  --     add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`).
+  --     show_result_in_chat = true, -- Show mcp tool results in chat.
+  --     make_vars = true, -- Convert resources to #variables.
+  --     make_slash_commands = true, -- Add prompts as /slash commands.
+  --   },
+  -- },
   history = {
     enabled = true,
     auto_save = true,
@@ -82,7 +82,7 @@ return {
       }, -- Optional: exclude files from diff analysis
       buffer = {
         enabled = true, -- Enable gitcommit buffer keymaps
-        keymap = '<leader>gcc', -- Keymap for generating commit message in gitcommit buffer
+        keymap = '<leader>gc', -- Keymap for generating commit message in gitcommit buffer
         auto_generate = false, -- Automatically generate message on entering gitcommit buffer
       },
       -- Feature toggles
@@ -111,7 +111,7 @@ return {
     opts = {
       paths = {
         '~/my-agent-skills', -- Single directory (non-recursive)
-        { '~/.config/nvim/skills', recursive = true }, -- Recursive search
+        { '~/.config/skills', recursive = true }, -- Recursive search
       },
     },
   },

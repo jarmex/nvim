@@ -40,9 +40,9 @@ return {
       },
     },
     keys = {
-      { '<leader>gcd', '<cmd>CodeDiff<cr>', desc = 'Diff file explorer' },
-      { '<leader>gcj', '<cmd>CodeDiff file HEAD<cr>', desc = 'Diff with HEAD' },
-      { '<leader>gcf', '<cmd>CodeDiff file HEAD~1<cr>', desc = 'Diff with HEAD~1' },
+      { '<leader>gj', '<cmd>CodeDiff<cr>', desc = 'Diff file explorer' },
+      -- { '<leader>gcj', '<cmd>CodeDiff file HEAD<cr>', desc = 'Diff with HEAD' },
+      -- { '<leader>gcf', '<cmd>CodeDiff file HEAD~1<cr>', desc = 'Diff with HEAD~1' },
       -- { '<leader>da', ':CodeDiff file ', desc = 'Diff with commit...', silent = false },
       -- { '<leader>dm', ':CodeDiff file ', desc = 'Diff two files...', silent = false },
     },

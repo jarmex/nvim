@@ -11,9 +11,3 @@ opt.shiftwidth = 4
 opt.softtabstop = 4
 opt.tabstop = 4
 opt.spell = true
-
-vim.keymap.set('n', 'gcm', [[:CodeCompanionGitCommit<CR>]], {
-  desc = 'Generate Commit Msg',
-  buffer = true,
-  silent = true,
-})
