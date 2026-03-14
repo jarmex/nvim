@@ -9,14 +9,15 @@ return {
   --   build = 'pnpm install -g mcp-hub@latest',
   --   -- build = 'bundled_build.lua',
   --   opts = function()
-  --     local gh_pat = os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')
-  --     local global_env = {
-  --       ['input:github_pat_mcp'] = gh_pat,
-  --     }
   --     return {
   --       -- use_bundled_binary = true,
   --       auto_toggle_mcp_servers = false,
-  --       global_env = global_env,
+  --       global_env = {
+  --         GITHUB_PERSONAL_ACCESS_TOKEN = os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN'),
+  --         SLACK_USER_TOKEN = os.getenv('SLACK_USER_TOKEN'),
+  --         SLACK_CLIENT_ID = os.getenv('SLACK_CLIENT_ID'),
+  --         SLACK_CLIENT_SECRET = os.getenv('SLACK_CLIENT_SECRET'),
+  --       },
   --       ui = {
   --         window = {
   --           border = vim.g.borderStyle,

@@ -37,6 +37,7 @@ require('lazy').setup({
     { import = 'plugins.db' },
     { import = 'plugins.mini' },
     { import = 'plugins.theme' },
+    { import = 'plugins.to-try' },
   },
   defaults = { lazy = true },
   install = { colorscheme = { 'catppuccin', 'habamax' } },

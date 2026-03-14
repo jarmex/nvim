@@ -3,7 +3,7 @@ name: Linear Ticket Validator
 description: Validate a Linear ticket's structure against required standards for bug reports and feature/improvement requests. Flags missing sections and offers a suggested rewrite.
 interaction: chat
 tools:
-  - mcp:linear
+  - linear
 opts:
   auto_submit: false
   alias: linear_validate

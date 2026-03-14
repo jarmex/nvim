@@ -1,15 +1,33 @@
 return {
-  -- ['code_crawler'] = require('plugins.ai.codecompanion.tools.code_crawler'),
-  -- ['code_edit'] = require('plugins.ai.codecompanion.tools.code_edit'),
-  -- ['tavily'] = require('plugins.ai.codecompanion.tools.tavily'),
-  -- ['code_developer'] = require('plugins.ai.codecompanion.tools.developer'),
   ['insert_edit_into_file'] = {
-    description = 'Insert code into an existing file',
     opts = {
-      requires_approval = { -- Require approval before the tool is executed?
-        requires_approval_before = false,
-      },
+      require_approval_before = false,
       require_confirmation_after = false,
+    },
+  },
+  run_command = {
+    opts = {
+      require_approval_before = true,
+    },
+  },
+  read_file = {
+    opts = {
+      require_approval_before = false,
+    },
+  },
+  grep_search = {
+    opts = {
+      require_approval_before = false,
+    },
+  },
+  list_files = {
+    opts = {
+      require_approval_before = false,
+    },
+  },
+  fetch = {
+    opts = {
+      require_approval_before = false,
     },
   },
   groups = {

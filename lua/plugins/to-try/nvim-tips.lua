@@ -27,9 +27,9 @@ return {
       map('n', '<leader>ntr', ':NeovimTipsRandom<CR>', { desc = 'Show random tip', noremap = true, silent = true })
     end,
   },
-  {
-    'alex-popov-tech/store.nvim',
-    dependencies = { 'OXY2DEV/markview.nvim' },
-    cmd = 'Store',
-  },
+  -- {
+  --   'alex-popov-tech/store.nvim',
+  --   dependencies = { 'OXY2DEV/markview.nvim' },
+  --   cmd = 'Store',
+  -- },
 }

@@ -58,9 +58,11 @@ return {
             parser = 'claude',
             description = 'Rule files for claude',
             files = {
-              '~/.claude/CLAUDE.md',
-              'CLAUDE.md',
+              { path = 'CLAUDE.md', parser = 'claude' },
+              { path = 'CLAUDE.local.md', parser = 'claude' },
+              { path = '~/.claude/CLAUDE.md', parser = 'claude' },
             },
+            is_preset = true,
           },
           opts = {
             chat = {

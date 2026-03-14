@@ -15,7 +15,7 @@ opts:
 
 ## user
 
-# {editor_context}
+#{buffer}
 
 @{agent}
 

@@ -17,9 +17,9 @@ return {
   },
   keys = {
     -- suggested keymap
-    { '<leader>#', '<cmd>PasteImage<cr>', desc = 'Paste image from system clipboard' },
+    { '<leader>zp', '<cmd>PasteImage<cr>', desc = 'Paste image from system clipboard' },
     {
-      '<leader>#/',
+      '<leader>#',
       function()
         Snacks.picker.files({
           ft = { 'jpg', 'jpeg', 'png', 'webp' },
