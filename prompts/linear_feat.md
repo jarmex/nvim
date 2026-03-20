@@ -2,7 +2,7 @@
 name: Linear Feature Ticket
 description: Generate a Linear issue in the Engineering team
 interaction: chat
-tools:
+mcp_servers:
   - linear
 opts:
   auto_submit: false

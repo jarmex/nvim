@@ -299,7 +299,7 @@ return {
         projects = {
           projects = {
             vim.fn.expand('~/Projects/PayAngel/StandApp/Nodejs'),
-            vim.fn.expand('~/Projects/PAiC/extended'),
+            -- vim.fn.expand('~/Projects/PAiC/extended'),
           },
           recent = true,
           dev = { '~/Projects/PayAngel/StandApp/Nodejs', '~/Projects/PAiC/extended' },

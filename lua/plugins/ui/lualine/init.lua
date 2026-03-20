@@ -21,7 +21,7 @@ return {
       local status = require('plugins.ui.lualine.status')
       return {
         options = {
-          theme = 'catppuccin',
+          theme = 'catppuccin-nvim',
           icons_enabled = true,
           component_separators = { left = '', right = '' },
           section_separators = { left = '', right = '' },

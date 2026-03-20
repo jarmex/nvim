@@ -2,7 +2,7 @@
 name: Linear Release Notes
 description: Generate executive-level release notes from Linear tickets.
 interaction: chat
-tools:
+mcp_servers:
   - linear
 opts:
   auto_submit: false

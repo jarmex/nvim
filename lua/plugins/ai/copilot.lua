@@ -3,7 +3,7 @@ return {
     'zbirenbaum/copilot.lua',
     cmd = 'Copilot',
     event = 'InsertEnter',
-    keys = { { '<leader>cp', ':Copilot<CR>', desc = 'Copilot' } },
+    -- keys = { { '<leader>cp', ':Copilot<CR>', desc = 'Copilot' } },
     build = ':Copilot auth',
     dependencies = {
       'copilotlsp-nvim/copilot-lsp',

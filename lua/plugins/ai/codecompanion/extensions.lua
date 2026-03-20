@@ -37,10 +37,12 @@ return {
       expiration_days = 45,
       save_chat_keymap = '<localleader>hs',
       title_generation_opts = {
-        ---Adapter for generating titles (defaults to current chat adapter)
-        adapter = DEFAULT_ADAPTOR, -- e.g. copilot, openai
-        ---Model for generating titles (defaults to current chat model)
-        model = DEFAULT_COPILOT_MODEL, -- "gpt-5-nano-2025-08-07"
+        adapter = nil, -- defaults to current chat adapter when nil
+        model = nil, -- defaults to current chat model when nil
+        refresh_every_n_prompts = 1, -- 10,
+        format_title = function(original_title)
+          return original_title
+        end,
       },
       picker_keymaps = {
         rename = { n = 'gr', i = '<C-r>' },
@@ -51,8 +53,18 @@ return {
         return chat_data.cwd == vim.fn.getcwd()
       end,
       summary = {
-        create_summary_keymap = '<Leader>csc',
-        browse_summaries_keymap = '<Leader>csb',
+        create_summary_keymap = 'gcs',
+        browse_summaries_keymap = 'gbs',
+
+        generation_opts = {
+          adapter = nil, -- defaults to current chat adapter
+          model = nil, -- defaults to current chat model
+          context_size = 128000, -- max tokens that the model supports
+          include_references = true, -- include slash command content
+          include_tool_outputs = true, -- include tool execution results
+          system_prompt = nil, -- custom system prompt (string or function)
+          format_summary = nil, -- custom function to format generated summary e.g to remove <think/> tags from summary
+        },
       },
     },
   },

@@ -2,7 +2,7 @@
 name: Linear Bug Ticket
 description: Generate a Linear Bug issue in the Engineering team
 interaction: chat
-tools:
+mcp_servers:
   - linear
 opts:
   alias: linear-bug

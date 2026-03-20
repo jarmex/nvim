@@ -8,6 +8,7 @@ return {
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
+      -- preset = 'obsidian',
       quote = {
         repeat_linebreak = true, -- full border on soft-wrap
       },
@@ -15,6 +16,7 @@ return {
         blink = { enabled = true },
         lsp = { enabled = true },
       },
+      debounce = 250,
       file_types = { 'markdown', 'codecompanion', 'obsidian' },
       -- render_modes = { 'n', 'c', 'i' },
       latex = { enabled = false },

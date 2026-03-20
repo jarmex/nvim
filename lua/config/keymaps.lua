@@ -111,8 +111,6 @@ keymap('n', '<M-Down>', ':resize -2<CR>', { desc = 'Decrease window height', sil
 keymap('n', '<M-Left>', ':vertical resize -2<CR>', { desc = 'Decrease window width', silent = true })
 keymap('n', '<M-Right>', ':vertical resize +2<CR>', { desc = 'Increase window width', silent = true })
 
--- keymap('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'Line Diagnostics' })
-
 -- Tabs
 keymap('n', '<leader><tab>l', '<cmd>tablast<cr>', { desc = 'Last Tab' })
 keymap('n', '<leader><tab>f', '<cmd>tabfirst<cr>', { desc = 'First Tab' })

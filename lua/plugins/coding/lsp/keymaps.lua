@@ -68,10 +68,6 @@ local function keymap(bufnr)
 
   map('gl', vim.diagnostic.open_float, { desc = 'View current diagnostic' })
 
-  -- map('[d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
-  -- map(']d', diagnostic_goto(false), { desc = 'Next Diagnostic' })
-  -- map('<leader>cd', "<cmd>lua vim.diagnostic.open_float({source='if_many'})<cr>", { desc = 'Diagnostic' })
-
   map('<leader>ql', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix [l]ist' })
 
   map('<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', { desc = '[W]orkspace [A]dd Folder' })
@@ -94,19 +90,6 @@ local function keymap(bufnr)
 
   map('<leader>gD', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
   map('grd', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
-
-  -- Copy the diagnostic message under your cursor to the clipboard
-  map('<leader>cd', function()
-    local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
-    local diags = vim.diagnostic.get(0, { lnum = lnum })
-    if #diags > 0 then
-      local msg = diags[1].message
-      vim.fn.setreg('+', msg)
-      print('✔ Diagnostic copied: ' .. msg:gsub('\n.*', ' …'))
-    else
-      print('No diagnostic on this line')
-    end
-  end, { desc = '[C]opy [D]iagnostic under cursor' })
 
   --- TypeScript Tools
   if not isTsToolOk then

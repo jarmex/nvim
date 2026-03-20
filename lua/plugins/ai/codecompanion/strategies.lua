@@ -32,6 +32,14 @@ M.background = {
     model = COPILOT_GPTMODEL,
   },
   chat = {
+    callbacks = {
+      ['on_ready'] = {
+        actions = {
+          'interactions.background.builtin.chat_make_title',
+        },
+        enabled = true,
+      },
+    },
     opts = {
       enabled = true,
     },
@@ -120,6 +128,7 @@ M.chat = {
 M.cmd = {
   adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL },
 }
+
 M.cli = {
   agent = 'claude_code',
   agents = {
@@ -129,6 +138,16 @@ M.cli = {
       description = 'Claude Code CLI',
       provider = 'terminal',
     },
+    codex = {
+      cmd = 'codex',
+      args = {},
+      description = 'OpenAI Codex CLI',
+      provider = 'terminal',
+    },
+  },
+  opts = {
+    auto_insert = true, -- Enter insert mode when focusing the CLI terminal
+    reload = true, -- Reload buffers when an agent modifies files on disk
   },
 }
 

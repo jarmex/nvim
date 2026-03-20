@@ -55,7 +55,6 @@ return {
     desc = 'Add selection to CodeCompanionChat',
     silent = true,
   },
-  { '<leader>ai', '<cmd>CodeCompanion<cr>', mode = { 'n', 'v' }, desc = 'InlineCode', silent = true },
   {
     '<leader>at',
     '<cmd>CodeCompanionChat Toggle<CR>',
@@ -65,36 +64,32 @@ return {
   },
   { '<leader>aa', '<cmd>CodeCompanionActions<CR>', desc = '[A]I [A]ctions', mode = { 'n', 'v' }, silent = true },
   { '<leader>ad', ':CodeCompanionChat adapter=deepseek<CR>', desc = 'Codecompanion DeepSeek', silent = true },
-  { '<leader>ag', ':CodeCompanionChat adapter=gemini<CR>', desc = 'Codecompanion: Gemini', silent = true },
-  { '<leader>al', ':CodeCompanionChat adapter=ollama<CR>', desc = 'Codecompanion Ollama', silent = true },
   { '<leader>an', ':CodeCompanionChat adapter=anthropic<CR>', desc = 'Codecompanion Anthropic', silent = true },
   { '<leader>ao', ':CodeCompanionChat adapter=openai<CR>', desc = 'Codecompanion OpenAI', silent = true },
   { '<leader>au', ':CodeCompanionChat adapter=openrouter<CR>', desc = 'Codecompanion OpenRouter', silent = true },
   { '<leader>aq', ':CodeCompanionChat adapter=qwen<CR>', desc = 'Codecompanion Qwen', silent = true },
-  {
-    '<Leader>aA',
-    '<Cmd>lua require("codecompanion.interactions.inline"):stop()<CR>',
-    desc = 'AI: Abort inline request',
-    silent = true,
-  },
   { '<Leader>ah', '<Cmd>CodeCompanionHistory<CR>', desc = 'AI: Show chat history', silent = true },
-  { '<leader>aj', ask_selection, mode = { 'n', 'v' }, desc = 'Code Companion Inline Prompt', silent = true },
+  { '<leader>ai', ask_selection, mode = { 'n', 'v' }, desc = 'Code Companion Inline Prompt', silent = true },
   { '<Leader>ae', open_chat, desc = '[A]I CodeCompanion [c]hat', silent = true },
+  { '<leader>al', ':CodeCompanionCLI<CR>', desc = 'Open Claude Code', silent = true },
   {
     '<leader>as',
-    function()
-      require('codecompanion').prompt('tests')
-    end,
+    '<cmd>CodeCompanionChat /write-tests<CR>',
     mode = 'v',
     desc = 'Generate Tests (CodeCompanion)',
     silent = true,
   },
   {
-    '<leader>af',
+    '<Leader>cp',
     function()
-      require('codecompanion').prompt('fix')
+      return require('codecompanion').cli({ prompt = true })
     end,
-    mode = { 'x', 'v' },
-    desc = ' Fix Code (CodeCompanion)',
+    mode = { 'n', 'v' },
+    desc = 'Prompt the CLI agent',
+    silent = true,
   },
+  -- [C]odeCompanion [D]iagnostics
+  vim.keymap.set('n', '<LocalLeader>cd', function()
+    return require('codecompanion').cli('#{diagnostics} Can you fix these?', { focus = false, submit = true })
+  end, { desc = 'Send diagnostics to CLI agent' }),
 }
