@@ -1,13 +1,22 @@
 return {
   ['insert_edit_into_file'] = {
     opts = {
-      require_approval_before = false,
-      require_confirmation_after = false,
+      requires_approval_before = {
+        buffer = false,
+        file = false,
+      },
+      requires_approval_after = true,
     },
   },
-  run_command = {
+  ['run_command'] = {
     opts = {
-      require_approval_before = true,
+      require_approval_before = false,
+      requires_approval_after = false,
+    },
+  },
+  ['delete_file'] = {
+    opts = {
+      requires_approval_before = true,
     },
   },
   read_file = {
@@ -28,6 +37,13 @@ return {
   fetch = {
     opts = {
       require_approval_before = false,
+    },
+  },
+  ['memory'] = {
+    opts = {
+      whitelist = {
+        { path = '~/.config/personal/PERSONAL.md', as = '/personal' },
+      },
     },
   },
   groups = {

@@ -11,8 +11,6 @@ return {
       'j-hui/fidget.nvim',
       'hakonharnes/img-clip.nvim',
       'ravitemer/codecompanion-history.nvim', -- Save and load conversation history.
-      -- 'ravitemer/mcphub.nvim', -- Manage MCP servers.
-      -- 'jinzhongjia/codecompanion-gitcommit.nvim',
       'lalitmee/codecompanion-spinners.nvim',
       'jarmex/codecompanion-gitcommit.nvim',
       'cairijun/codecompanion-agentskills.nvim',
@@ -27,7 +25,6 @@ return {
     event = 'VeryLazy',
     keys = require('plugins.ai.codecompanion.keymaps'),
     opts = function()
-      -- local systemPromptModes = require('plugins.ai.codecompanion.systemprompts.try_sys_prompt')
       local adapters = require('plugins.ai.codecompanion.adapters')
       local display = require('plugins.ai.codecompanion.display')
       local strategies = require('plugins.ai.codecompanion.strategies')
