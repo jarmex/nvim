@@ -27,13 +27,17 @@ return {
       },
       checkbox = {
         enabled = true,
-        unchecked = { icon = '󱍫', highlight = 'DiagnosticInfo' },
-        checked = { icon = '󱍧', highlight = 'DiagnosticOk' },
+        -- unchecked = { icon = '󱍫', highlight = 'DiagnosticInfo' },
+        -- checked = { icon = '󱍧', highlight = 'DiagnosticOk' },
+
+        checked = { icon = '󰄵' },
+        unchecked = { icon = '󰄱' },
         custom = {
           in_progress = { raw = '[+]', rendered = '󱍬', highlight = 'DiagnosticInfo' },
           wont_do = { raw = '[/]', rendered = '󱍮', highlight = 'DiagnosticError' },
           waiting = { raw = '[?]', rendered = '󱍥', highlight = 'DiagnosticWarn' },
-          todo = { rendered = '◯ ' },
+          -- todo = { rendered = '◯ ' },
+          todo = { rendered = '󰡖', raw = '[-]', highlight = 'RenderMarkdownInfo' },
         },
       },
       pipe_table = {
@@ -46,6 +50,14 @@ return {
         min_width = vim.o.textwidth,
         icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' }, -- `numeric_x` glyphs
         -- icons = { "󰲠 ", "󰲢 ", "󰲤 ", "󰲦 ", "󰲨 ", "󰲪 " },
+      },
+      dash = {
+        width = vim.o.textwidth,
+        priority = 10, -- don't cover codelens from `markdown-oxide` for 1st line of frontmatter
+      },
+      bullet = {
+        icons = { '◇', '▪️', '▫️' }, -- ◆◇•◦▫️▪️
+        ordered_icons = '', -- disable overwriting ordered list numbers with 1-2-3
       },
       html = {
         enabled = true,

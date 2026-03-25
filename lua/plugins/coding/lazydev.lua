@@ -12,6 +12,7 @@ return {
         'lazy.nvim',
         'luvit-meta/library',
         'neotest',
+        'nvim-dap-ui',
         'plenary',
         -- Load luvit types when the `vim.uv` word is found
         { path = 'luvit-meta/library', words = { 'vim%.uv' } },

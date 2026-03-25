@@ -88,7 +88,19 @@ return {
     end,
     config = dapConfig,
   },
-
+  {
+    'theHamsta/nvim-dap-virtual-text',
+    opts = { virt_text_pos = 'eol' },
+    config = function(_, opts)
+      require('nvim-dap-virtual-text').setup(opts)
+      vim.api.nvim_create_user_command('DapVirtualTextClear', function()
+        require('nvim-dap-virtual-text.virtual_text').clear_virtual_text()
+      end, {
+        desc = 'Clear all the virtual text displayed by nvim-dap-virtual-text',
+        force = true,
+      })
+    end,
+  },
   { -- fancy UI for the debugger
     'rcarriga/nvim-dap-ui',
     event = 'VeryLazy',
@@ -125,6 +137,7 @@ return {
         indent = 2,
         max_value_lines = 100,
       },
+      wrap = true,
     },
     config = function(_, opts)
       local dap, dapui = require('dap'), require('dapui')

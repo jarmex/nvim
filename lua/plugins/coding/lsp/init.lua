@@ -1,5 +1,10 @@
 return {
   {
+    'qvalentin/helm-ls.nvim',
+    ft = 'helm',
+    opts = {},
+  },
+  {
     'neovim/nvim-lspconfig',
     cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
     event = { 'BufReadPre', 'BufNewFile' },

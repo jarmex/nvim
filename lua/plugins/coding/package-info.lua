@@ -18,7 +18,7 @@ return {
     },
     keys = {
       {
-        '<leader>ni',
+        '<leader>pi',
         '<cmd>lua require("package-info").show()<cr>',
         mode = { 'n' },
         desc = 'Show package info',
@@ -26,10 +26,26 @@ return {
         noremap = true,
       },
       {
-        '<leader>np',
+        '<leader>pc',
         '<cmd>lua require("package-info").change_version()<cr>',
         mode = { 'n' },
         desc = 'Change package version',
+        silent = true,
+        noremap = true,
+      },
+      {
+        '<leader>pd',
+        '<cmd>lua require("package-info").delete()<cr>',
+        mode = { 'n' },
+        desc = 'Delete package',
+        silent = true,
+        noremap = true,
+      },
+      {
+        '<leader>pu',
+        '<cmd>lua require("package-info").update()<cr>',
+        mode = { 'n' },
+        desc = 'Update package',
         silent = true,
         noremap = true,
       },
