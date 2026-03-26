@@ -69,6 +69,7 @@ return {
             status.showMacroRecording(),
             status.filetype(),
             status.LazyUpdates(),
+            status.Overseer(),
             -- status.treesitter(),
             {
               function()

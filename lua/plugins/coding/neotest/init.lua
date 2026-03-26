@@ -10,41 +10,9 @@ local adaptersList = {
     args = { '--coverage' },
   },
   ['neotest-jest'] = {
-    -- Use yarn test command prefix
-    -- jestCommand = "yarn test --",
-
-    -- Use npm test command prefix
-    jestCommand = 'npm run test --',
-    env = { CI = true },
-    cwd = function()
-      return vim.fn.getcwd()
-    end,
-    jestConfigFile = function()
-      --return require("neotest.providers.jest.config").find_config(file_path,
-      --    { 'jest.config.js', 'jest.config.ts', 'jest.config.mjs', 'jest.config.cjs' })
-      -- or return custom path: return vim.fn.getcwd() .. "/jest.config.js"
-      return vim.fn.getcwd() .. '/jest.config.ts'
-    end,
-    -- env = { CI = true }, -- Pass environment variables if needed
-    -- Disable Jest's internal test discovery if Neotest handles it better
-    jest_test_discovery = true,
-    isTestFile = function(file_path)
-      if require('neotest-jest.jest-util').defaultIsTestFile(file_path) then
-        return true
-      end
-
-      local ext = vim.fn.fnamemodify(file_path, ':e:e')
-
-      return ext == 'it.ts' and require('neotest-jest.jest-util').hasJestDependency(file_path)
-    end,
-    strategy_config = function(default_strategy, _)
-      default_strategy['resolveSourceMapLocations'] = {
-        '${workspaceFolder}/**',
-        '!**/node_modules/**',
-      }
-
-      return default_strategy
-    end,
+    -- jestCommand = 'pnpm run test --',
+    -- env = { CI = true },
+    -- cwd = require('neotest-jest').root,
   },
 
   ['neotest-golang'] = {

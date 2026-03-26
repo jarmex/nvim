@@ -1,27 +1,24 @@
 -- get_pull_request_diff
 local get_pull_request_diff = [[
+@{run_command}
 You are conducting a **security-focused, pragmatic code review**. Output must be **succinct, line-specific, and actionable**.
 
 ---
 
 ## Context Retrieval (Run in Order)
 
-1. **Repository Info**
-   ```bash
-   git remote get-url origin | sed 's/.*github\.com[:/]\([^/]*\)\/\([^/.]*\).*/\1 \2/'
-   ```
-   Capture: `repo_owner`, `repo_name`
+1. **Pull Request Metadata**
+   Run: `gh pr view --json number,title,body,state,author,baseRefName,headRefName,labels,additions,deletions,changedFiles`
 
-2. **Pull Request Data**
-   - Fetch PR: `@{github__get_pull_request}`
-   - Fetch diff: `@{github__get_pull_request_diff}`
+2. **Pull Request Diff**
+   Run: `gh pr diff`
 
 3. **Linear Ticket** (if referenced in PR title/body/branch)
    - Parse for pattern: `[A-Z]+-\d+` (e.g., `PAY-123`)
    - If found: `@{linear__get_issue}`
    - If not found: state "No Linear ticket referenced"
 
-4. **Error Handling**: If tools fail, continue review with available data and note gaps.
+4. **Error Handling**: If commands fail, continue review with available data and note gaps.
 
 ---
 
@@ -164,14 +161,10 @@ Please analyze the code changes and provide:
 
 Focus on being constructive and educational. Explain reasoning behind feedback, especially for architectural decisions.
 
-First, let me get the repository information from git and fetch the PR details:
-
-Run this command to get repo info: `git remote get-url origin | sed 's/.*github\.com[:/]\([^/]*\)\/\([^/.]*\).*/\1 \2/'`
-
-Then I'll use that info to:
-1. Get PR details: @{github__get_pull_request}
-2. Check for Jira ticket in description: @{linear__get_issue} if referenced
-3. Get the diff: @{github__get_pull_request_diff} for PR number:
+First, fetch the PR details by running:
+1. `gh pr view --json number,title,body,state,author,baseRefName,headRefName,labels,additions,deletions,changedFiles`
+2. `gh pr diff`
+3. Check for Linear ticket in description: @{linear__get_issue} if referenced
 ]]
 
 return {
@@ -187,4 +180,94 @@ return {
       { role = 'user', content = get_pull_request_diff },
     },
   },
+
+  --   ['PR Review Workflow'] = {
+  --     interaction = 'chat',
+  --     description = 'Multi-step PR review: fetch context → security → quality → verdict',
+  --     opts = {
+  --       is_workflow = true,
+  --     },
+  --     prompts = {
+  --       -- Step 1: Fetch all PR context
+  --       {
+  --         {
+  --           role = 'user',
+  --           content = [[
+  -- @{run_command}
+  -- Fetch the following context and confirm what you found before proceeding:
+  --
+  -- 1. Run: `gh pr view --json number,title,body,state,author,baseRefName,headRefName,labels,additions,deletions,changedFiles`
+  -- 2. Run: `gh pr diff`
+  -- 3. If a Linear ticket ID (pattern `[A-Z]+-\d+`) is in the PR title/body/branch, fetch it: @{linear__get_issue}
+  --
+  -- Summarize: PR title, description, changed files count, and Linear ticket summary (if found).
+  --           ]],
+  --         },
+  --       },
+  --       -- Step 2: Security analysis
+  --       {
+  --         {
+  --           role = 'user',
+  --           content = [[
+  -- Based on the PR diff above, perform a focused **security review only**.
+  --
+  -- Check for:
+  -- - Input validation (injection, XSS, command injection)
+  -- - AuthN/AuthZ on all new endpoints or jobs
+  -- - Hardcoded secrets or tokens
+  -- - Insecure defaults (CORS, TLS, cookies)
+  -- - PII in logs or error responses
+  -- - Vulnerable dependencies introduced
+  --
+  -- Format each finding as:
+  -- **Severity**: Blocking | Major | Minor
+  -- **Location**: file:line
+  -- **Issue**: description
+  -- **Fix**: specific solution
+  --
+  -- State "No security issues found" if clean.
+  --           ]],
+  --         },
+  --       },
+  --       -- Step 3: Code quality + architecture
+  --       {
+  --         {
+  --           role = 'user',
+  --           content = [[
+  -- Now review **code quality and architecture** for the same diff.
+  --
+  -- Cover:
+  -- - Design patterns and separation of concerns
+  -- - Function complexity (target <20 lines, nesting ≤3)
+  -- - Error handling and null safety
+  -- - Performance concerns (N+1 queries, blocking I/O, large payloads)
+  -- - Test coverage gaps
+  --
+  -- Anchor all feedback to `file:line`. Be specific and actionable.
+  --           ]],
+  --         },
+  --       },
+  --       -- Step 4: Final verdict (auto_submit false so you can review before sending)
+  --       {
+  --         {
+  --           role = 'user',
+  --           opts = { auto_submit = false },
+  --           content = [[
+  -- Given your findings above, give the final review verdict:
+  --
+  -- **Decision**: Approve | Approve with nits | Request changes
+  --
+  -- If requesting changes, list **required** (blocking) vs **suggested** (nit) items.
+  --
+  -- End with a "Definition of Done" checklist:
+  -- - [ ] No blocking security issues
+  -- - [ ] Tests cover new logic and critical paths
+  -- - [ ] No secrets; PII handled properly
+  -- - [ ] Breaking changes documented
+  -- - [ ] Observability added for new code paths
+  --           ]],
+  --         },
+  --       },
+  --     },
+  --   },
 }

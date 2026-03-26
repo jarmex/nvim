@@ -81,6 +81,6 @@ Every task is considered complete only when:
 
 ## user
 
-Use the @{linear} tool to create a Linear issue in the Engineering team.
+Use the @{mcp:linear} tool to create a Linear issue in the Engineering team.
 
 Feature or Task Description Input below:

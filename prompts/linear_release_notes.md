@@ -62,4 +62,4 @@ A polished, concise, executive-ready release note designed for senior leadership
 
 ## user
 
-Use the @{linear} tool to get the list of Linear tickets for the upcoming release.
+Use the @{mcp:linear} tool to get the list of Linear tickets for the upcoming release.

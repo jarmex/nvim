@@ -1,6 +1,19 @@
-local matcher = require('overseer.template.vscode.problem_matcher')
-
 local M = {}
+
+-- Matches: src/index.ts:10:7 lint/style/useConst ━━━━━━━...
+M.biome_problem_matcher = {
+  owner = 'biome',
+  fileLocation = 'autoDetect',
+  pattern = {
+    {
+      vim_regexp = '\\v^(\\S+):(\\d+):(\\d+) (\\S+)',
+      file = 1,
+      line = 2,
+      column = 3,
+      message = 4,
+    },
+  },
+}
 
 M.python_problem_matcher = {
   owner = 'python',
@@ -28,11 +41,15 @@ M.python_problem_matcher = {
 local command_problem_matcher = {
   {
     regexp = '\\(cmake\\|reach\\).*build',
-    problem_matcher = matcher.resolve_problem_matcher('$gcc'),
+    problem_matcher = '$gcc',
   },
   {
     regexp = '\\(py\\|conf-test\\)',
     problem_matcher = M.python_problem_matcher,
+  },
+  {
+    regexp = 'biome',
+    problem_matcher = M.biome_problem_matcher,
   },
 }
 
@@ -53,6 +70,7 @@ end
 ---@param params overseer.Params?
 ---@return table|nil problem_matcher
 function M.get_problem_matcher(cmd, params)
+  local matcher = require('overseer.template.vscode.problem_matcher')
   local problem_matcher = nil
 
   if params and params.problem_matcher then
@@ -60,7 +78,10 @@ function M.get_problem_matcher(cmd, params)
   end
 
   if problem_matcher == nil then
-    problem_matcher = M.get_problem_matcher_from_cmd(cmd)
+    local raw = M.get_problem_matcher_from_cmd(cmd)
+    if raw then
+      problem_matcher = type(raw) == 'string' and matcher.resolve_problem_matcher(raw) or raw
+    end
   end
 
   return problem_matcher

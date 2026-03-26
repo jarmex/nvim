@@ -27,61 +27,56 @@ return {
     'stevearc/overseer.nvim',
     -- tag = 'v1.6.0',
     cmd = {
-      'OverseerBuild',
-      'OverseerClearCache',
       'OverseerClose',
-      'OverseerDeleteBundle',
       'OverseerFromTerminal',
       'OverseerInfo',
-      'OverseerLoadBundle',
       'OverseerOpen',
-      'OverseerQuickAction',
       'OverseerRun',
-      'OverseerRunCmd',
-      'OverseerSaveBundle',
       'OverseerTaskAction',
       'OverseerToggle',
     },
     keys = {
       { '<leader>o', '', desc = 'Overseer' },
-      { '<leader>oR', '<cmd>OverseerRunCmd<cr>', desc = 'Run Command' },
       { '<leader>ol', '<cmd>OverseerTaskAction<cr>', desc = 'Task Action' },
-      { '<leader>ob', '<cmd>OverseerBuild<cr>', desc = 'Build' },
       { '<leader>oc', '<cmd>OverseerClose<cr>', desc = 'Close' },
-      { '<leader>od', '<cmd>OverseerDeleteBundle<cr>', desc = 'Delete Bundle' },
-      { '<leader>ob', '<cmd>OverseerLoadBundle<cr>', desc = 'Load Bundle' },
-      { '<leader>oi', '<cmd>OverseerInfo<cr>', desc = 'Overseer Info' },
       { '<leader>oo', run_last_task, desc = 'Run the last Overseer task' },
-      { '<leader>oq', '<cmd>OverseerQuickAction<cr>', desc = 'Quick Action' },
       { '<leader>or', '<cmd>OverseerRun<cr>', desc = 'Run' },
-      { '<leader>os', '<cmd>OverseerSaveBundle<cr>', desc = 'Save Bundle' },
       { '<leader>ot', '<cmd>OverseerToggle<cr>', desc = 'Toggle' },
-      { '<leader>oh', '<cmd>OverseerClearCache<cr>', desc = 'Clear cache' },
       { '<leader>ox', '<cmd>OverseerFromTerminal<cr>', mode = { 'n', 'v' }, desc = 'Overseer From Terminal' },
       { '<leader>oa', '<cmd>OverseerRestartLast<cr>', desc = 'Overseer Restart Last' },
       { '<leader>op', open_first_failed_task, desc = 'Overseer Open Failed Task' },
+      {
+        '<leader>od',
+        function()
+          local overseer = require('overseer')
+          local task_list = require('overseer.task_list')
+          local tasks = overseer.list_tasks({
+            sort = task_list.sort_finished_recently,
+            include_ephemeral = true,
+          })
+          if vim.tbl_isempty(tasks) then
+            vim.notify('No tasks found', vim.log.levels.WARN)
+          else
+            local most_recent = tasks[1]
+            overseer.run_action(most_recent)
+          end
+        end,
+        mode = 'n',
+        desc = '[O]verseer [D]o quick action',
+      },
     },
     opts = {
       output = {
         -- Use a terminal buffer to display output. If false, a normal buffer is used
         use_terminal = true,
         -- If true, don't clear the buffer when a task restarts
-        preserve_output = false,
+        preserve_output = true,
       },
       templates = { 'make', 'user', 'vscode', 'task', 'shell' },
       -- Auto-detect task files
       auto_detect_success_color = true,
       dap = false,
       strategy = { 'jobstart', preserve_output = true, use_terminal = true, use_shell = true },
-      -- strategy = {
-      --   'toggleterm',
-      --   auto_scroll = false,
-      --   close_on_exit = false,
-      --   hidden = false,
-      --   open_on_start = false,
-      --   quit_on_exit = 'never',
-      --   use_shell = true,
-      -- },
       task_launcher = {
         bindings = {
           n = {

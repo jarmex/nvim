@@ -80,7 +80,7 @@ return {
     silent = true,
   },
   {
-    '<Leader>cp',
+    '<Leader>ap',
     function()
       return require('codecompanion').cli({ prompt = true })
     end,

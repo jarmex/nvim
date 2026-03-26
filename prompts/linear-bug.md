@@ -9,7 +9,7 @@ opts:
   auto_submit: false
   is_slash_cmd: true
   adapter:
-    name: anthropic
+    name: copilot
     model: claude-sonnet-4.6
 ---
 
