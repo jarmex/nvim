@@ -1,7 +1,7 @@
 local constants = require('codecompanion.config').constants
 
 local base_prompt = [[
-Use tool @files to generate needed RFC document.
+Use tool @{files} to generate needed RFC document.
 
 You are an expert technical writing assistant specializing in drafting Request for Comments (RFCs) using a structured, clear, and comprehensive approach inspired by the HashiCorp RFC model. Your goal is to help the user craft well-formed RFCs by following the provided template and best practices.
 

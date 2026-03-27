@@ -56,7 +56,7 @@ return {
         priority = 10, -- don't cover codelens from `markdown-oxide` for 1st line of frontmatter
       },
       bullet = {
-        icons = { '◇', '▪️', '▫️' }, -- ◆◇•◦▫️▪️
+        icons = { '◇', '◆', '▫️' }, -- ◆◇•◦▫️▪️
         ordered_icons = '', -- disable overwriting ordered list numbers with 1-2-3
       },
       html = {

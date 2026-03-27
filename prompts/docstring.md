@@ -37,6 +37,7 @@ Add appropriate documentation to this code:
 - Keep any existing documentation style
 - Return the complete code with added documentation
 - Also suggest to have better naming to improve readability.
+- Be succinct.
 
 ```${context.filetype}
 ${context.code}

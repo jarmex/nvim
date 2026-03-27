@@ -9,6 +9,37 @@ local function open_chat()
   end
 end
 
+-- Smart Inline
+--
+-- Handle <leader>c mapping intelligently based on selection state.
+-- No selection: Start with current file context
+-- With selection: Use range-based CodeCompanion
+local function smart_inline()
+  local mode = vim.api.nvim_get_mode().mode
+  local has_snacks = pcall(require, 'snacks.input')
+
+  if has_snacks then
+    -- Use snacks input
+    if mode == 'n' then
+      vim.ui.input({ prompt = 'CodeCompanion: ' }, function(input)
+        if input and input ~= '' then
+          vim.cmd('CodeCompanion #{buffer} ' .. input)
+        end
+      end)
+    else
+      vim.ui.input({ prompt = 'CodeCompanion: ' }, function(input)
+        if input and input ~= '' then
+          vim.cmd("'<,'>CodeCompanion " .. input)
+        end
+      end)
+    end
+  else
+    -- Fallback to command line
+    local prefix = mode == 'n' and ':CodeCompanion #{buffer} ' or ':CodeCompanion '
+    vim.fn.feedkeys(prefix, 'n')
+  end
+end
+
 local function ask_selection()
   vim.ui.input({ prompt = 'CodeCompanion Input: ' }, function(input)
     if not input then
@@ -70,6 +101,14 @@ return {
   { '<leader>aq', ':CodeCompanionChat adapter=qwen<CR>', desc = 'Codecompanion Qwen', silent = true },
   { '<Leader>ah', '<Cmd>CodeCompanionHistory<CR>', desc = 'AI: Show chat history', silent = true },
   { '<leader>ai', ask_selection, mode = { 'n', 'v' }, desc = 'Code Companion Inline Prompt', silent = true },
+  {
+    '<leader>as',
+    smart_inline,
+    mode = { 'n', 'v' },
+    desc = 'CodeCompanion Smart Inline',
+    silent = true,
+    noremap = true,
+  },
   { '<Leader>ae', open_chat, desc = '[A]I CodeCompanion [c]hat', silent = true },
   { '<leader>al', ':CodeCompanionCLI<CR>', desc = 'Open Claude Code', silent = true },
   {

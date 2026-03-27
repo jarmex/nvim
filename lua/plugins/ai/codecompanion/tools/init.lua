@@ -43,6 +43,7 @@ return {
     opts = {
       whitelist = {
         { path = '~/.config/personal/PERSONAL.md', as = '/personal' },
+        { path = '~/.config/personal/notes', as = '/notes' },
       },
     },
   },
@@ -70,18 +71,6 @@ return {
       },
       opts = {
         collapse_tools = true,
-      },
-    },
-    ['my_agent'] = {
-      description = 'My custom agent',
-      system_prompt = function(group, ctx)
-        return string.format('You are a coding agent. The date is %s. The user is on %s.', ctx.date, ctx.os)
-      end,
-      tools = { 'read_file', 'insert_edit_into_file', 'run_command' },
-      opts = {
-        collapse_tools = true,
-        ignore_system_prompt = true, -- Remove the chat's default system prompt
-        ignore_tool_system_prompt = true, -- Remove the default tool system prompt
       },
     },
   },

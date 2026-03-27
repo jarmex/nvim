@@ -1,6 +1,4 @@
--- local adapters = require('plugins.ai.codecompanion.adapters')
 -- local defaultAdapter = os.getenv('NVIM_AI_ADAPTER') or 'copilot'
-local systemPromptModes = require('plugins.ai.codecompanion.systemprompts')
 local DEFAULT_ADAPTER = 'copilot'
 local DEFAULT_MODEL = 'claude-haiku-4.5'
 local COPILOT_GPTMODEL = 'gpt-4.1'
@@ -111,13 +109,6 @@ M.chat = {
     completion = { modes = { i = '<C-x>' } },
     clear = { modes = { n = 'gcr' } },
     regenerate = { modes = { n = 'gcR' } },
-    switch_mode = {
-      modes = { n = 'gm' },
-      description = 'Switch Chat Mode',
-      callback = function()
-        systemPromptModes.browse()
-      end,
-    },
   },
 }
 
