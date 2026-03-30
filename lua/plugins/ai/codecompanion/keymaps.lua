@@ -131,4 +131,8 @@ return {
   vim.keymap.set('n', '<LocalLeader>cd', function()
     return require('codecompanion').cli('#{diagnostics} Can you fix these?', { focus = false, submit = true })
   end, { desc = 'Send diagnostics to CLI agent' }),
+  -- [C]odeCompanion [A]dd
+  vim.keymap.set({ 'n', 'v' }, '<LocalLeader>aT', function()
+    return require('codecompanion').cli('#{this}', { focus = false })
+  end, { desc = 'Add context to the CLI agent' }),
 }

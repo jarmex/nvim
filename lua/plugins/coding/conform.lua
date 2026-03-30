@@ -1,4 +1,3 @@
--- local linterConfig = vim.fn.stdpath('config') .. '/.linter_configs'
 local markdownlintrc = vim.fn.expand(vim.fn.stdpath('config') .. '/.linter_configs/markdownlint.jsonc')
 
 return {
@@ -60,17 +59,13 @@ return {
         lua = { 'stylua' },
         markdown = { 'markdownlint', 'markdown-toc', stop_after_first = true },
         scss = { 'prettierd' },
-        -- python = { 'black', 'isort' },
         python = { 'ruff_fix', 'ruff_organize_imports' },
         sh = { 'shfmt' },
         sql = { 'sleek' }, -- https://github.com/nrempel/sleek
-        -- sql = { 'sqlfmt', 'sqlfluff', 'sql_formatter', stop_after_first = true },
-        -- typescript = { 'biome' },
-        typescript = { 'ts-add-missing-imports', 'ts-remove-unused-imports', 'biome-organize-imports', 'biome' },
+        typescript = { 'biome-organize-imports', 'biome' },
         typescriptreact = { 'biome', 'biome-organize-imports' },
         -- yaml = { 'prettier' },
         xml = { 'xmlformatter' },
-        -- https://github.com/google/yamlfmt
         yaml = { 'yamlfmt', 'trim_whitespace' },
         zsh = { 'shell-home', 'shellcheck' },
         ['*'] = { 'trim_whitespace' },

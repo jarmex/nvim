@@ -6,6 +6,17 @@ local prompt_library = {
       vim.fn.getcwd() .. '/.prompts',
       vim.fn.stdpath('config') .. '/prompts',
     },
+    -- dirs = (function()
+    --           local base = vim.fn.expand("~/.config/nvim/utils/agents/skills")
+    --           local dirs = {}
+    --           for _, entry in ipairs(vim.fn.readdir(base)) do
+    --             local path = base .. "/" .. entry
+    --             if vim.fn.isdirectory(path) == 1 and entry ~= "references" then
+    --               table.insert(dirs, path)
+    --             end
+    --           end
+    --           return dirs
+    --         end)(),
   },
 }
 

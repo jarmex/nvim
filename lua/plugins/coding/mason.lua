@@ -19,7 +19,7 @@ local ensureInstalled = {
     'json-lsp',
     'just-lsp',
     'lua-language-server',
-    'marksman', -- Markdown lsp
+    -- 'marksman', -- Markdown lsp
     -- 'omnisharp',
     -- 'pyright',
     'ruff', -- python linter & formatter

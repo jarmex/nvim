@@ -14,12 +14,12 @@ return {
           { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
           { icon = ' ', key = 's', desc = 'Load Session', section = 'session' },
           { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
-          {
-            icon = ' ',
-            key = 'c',
-            desc = 'Config',
-            action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
-          },
+          -- {
+          --   icon = ' ',
+          --   key = 'c',
+          --   desc = 'Config',
+          --   action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+          -- },
           { icon = '󱘣 ', key = '/', desc = 'Find Text', action = ":lua Snacks.dashboard.pick('live_grep')" },
           { icon = ' ', key = 'm', desc = 'Show mark', action = ":lua Snacks.dashboard.pick('marks')" },
           { icon = ' ', key = 't', desc = 'Show todo', action = ':TodoQuickFix' },

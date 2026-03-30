@@ -24,11 +24,6 @@ return {
       require_approval_before = false,
     },
   },
-  grep_search = {
-    opts = {
-      require_approval_before = false,
-    },
-  },
   list_files = {
     opts = {
       require_approval_before = false,
@@ -39,11 +34,33 @@ return {
       require_approval_before = false,
     },
   },
+  ['fetch_webpage'] = {
+    opts = {
+      require_approval_before = false,
+    },
+  },
+  ['file_search'] = {
+    opts = {
+      require_approval_before = false,
+    },
+  },
+  ['get_changed_files'] = {
+    opts = {
+      require_approval_before = false,
+    },
+  },
+  ['grep_search'] = {
+    opts = {
+      require_approval_before = false,
+    },
+  },
   ['memory'] = {
     opts = {
+      require_approval_before = false,
       whitelist = {
-        { path = '~/.config/personal/PERSONAL.md', as = '/personal' },
-        { path = '~/.config/personal/notes', as = '/notes' },
+        { path = '~/.config/personal/PERSONAL.md', as = 'personal' },
+        { path = '~/.config/personal/notes', as = 'notes' },
+        -- { path = "~/notes/Repositories/", as = "obsidian" },
       },
     },
   },

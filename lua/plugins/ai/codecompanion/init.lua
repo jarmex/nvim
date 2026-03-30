@@ -51,6 +51,13 @@ return {
           log_level = 'DEBUG',
         },
         rules = {
+          default = {
+            files = {
+              { path = '~/.config/personal/PERSONAL.md', parser = 'codecompanion' },
+              { path = 'CLAUDE.md', parser = 'claude' },
+              { path = 'AGENTS.md', parser = 'claude' },
+            },
+          },
           claude = {
             parser = 'claude',
             description = 'Rule files for claude',
