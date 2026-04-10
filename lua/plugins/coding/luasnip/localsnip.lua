@@ -62,12 +62,6 @@ local function lorem(_, snp)
   end
 end
 
--- vim.filetype.add({
---   pattern = {
---     ['.*.spec.ts'] = 'jest.typescript',
---   },
--- })
-
 ls.add_snippets(nil, {
   jest = {
     sp('3"', [["""${1:$TM_SELECTED_TEXT}"""]]),

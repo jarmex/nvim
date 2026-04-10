@@ -15,34 +15,6 @@ local disable_providers = function()
   end
 end
 
-local add_filetype = function()
-  vim.filetype.add({
-    filename = {
-      Brewfile = 'ruby',
-      ['.bash_aliases'] = 'bash',
-      ['.bash_functions'] = 'bash',
-      ['.bash_profile'] = 'bash',
-      ['.bashrc'] = 'bash',
-      ['.shell_platform'] = 'bash',
-      ['.zprofile'] = 'zsh',
-      ['.zsh_functions'] = 'zsh',
-      ['.zshenv'] = 'zsh',
-      ['.zshrc'] = 'zsh',
-      ['.zsh_copilot'] = 'zsh',
-      ['~/.config/ghostty/config'] = 'toml',
-    },
-    pattern = {
-      ['*.jsonc'] = 'jsonc',
-      ['tsconfig.json'] = 'jsonc',
-      ['tsconfig*.json'] = 'jsonc',
-      ['%.env%.[%w_.-]+'] = 'sh',
-    },
-    extension = {
-      hurl = 'hurl',
-    },
-  })
-end
-
 local leader_map = function()
   vim.api.nvim_set_keymap('n', '<Space>', '', { noremap = true })
   vim.api.nvim_set_keymap('x', '<Space>', '', { noremap = true })
@@ -57,7 +29,6 @@ Helpers.safeRequire('config.commands')
 Helpers.safeRequire('config.autocmds')
 
 disable_providers()
-add_filetype()
 
 Helpers.safeRequire('config.lazy')
 

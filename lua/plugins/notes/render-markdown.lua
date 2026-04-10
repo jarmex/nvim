@@ -14,7 +14,7 @@ return {
       },
       completions = {
         blink = { enabled = true },
-        lsp = { enabled = true },
+        lsp = { enabled = false },
       },
       debounce = 250,
       file_types = { 'markdown', 'codecompanion', 'obsidian' },

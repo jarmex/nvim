@@ -1,10 +1,11 @@
 return {
   {
     'saxon1964/neovim-tips',
+    enabled = false,
     version = '*', -- Only update on tagged releases
     dependencies = {
       'MunifTanjim/nui.nvim',
-      'MeanderingProgrammer/render-markdown.nvim',
+      -- 'MeanderingProgrammer/render-markdown.nvim',
     },
     opts = {
       -- OPTIONAL: Location of user defined tips (default value shown below)
