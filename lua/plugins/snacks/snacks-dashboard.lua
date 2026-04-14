@@ -45,7 +45,7 @@ return {
       sections = {
         {
           section = 'terminal',
-          cmd = 'lolcat --seed=24 ~/.config/nvim/static/neo2.cat',
+          cmd = 'lolcat --seed=24 ~/.config/nvim/static/neo2.cat; sleep .1',
           indent = -5,
           height = 10,
           width = 71,

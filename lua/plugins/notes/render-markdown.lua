@@ -9,19 +9,17 @@ return {
     ---@type render.md.UserConfig
     opts = {
       -- preset = 'obsidian',
-      quote = {
-        repeat_linebreak = true, -- full border on soft-wrap
-      },
+      -- quote = {
+      --   repeat_linebreak = true, -- full border on soft-wrap
+      -- },
       completions = {
         blink = { enabled = true },
         lsp = { enabled = false },
       },
       debounce = 250,
       file_types = { 'markdown', 'codecompanion', 'obsidian' },
-      -- render_modes = { 'n', 'c', 'i' },
-      latex = { enabled = false },
+      latex = { enabled = false, render_modes = false },
       render_modes = true, -- Render in ALL modes
-      -- render_modes = { 'n', 'c', 'i' },
       sign = {
         enabled = false, -- Turn off in the status column
       },
@@ -55,10 +53,10 @@ return {
         width = vim.o.textwidth,
         priority = 10, -- don't cover codelens from `markdown-oxide` for 1st line of frontmatter
       },
-      bullet = {
-        icons = { '◇', '◆', '▫️' }, -- ◆◇•◦▫️▪️
-        ordered_icons = '', -- disable overwriting ordered list numbers with 1-2-3
-      },
+      -- bullet = {
+      --   icons = { '◇', '◆', '▫️' }, -- ◆◇•◦▫️▪️
+      --   ordered_icons = '', -- disable overwriting ordered list numbers with 1-2-3
+      -- },
       html = {
         enabled = true,
         comment = {

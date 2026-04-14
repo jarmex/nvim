@@ -121,6 +121,7 @@ return {
           pcall(vim.treesitter.start, args.buf)
         end,
       })
+      vim.treesitter.language.register('json', { 'jsonc' })
     end,
   },
   {

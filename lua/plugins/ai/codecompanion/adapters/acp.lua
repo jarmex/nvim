@@ -43,8 +43,10 @@ return {
   end,
   codex = function()
     return require('codecompanion.adapters').extend('codex', {
+      formatted_name = '\u{E4C6}  Codex',
       defaults = {
-        auth_method = 'openai-api-key', -- "openai-api-key"|"codex-api-key"|"chatgpt"
+        timeout = 20000, -- codecompanion's own timeout is 20 seconds for connection init
+        auth_method = 'chatgpt', -- 'openai-api-key'|'codex-api-key'|'chatgpt'
       },
     })
   end,

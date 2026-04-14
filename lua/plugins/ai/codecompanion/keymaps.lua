@@ -111,6 +111,7 @@ return {
   },
   { '<Leader>ae', open_chat, desc = '[A]I CodeCompanion [c]hat', silent = true },
   { '<leader>al', ':CodeCompanionCLI<CR>', desc = 'Open Claude Code', silent = true },
+  { '<leader>aC', ':CodeCompanionCLI agent=codex<CR>', desc = 'Open Codex', silent = true },
   {
     '<leader>as',
     '<cmd>CodeCompanionChat /write-tests<CR>',
