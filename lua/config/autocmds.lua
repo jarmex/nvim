@@ -126,6 +126,20 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- Prevent LSP from attaching to quickfix buffers — quicker.nvim's setqflist
+-- calls trigger LSP change-tracking which hits an assertion in sync.lua:225
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = augroup('qf_no_lsp'),
+  desc = 'Detach LSP from quickfix buffers to prevent sync.lua assertion failures',
+  callback = function(event)
+    if vim.bo[event.buf].filetype == 'qf' then
+      vim.schedule(function()
+        vim.lsp.buf_detach_client(event.buf, event.data.client_id)
+      end)
+    end
+  end,
+})
+
 --------------------------------------------------------------------------------
 
 -- AUTO-CLEANUP

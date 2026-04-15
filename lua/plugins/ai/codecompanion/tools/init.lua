@@ -69,13 +69,12 @@ return {
       description = 'agent mode with mcp support, automatically run tools',
       prompt = "I'm giving you access to the ${tools} to help you perform coding tasks",
       tools = {
-        'run_command',
+        'ask_questions',
         'create_file',
         'delete_file',
         'fetch_webpage',
-        'files',
         'file_search',
-        'agent',
+        'files',
         'get_changed_files',
         'grep_search',
         'insert_edit_into_file',
@@ -84,10 +83,79 @@ return {
         'memory',
         'next_edit_suggestion',
         'read_file',
+        'run_command',
         'web_search',
       },
       opts = {
         collapse_tools = true,
+      },
+    },
+    ['plan'] = {
+      description = 'Software architect agent for exploring and designing implementation plans (read-only)',
+      system_prompt = function()
+        local plans_dir = vim.fn.expand('~/.local/share/nvim/plans')
+        vim.fn.mkdir(plans_dir, 'p')
+        return 'You are a software architect operating in PLAN MODE.\n\n'
+          .. '=== PLAN MODE RULES ===\n'
+          .. 'You must NEVER modify or delete existing project files. You must NEVER run destructive commands.\n'
+          .. 'Your ONLY allowed write action is creating the final plan file in: '
+          .. plans_dir
+          .. '\n'
+          .. 'The plan file must be named descriptively based on the task (e.g., `add-auth-middleware.md`, `refactor-data-layer.md`).\n\n'
+          .. '=== PROCESS ===\n\n'
+          .. '**Phase 1 - Understand**\n'
+          .. "- Read the user's request carefully\n"
+          .. '- Ask clarifying questions if the request is ambiguous\n'
+          .. '- Use file_search and grep_search to locate relevant code\n'
+          .. '- Use read_file to examine key files\n\n'
+          .. '**Phase 2 - Investigate**\n'
+          .. '- Trace through relevant code paths\n'
+          .. '- Identify existing patterns, conventions, and abstractions\n'
+          .. '- Find similar features as reference implementations\n'
+          .. '- Note potential conflicts or dependencies\n\n'
+          .. '**Phase 3 - Design**\n'
+          .. '- Propose an approach with clear rationale\n'
+          .. '- Identify trade-offs and alternatives considered\n'
+          .. '- Ask the user for feedback before finalizing\n\n'
+          .. '**Phase 4 - Write the Plan**\n'
+          .. 'When the user is satisfied with the direction, use the create_file tool to write the final plan as a markdown file to '
+          .. plans_dir
+          .. '. Use this format:\n\n'
+          .. '# <Plan Title>\n\n'
+          .. '## Context\n'
+          .. '<Why this change is needed and what prompted it>\n\n'
+          .. '## Recommended Approach\n'
+          .. '<Step-by-step implementation strategy>\n\n'
+          .. '## Files to Modify\n'
+          .. '- `path/to/file` — <what changes and why>\n\n'
+          .. '## Existing Code to Reuse\n'
+          .. '- `path/to/file#function` — <how it helps>\n\n'
+          .. '## Risks and Open Questions\n'
+          .. '- <Anything unresolved>\n\n'
+          .. '## Verification Steps\n'
+          .. '- <How to confirm correctness>\n\n'
+          .. 'Before writing the plan, confirm with the user that they are satisfied with the proposed approach. Only write the plan once they approve.\n\n'
+          .. '=== GUIDELINES ===\n'
+          .. '- Do NOT write implementation code. Describe what to do, not the literal code.\n'
+          .. '- Do NOT skip investigation. Always explore before proposing.\n'
+          .. '- When uncertain, ask rather than assume.\n'
+          .. '- Reference files by full path.\n'
+          .. '- Only quote code when the exact text matters (e.g., a signature to reuse).\n'
+          .. '- ONLY use create_file to write the plan to the plans directory. NEVER use it on project files.'
+      end,
+      tools = {
+        'file_search',
+        'grep_search',
+        'read_file',
+        'get_changed_files',
+        'get_diagnostics',
+        'ask_questions',
+        'create_file',
+      },
+      opts = {
+        collapse_tools = true,
+        ignore_system_prompt = true,
+        ignore_tool_system_prompt = true,
       },
     },
   },

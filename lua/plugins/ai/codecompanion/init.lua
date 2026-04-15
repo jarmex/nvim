@@ -54,8 +54,8 @@ return {
           default = {
             files = {
               { path = '~/.config/personal/PERSONAL.md', parser = 'codecompanion' },
-              { path = 'CLAUDE.md', parser = 'claude' },
-              { path = 'AGENTS.md', parser = 'claude' },
+              -- { path = 'CLAUDE.md', parser = 'claude' },
+              -- { path = 'AGENTS.md', parser = 'claude' },
             },
           },
           claude = {
@@ -68,9 +68,17 @@ return {
             },
             is_preset = true,
           },
+          personal = {
+            description = 'Personal rules and code philosophy',
+            files = {
+              vim.fn.stdpath('config') .. '/prompts/personal-programming.md',
+              os.getenv('HOME') .. '/.agent/AGENTS.md',
+            },
+          },
           opts = {
             chat = {
-              enabled = false,
+              -- autoload = { 'default', 'personal' },
+              enabled = true,
             },
           },
         },
