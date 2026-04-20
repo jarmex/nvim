@@ -104,6 +104,30 @@ return {
       -- codecompanion yolo mode
       vim.g.codecompanion_yolo_mode = true
 
+      -- Compact consecutive blank lines between tool results
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'CodeCompanionToolsFinished',
+        callback = function(ev)
+          local bufnr = ev.data and ev.data.bufnr
+          if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
+            return
+          end
+          local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+          local new_lines = {}
+          local prev_blank = false
+          for _, line in ipairs(lines) do
+            local is_blank = line == ''
+            if not (is_blank and prev_blank) then
+              table.insert(new_lines, line)
+            end
+            prev_blank = is_blank
+          end
+          if #new_lines ~= #lines then
+            vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, new_lines)
+          end
+        end,
+      })
+
       -- CodeCompanion executes 'checktime' only for the @insert_edit_into_file tool,
       -- but files may also be modified by other tools.
       vim.api.nvim_create_autocmd('WinLeave', {
