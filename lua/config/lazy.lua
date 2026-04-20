@@ -12,16 +12,6 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-local function lazy_file()
-  -- Add support for the LazyFile event
-  local Event = require('lazy.core.handler.event')
-
-  Event.mappings.LazyFile = { id = 'LazyFile', event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' } }
-  Event.mappings['User LazyFile'] = Event.mappings.LazyFile
-end
-
-lazy_file()
-
 require('lazy').setup({
   spec = {
     { import = 'plugins.core' },

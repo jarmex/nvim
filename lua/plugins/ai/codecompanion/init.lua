@@ -93,19 +93,6 @@ return {
       -- Ensure buffer is treated as markdown by treesitter despite being codecompanion filetype
       vim.treesitter.language.register('markdown', 'codecompanion')
 
-      -- CodeCompanion executes 'checktime' only for the @insert_edit_into_file tool,
-      -- but files may also be modified by other tools.
-      vim.api.nvim_create_autocmd('WinLeave', {
-        desc = 'Reload buffers when leaving CodeCompanion Chat window',
-        pattern = '*',
-        group = vim.api.nvim_create_augroup('user.cc_checktime', { clear = true }),
-        callback = function()
-          if vim.bo.filetype == 'codecompanion' then
-            vim.cmd('checktime')
-          end
-        end,
-      })
-
       -- Emit CodeCompanion title to CodeCompanionHistory
       vim.api.nvim_create_autocmd('User', {
         pattern = 'CodeCompanionChatSubmitted',

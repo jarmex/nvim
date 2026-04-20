@@ -2,7 +2,6 @@
 --  │ Default plugins │
 --  ╰─────────────────╯
 local default_options = {
-  autowrite = true, -- Enable auto write
   backup = false, -- creates a backup file
   clipboard = 'unnamedplus', -- allows neovim to access the system clipboard
   cmdheight = 0, -- more space in the neovim command line for displaying messages
@@ -34,9 +33,9 @@ local default_options = {
   updatetime = 280, -- If in this milliseconds nothing is typed, the swap file will be written to disk.
   writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
   cursorline = true, -- highlight the current line
-  number = true, -- set numbered lines
   ruler = false, -- Disable the default ruler
   laststatus = 3,
+  number = true, -- set numbered lines
   relativenumber = true, -- set relative numbered lines
   numberwidth = 2, -- set number column width to 2 {default 4}
   signcolumn = 'yes', -- always show the sign column, otherwise it would shift the text each time
@@ -49,10 +48,10 @@ local default_options = {
   encoding = 'UTF-8', -- Set the encoding type
   incsearch = true, -- Shows the match while typing
   inccommand = 'split', -- information about all identifiers to be renamed
-  cmdwinheight = 25, --change the height of the preview window
+  -- cmdwinheight = 25, --change the height of the preview window
   shiftround = true, -- Round indent
   undofile = true,
-  undolevels = 10000,
+  undolevels = 1000,
   -- Indenting
   expandtab = true, -- convert tabs to spaces
   smartindent = true, -- make indenting smarter again
@@ -60,8 +59,8 @@ local default_options = {
   softtabstop = 2,
   shiftwidth = 2, -- the number of spaces inserted for each indentation
   sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' },
-  virtualedit = 'block', -- Allow cursor to move where there is no text in visual block mode
-  wildmode = 'longest:full,full', -- Command-line completion mode
+  -- virtualedit = 'block', -- Allow cursor to move where there is no text in visual block mode
+  -- wildmode = 'longest:full,full', -- Command-line completion mode
   -- grepprg = 'rg --vimgrep',
   grepformat = '%f:%l:%c:%m',
   fillchars = {
@@ -83,7 +82,8 @@ local default_options = {
     verthoriz = '┼',
   },
   -- winminwidth = 5, -- Minimum window width
-  spelllang = { 'en' },
+  spelllang = 'en_us',
+  spellsuggest = 'best,20', -- Limits to 20 suggestions
   splitkeep = 'screen',
   jumpoptions = 'view',
   -- winborder = 'rounded', -- rounded corners on floating windows
@@ -117,7 +117,8 @@ vim.opt.wildignore:append({
 vim.opt.grepprg = vim.fn.executable('rg') == 1 and 'rg --vimgrep --smart-case --follow' or 'grep -n $* /dev/null'
 
 vim.opt.listchars = {
-  tab = ' ',
+  -- tab = ' ',
+  tab = '» ',
   trail = '·',
   extends = '',
   precedes = '',
@@ -130,5 +131,5 @@ if vim.fn.getenv('TERM_PROGRAM') == 'ghostty' then
 end
 
 -- project specific settings (see lazyrc.lua for .lazy.lua support)
-vim.opt.exrc = true -- allow local .nvim.lua .vimrc .exrc files
-vim.opt.secure = true -- disable shell and write commands in local .nvim.lua .vimrc .exrc files
+-- vim.opt.exrc = true -- allow local .nvim.lua .vimrc .exrc files
+-- vim.opt.secure = true -- disable shell and write commands in local .nvim.lua .vimrc .exrc files

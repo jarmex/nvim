@@ -8,6 +8,11 @@ local function keymap(modes, lhs, rhs, opts)
   vim.keymap.set(modes, lhs, rhs, opts)
 end
 
+-- Buffers
+keymap('n', '<C-y>', '<cmd>%y+<CR>', { desc = 'Copy buffer' })
+keymap('n', '<leader>`', '<C-^>', { noremap = true, desc = 'Alternate buffers' })
+keymap('n', '<leader>bo', '<cmd>b#<cr>', { desc = 'Switch to Other Buffer' })
+
 -- Better window movement
 -- Move to window using the <ctrl> hjkl keys
 keymap('n', '<C-h>', '<C-w>h', { desc = 'Go to left window', noremap = true, unique = false })
@@ -45,7 +50,6 @@ keymap('n', 'J', 'mzJ`z')
 -- keymap('n', '<C-d>', '<C-d>zz')
 -- keymap('n', '<C-u>', '<C-u>zz')
 keymap('n', '=ap', "ma=ap'a")
-keymap('n', '<leader>zr', '<cmd>LspRestart<cr>')
 
 -- Better indent
 keymap('v', '<', '<gv')
@@ -80,10 +84,6 @@ keymap('t', '<c-_>', '<cmd>close<cr>', { desc = 'which_key_ignore' })
 -- Clear search with <esc>
 keymap('n', '<leader><space>', ':nohlsearch<CR>', { desc = 'Clear hlsearch', nowait = true })
 keymap({ 'n', 'i' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsearch' })
-
--- buffers
-keymap('n', '<leader>`', '<C-^>', { noremap = true, desc = 'Alternate buffers' })
-keymap('n', '<leader>bo', '<cmd>b#<cr>', { desc = 'Switch to Other Buffer' })
 
 -- lazy
 keymap('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'Lazy' })
@@ -128,26 +128,6 @@ keymap('n', '<leader>qd', function()
   vim.cmd.cexpr('[]')
 end, { desc = '󰚃 Delete qf-list' })
 
--- keymap('n', '<leader>qq', function()
---   local quickfixWinOpen = vim.fn.getqflist({ winid = true }).winid ~= 0
---   vim.cmd[quickfixWinOpen and 'cclose' or 'copen']()
--- end, { desc = ' Toggle quickfix window' })
-
--- -- FOLDING
--- keymap('n', 'zz', '<cmd>%foldclose<CR>', { desc = ' Close toplevel folds' })
--- keymap('n', 'zm', 'zM', { desc = ' Close all folds' })
--- keymap('n', 'zv', 'zv', { desc = '󰘖 Open until cursor visible' }) -- just for which-key
--- keymap('n', 'zr', 'zR', { desc = '󰘖 Open all folds' })
--- keymap('n', 'zo', 'zO', { desc = '󰘖 Open fold recursively' })
--- stylua: ignore
-keymap("n", "zf", function() vim.opt.foldlevel = vim.v.count1 end, { desc = " Set fold level to {count}" })
-
--- keymap('n', '<leader>zs', function()
---   local modeline = vim.bo.commentstring:format('vim foldlevel=' .. vim.o.foldlevel)
---   vim.api.nvim_buf_set_lines(0, 0, 0, false, { modeline })
---   vim.api.nvim_win_set_cursor(0, { 1, #modeline })
--- end, { desc = '󰆓 Save foldlevel in modeline' })
-
 -- keep the register clean
 -- keymap({ 'n', 'x' }, 'x', '"_x')
 -- keymap({ 'n', 'x' }, 'c', '"_c')
@@ -160,7 +140,6 @@ end, { expr = true })
 
 --------------------------------------------------------------------------------
 -- LINE & CHARACTER MOVEMENT
-
 keymap('n', '<Down>', [[<cmd>. move +1<CR>==]], { desc = '󰜮 Move line down' })
 keymap('n', '<Up>', [[<cmd>. move -2<CR>==]], { desc = '󰜷 Move line up' })
 keymap('n', '<Right>', [["zx"zp]], { desc = '➡️ Move char right' })
@@ -171,11 +150,3 @@ keymap('x', '<Right>', [["zx"zpgvlolo]], { desc = '➡️ Move selection right' 
 keymap('x', '<left>', [["zxhh"zpgvhoho]], { desc = '⬅ Move selection left' })
 
 --------------------------------------------------------------------------------
--- INSERT MODE
-keymap('n', 'i', function()
-  local lineEmpty = vim.trim(vim.api.nvim_get_current_line()) == ''
-  return lineEmpty and '"_cc' or 'i'
-end, { expr = true, desc = 'indented i on empty line' })
-
-keymap('v', '<leader>64e', "c<c-r>=system('base64 --wrap=0',          @\")<cr><esc>", { desc = 'Base64 encode' })
-keymap('v', '<leader>64d', "c<c-r>=system('base64 --wrap=0 --decode', @\")<cr><esc>", { desc = 'Base64 decode' })
