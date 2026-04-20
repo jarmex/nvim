@@ -15,14 +15,7 @@ return {
       mode = { 'n', 'v' },
       desc = 'Format file or range (in visual mode)',
     },
-    {
-      '<leader>cM',
-      function()
-        require('conform').format({ formatters = { 'injected' }, timeout_ms = 3000 })
-      end,
-      mode = { 'n', 'v' },
-      desc = 'Format Injected Langs',
-    },
+
     {
       '<leader>cm',
       function()
@@ -64,7 +57,6 @@ return {
         sql = { 'sleek' }, -- https://github.com/nrempel/sleek
         typescript = { 'biome-organize-imports', 'biome' },
         typescriptreact = { 'biome', 'biome-organize-imports' },
-        -- yaml = { 'prettier' },
         xml = { 'xmlformatter' },
         yaml = { 'yamlfmt', 'trim_whitespace' },
         zsh = { 'shell-home', 'shellcheck' },
@@ -102,7 +94,6 @@ return {
             callback(nil, updated)
           end,
         },
-        injected = { options = { ignore_errors = true } },
         markdownlint = {
           command = 'markdownlint',
           stdin = false,

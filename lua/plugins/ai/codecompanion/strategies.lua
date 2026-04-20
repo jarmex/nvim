@@ -135,6 +135,12 @@ M.cli = {
       description = 'OpenAI Codex CLI',
       provider = 'terminal',
     },
+    opencode = {
+      cmd = 'opencode',
+      args = {},
+      description = 'OpenCode',
+      provider = 'terminal',
+    },
   },
   opts = {
     auto_insert = true, -- Enter insert mode when focusing the CLI terminal

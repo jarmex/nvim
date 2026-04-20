@@ -68,42 +68,17 @@ M.chat = {
     tool_failure = '  ',
     tool_success = '  ',
   },
-
-  debug_window = {
-    ---@return number|fun(): number
-    width = vim.o.columns - 5,
-    ---@return number|fun(): number
-    height = vim.o.lines - 2,
-  },
-
   window = {
     width = 0.60,
     layout = vim.o.columns >= 120 and 'vertical' or 'horizontal',
     position = 'right',
     sticky = true,
     opts = {
-      -- breakindent = true,
-      -- cursorcolumn = false,
-      cursorline = true,
       number = false,
       relativenumber = false,
-      -- foldcolumn = '0',
-      -- linebreak = true,
-      -- list = false,
-      -- numberwidth = 1,
       signcolumn = 'no',
-      spell = true,
-      foldcolumn = '3',
-      numberwidth = 3,
-      -- wrap = true,
+      spell = false,
       winbar = '',
-      -- statuscolumn = ' ',
-      -- winfixbuf = true,
-      -- scrolloff = 3,
-      -- allow folding codeblocks
-      -- foldlevel = 1,
-      -- foldmethod = 'expr',
-      -- foldexpr = 'v:lua.vim.treesitter.foldexpr()', -- allow folding codeblocks
     },
   },
 }

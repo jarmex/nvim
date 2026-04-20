@@ -151,6 +151,7 @@ return {
         'get_diagnostics',
         'ask_questions',
         'create_file',
+        'memory',
       },
       opts = {
         collapse_tools = true,
@@ -175,9 +176,8 @@ return {
     -- enabled = true, -- Enable the tools system prompt?
     -- replace_main_system_prompt = false, -- Replace the main system prompt with the tools system prompt?
     -- },
-  },
-  plan = {
-    callback = require('plugins.ai.codecompanion.tools.plan'),
-    description = 'Manage an internal todo list',
+    default_tools = {
+      'memory',
+    },
   },
 }
