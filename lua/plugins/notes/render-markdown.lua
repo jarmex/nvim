@@ -12,6 +12,7 @@ return {
       -- quote = {
       --   repeat_linebreak = true, -- full border on soft-wrap
       -- },
+      code = { sign = false },
       completions = {
         blink = { enabled = true },
         lsp = { enabled = false },

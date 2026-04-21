@@ -4,6 +4,12 @@ M.mcpServers = {
     ['memory'] = {
       cmd = { 'npx', '-y', '@modelcontextprotocol/server-memory' },
     },
+    ['fireflies'] = {
+      cmd = { 'npx', '-y', 'mcp-remote', 'https://api.fireflies.ai/mcp' },
+      tool_defaults = {
+        require_approval_before = false,
+      },
+    },
     ['sequential-thinking'] = {
       cmd = { 'npx', '-y', '@modelcontextprotocol/server-sequential-thinking' },
     },

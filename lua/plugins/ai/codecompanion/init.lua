@@ -54,8 +54,8 @@ return {
           default = {
             files = {
               { path = '~/.config/personal/PERSONAL.md', parser = 'codecompanion' },
-              -- { path = 'CLAUDE.md', parser = 'claude' },
-              -- { path = 'AGENTS.md', parser = 'claude' },
+              { path = 'CLAUDE.md', parser = 'claude' },
+              { path = 'AGENTS.md', parser = 'claude' },
             },
           },
           claude = {
@@ -78,6 +78,7 @@ return {
           opts = {
             chat = {
               -- autoload = { 'default', 'personal' },
+              autoload = 'default',
               enabled = true,
             },
           },
