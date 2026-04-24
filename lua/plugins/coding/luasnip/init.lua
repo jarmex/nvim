@@ -4,12 +4,12 @@ return {
     version = 'v2.*',
     build = 'make install_jsregexp',
     dependencies = { 'rafamadriz/friendly-snippets' },
-    config = function()
+    config = function(_, opts)
+      require('luasnip').setup(opts)
+
       require('luasnip.loaders.from_vscode').lazy_load()
 
       require('plugins.coding.luasnip.localsnip')
-
-      require('luasnip').setup()
 
       require('luasnip').filetype_extend('typescript', { 'tsdoc' })
       require('luasnip').filetype_extend('typescript', { 'next-ts' })
@@ -23,8 +23,6 @@ return {
       require('luasnip').filetype_extend('c', { 'cdoc' })
       require('luasnip').filetype_extend('cpp', { 'cppdoc' })
       require('luasnip').filetype_extend('php', { 'phpdoc' })
-      require('luasnip').filetype_extend('kotlin', { 'kdoc' })
-      require('luasnip').filetype_extend('ruby', { 'rdoc' })
       require('luasnip').filetype_extend('sh', { 'shelldoc' })
     end,
   },

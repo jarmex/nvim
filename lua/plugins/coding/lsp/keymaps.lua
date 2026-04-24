@@ -1,7 +1,4 @@
 ---@diagnostic disable: need-check-nil
-
-local isTsToolOk, typeScriptTools = pcall(require, 'typescript-tools.api')
-
 local function hover_action()
   -- local winid = require('ufo').peekFoldedLinesUnderCursor()
   -- if not winid then
@@ -90,13 +87,6 @@ local function keymap(bufnr)
 
   map('<leader>gD', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
   map('grd', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
-
-  --- TypeScript Tools
-  if not isTsToolOk then
-    return
-  end
-  map('gs', typeScriptTools.organize_imports, { desc = 'Organize imports' })
-  map('gI', typeScriptTools.add_missing_imports, { desc = 'Add missing imports' })
 end
 
 local function disable_global_keymaps()

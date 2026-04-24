@@ -1,6 +1,7 @@
 return {
   'necrom4/convy.nvim',
   cmd = 'Convy',
+  event = 'VeryLazy',
   opts = {
     notifications = true,
   },

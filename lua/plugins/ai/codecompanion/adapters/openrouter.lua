@@ -26,7 +26,7 @@ return function()
     schema = {
       model = {
         default = 'google/gemini-3.1-flash-lite-preview',
-        -- default = 'moonshotai/kimi-k2.5',
+        -- default = 'moonshotai/kimi-k2.6',
         choices = {
           'minimax/minimax-m2.7',
           'qwen/qwen3-coder-next',
@@ -37,6 +37,7 @@ return function()
           ['deepseek/deepseek-v3.2-speciale'] = { opts = { can_reason = true } },
           ['google/gemini-3.1-flash-lite-preview'] = { opts = { can_reason = true } },
           ['moonshotai/kimi-k2.5'] = { opts = { can_reason = true } },
+          ['moonshotai/kimi-k2.6'] = { opts = { can_reason = true } },
         },
       },
     },

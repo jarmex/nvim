@@ -1,5 +1,7 @@
--- local vls_bin = vim.fn.exepath('vue-language-server')
--- local vls_dir = vls_bin:gsub('/bin/vue%-language%-server', '/lib/node_modules/@vue/language-server')
+local mason_packages = vim.fn.stdpath('data') .. '/mason/packages'
+local volar_path = mason_packages .. '/vue-language-server/node_modules/@vue/language-server'
+-- local extractedTsserver = mason_packages .. "/typescript-language-server/node_modules/typescript/lib"
+
 local constants = require('helpers.constants')
 
 local vue_plugin = {
@@ -60,7 +62,43 @@ local config = {
       },
     },
   },
+  init_options = {
+    plugins = {
+      {
+        name = '@vue/typescript-plugin',
+        location = volar_path,
+        languages = { 'javascript', 'typescript', 'vue', 'tsx', 'jsx', 'typescriptreact' },
+      },
+    },
+  },
   filetypes = constants.javascript_aliases,
+
+  handlers = {
+    ['textDocument/publishDiagnostics'] = function(_, result, ctx, config)
+      if result.diagnostics == nil then
+        return
+      end
+
+      -- ignore some ts_ls / tsserver diagnostics
+      local idx = 1
+      while idx <= #result.diagnostics do
+        local entry = result.diagnostics[idx]
+
+        local formatter = require('format-ts-errors')[entry.code]
+        entry.message = formatter and formatter(entry.message) or entry.message
+
+        -- codes: https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json
+        if entry.code == 80001 then
+          -- { message = "File is a CommonJS module; it may be converted to an ES module.", }
+          table.remove(result.diagnostics, idx)
+        else
+          idx = idx + 1
+        end
+      end
+
+      vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+    end,
+  },
 }
 
 return config
