@@ -12,6 +12,7 @@ return {
   {
     'andythigpen/nvim-coverage',
     event = 'VeryLazy',
+    enabled = false,
     cmd = {
       'Coverage',
       'CoverageLoad',

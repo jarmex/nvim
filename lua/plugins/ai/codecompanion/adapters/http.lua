@@ -110,9 +110,9 @@ return {
 
   openrouter = require('plugins.ai.codecompanion.adapters.openrouter'),
 
-  ['deepseek-chat'] = function()
+  ['deepseek-flash'] = function()
     return require('codecompanion.adapters.http').extend('deepseek', {
-      schema = { model = { default = 'deepseek-chat' } },
+      schema = { model = { default = 'deepseek-v4-flash' } },
     })
   end,
 
@@ -123,11 +123,11 @@ return {
       },
       schema = {
         model = {
-          default = 'deepseek-chat',
-          -- default = 'deepseek-reasoner',
+          default = 'deepseek-v4-flash',
         },
-        temperature = {
-          default = 0.2,
+        choices = {
+          'deepseek-v4-flash',
+          'deepseek-v4-pro',
         },
       },
     })
