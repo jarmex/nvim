@@ -95,29 +95,57 @@ for k, v in pairs(default_options) do
 end
 
 vim.opt.wildignore:append({
+  '*.DS_Store',
+  '*.aiff',
+  '*.bz2',
+  '*.cache',
+  '*.class',
+  '*.dll',
+  '*.dll',
+  '*.gif',
+  '*.gz',
+  '*.jpeg',
+  '*.jpg',
+  '*.mdb',
+  '*.meta',
   '*.o',
   '*.obj',
-  '*.dll',
-  '*.exe',
+  '*.pdb',
+  '*.png',
   '*.pyc',
-  '*.class',
-  '*.swp',
+  '*.so',
+  '*.svg',
   '*.swo',
-  '*.DS_Store',
-  '*/node_modules/*',
-  '*/target/*',
+  '*.swp',
+  '*.wav',
+  '*.zip',
+  '*/.git/*',
+  '*/.venv/*',
   '*/build/*',
   '*/dist/*',
-  '*/.git/*',
-  '*/.svn/*',
-  '*/.venv/*',
+  '*/node_modules/*',
+  '*/target/*',
   '*/venv/*',
 })
 
-vim.opt.grepprg = vim.fn.executable('rg') == 1 and 'rg --vimgrep --smart-case --follow' or 'grep -n $* /dev/null'
+-- vim.opt.grepprg = vim.fn.executable('rg') == 1 and 'rg --vimgrep --smart-case --follow' or 'grep -n $* /dev/null'
+
+if vim.fn.executable('rg') == 1 then
+  vim.o.grepprg = 'rg --vimgrep --no-heading --smart-case'
+  vim.o.grepformat = '%f:%l:%c:%m,%f:%l:%m'
+elseif vim.fn.executable('ag') == 1 then
+  vim.o.grepprg = 'ag --vimgrep'
+  vim.o.grepformat = '%f:%l:%c:%m'
+elseif vim.fn.executable('ack') == 1 then
+  vim.o.grepprg = 'ack --nogroup --nocolor'
+elseif vim.fn.finddir('.git', '.;') ~= '' then
+  vim.o.grepprg = 'git --no-pager grep --no-color -n'
+  vim.o.grepformat = '%f:%l:%m,%m %f match%ts,%f'
+else
+  vim.o.grepprg = 'grep -nIR $* /dev/null'
+end
 
 vim.opt.listchars = {
-  -- tab = ' ',
   tab = '» ',
   trail = '·',
   extends = '',

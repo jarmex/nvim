@@ -10,6 +10,7 @@ return {
     dependencies = {
       'j-hui/fidget.nvim',
       'hakonharnes/img-clip.nvim',
+      'ravitemer/mcphub.nvim',
       'ravitemer/codecompanion-history.nvim', -- Save and load conversation history.
       'lalitmee/codecompanion-spinners.nvim',
       'jarmex/codecompanion-gitcommit.nvim',
@@ -73,13 +74,15 @@ return {
             files = {
               vim.fn.stdpath('config') .. '/prompts/personal-programming.md',
               os.getenv('HOME') .. '/.agent/AGENTS.md',
+              { path = '~/.config/personal/PERSONAL.md', parser = 'codecompanion' },
+              { path = 'CLAUDE.md', parser = 'claude' },
             },
           },
           opts = {
             chat = {
               -- autoload = { 'default', 'personal' },
               autoload = 'default',
-              enabled = true,
+              enabled = false,
             },
           },
         },

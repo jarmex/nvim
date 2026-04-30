@@ -1,7 +1,7 @@
 local adapters = require('codecompanion.adapters')
 
 -- local adapter = { name = "openai_responses", model = "gpt-5-mini" }
-local reasoningEffort = 'minimal' -- minimal|low|medium|high https://platform.openai.com/docs/api-reference/responses/create#responses_create-reasoning
+local reasoningEffort = 'low' -- none|low|medium|high https://platform.openai.com/docs/api-reference/responses/create#responses_create-reasoning
 
 return {
   --- Anthropic config for CodeCompanion.
@@ -67,7 +67,7 @@ return {
             },
           },
         },
-        ['reasoning.effort'] = { default = 'minimal' },
+        ['reasoning.effort'] = { default = 'low' },
         verbosity = { default = 'low' },
       },
     })
@@ -101,7 +101,7 @@ return {
       },
       schema = {
         model = {
-          default = 'gpt-4.1-mini-2025-04-14', -- 'gpt-5-2025-08-07',
+          default = 'gpt-5.4-mini', -- 'gpt-5-2025-08-07',
         },
       },
     }
@@ -109,12 +109,6 @@ return {
   end,
 
   openrouter = require('plugins.ai.codecompanion.adapters.openrouter'),
-
-  ['deepseek-flash'] = function()
-    return require('codecompanion.adapters.http').extend('deepseek', {
-      schema = { model = { default = 'deepseek-v4-flash' } },
-    })
-  end,
 
   deepseek = function()
     return adapters.extend('deepseek', {
@@ -181,7 +175,7 @@ return {
         model = {
           default = 'qwen3-coder-plus',
           choices = {
-            'qwen3-coder-plus-2025-07-22',
+            'qwen3.6-max-preview',
             'qwen3-coder-plus',
             'qwen-turbo-2025-04-28',
           },

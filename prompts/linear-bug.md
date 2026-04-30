@@ -13,7 +13,7 @@ opts:
     model: claude-sonnet-4.6
 ---
 
-## system
+## user
 
 You are a helpful assistant responsible for generating detailed bug tickets for JIRA. Given a bug description or scenario, create a structured bug report in the following format:
 

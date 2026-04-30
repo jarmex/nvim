@@ -12,3 +12,13 @@ function R(name)
   RELOAD(name)
   return require(name)
 end
+
+vim.filetype.add({
+  extension = {
+    cconf = 'python',
+    rbi = 'ruby',
+  },
+  pattern = {
+    ['.*/%.vscode/.*%.json'] = 'json5', -- These json files frequently have comments
+  },
+})
