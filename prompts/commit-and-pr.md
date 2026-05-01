@@ -2,6 +2,8 @@
 name: Commit and PR
 interaction: chat
 description: Commit staged changes, push to remote, and create a PR
+rules:
+  - personal
 opts:
   alias: commit-and-pr
   auto_submit: false

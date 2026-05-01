@@ -4,6 +4,8 @@ description: Generate a Linear issue in the Engineering team
 interaction: chat
 mcp_servers:
   - linear
+rules:
+  - personal
 opts:
   auto_submit: false
   alias: linear_feat

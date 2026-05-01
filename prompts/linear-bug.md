@@ -4,6 +4,8 @@ description: Generate a Linear Bug issue in the Engineering team
 interaction: chat
 mcp_servers:
   - linear
+rules:
+  - personal
 opts:
   alias: linear-bug
   auto_submit: false

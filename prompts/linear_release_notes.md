@@ -4,6 +4,8 @@ description: Generate executive-level release notes from Linear tickets.
 interaction: chat
 mcp_servers:
   - linear
+rules:
+  - personal
 opts:
   auto_submit: false
   alias: linear_release_notes

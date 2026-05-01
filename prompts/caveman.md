@@ -10,6 +10,8 @@ description: >
 interaction: chat
 disable-model-invocation: true
 argument-hint: "[full|ultra]"
+rules:
+  - personal
 ---
 
 ## user

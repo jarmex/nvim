@@ -1,7 +1,7 @@
 local adapters = require('codecompanion.adapters')
 
 -- local adapter = { name = "openai_responses", model = "gpt-5-mini" }
-local reasoningEffort = 'low' -- none|low|medium|high https://platform.openai.com/docs/api-reference/responses/create#responses_create-reasoning
+-- local reasoningEffort = 'low' -- none|low|medium|high https://platform.openai.com/docs/api-reference/responses/create#responses_create-reasoning
 
 return {
   --- Anthropic config for CodeCompanion.
@@ -67,7 +67,7 @@ return {
             },
           },
         },
-        ['reasoning.effort'] = { default = 'low' },
+        -- ['reasoning.effort'] = { default = 'low' },
         verbosity = { default = 'low' },
       },
     })
@@ -82,7 +82,7 @@ return {
             ['gpt-5-nano'] = { opts = { can_reason = true } },
           },
         },
-        ['reasoning.effort'] = { default = reasoningEffort },
+        -- ['reasoning.effort'] = { default = reasoningEffort },
 
         -- PENDING https://github.com/olimorris/codecompanion.nvim/pull/2561
         ['reasoning.summary'] = {
