@@ -1,48 +1,45 @@
 # AGENTS.md - Neovim Configuration
 
-## Commands
+## Common commands
 
-- **Format**: `stylua lua/` (format Lua files)
+- **Format**: `stylua lua/`
 - **Validate**: Open Neovim and run `:checkhealth`
-- **Plugins**: `:Lazy sync` (install/update), `:Lazy profile` (performance)
+- **Plugins**: `:Lazy sync` to install/update, `:Lazy profile` for performance analysis
 
-## Structure
+## Project structure
 
-- `lua/core/` - Options, keymaps, utilities
-- `lua/plugins/` - lazy.nvim plugin specs (grouped by domain)
-- `lua/_meta.lua` - Type definitions
+- `lua/core/` — options, keymaps, utilities
+- `lua/plugins/` — `lazy.nvim` plugin specs, grouped by domain
+- `lua/_meta.lua` — type definitions
 
-## Patterns
+## Conventions
 
 - Use LuaCATS annotations: `--- @type`, `--- @param`, `--- @return`
-- Plugin specs: `return { { "plugin/name", event = "VeryLazy", opts = {} } }`
-- Lang specs: `return --- @type LangSpec { lsp = "server", others = { "tool" } }`
-- Prefer `event = "VeryLazy"` or `ft = "filetype"` for lazy loading
+- Plugin specs should follow: `return { { "plugin/name", event = "VeryLazy", opts = {} } }`
+- Lang specs should follow: `return --- @type LangSpec { lsp = "server", others = { "tool" } }`
+- Prefer lazy loading with `event = "VeryLazy"` or `ft = "filetype"`
 
-## Keybinding Guidelines
+## Keybinding rules
 
-- **Before adding/modifying keybindings**: Search the codebase for existing uses of the key sequence to avoid conflicts
-- **Check for conflicts**: Use `grep` to search `lua/plugins/` and `lua/core/keybind.lua` for the key pattern
-- **Avoid overwriting**: Plugin keybindings in `on_attach` or `keys` tables may override each other based on load order
-- **All keybindings need descriptions**: Ensure every keybinding has a clear description for better usability and maintenance (english only)
+- Search existing mappings before adding or changing keybindings
+- Check `lua/plugins/` and `lua/core/keybind.lua` for conflicts
+- Be aware that `on_attach` and `keys` may override mappings based on load order
+- Every keybinding must include a clear English description
 
 ## General rules
 
-- Don't over-explore the codebase with excessive grep/read calls. If you haven't converged on an approach after 3-4 searches, pause and share what you've found so far rather than continuing to search.
-- When the user asks to fix tests, fix the tests — not the source code — unless explicitly asked otherwise.
+- Avoid excessive searching; stop after 3–4 targeted checks if the approach is not converging
+- If the user asks to fix tests, fix the tests instead of the source unless told otherwise
+- Do only what is requested
+- Prefer editing existing files
+- Do not create files unless absolutely necessary
+- Do not create documentation files proactively
+- Keep memory in the current working directory and `memories/`
 
-## Important instructions
+## Self-improvement loop
 
-- Do what has been asked; nothing more, nothing less.
-- NEVER create files unless absolutely necessary
-- ALWAYS prefer editing existing files
-- NEVER proactively create documentation files
-- ALWAYS keep memory in the current working directory and `memories/` folder
+If a `PERSONAL.md` file is present, follow it carefully:
 
-### Self-improvement loop
-
-The user may have shared a `PERSONAL.md` file with specific instructions for how they like to work. If so, follow these instructions carefully:
-
-- Review the `PERSONAL.md` at the start of every session
-- After ANY correction from the user: update the `PERSONAL.md` with the pattern
-- Write rules that prevent the same mistake from happening again
+- Review `PERSONAL.md` at the start of every session
+- After any correction from the user, update `PERSONAL.md`
+- Add rules that prevent the same mistake from recurring

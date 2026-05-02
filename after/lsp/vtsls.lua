@@ -72,7 +72,7 @@ local config = {
     },
   },
   filetypes = constants.javascript_aliases,
-
+  single_file_support = false,
   handlers = {
     ['textDocument/publishDiagnostics'] = function(_, result, ctx, config)
       if result.diagnostics == nil then

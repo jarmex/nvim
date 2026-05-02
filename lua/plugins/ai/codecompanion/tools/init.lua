@@ -85,6 +85,7 @@ return {
         'read_file',
         'run_command',
         'web_search',
+        'agent_skills',
       },
       opts = {
         collapse_tools = true,
