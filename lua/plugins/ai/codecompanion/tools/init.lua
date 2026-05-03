@@ -177,6 +177,7 @@ return {
     -- enabled = true, -- Enable the tools system prompt?
     -- replace_main_system_prompt = false, -- Replace the main system prompt with the tools system prompt?
     -- },
+    allowed_in_yolo_mode = true,
     default_tools = {
       'memory',
     },

@@ -66,16 +66,16 @@ return {
       },
     },
     opts = {
+      dap = false,
       output = {
         -- Use a terminal buffer to display output. If false, a normal buffer is used
         use_terminal = true,
         -- If true, don't clear the buffer when a task restarts
-        preserve_output = true,
+        preserve_output = false,
       },
-      templates = { 'make', 'user', 'vscode', 'task', 'shell' },
+      templates = { 'builtin', 'user' },
       -- Auto-detect task files
       auto_detect_success_color = true,
-      dap = false,
       strategy = { 'jobstart', preserve_output = true, use_terminal = true, use_shell = true },
       task_launcher = {
         bindings = {
@@ -137,9 +137,14 @@ return {
       },
       component_aliases = {
         default = {
-          'on_exit_set_status',
-          { 'on_complete_notify', system = 'unfocused' },
+          'user.interactive_shell', -- run tasks in interactive shell so aliases/functions are available
+          'user.on_output_parse', -- parse with problem matcher
+          'on_exit_set_status', -- set the status based on exit code
+          { 'on_complete_notify', system = 'unfocused' }, -- popup notification
+          { 'on_result_diagnostics', remove_on_restart = true, underline = true }, -- display diagnostics
           { 'on_complete_dispose', require_view = { 'SUCCESS', 'FAILURE' } },
+          'unique',
+          { 'user.on_complete_close_term', statuses = { 'SUCCESS' }, timeout = 5 },
         },
         default_neotest = {
           'unique',

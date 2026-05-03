@@ -188,6 +188,11 @@ return {
     }
     return adapters.extend('openai_compatible', qwen_config)
   end,
+  copilot = function()
+    return require('codecompanion.adapters').extend('copilot', {
+      schema = { model = { default = 'gpt-5-mini' } },
+    })
+  end,
   default_copilot = function()
     require('codecompanion.adapters').extend('copilot', {
       schema = {

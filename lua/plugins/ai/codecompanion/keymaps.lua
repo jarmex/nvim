@@ -78,6 +78,21 @@ local function ask_selection()
   end)
 end
 
+local function send_buffer_to_chat(bufnr)
+  CodeCompanion = require('codecompanion')
+
+  local chat = CodeCompanion.last_chat()
+  if not chat then
+    chat = CodeCompanion.chat()
+  end
+
+  chat:add_buf_message({
+    role = 'user',
+    content = '#{buffer:' .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ':t') .. '}',
+  })
+  chat.ui:open()
+end
+
 return {
   {
     'ga',
@@ -128,6 +143,27 @@ return {
     mode = { 'n', 'v' },
     desc = 'Prompt the CLI agent',
     silent = true,
+  },
+  {
+    '<leader>ab',
+    function()
+      send_buffer_to_chat(vim.api.nvim_get_current_buf())
+    end,
+    desc = 'Code Companion Send Buffer',
+  },
+  {
+    '<leader>ax',
+    ':CodeCompanion #{explain terminal error}<cr>',
+    mode = { 'n' },
+    desc = 'Code Companion Explain Terminal Error',
+  },
+  {
+    '<leader>av',
+    function()
+      require('codecompanion').chat()
+    end,
+    mode = { 'n' },
+    desc = 'Code Companion New Chat',
   },
   -- [C]odeCompanion [D]iagnostics
   vim.keymap.set('n', '<LocalLeader>cd', function()

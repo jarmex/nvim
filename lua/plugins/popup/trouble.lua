@@ -50,6 +50,20 @@ return {
         },
       },
     },
+    formatters = {
+      kind_icon = function(ctx)
+        if not ctx.item.kind then
+          return
+        end
+        local icon = require('helpers.icons').kind[ctx.item.kind] or ctx.opts.icons.kinds[ctx.item.kind]
+        if icon then
+          return {
+            text = icon,
+            hl = 'TroubleIcon' .. ctx.item.kind,
+          }
+        end
+      end,
+    },
   },
   specs = {
     'folke/snacks.nvim',

@@ -49,7 +49,7 @@ M.background = {
 --------------
 
 M.inline = {
-  adapter = { name = DEFAULT_ADAPTER, model = 'gpt-5.1-codex' },
+  adapter = { name = DEFAULT_ADAPTER, model = 'gpt-5-mini' },
   opts = {
     diff_timeout = 300,
   },
@@ -60,34 +60,34 @@ M.inline = {
 --  Chat  --
 ------------
 
-local extras = [[
-  When replying with code, the code must:
-- Follow idiomatic patterns and current best practices for the language/framework
-- Prefer functional programming patterns: small typed functions, currying/partial application
-- Favor composition over inheritance, explicit over implicit
-- Functions under 20 lines, max 3 levels nesting
-- Extract complex logic into focused helper functions
-- Early returns to reduce nesting
-- Use current, well-maintained libraries and avoid deprecated patterns
-- Use descriptive variable names and small named functions to make code read like English
-- Minimal comments, only when non-idiomatic patterns are used and explanation is needed
-
-Extra information:
-- current project that you're working on: %s
-- current operating system: %s
-]]
+-- local extras = [[
+--   When replying with code, the code must:
+-- - Follow idiomatic patterns and current best practices for the language/framework
+-- - Prefer functional programming patterns: small typed functions, currying/partial application
+-- - Favor composition over inheritance, explicit over implicit
+-- - Functions under 20 lines, max 3 levels nesting
+-- - Extract complex logic into focused helper functions
+-- - Early returns to reduce nesting
+-- - Use current, well-maintained libraries and avoid deprecated patterns
+-- - Use descriptive variable names and small named functions to make code read like English
+-- - Minimal comments, only when non-idiomatic patterns are used and explanation is needed
+--
+-- Extra information:
+-- - current project that you're working on: %s
+-- - current operating system: %s
+-- ]]
 
 M.chat = {
   -- adapter = defaultAdapter,
   adapter = {
     name = DEFAULT_ADAPTER,
-    model = 'claude-haiku-4.5',
+    model = 'claude-sonnet-4.6',
   },
   opts = {
     completion_provider = 'blink', -- blink | cmp | coc | default
-    system_prompt = function(ctx)
-      return ctx.default_system_prompt .. string.format(extras, ctx.project_root or ctx.cwd, ctx.os or 'unknown')
-    end,
+    -- system_prompt = function(ctx)
+    --   return ctx.default_system_prompt .. string.format(extras, ctx.project_root or ctx.cwd, ctx.os or 'unknown')
+    -- end,
     send_code = true,
   },
   roles = {
@@ -102,7 +102,7 @@ M.chat = {
   },
   tools = require('plugins.ai.codecompanion.tools'),
   slash_commands = require('plugins.ai.codecompanion.slash_commands'),
-  variables = require('plugins.ai.codecompanion.variables'),
+  editor_context = require('plugins.ai.codecompanion.variables'),
   keymaps = {
     close = { modes = { n = 'q', i = '<C-c>' } },
     -- clear = { modes = { n = '<C-x>' } },

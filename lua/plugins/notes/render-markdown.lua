@@ -12,13 +12,20 @@ return {
       -- quote = {
       --   repeat_linebreak = true, -- full border on soft-wrap
       -- },
-      code = { sign = false },
+      code = { sign = false, border = 'thin' },
       completions = {
         blink = { enabled = true },
         lsp = { enabled = false },
       },
       debounce = 250,
-      file_types = { 'markdown', 'codecompanion', 'obsidian' },
+      file_types = {
+        'markdown',
+        'markdown.floaterm',
+        'codecompanion',
+        'obsidian',
+        'codecompanion.floaterm',
+        'mcphub',
+      },
       latex = { enabled = false, render_modes = false },
       render_modes = true, -- Render in ALL modes
       sign = {
@@ -29,8 +36,8 @@ return {
         -- unchecked = { icon = '󱍫', highlight = 'DiagnosticInfo' },
         -- checked = { icon = '󱍧', highlight = 'DiagnosticOk' },
 
-        checked = { icon = '󰄵' },
-        unchecked = { icon = '󰄱' },
+        checked = { icon = '󰄵', highlight = 'DiagnosticInfo' },
+        unchecked = { icon = '󰄱', highlight = 'DiagnosticOk' },
         custom = {
           in_progress = { raw = '[+]', rendered = '󱍬', highlight = 'DiagnosticInfo' },
           wont_do = { raw = '[/]', rendered = '󱍮', highlight = 'DiagnosticError' },
@@ -44,11 +51,24 @@ return {
         border_virtual = true, -- borders not on empty lines -> preserves blank lines
       },
       heading = {
+        sign = false,
         position = 'inline', -- = remove indentation of headings
         width = 'block', -- = not full width
         min_width = vim.o.textwidth,
         icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' }, -- `numeric_x` glyphs
         -- icons = { "󰲠 ", "󰲢 ", "󰲤 ", "󰲦 ", "󰲨 ", "󰲪 " },
+        -- icons = {
+        --   '█ ',
+        --   '██ ',
+        --   '███ ',
+        --   '████ ',
+        --   '█████ ',
+        --   '██████ ',
+        --   '███████ ',
+        -- },
+        right_pad = 1,
+        border_prefix = true,
+        border = false,
       },
       dash = {
         width = vim.o.textwidth,
@@ -96,7 +116,7 @@ return {
           },
         },
       },
-      -- restart_highlighter = true,
+      restart_highlighter = false,
     },
   },
 }
