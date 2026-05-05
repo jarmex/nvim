@@ -122,7 +122,7 @@ return {
   agentskills = {
     opts = {
       paths = {
-        { '.claude/skills', recursive = true },
+        { '~/.config/skills/.claude/skills', recursive = true },
         { '~/.config/skills', recursive = true }, -- Recursive search
       },
     },
