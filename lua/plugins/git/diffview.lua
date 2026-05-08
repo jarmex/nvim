@@ -9,12 +9,14 @@ return {
   --    },
   --  },
 
+  -- "dlyongemallo/diffview.nvim",
   -- better diffing
   'sindrets/diffview.nvim',
   dependencies = {
     'nvim-neotest/nvim-nio',
   },
   event = 'VeryLazy',
+  enabled = false,
   cmd = {
     'DiffviewOpen',
     'DiffviewClose',

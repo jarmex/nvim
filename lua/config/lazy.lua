@@ -70,9 +70,9 @@ require('lazy').setup({
     path = '~/Projects/lua',
     patterns = { 'jarmex' },
   },
-  diff = {
-    cmd = 'diffview.nvim',
-  },
+  -- diff = {
+  --   cmd = 'diffview.nvim',
+  -- },
   readme = { enabled = true },
   performance = {
     rtp = {

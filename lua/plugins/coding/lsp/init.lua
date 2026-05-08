@@ -111,12 +111,12 @@ return {
           end
 
           -- Prevent LSP from attaching to virtual buffers such as diffview.
-          local bufname = vim.api.nvim_buf_get_name(args.buf)
-          if bufname:match('^diffview://') then
-            vim.schedule(function()
-              vim.lsp.buf_detach_client(args.buf, args.data.client_id)
-            end)
-          end
+          -- local bufname = vim.api.nvim_buf_get_name(args.buf)
+          -- if bufname:match('^diffview://') then
+          --   vim.schedule(function()
+          --     vim.lsp.buf_detach_client(args.buf, args.data.client_id)
+          --   end)
+          -- end
         end,
       })
     end,

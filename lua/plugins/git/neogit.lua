@@ -4,7 +4,7 @@ return {
     version = '*',
     event = 'VeryLazy',
     dependencies = {
-      'sindrets/diffview.nvim', -- optional - Diff integration
+      -- 'sindrets/diffview.nvim', -- optional - Diff integration
       'nvim-lua/plenary.nvim',
       'folke/snacks.nvim',
     },
@@ -40,8 +40,9 @@ return {
       use_per_project_settings = true,
       integrations = {
         snacks = true,
-        diffview = true,
+        diffview = false,
         telescope = false,
+        codediff = true,
       },
       status = {
         show_head_commit_hash = true,

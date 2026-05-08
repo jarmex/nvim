@@ -22,7 +22,8 @@ local M = {
       },
       default_integrations = {
         blink_cmp = { style = 'solid' },
-        diffview = true,
+        diffview = false,
+        codediff = true,
         fidget = true,
         fzf = true,
         headlines = true,

@@ -8,7 +8,7 @@ local function gitsigns_keymaps()
     { '<leader>gu', '<cmd>Gitsigns undo_stage_hunk<cr>', desc = 'Undo Stage Hunk' },
     { '<leader>gr', '<cmd>Gitsigns reset_hunk<cr>', desc = 'Reset Hunk' },
     { '<leader>gR', '<cmd>Gitsigns reset_buffer<cr>', desc = 'Reset Buffer' },
-    { '<leader>ga', '<cmd>Gitsigns toggle_current_line_blame<cr>', desc = 'Toggle Git Blame' },
+    -- { '<leader>ga', '<cmd>Gitsigns toggle_current_line_blame<cr>', desc = 'Toggle Git Blame' },
     { '<leader>hg', '<cmd>Gitsigns diffthis HEAD<cr>', desc = 'Git Diff This' },
   }
 end

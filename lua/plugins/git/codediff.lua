@@ -40,11 +40,10 @@ return {
       },
     },
     keys = {
-      { '<leader>gj', '<cmd>CodeDiff<cr>', desc = 'Diff file explorer' },
+      { '<leader>gc', '<cmd>CodeDiff<cr>', desc = 'Diff file explorer' },
       { '<leader>gdc', '<cmd>CodeDiff file HEAD~1<cr>', desc = 'Diff with HEAD' },
-      -- { '<leader>gcf', '<cmd>CodeDiff file HEAD~1<cr>', desc = 'Diff with HEAD~1' },
-      -- { '<leader>da', ':CodeDiff file ', desc = 'Diff with commit...', silent = false },
-      -- { '<leader>dm', ':CodeDiff file ', desc = 'Diff two files...', silent = false },
+      { '<leader>gdf', ':CodeDiff history %<cr>', desc = 'Git File History', silent = false },
+      { '<leader>gh', ':CodeDiff history<cr>', desc = 'Git History', silent = false },
     },
   },
 }

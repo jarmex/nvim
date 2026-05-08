@@ -362,7 +362,7 @@ function M.git_diff(opts)
       end
     end,
     on_click = function()
-      vim.cmd('DiffviewOpen')
+      vim.cmd('CodeDiff')
     end,
     symbols = {
       added = icons.git.added,
