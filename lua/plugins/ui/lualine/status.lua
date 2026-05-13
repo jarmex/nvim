@@ -206,6 +206,16 @@ function M.mode(opts)
   }, opts)
 end
 
+function M.workingDirectory(opts)
+  return helper.extend_tbl({
+    function()
+      local cwd = vim.fn.getcwd()
+      return '󰉋 ' .. vim.fn.fnamemodify(cwd, ':t')
+    end,
+    -- separator = { left = '', right = '' },
+    color = { bg = colors.red, fg = color.bg_dark, gui = 'bold' },
+  }, opts)
+end
 function M.showMacroRecording(opts)
   return helper.extend_tbl({
     function()

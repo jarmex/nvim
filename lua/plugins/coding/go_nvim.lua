@@ -8,6 +8,7 @@ return {
   {
     'ray-x/go.nvim',
     enabled = true,
+    version = '*',
     lazy = true,
     dependencies = { -- optional packages
       'ray-x/guihua.lua',

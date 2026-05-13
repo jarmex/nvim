@@ -25,7 +25,7 @@ return function()
     -- },
     schema = {
       model = {
-        default = 'google/gemini-3.1-flash-lite-preview',
+        default = 'google/gemini-3.1-flash-lite',
         -- default = 'deepseek/deepseek-v4-flash',
         choices = {
           'minimax/minimax-m2.7',
@@ -33,7 +33,7 @@ return function()
           'xiaomi/mimo-v2.5-pro',
           'deepseek/deepseek-v4-flash',
           'z-ai/glm-5-turbo',
-          ['google/gemini-3.1-flash-lite-preview'] = { opts = { can_reason = true } },
+          -- ['google/gemini-3.1-flash-lite'] = { opts = { can_reason = true } },
           ['moonshotai/kimi-k2.6'] = { opts = { can_reason = true } },
         },
       },

@@ -87,34 +87,16 @@ return {
       task_list = {
         default_detail = 2,
         direction = 'bottom',
-        min_height = 17,
-        max_height = 17,
+        min_height = 18,
+        max_height = 20,
         min_width = 0.4,
         max_width = 0.4,
         separator = '',
         bindings = {
-          ---@diagnostic disable-next-line: assign-type-mismatch
-          ['<C-s>'] = false,
-          ['<C-h>'] = false,
-          ['<C-j>'] = false,
-          ['<C-k>'] = false,
-          ['<C-l>'] = false,
-          ['<C-x>'] = 'OpenSplit',
-          ['zo'] = 'IncreaseDetail',
-          ['zc'] = 'DecreaseDetail',
-          ['zr'] = 'IncreaseDetail',
-          ['zm'] = 'DecreaseDetail',
-          [']'] = false,
-          ['['] = false,
-          ['[t'] = 'PrevTask',
-          [']t'] = 'NextTask',
-          ['<C-r>'] = '<CMD>OverseerQuickAction restart<CR>',
-          ['<C-d>'] = '<CMD>OverseerQuickAction dispose<CR>',
-          ['<A-v>'] = 'TogglePreview',
-          ['<A-j>'] = 'ScrollOutputDown',
-          ['<A-k>'] = 'ScrollOutputUp',
-          ['dd'] = 'Dispose',
-          ['ss'] = 'Stop',
+          ['<C-h>'] = '<C-w>h',
+          ['<C-j>'] = '<C-w>j',
+          ['<C-k>'] = '<C-w>k',
+          ['<C-l>'] = '<C-w>l',
         },
         -- default_detail = 1,
       },
@@ -137,14 +119,11 @@ return {
       },
       component_aliases = {
         default = {
-          'user.interactive_shell', -- run tasks in interactive shell so aliases/functions are available
-          'user.on_output_parse', -- parse with problem matcher
           'on_exit_set_status', -- set the status based on exit code
           { 'on_complete_notify', system = 'unfocused' }, -- popup notification
           { 'on_result_diagnostics', remove_on_restart = true, underline = true }, -- display diagnostics
           { 'on_complete_dispose', require_view = { 'SUCCESS', 'FAILURE' } },
           'unique',
-          { 'user.on_complete_close_term', statuses = { 'SUCCESS' }, timeout = 5 },
         },
         default_neotest = {
           'unique',
@@ -155,16 +134,8 @@ return {
     },
     config = function(_, opts)
       local overseer = require('overseer')
-      local util = require('overseer.util')
 
       local otherCommands = require('plugins.coding.overseer.commands')
-
-      -- Override run_in_cwd to prevent fullscreen terminal execution and output flickering
-      ---@diagnostic disable-next-line: duplicate-set-field
-      util.run_in_cwd = function(cwd, callback)
-        vim.cmd.lcd({ args = { cwd }, mods = { silent = true, noautocmd = true } })
-        callback()
-      end
 
       overseer.setup(opts)
 
