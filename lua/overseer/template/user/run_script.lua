@@ -1,4 +1,4 @@
--- https://github.com/stevearc/overseer.nvim/blob/master/doc/tutorials.md#build-a-c-file
+-- https://github.com/lucobellic/nvim-config/blob/main/lua/plugins/code/overseer.lua
 return {
   name = 'run script',
   builder = function()

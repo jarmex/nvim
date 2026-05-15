@@ -376,5 +376,26 @@ return function()
       end,
       desc = 'GitHub Pull Requests (all)',
     },
+    {
+      '<leader>uP',
+      function()
+        Snacks.terminal.toggle(nil, { win = { position = 'bottom' } })
+      end,
+      desc = 'Toggle Terminal',
+    },
+    {
+      '<leader>up',
+      function()
+        Snacks.terminal.toggle(nil, { win = { position = 'bottom' } })
+      end,
+      desc = 'Toggle Terminal',
+    },
+    {
+      '<leader>sgh',
+      function()
+        require('plugins.snacks.utils.picker-git').git_history()
+      end,
+      desc = 'Search Git History',
+    },
   }
 end

@@ -89,7 +89,15 @@ return {
       quickfile = { enabled = true },
       scroll = { enabled = true },
       statuscolumn = { enabled = true, left = { 'mark', 'sign', 'git' }, right = { 'fold' } },
-      terminal = { enabled = true, win = { wo = { winbar = '' } } },
+      terminal = {
+        enabled = true,
+        win = {
+          wo = { winbar = '' },
+          keys = {
+            term_normal = false,
+          },
+        },
+      },
       rename = { enabled = true },
       words = { enabled = true, notify_jump = true, modes = { 'n' }, debounce = 300 },
     },

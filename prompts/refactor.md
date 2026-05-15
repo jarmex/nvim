@@ -9,6 +9,8 @@ opts:
   is_slash_cmd:  true
   auto_submit: true
   stop_context_insertion: true
+  adapter:
+    name: default_copilot
 ---
 
 ## system
