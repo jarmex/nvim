@@ -294,11 +294,18 @@ end
 function M.diagnostics(opts)
   return helper.extend_tbl({
     'diagnostics',
-    sources = { 'nvim_diagnostic' },
+    always_visible = true,
+    update_in_insert = true,
+    sources = {
+      'nvim_lsp',
+      'nvim_diagnostic',
+      'nvim_workspace_diagnostic',
+    },
     colored = true,
     draw_empty = false,
     on_click = function()
-      vim.cmd('Trouble diagnostics toggle filter.buf=0')
+      vim.cmd('Trouble diagnostics toggle')
+      -- vim.cmd('Trouble diagnostics toggle filter.buf=0')
     end,
     symbols = {
       error = icons.diagnostics.Error,

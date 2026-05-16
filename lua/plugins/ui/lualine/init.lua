@@ -107,6 +107,27 @@ return {
     end,
     config = function(_, opts)
       require('lualine').setup(opts)
+      -- Add overseer integration after lualine is set up
+      vim.schedule(function()
+        local ok, overseer = pcall(require, 'overseer')
+        if ok then
+          local lualine = require('lualine')
+          local config = lualine.get_config()
+          table.insert(config.sections.lualine_x, 1, {
+            'overseer',
+            label = '',
+            colored = true,
+            symbols = {
+              [overseer.STATUS.FAILURE] = '✗ ',
+              [overseer.STATUS.CANCELED] = '⊘ ',
+              [overseer.STATUS.SUCCESS] = '✓ ',
+              [overseer.STATUS.RUNNING] = '⟳ ',
+            },
+            unique = false,
+          })
+          lualine.setup(config)
+        end
+      end)
     end,
   },
 }
