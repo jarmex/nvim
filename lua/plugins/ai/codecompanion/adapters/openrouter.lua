@@ -25,10 +25,13 @@ return function()
     -- },
     schema = {
       model = {
-        default = 'google/gemini-3.1-flash-lite',
+        default = 'google/gemini-3.5-flash',
         -- default = 'deepseek/deepseek-v4-flash',
         choices = {
+          'google/gemini-3.1-flash-lite',
+          'google/gemini-3.5-flash',
           'minimax/minimax-m2.7',
+          'qwen/qwen3.7-max',
           'qwen/qwen3.6-flash',
           'xiaomi/mimo-v2.5-pro',
           'deepseek/deepseek-v4-flash',

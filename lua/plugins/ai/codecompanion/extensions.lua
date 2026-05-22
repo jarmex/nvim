@@ -3,6 +3,7 @@ local DEFAULT_ADAPTOR = 'copilot'
 
 return {
   mcphub = {
+    enabled = false,
     callback = 'mcphub.extensions.codecompanion',
     opts = {
       make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers.

@@ -1,3 +1,41 @@
+-- local function open_file_under_cursor_in_picker()
+--   local target = vim.fn.expand('<cfile>')
+--   vim.api.nvim_command('wincmd k')
+--
+--   require('snacks.picker').files({
+--     prompt = '🍪 ',
+--     default_text = target,
+--     wrap = true,
+--     find_command = { 'rg', '--files', '--no-require-git' },
+--   })
+-- end
+--
+-- vim.keymap.set('n', 'gs', open_file_under_cursor_in_picker, { desc = 'Search file name under cursor' })
+
+local function find_recent_files()
+  -- Use smart() which combines recent files, buffers and files (similar to smart_open)
+  require('snacks.picker').smart({
+    multi = { 'files' },
+    format = 'file',
+    prompt = '🍪 ',
+    wrap = true,
+    matcher = {
+      fuzzy = true,
+      filename_bonus = true,
+      history_bonus = true,
+      sort_empty = true,
+      frecency = true,
+    },
+    keys = {
+      '<leader>q',
+      Snacks.picker.qflist,
+      desc = 'Add to quickfix list',
+    },
+    filter = {
+      cwd = true,
+    },
+  })
+end
 return function()
   return {
     -- { '<leader>.', function() Snacks.scratch() end, desc = 'Toggle Scratch Buffer', },
@@ -203,7 +241,7 @@ return function()
     {
       '<leader>ff',
       function()
-        Snacks.picker.smart({ filter = { cwd = true } })
+        find_recent_files()
       end,
       desc = 'Find Files',
     },

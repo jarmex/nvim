@@ -82,7 +82,7 @@ return {
           },
           opts = {
             chat = {
-              -- autoload = { 'default', 'personal' },
+              autoload = { 'personal' },
               -- autoload = 'default',
               enabled = true,
             },

@@ -2,6 +2,7 @@ return {
   {
     'ravitemer/mcphub.nvim',
     branch = 'main',
+    enabled = false,
     keys = {
       { '<leader>$', '<Cmd>MCPHub<CR>', desc = 'Open MCB Hub' },
     },

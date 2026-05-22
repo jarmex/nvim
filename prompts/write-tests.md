@@ -17,7 +17,7 @@ opts:
     model: claude-sonnet-4.6
 ---
 
-## system
+## user
 
 Generate comprehensive unit tests for the provided code.
 
@@ -38,7 +38,5 @@ Follow these additional rules:
 - Run the tests if a test runner is available in the environment.
     - If tests fail, analyze the output and fix the issues (incorrect mocks, wrong assertions, missing setup).
     - If you cannot run tests (missing runner, build failures, permission issues), output the test code with a note about any uncertainties.
-
-## user
 
 The code to generate tests for is #{buffer}
