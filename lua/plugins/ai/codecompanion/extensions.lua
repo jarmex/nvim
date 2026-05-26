@@ -2,18 +2,6 @@ local DEFAULT_COPILOT_MODEL = 'gpt-4.1' -- grok-code-fast-1, gpt-4.1
 local DEFAULT_ADAPTOR = 'copilot'
 
 return {
-  mcphub = {
-    enabled = false,
-    callback = 'mcphub.extensions.codecompanion',
-    opts = {
-      make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers.
-      show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true).
-      add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`).
-      make_vars = false, -- Convert resources to #variables. -- TODO: re-enable after ravitemer/mcphub.nvim#279 lands
-      show_result_in_chat = true, -- Show mcp tool results in chat.
-      make_slash_commands = true, -- Add prompts as /slash commands.
-    },
-  },
   history = {
     enabled = true,
     auto_save = true,
@@ -133,39 +121,6 @@ return {
       log_level = 'info',
       -- Available options: "cursor-relative", "snacks", "fidget", "lualine", "heirline", "native", "none"
       style = 'snacks',
-    },
-  },
-  vectorcode = {
-    opts = {
-      tool_group = {
-        -- this will register a tool group called `@vectorcode_toolbox` that contains all 3 tools
-        enabled = false,
-        -- a list of extra tools that you want to include in `@vectorcode_toolbox`.
-        -- if you use @vectorcode_vectorise, it'll be very handy to include
-        -- `file_search` here.
-        extras = {},
-        collapse = false, -- whether the individual tools should be shown in the chat
-      },
-      tool_opts = {
-        ['*'] = {},
-        ls = {},
-        vectorise = {},
-        query = {
-          max_num = { chunk = 80, document = 20 },
-          default_num = { chunk = 50, document = 10 },
-          include_stderr = false,
-          use_lsp = true,
-          no_duplicate = true,
-          chunk_mode = true,
-          summarise = {
-            enabled = false,
-            adapter = nil,
-            query_augmented = true,
-          },
-        },
-        files_ls = {},
-        files_rm = {},
-      },
     },
   },
 }

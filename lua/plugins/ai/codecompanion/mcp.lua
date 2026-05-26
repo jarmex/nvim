@@ -1,4 +1,5 @@
 local M = {}
+
 M.mcpServers = {
   servers = {
     ['memory'] = {
@@ -9,6 +10,29 @@ M.mcpServers = {
       tool_defaults = {
         require_approval_before = false,
       },
+    },
+    ['github'] = {
+      cmd = {
+        'docker',
+        'run',
+        '-i',
+        '--rm',
+        '-e',
+        'GITHUB_PERSONAL_ACCESS_TOKEN',
+        'ghcr.io/github/github-mcp-server',
+      },
+      env = {
+        GITHUB_PERSONAL_ACCESS_TOKEN = os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN'),
+      },
+    },
+    ['kubernetes'] = {
+      cmd = { 'npx', 'mcp-server-kubernetes' },
+    },
+    ['playwright'] = {
+      cmd = { 'npx', '@playwright/mcp@latest' },
+    },
+    ['basic-memory'] = {
+      cmd = { 'uvx', 'basic-memory', 'mcp' },
     },
     ['sequential-thinking'] = {
       cmd = { 'npx', '-y', '@modelcontextprotocol/server-sequential-thinking' },

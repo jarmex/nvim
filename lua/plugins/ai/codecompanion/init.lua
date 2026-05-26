@@ -10,7 +10,6 @@ return {
     dependencies = {
       'j-hui/fidget.nvim',
       'hakonharnes/img-clip.nvim',
-      'ravitemer/mcphub.nvim',
       'ravitemer/codecompanion-history.nvim', -- Save and load conversation history.
       'lalitmee/codecompanion-spinners.nvim',
       'jarmex/codecompanion-gitcommit.nvim',

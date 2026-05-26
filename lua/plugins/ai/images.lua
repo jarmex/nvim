@@ -4,6 +4,11 @@ return {
   event = 'VeryLazy',
   cmd = { 'PasteImage' },
   opts = {
+    default = {
+      dir_path = 'assets/images',
+      prompt_for_file_name = false,
+      show_dir_path_in_prompt = true,
+    },
     filetypes = {
       codecompanion = {
         prompt_for_file_name = false,
@@ -12,6 +17,9 @@ return {
       },
       markdown = {
         relative_to_current_file = true,
+        prompt_for_file_name = false,
+        template = '![$CURSOR]($FILE_PATH)',
+        dir_path = 'assets/images',
       },
     },
   },

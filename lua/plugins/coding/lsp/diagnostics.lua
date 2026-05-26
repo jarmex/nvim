@@ -9,27 +9,8 @@ local function format_diagnostic(prefix, diagnostic)
   return string.format(prefix .. ' %s', formatted_message)
 end
 
-local virtual_text_config = {
-  prefix = '',
-  format = function(diagnostic)
-    local severity = diagnostic.severity
-    if severity == vim.diagnostic.severity.ERROR then
-      return format_diagnostic('󰅚', diagnostic)
-    end
-    if severity == vim.diagnostic.severity.WARN then
-      return format_diagnostic('⚠', diagnostic)
-    end
-    if severity == vim.diagnostic.severity.INFO then
-      return format_diagnostic('ⓘ', diagnostic)
-    end
-    if severity == vim.diagnostic.severity.HINT then
-      return format_diagnostic('󰌶', diagnostic)
-    end
-    return format_diagnostic('■', diagnostic)
-  end,
-}
-
 local diagnostic_config = {
+  severity_sort = true,
   signs = {
     -- text = { '', '▲', '●', '' }, -- Error, Warn, Info, Hint
     text = {
@@ -45,27 +26,25 @@ local diagnostic_config = {
       [vim.diagnostic.severity.HINT] = 'DiagnosticHint',
     },
   },
-  virtual_text = virtual_text_config,
-  -- virtual_text = {
-  --   spacing = 2,
-  --   severity = {
-  --     min = vim.diagnostic.severity.WARN, -- leave out Info & Hint
-  --   },
-  --   format = function(diag)
-  --     local msg = diag.message:gsub('%.$', '')
-  --     return msg
-  --   end,
-  --   suffix = function(diag)
-  --     if not diag then
-  --       return ''
-  --     end
-  --     local codeOrSource = (tostring(diag.code or diag.source or ''))
-  --     if codeOrSource == '' then
-  --       return ''
-  --     end
-  --     return (' [%s]'):format(codeOrSource:gsub('%.$', ''))
-  --   end,
-  -- },
+  virtual_text = {
+    prefix = '',
+    format = function(diagnostic)
+      local severity = diagnostic.severity
+      if severity == vim.diagnostic.severity.ERROR then
+        return format_diagnostic('󰅚', diagnostic)
+      end
+      if severity == vim.diagnostic.severity.WARN then
+        return format_diagnostic('⚠', diagnostic)
+      end
+      if severity == vim.diagnostic.severity.INFO then
+        return format_diagnostic('ⓘ', diagnostic)
+      end
+      if severity == vim.diagnostic.severity.HINT then
+        return format_diagnostic('󰌶', diagnostic)
+      end
+      return format_diagnostic('■', diagnostic)
+    end,
+  },
   float = {
     focusable = false,
     style = 'minimal',
@@ -94,7 +73,28 @@ vim.diagnostic.config(diagnostic_config)
 local function cycle_diagnostic_modes(direction)
   local current_config = vim.diagnostic.config() or diagnostic_config
   local modes = {
-    { virtual_text = virtual_text_config, virtual_lines = false },
+    {
+      virtual_text = {
+        prefix = '',
+        format = function(diagnostic)
+          local severity = diagnostic.severity
+          if severity == vim.diagnostic.severity.ERROR then
+            return format_diagnostic('󰅚', diagnostic)
+          end
+          if severity == vim.diagnostic.severity.WARN then
+            return format_diagnostic('⚠', diagnostic)
+          end
+          if severity == vim.diagnostic.severity.INFO then
+            return format_diagnostic('ⓘ', diagnostic)
+          end
+          if severity == vim.diagnostic.severity.HINT then
+            return format_diagnostic('󰌶', diagnostic)
+          end
+          return format_diagnostic('■', diagnostic)
+        end,
+      },
+      virtual_lines = false,
+    },
     { virtual_text = false, virtual_lines = true },
     { virtual_text = false, virtual_lines = false },
   }
@@ -103,8 +103,29 @@ local function cycle_diagnostic_modes(direction)
   for i, mode in ipairs(modes) do
     if
       (
-        (type(current_config.virtual_text) == 'table' and mode.virtual_text == virtual_text_config)
-        or (current_config.virtual_text == mode.virtual_text)
+        (
+          type(current_config.virtual_text) == 'table'
+          and mode.virtual_text
+            == {
+              prefix = '',
+              format = function(diagnostic)
+                local severity = diagnostic.severity
+                if severity == vim.diagnostic.severity.ERROR then
+                  return format_diagnostic('󰅚', diagnostic)
+                end
+                if severity == vim.diagnostic.severity.WARN then
+                  return format_diagnostic('⚠', diagnostic)
+                end
+                if severity == vim.diagnostic.severity.INFO then
+                  return format_diagnostic('ⓘ', diagnostic)
+                end
+                if severity == vim.diagnostic.severity.HINT then
+                  return format_diagnostic('󰌶', diagnostic)
+                end
+                return format_diagnostic('■', diagnostic)
+              end,
+            }
+        ) or (current_config.virtual_text == mode.virtual_text)
       ) and (current_config.virtual_lines == mode.virtual_lines)
     then
       current_mode_index = i
@@ -128,9 +149,9 @@ vim.keymap.set('n', '<space>d[', function()
   cycle_diagnostic_modes('backward')
 end, { noremap = true, silent = true })
 
-vim.api.nvim_create_autocmd('BufEnter', {
-  group = vim.api.nvim_create_augroup('DisableNewLineAutoCommentString', {}),
-  callback = function()
-    vim.opt.formatoptions = vim.opt.formatoptions - { 'c', 'r', 'o' }
-  end,
-})
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--   group = vim.api.nvim_create_augroup('DisableNewLineAutoCommentString', {}),
+--   callback = function()
+--     vim.opt.formatoptions = vim.opt.formatoptions - { 'c', 'r', 'o' }
+--   end,
+-- })

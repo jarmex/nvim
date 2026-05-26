@@ -4,6 +4,7 @@ return {
   opts = {
     show_presets = false,
   },
+  mcp = require('plugins.ai.codecompanion.mcp').mcpServers,
   claude_code = function()
     return adapters.extend('claude_code', {
       env = {
@@ -13,30 +14,7 @@ return {
   end,
   gemini_cli = function()
     return adapters.extend('gemini_cli', {
-      commands = {
-        -- default = { 'gemini', '--experimental-acp' },
-        default = {
-          'gemini',
-          '--experimental-acp',
-          '-m',
-          'gemini-2.5-flash',
-        },
-        flash = {
-          'gemini',
-          '--experimental-acp',
-          '-m',
-          'gemini-2.5-flash',
-        },
-        pro = {
-          'gemini',
-          '--experimental-acp',
-          '-m',
-          'gemini-2.5-pro',
-        },
-      },
       defaults = {
-        -- auth_method = "gemini-api-key",
-        mcpServers = require('mcphub').get_hub_instance():get_servers(),
         timeout = 20000, -- 20 seconds
       },
     })
@@ -47,6 +25,17 @@ return {
       defaults = {
         timeout = 20000, -- codecompanion's own timeout is 20 seconds for connection init
         auth_method = 'chatgpt', -- 'openai-api-key'|'codex-api-key'|'chatgpt'
+      },
+    })
+  end,
+  copilot_acp = function()
+    return require('codecompanion.adapters').extend('copilot_acp', {
+      defaults = {
+        timeout = 20000,
+        session_config_options = {
+          model = 'claude-opus-4-6',
+        },
+        mcpServers = 'inherit_from_config',
       },
     })
   end,

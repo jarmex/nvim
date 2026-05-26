@@ -26,7 +26,7 @@ return function()
     schema = {
       model = {
         default = 'google/gemini-3.5-flash',
-        -- default = 'deepseek/deepseek-v4-flash',
+        -- default = 'qwen/qwen3.7-max',
         choices = {
           'google/gemini-3.1-flash-lite',
           'google/gemini-3.5-flash',
