@@ -158,12 +158,18 @@ return {
     desc = 'Code Companion Explain Terminal Error',
   },
   {
-    '<leader>av',
+    '<leader>ccm',
     function()
-      require('codecompanion').chat()
+      vim.ui.input({ prompt = 'Message: ' }, function(msg)
+        if not msg or msg == '' then
+          return
+        end
+        local escaped = vim.fn.escape(msg, '"')
+        vim.cmd([[silent '<,'>CodeCompanionChat ]] .. escaped)
+      end)
     end,
-    mode = { 'n' },
-    desc = 'Code Companion New Chat',
+    mode = 'v',
+    desc = 'CodeCompanion Send Selection with Message',
   },
   -- [C]odeCompanion [D]iagnostics
   vim.keymap.set('n', '<LocalLeader>cd', function()

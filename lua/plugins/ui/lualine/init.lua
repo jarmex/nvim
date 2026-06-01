@@ -65,6 +65,7 @@ return {
             status.filename(),
           },
           lualine_x = {
+            -- 'cc_model',
             status.DapStatus(),
             status.showMacroRecording(),
             status.filetype(),

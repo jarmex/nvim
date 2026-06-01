@@ -10,6 +10,9 @@ return {
       env = {
         CLAUDE_CODE_OAUTH_TOKEN = os.getenv('CLAUDE_CODE_OAUTH_TOKEN'),
       },
+      defaults = {
+        mcpServers = 'inherit_from_config',
+      },
     })
   end,
   gemini_cli = function()
@@ -25,6 +28,7 @@ return {
       defaults = {
         timeout = 20000, -- codecompanion's own timeout is 20 seconds for connection init
         auth_method = 'chatgpt', -- 'openai-api-key'|'codex-api-key'|'chatgpt'
+        mcpServers = 'inherit_from_config',
       },
     })
   end,

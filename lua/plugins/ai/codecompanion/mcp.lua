@@ -47,7 +47,7 @@ M.mcpServers = {
       },
     },
     ['linear'] = {
-      cmd = { 'npx', '-y', 'mcp-remote', 'https://mcp.linear.app/sse' },
+      cmd = { 'npx', '-y', 'mcp-remote', 'https://mcp.linear.app/mcp' },
       tool_defaults = {
         require_approval_before = false,
       },
