@@ -31,15 +31,6 @@ return {
       create_new = false,
     },
     workspaces = { vault },
-
-    ---@type obsidian.config.CompletionOpts|{}
-    completion = {
-      nvim_cmp = false,
-      blink = true,
-      -- Trigger completion at 2 chars.
-      min_chars = 2,
-    },
-
     -- optional, set preferred picker
     ---@type obsidian.config.PickerOpts|{}
     picker = {

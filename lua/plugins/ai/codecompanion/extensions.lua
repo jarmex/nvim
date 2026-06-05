@@ -116,11 +116,11 @@ return {
       },
     },
   },
-  spinner = {
-    opts = {
-      log_level = 'info',
-      -- Available options: "cursor-relative", "snacks", "fidget", "lualine", "heirline", "native", "none"
-      style = 'snacks',
-    },
-  },
+  -- spinner = {
+  --   opts = {
+  --     log_level = 'info',
+  --     -- Available options: "cursor-relative", "snacks", "fidget", "lualine", "heirline", "native", "none"
+  --     style = 'snacks',
+  --   },
+  -- },
 }

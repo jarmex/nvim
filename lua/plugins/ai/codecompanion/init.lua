@@ -8,10 +8,10 @@ return {
     'olimorris/codecompanion.nvim',
     version = false,
     dependencies = {
-      'j-hui/fidget.nvim',
+      -- 'j-hui/fidget.nvim',
       'hakonharnes/img-clip.nvim',
       'ravitemer/codecompanion-history.nvim', -- Save and load conversation history.
-      'lalitmee/codecompanion-spinners.nvim',
+      -- 'lalitmee/codecompanion-spinners.nvim',
       'jarmex/codecompanion-gitcommit.nvim',
       'cairijun/codecompanion-agentskills.nvim',
     },
@@ -75,7 +75,7 @@ return {
             description = 'Personal rules and code philosophy',
             files = {
               { path = '~/.config/personal/PERSONAL.md', parser = 'codecompanion' },
-              { path = 'CLAUDE.md', parser = 'claude' },
+              -- { path = 'CLAUDE.md', parser = 'claude' },
               { path = 'AGENTS.md', parser = 'claude' },
             },
           },
@@ -113,6 +113,8 @@ return {
           end
         end,
       })
+
+      require('plugins.ai.codecompanion.spinner').codecompanion_snacks()
     end,
   },
 }
