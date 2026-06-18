@@ -65,6 +65,16 @@ return {
     },
   },
   groups = {
+    ['mymemory'] = {
+      description = 'agent memory access',
+      prompt = 'You have access to your ${tools} which contain information about you, your preferences, and your past interactions. Use this information to inform your decisions and actions.',
+      tools = {
+        'memory',
+      },
+      opts = {
+        collapse_tools = true,
+      },
+    },
     ['myagent'] = {
       description = 'agent mode with mcp support, automatically run tools',
       prompt = "I'm giving you access to the ${tools} to help you perform coding tasks",
@@ -179,7 +189,7 @@ return {
     -- },
     allowed_in_yolo_mode = true,
     default_tools = {
-      'memory',
+      'mymemory',
     },
   },
 }

@@ -104,37 +104,31 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     local client = vim.lsp.get_client_by_id(ctx.data.client_id)
     assert(client, 'No client found')
+    --
+    -- Disable codelens for lua (lua_ls "0 References" is noisy)
+    if client.name == 'lua_ls' then
+      vim.lsp.codelens.enable(false, { bufnr = bufnr })
+    end
 
     if client.name == 'copilot' then
       return
     end
 
-    if client.name == 'gopls' then
-      if not client.server_capabilities.semanticTokensProvider then
-        local semantic = client.config.capabilities.textDocument.semanticTokens
-        client.server_capabilities.semanticTokensProvider = {
-          full = true,
-          legend = {
-            tokenTypes = semantic.tokenTypes,
-            tokenModifiers = semantic.tokenModifiers,
-          },
-          range = true,
-        }
-      end
+    -- Linked editing (e.g., paired HTML tags)
+    if client:supports_method('textDocument/linkedEditingRange', bufnr) then
+      vim.lsp.linked_editing_range.enable(true, { bufnr = bufnr })
     end
-    -- set up codelens
-    if client:supports_method('textDocument/codeLens', ctx.buf) then
-      vim.lsp.codelens.enable(true)
+
+    -- Inline color swatches
+    if client:supports_method('textDocument/documentColor', bufnr) then
+      vim.lsp.document_color.enable(true, { bufnr = bufnr })
     end
 
     -- set up workspace diagnostics
     if client:supports_method('workspace/diagnostic', ctx.buf) then
-      -- WARNING: not sure if this is the intended use case. Let's see...
-      vim.notify_once(vim.inspect('Setting up workspace diagnostics for ' .. client.name), vim.log.levels.WARN)
-      ---@type vim.lsp.WorkspaceDiagnosticsOpts
-      local opts = { client_id = client.id }
-      vim.lsp.buf.workspace_diagnostics(opts)
+      vim.lsp.buf.workspace_diagnostics({ client_id = client.id })
     end
+
     -- setup inline completion (only neovim 0.12+)
     if vim.lsp.inline_completion then
       if client:supports_method('textDocument/inlineCompletion', ctx.buf) then
@@ -143,5 +137,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     keymap(bufnr)
+  end,
+})
+
+-- Reset diagnostics on detach so :lsp restart/:lsp stop don't leave stale state.
+vim.api.nvim_create_autocmd('LspDetach', {
+  group = vim.api.nvim_create_augroup('lsp-detach-cleanup', { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client then
+      return
+    end
+
+    local prefix = ('nvim.lsp.%s.%d'):format(client.name, client.id)
+    for namespace, metadata in pairs(vim.diagnostic.get_namespaces()) do
+      local name = metadata.name or ''
+      if name == prefix or vim.startswith(name, prefix .. '.') then
+        vim.diagnostic.reset(namespace)
+      end
+    end
   end,
 })

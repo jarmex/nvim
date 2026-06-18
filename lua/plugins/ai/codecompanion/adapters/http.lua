@@ -194,7 +194,7 @@ return {
     })
   end,
   default_copilot = function()
-    require('codecompanion.adapters').extend('copilot', {
+    return require('codecompanion.adapters').extend('copilot', {
       schema = {
         model = {
           order = 1,

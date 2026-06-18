@@ -5,42 +5,24 @@ return function()
     name = 'openrouter',
     formatted_name = 'OpenRouter',
     env = {
-      url = 'https://openrouter.ai/api/v1',
-      chat_url = '/chat/completions',
       api_key = os.getenv('OPENROUTER_API_KEY'),
-      models_endpoint = '/models',
     },
-    -- from https://github.com/Davidyz/dotfiles/blob/5635536d0151a59dd767da5505a91ecc7d6449ff/neovim/lua/plugin_specs/ai.lua
-    -- handlers = {
-    --   parse_extra = function(_, data)
-    --     local extra = data.extra
-    --     if extra and extra.reasoning then
-    --       data.output.reasoning = { content = extra.reasoning }
-    --       if data.output.content == '' then
-    --         data.output.content = nil
-    --       end
-    --     end
-    --     return data
-    --   end,
-    -- },
     schema = {
       model = {
-        default = 'google/gemini-3.5-flash',
-        -- default = 'qwen/qwen3.7-max',
+        default = 'moonshotai/kimi-k2.7-code',
         choices = {
           'google/gemini-3.1-flash-lite',
           'google/gemini-3.5-flash',
+          'openrouter/fusion',
           'minimax/minimax-m2.7',
           'qwen/qwen3.7-max',
           'qwen/qwen3.6-flash',
           'xiaomi/mimo-v2.5-pro',
           'deepseek/deepseek-v4-flash',
           'z-ai/glm-5-turbo',
-          -- ['google/gemini-3.1-flash-lite'] = { opts = { can_reason = true } },
-          ['moonshotai/kimi-k2.6'] = { opts = { can_reason = true } },
         },
       },
     },
   }
-  return adapters.extend('openai_compatible', openrouter_config)
+  return adapters.extend('openrouter', openrouter_config)
 end

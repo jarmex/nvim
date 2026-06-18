@@ -39,19 +39,6 @@ return {
         capabilities = lsp_capabilities,
       })
 
-      require('plugins.coding.lsp.keymaps')
-
-      vim.lsp.config('copilot', {
-        settings = {
-          telemetry = {
-            -- doesn't work, seems to be a vscode setting
-            telemetryLevel = 'off',
-          },
-        },
-      })
-
-      -- vim.lsp.config('emmet_language_server', {})
-
       vim.lsp.enable({
         'basedpyright',
         'bashls',
@@ -73,6 +60,20 @@ return {
         'vue_ls',
         'yamlls',
         -- 'ts_ls',
+      })
+
+      -- Enable codelens globally
+      vim.lsp.codelens.enable(true)
+
+      require('plugins.coding.lsp.keymaps')
+
+      vim.lsp.config('copilot', {
+        settings = {
+          telemetry = {
+            -- doesn't work, seems to be a vscode setting
+            telemetryLevel = 'off',
+          },
+        },
       })
 
       require('plugins.coding.lsp.diagnostics')

@@ -64,7 +64,10 @@ return {
       useLspFoldsWithTreesitterFallback = { enabled = true },
       pauseFoldsOnSearch = true,
       autoFold = { enabled = true },
-      foldKeymaps = { setup = false },
+      foldKeymaps = {
+        setup = false,
+        scrollLeftOnCaret = true, -- `^` should scroll left (basically mapped to `0^`)
+      },
     },
     keys = {
       {

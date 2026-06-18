@@ -23,6 +23,9 @@ vim.g.border = {
   borderchars = enable_border and { '─', '│', '─', '│', '┌', '┐', '┘', '└' }
     or { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
 }
+-- builtin plugins
+vim.cmd('packadd nvim.undotree')
+vim.cmd('packadd nvim.difftool')
 
 require('helpers.global')
 

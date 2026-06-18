@@ -46,6 +46,9 @@ M.mcpServers = {
         require_approval_before = true,
       },
     },
+    ['claude_memory'] = {
+      cmd = { 'npx', '-y', '@modelcontextprotocol/server-filesystem', os.getenv('HOME') .. '/.claude/projects' },
+    },
     ['linear'] = {
       cmd = { 'npx', '-y', 'mcp-remote', 'https://mcp.linear.app/mcp' },
       tool_defaults = {

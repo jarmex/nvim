@@ -236,22 +236,22 @@ local function codecompanion_snacks()
     end,
   })
 
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'CodeCompanionChatOpened',
-    group = group,
-    callback = function()
-      cc_notify(cc_icons.chat .. ' Chat opened', { title = 'CodeCompanion Chat' })
-    end,
-  })
+  -- vim.api.nvim_create_autocmd('User', {
+  --   pattern = 'CodeCompanionChatOpened',
+  --   group = group,
+  --   callback = function()
+  --     cc_notify(cc_icons.chat .. ' Chat opened', { title = 'CodeCompanion Chat' })
+  --   end,
+  -- })
 
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'CodeCompanionChatHidden',
-    group = group,
-    callback = function()
-      cc_notify(cc_icons.chat .. ' Chat hidden', { title = 'CodeCompanion Chat' })
-    end,
-  })
-
+  -- vim.api.nvim_create_autocmd('User', {
+  --   pattern = 'CodeCompanionChatHidden',
+  --   group = group,
+  --   callback = function()
+  --     cc_notify(cc_icons.chat .. ' Chat hidden', { title = 'CodeCompanion Chat' })
+  --   end,
+  -- })
+  --
   vim.api.nvim_create_autocmd('User', {
     pattern = 'CodeCompanionChatClosed',
     group = group,
@@ -380,100 +380,100 @@ local function codecompanion_snacks()
   })
 
   -- ── Tools ──────────────────────────────────────────────────────────────
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'CodeCompanionToolsStarted',
-    group = group,
-    callback = function()
-      reset_tools_added()
-      cc_notify(cc_icons.tool .. ' Tools started', { title = 'CodeCompanion Tools', id = 'cc_tools', timeout = 6000 })
-    end,
-  })
-
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'CodeCompanionToolsFinished',
-    group = group,
-    callback = function()
-      local msg = '󰅩 Tools finished'
-      if #tools_added > 0 then
-        msg = tools_added_message('󰅩 Tools finished')
-      end
-      cc_notify(msg, { title = 'CodeCompanion Tools', id = 'cc_tools', timeout = 6000 })
-    end,
-  })
-
-  vim.api.nvim_create_autocmd('User', {
-    -- Current source emits CodeCompanionChatToolAdded (docs still mention ToolAdded).
-    pattern = { 'CodeCompanionChatToolAdded', 'CodeCompanionToolAdded' },
-    group = group,
-    callback = function(args)
-      local tool = event_tool_name(args.data)
-      add_tool_added(tool)
-      cc_notify(tools_added_message(), {
-        title = 'CodeCompanion Tools',
-        id = 'cc_tools',
-        timeout = 6000,
-      })
-    end,
-  })
-
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'CodeCompanionToolApprovalRequested',
-    group = group,
-    callback = function(args)
-      local tool = event_tool_name(args.data)
-      cc_notify(' Approval needed: ' .. tostring(tool), {
-        title = 'CodeCompanion Tools',
-        level = 'warn',
-        timeout = false,
-        id = 'cc_approval_' .. tostring(tool),
-      })
-    end,
-  })
-
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'CodeCompanionToolApprovalFinished',
-    group = group,
-    callback = function(args)
-      local data = args.data or {}
-      local tool = event_tool_name(data)
-      local choice = data.choice and (' (' .. tostring(data.choice) .. ')') or ''
-      cc_notify('Tool approval resolved: ' .. tostring(tool) .. choice, {
-        title = 'CodeCompanion Tools',
-        id = 'cc_approval_' .. tostring(tool),
-        timeout = 6000,
-      })
-    end,
-  })
-
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'CodeCompanionToolStarted',
-    group = group,
-    callback = function(args)
-      local tool = (args.data and args.data.tool) or 'unknown'
-      cc_notify(cc_icons.tool .. ' ' .. tool, {
-        title = 'CodeCompanion Tools',
-        id = 'cc_tool_' .. tostring(tool),
-        timeout = 6000,
-      })
-    end,
-  })
-
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'CodeCompanionToolFinished',
-    group = group,
-    callback = function(args)
-      local tool = (args.data and args.data.tool) or 'unknown'
-      local status = args.data and args.data.status
-      local level = status == 'error' and 'error' or 'info'
-      local icon = status == 'error' and cc_icons.error or '󰅩'
-      cc_notify(icon .. ' ' .. tool, {
-        title = 'CodeCompanion Tools',
-        level = level,
-        id = 'cc_tool_' .. tostring(tool),
-        timeout = 6000,
-      })
-    end,
-  })
+  -- vim.api.nvim_create_autocmd('User', {
+  --   pattern = 'CodeCompanionToolsStarted',
+  --   group = group,
+  --   callback = function()
+  --     reset_tools_added()
+  --     cc_notify(cc_icons.tool .. ' Tools started', { title = 'CodeCompanion Tools', id = 'cc_tools', timeout = 6000 })
+  --   end,
+  -- })
+  --
+  -- vim.api.nvim_create_autocmd('User', {
+  --   pattern = 'CodeCompanionToolsFinished',
+  --   group = group,
+  --   callback = function()
+  --     local msg = '󰅩 Tools finished'
+  --     if #tools_added > 0 then
+  --       msg = tools_added_message('󰅩 Tools finished')
+  --     end
+  --     cc_notify(msg, { title = 'CodeCompanion Tools', id = 'cc_tools', timeout = 6000 })
+  --   end,
+  -- })
+  --
+  -- vim.api.nvim_create_autocmd('User', {
+  --   -- Current source emits CodeCompanionChatToolAdded (docs still mention ToolAdded).
+  --   pattern = { 'CodeCompanionChatToolAdded', 'CodeCompanionToolAdded' },
+  --   group = group,
+  --   callback = function(args)
+  --     local tool = event_tool_name(args.data)
+  --     add_tool_added(tool)
+  --     cc_notify(tools_added_message(), {
+  --       title = 'CodeCompanion Tools',
+  --       id = 'cc_tools',
+  --       timeout = 6000,
+  --     })
+  --   end,
+  -- })
+  --
+  -- vim.api.nvim_create_autocmd('User', {
+  --   pattern = 'CodeCompanionToolApprovalRequested',
+  --   group = group,
+  --   callback = function(args)
+  --     local tool = event_tool_name(args.data)
+  --     cc_notify(' Approval needed: ' .. tostring(tool), {
+  --       title = 'CodeCompanion Tools',
+  --       level = 'warn',
+  --       timeout = false,
+  --       id = 'cc_approval_' .. tostring(tool),
+  --     })
+  --   end,
+  -- })
+  --
+  -- vim.api.nvim_create_autocmd('User', {
+  --   pattern = 'CodeCompanionToolApprovalFinished',
+  --   group = group,
+  --   callback = function(args)
+  --     local data = args.data or {}
+  --     local tool = event_tool_name(data)
+  --     local choice = data.choice and (' (' .. tostring(data.choice) .. ')') or ''
+  --     cc_notify('Tool approval resolved: ' .. tostring(tool) .. choice, {
+  --       title = 'CodeCompanion Tools',
+  --       id = 'cc_approval_' .. tostring(tool),
+  --       timeout = 6000,
+  --     })
+  --   end,
+  -- })
+  --
+  -- vim.api.nvim_create_autocmd('User', {
+  --   pattern = 'CodeCompanionToolStarted',
+  --   group = group,
+  --   callback = function(args)
+  --     local tool = (args.data and args.data.tool) or 'unknown'
+  --     cc_notify(cc_icons.tool .. ' ' .. tool, {
+  --       title = 'CodeCompanion Tools',
+  --       id = 'cc_tool_' .. tostring(tool),
+  --       timeout = 6000,
+  --     })
+  --   end,
+  -- })
+  --
+  -- vim.api.nvim_create_autocmd('User', {
+  --   pattern = 'CodeCompanionToolFinished',
+  --   group = group,
+  --   callback = function(args)
+  --     local tool = (args.data and args.data.tool) or 'unknown'
+  --     local status = args.data and args.data.status
+  --     local level = status == 'error' and 'error' or 'info'
+  --     local icon = status == 'error' and cc_icons.error or '󰅩'
+  --     cc_notify(icon .. ' ' .. tool, {
+  --       title = 'CodeCompanion Tools',
+  --       level = level,
+  --       id = 'cc_tool_' .. tostring(tool),
+  --       timeout = 6000,
+  --     })
+  --   end,
+  -- })
 
   -- ── Inline ─────────────────────────────────────────────────────────────
   vim.api.nvim_create_autocmd('User', {

@@ -1,7 +1,7 @@
 -- local defaultAdapter = os.getenv('NVIM_AI_ADAPTER') or 'copilot'
 local DEFAULT_ADAPTER = 'copilot'
 local DEFAULT_MODEL = 'claude-haiku-4.5'
-local COPILOT_GPTMODEL = 'gpt-4.1'
+-- local COPILOT_GPTMODEL = 'gpt-4.1'
 
 --------------------------------------------------------------------------------
 --                                                                            --
@@ -27,7 +27,7 @@ local M = {}
 M.background = {
   adapter = {
     name = DEFAULT_ADAPTER,
-    model = COPILOT_GPTMODEL,
+    model = 'gpt-5-mini',
   },
   chat = {
     callbacks = {
@@ -49,7 +49,7 @@ M.background = {
 --------------
 
 M.inline = {
-  adapter = { name = DEFAULT_ADAPTER, model = 'gpt-5-mini' },
+  adapter = { name = DEFAULT_ADAPTER, model = 'claude-haiku-4.5' },
   opts = {
     diff_timeout = 300,
   },
@@ -81,7 +81,7 @@ M.chat = {
   -- adapter = defaultAdapter,
   adapter = {
     name = DEFAULT_ADAPTER,
-    model = 'claude-sonnet-4.6',
+    model = 'gpt-5-mini', -- 'claude-sonnet-4.6',
   },
   opts = {
     completion_provider = 'blink', -- blink | cmp | coc | default

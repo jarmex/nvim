@@ -48,7 +48,7 @@ return {
         json = { 'biome' },
         json5 = { 'biome' },
         jsonc = { 'biome' },
-        less = { 'prettierd' },
+        -- less = { 'prettierd' },
         lua = { 'stylua' },
         markdown = { 'markdownlint', 'markdown-toc', stop_after_first = true },
         scss = { 'prettierd' },
@@ -80,6 +80,12 @@ return {
         return { timeout_ms = 500, lsp_format = 'fallback' }
       end,
       formatters = {
+        -- biome = {
+        --   args = { 'format', '--indent-style', 'space', '--stdin-file-path', '$FILENAME' },
+        -- },
+        -- ['biome-organize-imports'] = {
+        --   args = { 'organize-imports', '--indent-style', 'space', '--stdin-file-path', '$FILENAME' },
+        -- },
         shellcheck = {
           -- add `--shell=bash` to force to work with `zsh`
           args = "'$FILENAME' --format=diff --shell=bash | patch -p1 '$FILENAME'",
@@ -121,12 +127,20 @@ return {
           -- see https://github.com/segmentio/golines/issues/33
           prepend_args = { '--base-formatter=gofumpt', '--ignore-generated', '--tab-len=1', '--max-len=120' },
         },
+        -- yamlfmt = {
+        --   prepend_args = {
+        --     -- https://github.com/google/yamlfmt/blob/main/docs/config-file.md#configuration-1
+        --     '-formatter',
+        --     'retain_line_breaks_single=true',
+        --     'include_document_start=true',
+        --   },
+        -- },
         yamlfmt = {
           prepend_args = {
-            -- https://github.com/google/yamlfmt/blob/main/docs/config-file.md#configuration-1
             '-formatter',
             'retain_line_breaks_single=true',
-            'include_document_start=true',
+            '-formatter',
+            'pad_line_comments=2',
           },
         },
         xmlformatter = {
