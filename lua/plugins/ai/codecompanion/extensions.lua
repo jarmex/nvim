@@ -26,12 +26,10 @@ return {
       expiration_days = 45,
       save_chat_keymap = 'sc',
       title_generation_opts = {
-        adapter = nil, -- defaults to current chat adapter when nil
-        model = nil, -- defaults to current chat model when nil
-        refresh_every_n_prompts = 1, -- 10,
-        format_title = function(original_title)
-          return original_title
-        end,
+        adapter = 'openai_gpt_54_nano_legacy',
+        model = 'gpt-5.4-nano',
+        refresh_every_n_prompts = 3,
+        max_refreshes = 10,
       },
       picker_keymaps = {
         rename = { n = 'gr', i = '<C-r>' },
@@ -111,8 +109,9 @@ return {
   agentskills = {
     opts = {
       paths = {
-        { '~/.config/skills/.claude/skills', recursive = true },
-        { '~/.config/skills', recursive = true }, -- Recursive search
+        -- { '~/.config/skills/.claude/skills', recursive = true },
+        { '~/.agents/skills', recursive = true }, -- Recursive search
+        { '.claude/skills', recursive = true }, -- Recursive search
       },
     },
   },

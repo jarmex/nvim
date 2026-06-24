@@ -82,6 +82,8 @@ M.chat = {
   adapter = {
     name = DEFAULT_ADAPTER,
     model = 'gpt-5-mini', -- 'claude-sonnet-4.6',
+    -- adapter = 'claude_code',
+    -- model = 'haiku',
   },
   opts = {
     completion_provider = 'blink', -- blink | cmp | coc | default
@@ -109,6 +111,13 @@ M.chat = {
     completion = { modes = { i = '<C-x>' } },
     clear = { modes = { n = 'gcr' } },
     regenerate = { modes = { n = 'gcR' } },
+  },
+  window = {
+    breakindent = true,
+    cursorcolumn = false,
+    cursorline = false,
+    spell = false,
+    wrap = true,
   },
 }
 

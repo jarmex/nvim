@@ -3,6 +3,45 @@ local adapters = require('codecompanion.adapters')
 -- local adapter = { name = "openai_responses", model = "gpt-5-mini" }
 -- local reasoningEffort = 'low' -- none|low|medium|high https://platform.openai.com/docs/api-reference/responses/create#responses_create-reasoning
 
+-- Helpers
+local function disabled()
+  return false
+end
+
+-- OpenAI
+local function openai_responses_adapter(name, model, stream, context_window)
+  return adapters.extend('openai_responses', {
+    name = name,
+    -- env = { api_key = OPENAI_API_KEY },
+    schema = {
+      model = {
+        default = model,
+        choices = {
+          [model] = {
+            meta = {
+              context_window = context_window,
+            },
+            opts = {
+              can_reason = true,
+              can_manage_context = true,
+              has_function_calling = true,
+              has_vision = true,
+              stream = stream,
+            },
+          },
+        },
+      },
+      ['reasoning.effort'] = { default = 'medium' },
+      verbosity = { default = 'low' },
+    },
+    available_tools = {
+      ['web_search'] = {
+        enabled = disabled,
+      },
+    },
+  })
+end
+
 return {
   --- Anthropic config for CodeCompanion.
   anthropic = function()
@@ -47,6 +86,30 @@ return {
       },
     }
     return adapters.extend('anthropic', anthropic_config)
+  end,
+
+  openai_gpt_54_nano_legacy = function()
+    return adapters.extend('openai', {
+      name = 'openai_gpt_54_nano_legacy',
+      -- env = { api_key = OPENAI_API_KEY },
+      schema = {
+        model = {
+          default = 'gpt-5.4-nano',
+          choices = {
+            ['gpt-5.4-nano'] = {
+              meta = {
+                context_window = 400000,
+              },
+            },
+          },
+        },
+        reasoning_effort = { default = 'none' },
+      },
+    })
+  end,
+
+  openai_gpt_54_nano = function()
+    return openai_responses_adapter('openai_gpt_54_nano', 'gpt-5.4-nano', false, 400000)
   end,
 
   --- OpenAI config for CodeCompanion.
