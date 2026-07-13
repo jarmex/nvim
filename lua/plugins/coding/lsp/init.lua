@@ -22,6 +22,8 @@ return {
         dynamicRegistration = false,
         lineFoldingOnly = true,
       }
+      -- Enable file watching for LSP
+      -- It's disabled because the default implementation is considered slow.
       lsp_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 
       local has_blink, blink = pcall(require, 'blink.cmp')

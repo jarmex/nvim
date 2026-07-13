@@ -103,7 +103,14 @@ return {
   },
   {
     '<leader>at',
-    '<cmd>CodeCompanionChat Toggle<CR>',
+    -- '<cmd>CodeCompanionChat Toggle<CR>',
+    function()
+      if vim.o.columns < 100 then
+        return require('codecompanion').toggle({ window_opts = { layout = 'float', width = vim.o.columns } })
+      end
+      require('codecompanion').toggle({ window_opts = { layout = 'vertical' } })
+    end,
+
     desc = 'CodeCompanion Toggle',
     mode = { 'n', 'v' },
     silent = true,
@@ -127,6 +134,15 @@ return {
   },
   { '<Leader>ae', open_chat, desc = '[A]I CodeCompanion [c]hat', silent = true },
   { '<leader>al', ':CodeCompanionCLI<CR>', desc = 'Open Claude Code', silent = true },
+  {
+    '<leader>af',
+    function()
+      return require('codecompanion').cli({ prompt = true })
+    end,
+    mode = { 'n', 'v' },
+    desc = 'Prompt the CLI agent',
+  },
+
   { '<leader>aC', ':CodeCompanionCLI agent=codex<CR>', desc = 'Open Codex', silent = true },
   {
     '<leader>as',

@@ -189,7 +189,8 @@ return {
     -- },
     allowed_in_yolo_mode = true,
     default_tools = {
-      'mymemory',
+      'agent_skills',
+      'memory',
     },
   },
 }

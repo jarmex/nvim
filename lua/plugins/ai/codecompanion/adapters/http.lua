@@ -43,6 +43,9 @@ local function openai_responses_adapter(name, model, stream, context_window)
 end
 
 return {
+  -- opts = {
+  --   show_presets = false,
+  -- },
   --- Anthropic config for CodeCompanion.
   anthropic = function()
     local anthropic_config = {
