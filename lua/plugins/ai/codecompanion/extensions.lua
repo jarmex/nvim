@@ -1,4 +1,4 @@
-local DEFAULT_COPILOT_MODEL = 'gpt-4.1' -- grok-code-fast-1, gpt-4.1
+local DEFAULT_COPILOT_MODEL = 'claude-haiku-4.5' -- grok-code-fast-1, gpt-4.1
 local DEFAULT_ADAPTOR = 'copilot'
 
 return {
@@ -26,8 +26,8 @@ return {
       expiration_days = 45,
       save_chat_keymap = 'sc',
       title_generation_opts = {
-        adapter = 'openai_gpt_54_nano_legacy',
-        model = 'gpt-5.4-nano',
+        adapter = 'openrouter_title_generation',
+        -- model = 'gpt-5.4-nano',
         refresh_every_n_prompts = 3,
         max_refreshes = 10,
       },
