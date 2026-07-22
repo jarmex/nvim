@@ -77,7 +77,7 @@ return {
     },
     ['myagent'] = {
       description = 'agent mode with mcp support, automatically run tools',
-      prompt = "I'm giving you access to the ${tools} to help you perform coding tasks",
+      -- prompt = "I'm giving you access to the ${tools} to help you perform coding tasks",
       tools = {
         'ask_questions',
         'create_file',
@@ -89,7 +89,6 @@ return {
         'grep_search',
         'insert_edit_into_file',
         'list_code_usages',
-        'mcp',
         'memory',
         'next_edit_suggestion',
         'read_file',
@@ -189,8 +188,7 @@ return {
     -- },
     allowed_in_yolo_mode = true,
     default_tools = {
-      'agent_skills',
-      'memory',
+      'myagent',
     },
   },
 }

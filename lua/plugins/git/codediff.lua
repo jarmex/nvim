@@ -42,7 +42,7 @@ return {
     keys = {
       { '<leader>gc', '<cmd>CodeDiff<cr>', desc = 'Diff file explorer' },
       { '<leader>gdc', '<cmd>CodeDiff file HEAD~1<cr>', desc = 'Diff with HEAD' },
-      { '<leader>gdf', ':CodeDiff history %<cr>', desc = 'Git File History', silent = false },
+      { '<leader>gdf', ':CodeDiff history HEAD~20 %<cr>', desc = 'Git File History', silent = false },
       { '<leader>gh', ':CodeDiff history<cr>', desc = 'Git History', silent = false },
     },
   },

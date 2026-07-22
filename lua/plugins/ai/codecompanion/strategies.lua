@@ -78,15 +78,24 @@ M.inline = {
 -- ]]
 
 M.chat = {
-  -- adapter = defaultAdapter,
-  adapter = {
-    name = DEFAULT_ADAPTER,
-    model = 'gpt-5-mini', -- 'claude-sonnet-4.6',
-    -- adapter = 'claude_code',
-    -- model = 'haiku',
-  },
+  adapter = 'codex',
+  -- adapter = 'claude_code',
+  -- adapter = {
+  --   -- name = DEFAULT_ADAPTER,
+  --   -- model = 'gpt-5-mini', -- 'claude-sonnet-4.6',
+  --   -- adapter = 'claude_code',
+  --   -- model = 'haiku',
+  -- },
   opts = {
     completion_provider = 'blink', -- blink | cmp | coc | default
+    -- remove default system prompt for acp agents (these usually come with their
+    -- own, and modifying e.g. AGENTS.md is usually better than system prompt)
+    system_prompt = function(ctx)
+      if ctx.adapter and ctx.adapter.type == 'acp' then
+        return ''
+      end
+      return ctx.default_system_prompt
+    end,
     -- system_prompt = function(ctx)
     --   return ctx.default_system_prompt .. string.format(extras, ctx.project_root or ctx.cwd, ctx.os or 'unknown')
     -- end,

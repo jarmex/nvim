@@ -1,340 +1,327 @@
 return {
-  -- {
-  --    'folke/which-key.nvim',
-  --    optional = true,
-  --    opts = {
-  --      spec = {
-  --        { '<leader>gd', group = 'diffview' },
-  --      },
-  --    },
-  --  },
-
-  -- "dlyongemallo/diffview.nvim",
-  -- better diffing
-  'sindrets/diffview.nvim',
-  dependencies = {
-    'nvim-neotest/nvim-nio',
-  },
-  event = 'VeryLazy',
-  enabled = false,
-  cmd = {
-    'DiffviewOpen',
-    'DiffviewClose',
-    'DiffviewFileHistory',
-    'DiffviewToggleFiles',
-    'DiffviewFocusFiles',
-    'DiffviewOriginDevelopHead',
-    'DiffviewRangeFileHistory',
-    'DiffviewLog',
-  },
-  keys = {
-    { '<leader>gdo', '<cmd>DiffviewOpen<cr>', desc = 'Diff View' },
-    { '<leader>gdt', '<cmd>DiffviewToggleFiles<cr>', desc = 'Diff View Toggle Files' },
-    { '<leader>gdh', '<cmd>DiffviewFileHistory %<cr>', desc = 'Diff View File History' },
-    -- { '<leader>gL', '<cmd>.DiffviewFileHistory --follow<CR>', mode = { 'n' }, desc = 'Line history' },
-    { '<leader>gdH', "<esc><cmd>'<,'>DiffviewFileHistory --follow<CR>", mode = { 'v' }, desc = 'Range history' },
-    -- { '<leader>gdF', '<cmd>DiffviewFileHistory --follow %<cr>', mode = { 'n' }, desc = 'File history' },
-    {
-      '<leader>gdg',
-      '<cmd>DiffviewOpen<cr>',
-      mode = { 'n', 'v' },
-      desc = 'Diffview Open',
-    },
-    {
-      '<leader>gdF',
-      '<cmd>0,$DiffviewFileHistory --follow<cr>',
-      mode = { 'n' },
-      desc = 'Diffview Range File History',
-    },
-    {
-      '<leader>gdf',
-      '<cmd>DiffviewFileHistory --no-merges --follow %<cr>',
-      mode = { 'n' },
-      desc = 'Diffview File History',
-    },
-    {
-      '<leader>gdf',
-      ':DiffviewFileHistory --no-merges --follow<cr>',
-      mode = { 'v' },
-      desc = 'Diffview File History',
-    },
-    {
-      '<leader>gdd',
-      '<cmd>DiffviewOpen --imply-local origin/develop...HEAD<cr>',
-      mode = { 'n', 'v' },
-      desc = 'Diffview origin/develop...HEAD',
-    },
-    {
-      '<leader>gdw',
-      '<cmd>windo diffthis<cr>',
-      mode = { 'n' },
-      desc = 'Windo diffthis',
-    },
-    {
-      '<leader>gdo',
-      '<cmd>diffthis<cr>',
-      mode = { 'n', 'v' },
-      desc = 'diffthis',
-    },
-  },
-  -- adopted from https://github.com/rafi/vim-config/blob/master/lua/rafi/plugins/git.lua
-  opts = function()
-    local actions = require('diffview.actions')
-    vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
-      group = vim.api.nvim_create_augroup('rafi_diffview', {}),
-      pattern = 'diffview:///panels/*',
-      callback = function()
-        vim.opt_local.cursorline = true
-        vim.opt_local.winhighlight = 'CursorLine:WildMenu'
-      end,
-    })
-
-    return {
-      default = {
-        disable_diagnostics = false,
-      },
-      enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
-      se_icons = true,
-      watch_index = true,
-      icons = {
-        folder_closed = '',
-        folder_open = '',
-      },
-      signs = {
-        fold_closed = '',
-        fold_open = '',
-        done = '✓',
-      },
-      file_panel = {
-        listing_style = 'tree', -- One of 'list' or 'tree'
-        tree_options = { -- Only applies when listing_style is 'tree'
-          flatten_dirs = true, -- Flatten dirs that only contain one single dir
-          folder_statuses = 'only_folded', -- One of 'never', 'only_folded' or 'always'.
-        },
-        win_config = { -- See ':h diffview-config-win_config'
-          position = 'left',
-          width = 35,
-          win_opts = {},
-        },
-      },
-      file_history_panel = {
-        -- log_options = { -- See ':h diffview-config-log_options'
-        --   single_file = {
-        --     diff_merges = "combined",
-        --   },
-        --   multi_file = {
-        --     diff_merges = "first-parent",
-        --   },
-        -- },
-        win_config = { -- See ':h diffview-config-win_config'
-          position = 'bottom',
-          height = 16,
-          win_opts = {},
-        },
-      },
-      commit_log_panel = {
-        win_config = { -- See ':h diffview-config-win_config'
-          win_opts = {},
-        },
-      },
-      default_args = { -- Default args prepended to the arg-list for the listed commands
-        DiffviewOpen = { '--imply-local' },
-        DiffviewFileHistory = {},
-      },
-      hooks = {}, -- See ':h diffview-config-hooks'
-      keymaps = {
-        view = {
-          -- The `view` bindings are active in the diff buffers, only when the current
-          -- tabpage is a Diffview.
-          ['<tab>'] = actions.select_next_entry, -- Open the diff for the next file
-          ['<s-tab>'] = actions.select_prev_entry, -- Open the diff for the previous file
-          ['gf'] = actions.goto_file, -- Open the file in a new split in the previous tabpage
-          ['<C-w><C-f>'] = actions.goto_file_split, -- Open the file in a new split
-          ['<C-w>gf'] = actions.goto_file_tab, -- Open the file in a new tabpage
-          ['<leader>e'] = actions.focus_files, -- Bring focus to the file panel
-          ['<leader>b'] = actions.toggle_files, -- Toggle the file panel.
-          ['g<C-x>'] = actions.cycle_layout, -- Cycle through available layouts.
-          ['[x'] = actions.prev_conflict, -- In the merge_tool: jump to the previous conflict
-          [']x'] = actions.next_conflict, -- In the merge_tool: jump to the next conflict
-          ['<leader>co'] = actions.conflict_choose('ours'), -- Choose the OURS version of a conflict
-          ['<leader>ct'] = actions.conflict_choose('theirs'), -- Choose the THEIRS version of a conflict
-          ['<leader>cb'] = actions.conflict_choose('base'), -- Choose the BASE version of a conflict
-          ['<leader>ca'] = actions.conflict_choose('all'), -- Choose all the versions of a conflict
-          ['dx'] = actions.conflict_choose('none'), -- Delete the conflict region
-          { 'n', 'q', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
-          { 'n', '<esc>', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
-          { 'n', '<c-n>', actions.select_next_entry, { desc = 'Open the diff for the next file' } },
-          { 'n', '<c-p>', actions.select_prev_entry, { desc = 'Open the diff for the previous file' } },
-          { 'n', '<c-c>', actions.toggle_files, { desc = 'Toggle the file panel' } },
-          { 'n', '-', actions.toggle_stage_entry, { desc = 'Stage / unstage the selected entry' } },
-          {
-            'n',
-            'gd',
-            function()
-              actions.goto_file_edit()
-              vim.lsp.buf.definition()
-            end,
-          },
-          {
-            'n',
-            'gq',
-            function()
-              require('diffview.actions').toggle_files()
-              vim.schedule(function()
-                vim.cmd('tabclose')
-              end)
-            end,
-          },
-          {
-            'n',
-            '<leader>cO',
-            actions.conflict_choose_all('ours'),
-            { desc = 'Choose the OURS version of a conflict for the whole file' },
-          },
-          {
-            'n',
-            '<leader>cT',
-            actions.conflict_choose_all('theirs'),
-            { desc = 'Choose the THEIRS version of a conflict for the whole file' },
-          },
-          {
-            'n',
-            '<leader>cB',
-            actions.conflict_choose_all('base'),
-            { desc = 'Choose the BASE version of a conflict for the whole file' },
-          },
-          {
-            'n',
-            '<leader>cA',
-            actions.conflict_choose_all('all'),
-            { desc = 'Choose all the versions of a conflict for the whole file' },
-          },
-          {
-            'n',
-            'dX',
-            actions.conflict_choose_all('none'),
-            { desc = 'Delete the conflict region for the whole file' },
-          },
-        },
-        diff1 = { --[[ Mappings in single window diff layouts ]]
-          { 'n', 'g?', actions.help({ 'view', 'diff1' }), { desc = 'Open the help panel' } },
-        },
-        diff2 = { --[[ Mappings in 2-way diff layouts ]]
-          { 'n', 'g?', actions.help({ 'view', 'diff2' }), { desc = 'Open the help panel' } },
-        },
-        diff3 = {
-          -- Mappings in 3-way diff layouts
-          {
-            { 'n', 'x' },
-            '2do',
-            actions.diffget('ours'),
-            { desc = 'Obtain the diff hunk from the OURS version of the file' },
-          },
-          {
-            { 'n', 'x' },
-            '3do',
-            actions.diffget('theirs'),
-            { desc = 'Obtain the diff hunk from the THEIRS version of the file' },
-          },
-          { 'n', 'g?', actions.help({ 'view', 'diff3' }), { desc = 'Open the help panel' } },
-        },
-        diff4 = {
-          -- Mappings in 4-way diff layouts
-          {
-            { 'n', 'x' },
-            '1do',
-            actions.diffget('base'),
-            { desc = 'Obtain the diff hunk from the BASE version of the file' },
-          },
-          {
-            { 'n', 'x' },
-            '2do',
-            actions.diffget('ours'),
-            { desc = 'Obtain the diff hunk from the OURS version of the file' },
-          },
-          {
-            { 'n', 'x' },
-            '3do',
-            actions.diffget('theirs'),
-            { desc = 'Obtain the diff hunk from the THEIRS version of the file' },
-          },
-          { 'n', 'g?', actions.help({ 'view', 'diff4' }), { desc = 'Open the help panel' } },
-        },
-        file_panel = {
-          { 'n', 'q', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
-          { 'n', '<esc>', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
-          { 'n', '<c-n>', actions.select_next_entry, { desc = 'Open the diff for the next file' } },
-          { 'n', '<c-p>', actions.select_prev_entry, { desc = 'Open the diff for the previous file' } },
-          { 'n', 'X', actions.restore_entry, { desc = 'Restore entry to the state on the left side.' } },
-          { 'n', '<cr>', actions.goto_file, { desc = 'Open the file in a new split in the previous tabpage' } },
-          { 'n', 'i', actions.listing_style, { desc = "Toggle between 'list' and 'tree' views" } },
-          { 'n', 'R', actions.refresh_files, { desc = 'Update stats and entries in the file list.' } },
-          { 'n', '<c-c>', actions.toggle_files, { desc = 'Toggle the file panel' } },
-          { 'n', '[x', actions.prev_conflict, { desc = 'Go to the previous conflict' } },
-          { 'n', ']x', actions.next_conflict, { desc = 'Go to the next conflict' } },
-          { 'n', '<leader>b', false },
-          {
-            'n',
-            'gq',
-            function()
-              require('diffview.actions').toggle_files()
-              vim.schedule(function()
-                vim.cmd('tabclose')
-              end)
-            end,
-          },
-        },
-        file_history_panel = {
-          { 'n', 'q', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
-          { 'n', '<esc>', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
-          { 'n', '<c-n>', actions.select_next_entry, { desc = 'Open the diff for the next file' } },
-          { 'n', '<c-p>', actions.select_prev_entry, { desc = 'Open the diff for the previous file' } },
-          { 'n', '<cr>', actions.goto_file, { desc = 'Open the file in a new split in the previous tabpage' } },
-          { 'n', '<c-c>', actions.toggle_files, { desc = 'Toggle the file panel' } },
-          { 'n', '<leader>b', false },
-          {
-            'n',
-            'gq',
-            function()
-              require('diffview.actions').toggle_files()
-              vim.schedule(function()
-                vim.cmd('tabclose')
-              end)
-            end,
-          },
-          {
-            'n',
-            '<C-g>',
-            require('diffview.actions').open_in_diffview,
-            { desc = 'Open the entry under the cursor in a diffview' },
-          },
-        },
-      },
-      view = {
-        -- Configure the layout and behavior of different types of views.
-        -- Available layouts:
-        --  'diff1_plain'
-        --    |'diff2_horizontal'
-        --    |'diff2_vertical'
-        --    |'diff3_horizontal'
-        --    |'diff3_vertical'
-        --    |'diff3_mixed'
-        --    |'diff4_mixed'
-        -- For more info, see ':h diffview-config-view.x.layout'.
-        default = {
-          -- Config for changed files, and staged files in diff views.
-          layout = 'diff2_horizontal',
-        },
-        merge_tool = {
-          -- Config for conflicted files in diff views during a merge or rebase.
-          layout = 'diff3_mixed',
-          disable_diagnostics = true, -- Temporarily disable diagnostics for conflict buffers while in the view.
-        },
-        file_history = {
-          -- Config for changed files in file history views.
-          layout = 'diff2_horizontal',
-        },
-      },
-    }
-  end,
+  -- -- better diffing
+  -- 'sindrets/diffview.nvim',
+  -- dependencies = { 'nvim-neotest/nvim-nio' },
+  -- event = 'VeryLazy',
+  -- enabled = false,
+  -- cmd = {
+  --   'DiffviewOpen',
+  --   'DiffviewClose',
+  --   'DiffviewFileHistory',
+  --   'DiffviewToggleFiles',
+  --   'DiffviewFocusFiles',
+  --   'DiffviewOriginDevelopHead',
+  --   'DiffviewRangeFileHistory',
+  --   'DiffviewLog',
+  -- },
+  -- keys = {
+  --   { '<leader>gdo', '<cmd>DiffviewOpen<cr>', desc = 'Diff View' },
+  --   { '<leader>gdt', '<cmd>DiffviewToggleFiles<cr>', desc = 'Diff View Toggle Files' },
+  --   { '<leader>gdh', '<cmd>DiffviewFileHistory %<cr>', desc = 'Diff View File History' },
+  --   -- { '<leader>gL', '<cmd>.DiffviewFileHistory --follow<CR>', mode = { 'n' }, desc = 'Line history' },
+  --   { '<leader>gdH', "<esc><cmd>'<,'>DiffviewFileHistory --follow<CR>", mode = { 'v' }, desc = 'Range history' },
+  --   -- { '<leader>gdF', '<cmd>DiffviewFileHistory --follow %<cr>', mode = { 'n' }, desc = 'File history' },
+  --   {
+  --     '<leader>gdg',
+  --     '<cmd>DiffviewOpen<cr>',
+  --     mode = { 'n', 'v' },
+  --     desc = 'Diffview Open',
+  --   },
+  --   {
+  --     '<leader>gdF',
+  --     '<cmd>0,$DiffviewFileHistory --follow<cr>',
+  --     mode = { 'n' },
+  --     desc = 'Diffview Range File History',
+  --   },
+  --   {
+  --     '<leader>gdf',
+  --     '<cmd>DiffviewFileHistory --no-merges --follow %<cr>',
+  --     mode = { 'n' },
+  --     desc = 'Diffview File History',
+  --   },
+  --   {
+  --     '<leader>gdf',
+  --     ':DiffviewFileHistory --no-merges --follow<cr>',
+  --     mode = { 'v' },
+  --     desc = 'Diffview File History',
+  --   },
+  --   {
+  --     '<leader>gdd',
+  --     '<cmd>DiffviewOpen --imply-local origin/develop...HEAD<cr>',
+  --     mode = { 'n', 'v' },
+  --     desc = 'Diffview origin/develop...HEAD',
+  --   },
+  --   {
+  --     '<leader>gdw',
+  --     '<cmd>windo diffthis<cr>',
+  --     mode = { 'n' },
+  --     desc = 'Windo diffthis',
+  --   },
+  --   {
+  --     '<leader>gdo',
+  --     '<cmd>diffthis<cr>',
+  --     mode = { 'n', 'v' },
+  --     desc = 'diffthis',
+  --   },
+  -- },
+  -- -- adopted from https://github.com/rafi/vim-config/blob/master/lua/rafi/plugins/git.lua
+  -- opts = function()
+  --   local actions = require('diffview.actions')
+  --   vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
+  --     group = vim.api.nvim_create_augroup('rafi_diffview', {}),
+  --     pattern = 'diffview:///panels/*',
+  --     callback = function()
+  --       vim.opt_local.cursorline = true
+  --       vim.opt_local.winhighlight = 'CursorLine:WildMenu'
+  --     end,
+  --   })
+  --
+  --   return {
+  --     default = {
+  --       disable_diagnostics = false,
+  --     },
+  --     enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
+  --     se_icons = true,
+  --     watch_index = true,
+  --     icons = {
+  --       folder_closed = '',
+  --       folder_open = '',
+  --     },
+  --     signs = {
+  --       fold_closed = '',
+  --       fold_open = '',
+  --       done = '✓',
+  --     },
+  --     file_panel = {
+  --       listing_style = 'tree', -- One of 'list' or 'tree'
+  --       tree_options = { -- Only applies when listing_style is 'tree'
+  --         flatten_dirs = true, -- Flatten dirs that only contain one single dir
+  --         folder_statuses = 'only_folded', -- One of 'never', 'only_folded' or 'always'.
+  --       },
+  --       win_config = { -- See ':h diffview-config-win_config'
+  --         position = 'left',
+  --         width = 35,
+  --         win_opts = {},
+  --       },
+  --     },
+  --     file_history_panel = {
+  --       -- log_options = { -- See ':h diffview-config-log_options'
+  --       --   single_file = {
+  --       --     diff_merges = "combined",
+  --       --   },
+  --       --   multi_file = {
+  --       --     diff_merges = "first-parent",
+  --       --   },
+  --       -- },
+  --       win_config = { -- See ':h diffview-config-win_config'
+  --         position = 'bottom',
+  --         height = 16,
+  --         win_opts = {},
+  --       },
+  --     },
+  --     commit_log_panel = {
+  --       win_config = { -- See ':h diffview-config-win_config'
+  --         win_opts = {},
+  --       },
+  --     },
+  --     default_args = { -- Default args prepended to the arg-list for the listed commands
+  --       DiffviewOpen = { '--imply-local' },
+  --       DiffviewFileHistory = {},
+  --     },
+  --     hooks = {}, -- See ':h diffview-config-hooks'
+  --     keymaps = {
+  --       view = {
+  --         -- The `view` bindings are active in the diff buffers, only when the current
+  --         -- tabpage is a Diffview.
+  --         ['<tab>'] = actions.select_next_entry, -- Open the diff for the next file
+  --         ['<s-tab>'] = actions.select_prev_entry, -- Open the diff for the previous file
+  --         ['gf'] = actions.goto_file, -- Open the file in a new split in the previous tabpage
+  --         ['<C-w><C-f>'] = actions.goto_file_split, -- Open the file in a new split
+  --         ['<C-w>gf'] = actions.goto_file_tab, -- Open the file in a new tabpage
+  --         ['<leader>e'] = actions.focus_files, -- Bring focus to the file panel
+  --         ['<leader>b'] = actions.toggle_files, -- Toggle the file panel.
+  --         ['g<C-x>'] = actions.cycle_layout, -- Cycle through available layouts.
+  --         ['[x'] = actions.prev_conflict, -- In the merge_tool: jump to the previous conflict
+  --         [']x'] = actions.next_conflict, -- In the merge_tool: jump to the next conflict
+  --         ['<leader>co'] = actions.conflict_choose('ours'), -- Choose the OURS version of a conflict
+  --         ['<leader>ct'] = actions.conflict_choose('theirs'), -- Choose the THEIRS version of a conflict
+  --         ['<leader>cb'] = actions.conflict_choose('base'), -- Choose the BASE version of a conflict
+  --         ['<leader>ca'] = actions.conflict_choose('all'), -- Choose all the versions of a conflict
+  --         ['dx'] = actions.conflict_choose('none'), -- Delete the conflict region
+  --         { 'n', 'q', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
+  --         { 'n', '<esc>', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
+  --         { 'n', '<c-n>', actions.select_next_entry, { desc = 'Open the diff for the next file' } },
+  --         { 'n', '<c-p>', actions.select_prev_entry, { desc = 'Open the diff for the previous file' } },
+  --         { 'n', '<c-c>', actions.toggle_files, { desc = 'Toggle the file panel' } },
+  --         { 'n', '-', actions.toggle_stage_entry, { desc = 'Stage / unstage the selected entry' } },
+  --         {
+  --           'n',
+  --           'gd',
+  --           function()
+  --             actions.goto_file_edit()
+  --             vim.lsp.buf.definition()
+  --           end,
+  --         },
+  --         {
+  --           'n',
+  --           'gq',
+  --           function()
+  --             require('diffview.actions').toggle_files()
+  --             vim.schedule(function()
+  --               vim.cmd('tabclose')
+  --             end)
+  --           end,
+  --         },
+  --         {
+  --           'n',
+  --           '<leader>cO',
+  --           actions.conflict_choose_all('ours'),
+  --           { desc = 'Choose the OURS version of a conflict for the whole file' },
+  --         },
+  --         {
+  --           'n',
+  --           '<leader>cT',
+  --           actions.conflict_choose_all('theirs'),
+  --           { desc = 'Choose the THEIRS version of a conflict for the whole file' },
+  --         },
+  --         {
+  --           'n',
+  --           '<leader>cB',
+  --           actions.conflict_choose_all('base'),
+  --           { desc = 'Choose the BASE version of a conflict for the whole file' },
+  --         },
+  --         {
+  --           'n',
+  --           '<leader>cA',
+  --           actions.conflict_choose_all('all'),
+  --           { desc = 'Choose all the versions of a conflict for the whole file' },
+  --         },
+  --         {
+  --           'n',
+  --           'dX',
+  --           actions.conflict_choose_all('none'),
+  --           { desc = 'Delete the conflict region for the whole file' },
+  --         },
+  --       },
+  --       diff1 = { --[[ Mappings in single window diff layouts ]]
+  --         { 'n', 'g?', actions.help({ 'view', 'diff1' }), { desc = 'Open the help panel' } },
+  --       },
+  --       diff2 = { --[[ Mappings in 2-way diff layouts ]]
+  --         { 'n', 'g?', actions.help({ 'view', 'diff2' }), { desc = 'Open the help panel' } },
+  --       },
+  --       diff3 = {
+  --         -- Mappings in 3-way diff layouts
+  --         {
+  --           { 'n', 'x' },
+  --           '2do',
+  --           actions.diffget('ours'),
+  --           { desc = 'Obtain the diff hunk from the OURS version of the file' },
+  --         },
+  --         {
+  --           { 'n', 'x' },
+  --           '3do',
+  --           actions.diffget('theirs'),
+  --           { desc = 'Obtain the diff hunk from the THEIRS version of the file' },
+  --         },
+  --         { 'n', 'g?', actions.help({ 'view', 'diff3' }), { desc = 'Open the help panel' } },
+  --       },
+  --       diff4 = {
+  --         -- Mappings in 4-way diff layouts
+  --         {
+  --           { 'n', 'x' },
+  --           '1do',
+  --           actions.diffget('base'),
+  --           { desc = 'Obtain the diff hunk from the BASE version of the file' },
+  --         },
+  --         {
+  --           { 'n', 'x' },
+  --           '2do',
+  --           actions.diffget('ours'),
+  --           { desc = 'Obtain the diff hunk from the OURS version of the file' },
+  --         },
+  --         {
+  --           { 'n', 'x' },
+  --           '3do',
+  --           actions.diffget('theirs'),
+  --           { desc = 'Obtain the diff hunk from the THEIRS version of the file' },
+  --         },
+  --         { 'n', 'g?', actions.help({ 'view', 'diff4' }), { desc = 'Open the help panel' } },
+  --       },
+  --       file_panel = {
+  --         { 'n', 'q', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
+  --         { 'n', '<esc>', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
+  --         { 'n', '<c-n>', actions.select_next_entry, { desc = 'Open the diff for the next file' } },
+  --         { 'n', '<c-p>', actions.select_prev_entry, { desc = 'Open the diff for the previous file' } },
+  --         { 'n', 'X', actions.restore_entry, { desc = 'Restore entry to the state on the left side.' } },
+  --         { 'n', '<cr>', actions.goto_file, { desc = 'Open the file in a new split in the previous tabpage' } },
+  --         { 'n', 'i', actions.listing_style, { desc = "Toggle between 'list' and 'tree' views" } },
+  --         { 'n', 'R', actions.refresh_files, { desc = 'Update stats and entries in the file list.' } },
+  --         { 'n', '<c-c>', actions.toggle_files, { desc = 'Toggle the file panel' } },
+  --         { 'n', '[x', actions.prev_conflict, { desc = 'Go to the previous conflict' } },
+  --         { 'n', ']x', actions.next_conflict, { desc = 'Go to the next conflict' } },
+  --         { 'n', '<leader>b', false },
+  --         {
+  --           'n',
+  --           'gq',
+  --           function()
+  --             require('diffview.actions').toggle_files()
+  --             vim.schedule(function()
+  --               vim.cmd('tabclose')
+  --             end)
+  --           end,
+  --         },
+  --       },
+  --       file_history_panel = {
+  --         { 'n', 'q', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
+  --         { 'n', '<esc>', ':DiffviewClose<cr>', { desc = 'Close Panel' } },
+  --         { 'n', '<c-n>', actions.select_next_entry, { desc = 'Open the diff for the next file' } },
+  --         { 'n', '<c-p>', actions.select_prev_entry, { desc = 'Open the diff for the previous file' } },
+  --         { 'n', '<cr>', actions.goto_file, { desc = 'Open the file in a new split in the previous tabpage' } },
+  --         { 'n', '<c-c>', actions.toggle_files, { desc = 'Toggle the file panel' } },
+  --         { 'n', '<leader>b', false },
+  --         {
+  --           'n',
+  --           'gq',
+  --           function()
+  --             require('diffview.actions').toggle_files()
+  --             vim.schedule(function()
+  --               vim.cmd('tabclose')
+  --             end)
+  --           end,
+  --         },
+  --         {
+  --           'n',
+  --           '<C-g>',
+  --           require('diffview.actions').open_in_diffview,
+  --           { desc = 'Open the entry under the cursor in a diffview' },
+  --         },
+  --       },
+  --     },
+  --     view = {
+  --       -- Configure the layout and behavior of different types of views.
+  --       -- Available layouts:
+  --       --  'diff1_plain'
+  --       --    |'diff2_horizontal'
+  --       --    |'diff2_vertical'
+  --       --    |'diff3_horizontal'
+  --       --    |'diff3_vertical'
+  --       --    |'diff3_mixed'
+  --       --    |'diff4_mixed'
+  --       -- For more info, see ':h diffview-config-view.x.layout'.
+  --       default = {
+  --         -- Config for changed files, and staged files in diff views.
+  --         layout = 'diff2_horizontal',
+  --       },
+  --       merge_tool = {
+  --         -- Config for conflicted files in diff views during a merge or rebase.
+  --         layout = 'diff3_mixed',
+  --         disable_diagnostics = true, -- Temporarily disable diagnostics for conflict buffers while in the view.
+  --       },
+  --       file_history = {
+  --         -- Config for changed files in file history views.
+  --         layout = 'diff2_horizontal',
+  --       },
+  --     },
+  --   }
+  -- end,
 }

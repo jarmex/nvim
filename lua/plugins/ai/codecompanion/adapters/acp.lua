@@ -1,32 +1,33 @@
-local adapters = require('codecompanion.adapters')
+local adapters = require('codecompanion.adapters.acp')
 
 return {
   opts = {
-    show_presets = false,
+    show_presets = false, -- only show user-defined adapters
+    show_model_choices = true, -- show model choices
   },
+  ---@type fun (): CodeCompanion.ACPAdapter
   claude_code = function()
-    -- local home = vim.fn.expand('~')
-    -- local file_path = vim.fn.fnamemodify(home .. '/.claude_code_apitoken', ':p')
-    --
-    -- -- Read the token directly using Lua instead of shell commands
-    -- local token = ''
-    -- local f = io.open(file_path, 'r')
-    -- if f then
-    --   -- Read entire file and trim any whitespace/newlines
-    --   token = f:read('*a'):gsub('%s+', '')
-    --   f:close()
-    -- else
-    --   vim.notify('Could not find Claude Code token at ' .. file_path, vim.log.levels.WARN)
-    -- end
-
-    return require('codecompanion.adapters').extend('claude_code', {
-      defaults = { mcpServers = 'inherit_from_config' },
-      env = {
-        -- CLAUDE_CODE_OAUTH_TOKEN = token,
-        CLAUDE_CODE_OAUTH_TOKEN = 'cmd:cat ~/.claude_code_apitoken',
-      },
-    })
+    return adapters.extend(
+      'claude_code',
+      ---@type CodeCompanion.ACPAdapter
+      {
+        defaults = {
+          mcpServers = 'inherit_from_config',
+          mode = 'plan',
+          timeout = 20000, -- codecompanion's own timeout is 20 seconds for connection init
+        },
+        env = {
+          -- CLAUDE_CODE_OAUTH_TOKEN = token,
+          CLAUDE_CODE_OAUTH_TOKEN = 'cmd:cat ~/.claude_code_apitoken',
+        },
+        -- commands = {
+        --   default = { 'bunx', '-y', '--bun', '@agentclientprotocol/claude-agent-acp@v0.29.2' },
+        --   yolo = { 'bunx', '-y', '--bun', '@agentclientprotocol/claude-agent-acp@v0.29.2', '--yolo' },
+        -- },
+      }
+    )
   end,
+  ---@type fun (): CodeCompanion.ACPAdapter
   gemini_cli = function()
     return adapters.extend('gemini_cli', {
       defaults = {
@@ -34,18 +35,20 @@ return {
       },
     })
   end,
+  ---@type fun (): CodeCompanion.ACPAdapter
   codex = function()
-    return require('codecompanion.adapters').extend('codex', {
+    return adapters.extend('codex', {
       formatted_name = '\u{E4C6}  Codex',
       defaults = {
         timeout = 20000, -- codecompanion's own timeout is 20 seconds for connection init
-        auth_method = 'chatgpt', -- 'openai-api-key'|'codex-api-key'|'chatgpt'
+        auth_method = 'chat-gpt', -- 'api-key'|'chat-gpt'
         mcpServers = 'inherit_from_config',
       },
     })
   end,
+  ---@type fun (): CodeCompanion.ACPAdapter
   copilot_acp = function()
-    return require('codecompanion.adapters').extend('copilot_acp', {
+    return adapters.extend('copilot_acp', {
       defaults = {
         timeout = 20000,
         session_config_options = {
@@ -54,5 +57,31 @@ return {
         mcpServers = 'inherit_from_config',
       },
     })
+  end,
+  ---@type fun (): CodeCompanion.ACPAdapter
+  opencode = function()
+    return adapters.extend(
+      'opencode',
+      ---@type CodeCompanion.ACPAdapter
+      {
+        env = {
+          PATH = vim.env['PATH'],
+          HOME = vim.env['HOME'],
+          USER = vim.env['USER'],
+          OPENCODE_CONFIG = vim.fn.expand('~/.config/nvim/utils/agents/opencode/zen.json'),
+          OPENCODE_API_KEY = vim.env['NVIM_OPENCODE_ACP_WORK'],
+        },
+        opts = {
+          verbose_output = true,
+        },
+        defaults = {
+          mcpServers = 'inherit_from_config',
+          mode = 'plan',
+        },
+        commands = {
+          default = { 'opencode', 'acp' },
+        },
+      }
+    )
   end,
 }

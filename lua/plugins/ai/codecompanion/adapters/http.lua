@@ -44,7 +44,8 @@ end
 
 return {
   -- opts = {
-  --   show_presets = false,
+  --   show_presets = false, -- only show user-defined adapters
+  --   show_model_choices = true, -- show model choices
   -- },
   --- Anthropic config for CodeCompanion.
   anthropic = function()
