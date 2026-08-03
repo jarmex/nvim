@@ -138,6 +138,10 @@ M.cmd = {
   adapter = { name = DEFAULT_ADAPTER, model = DEFAULT_MODEL },
 }
 
+M.code_review = {
+  enabled = true,
+}
+
 M.cli = {
   agent = 'claude_code',
   agents = {

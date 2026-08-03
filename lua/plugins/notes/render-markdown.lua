@@ -8,11 +8,19 @@ return {
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
-      -- preset = 'obsidian',
-      -- quote = {
-      --   repeat_linebreak = true, -- full border on soft-wrap
-      -- },
       code = { sign = false, border = 'thin' },
+      win_options = {
+        concealcursor = {
+          rendered = 'n',
+        },
+      },
+      -- Normal mode maintains the preview effect, preventing the raw Markdown symbols from appearing on the line where the cursor is located.
+      anti_conceal = {
+        enabled = true,
+        disabled_modes = { 'n' },
+        above = 0,
+        below = 0,
+      },
       completions = {
         blink = { enabled = true },
         lsp = { enabled = false },
@@ -24,7 +32,6 @@ return {
         'codecompanion',
         'obsidian',
         'codecompanion.floaterm',
-        'mcphub',
       },
       latex = { enabled = false, render_modes = false },
       render_modes = true, -- Render in ALL modes

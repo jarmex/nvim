@@ -1,6 +1,9 @@
 local M = {}
 
 M.mcpServers = {
+  opts = {
+    default_servers = { 'sequential-thinking' },
+  },
   servers = {
     ['memory'] = {
       cmd = { 'npx', '-y', '@modelcontextprotocol/server-memory' },

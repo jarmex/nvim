@@ -37,6 +37,7 @@ return {
           chat = strategies.chat,
           background = strategies.background,
           cli = strategies.cli,
+          code_review = strategies.code_review,
         },
         display = {
           diff = display.diff,
