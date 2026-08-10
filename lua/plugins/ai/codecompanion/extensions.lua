@@ -26,8 +26,8 @@ return {
       expiration_days = 45,
       save_chat_keymap = 'sc',
       title_generation_opts = {
-        adapter = 'openrouter_title_generation',
-        -- model = 'gpt-5.4-nano',
+        adapter = 'openrouter_background',
+        model = 'openai/gpt-oss-120b',
         refresh_every_n_prompts = 3,
         max_refreshes = 10,
       },

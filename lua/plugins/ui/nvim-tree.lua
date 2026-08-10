@@ -50,7 +50,7 @@ local function on_attach(bufnr)
     end
   end
   -- Attach default mappings
-  api.config.mappings.default_on_attach(bufnr)
+  api.map.on_attach.default(bufnr)
 
   vim.keymap.set('n', 'Y', api.fs.copy.filename, opts('Copy Name'))
   vim.keymap.set('n', 'y', api.fs.copy.relative_path, opts('Copy Relative Path'))
@@ -95,7 +95,7 @@ return {
     -- lazy = false,
     event = 'UIEnter',
     keys = {
-      { '<leader>ee', '<cmd>NvimTreeToggle<cr>', desc = 'Nvim Tree' },
+      { '<leader>e', '<cmd>NvimTreeToggle<cr>', desc = 'Nvim Tree' },
     },
     opts = {
       actions = { open_file = { quit_on_open = true, relative_path = true, resize_window = true } },

@@ -34,8 +34,8 @@ return {
     end,
     event = { 'CmdlineEnter' },
     keys = {
-      { 'ga', '<cmd>GoAlt<cr>', desc = 'GoAlt', ft = 'go' },
-      { '<leader>er', '<cmd>GoGenReturn<cr>', desc = 'GoGenReturn' },
+      { '<leader>ga', '<cmd>GoAlt<cr>', desc = 'GoAlt', ft = 'go' },
+      { '<leader>tgt', '<cmd>GoGenReturn<cr>', desc = 'GoGenReturn' },
       { '<leader>tgn', '<cmd>GinkgoFunc<CR>', desc = 'Run nearest test' },
       { '<leader>tgr', '<cmd>GoRun<CR>', desc = 'Run Go main' },
       { '<leader>tgf', '<cmd>GoTestFile<CR>', desc = 'Run test file' },

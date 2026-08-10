@@ -123,6 +123,15 @@ return {
   { '<leader>au', ':CodeCompanionChat adapter=openrouter<CR>', desc = 'Codecompanion OpenRouter', silent = true },
   { '<leader>aq', ':CodeCompanionChat adapter=qwen<CR>', desc = 'Codecompanion Qwen', silent = true },
   { '<Leader>ah', '<Cmd>CodeCompanionHistory<CR>', desc = 'AI: Show chat history', silent = true },
+  { '<leader>rc', '<cmd>CodeCompanionCodeReview Comment<cr>', mode = { 'n', 'v' }, desc = 'Comment on lines' },
+  { '<leader>rs', '<cmd>CodeCompanionCodeReview Start<cr>', mode = 'n', desc = 'Start code review' },
+  {
+    '<leader>rl',
+    '<cmd>CodeCompanionCodeReview Comments<cr>',
+    mode = 'n',
+    desc = 'Edit review comments file',
+  },
+
   { '<leader>ai', ask_selection, mode = { 'n', 'v' }, desc = 'Code Companion Inline Prompt', silent = true },
   {
     '<leader>as',
@@ -178,6 +187,34 @@ return {
     mode = 'v',
     desc = 'CodeCompanion Send Selection with Message',
   },
+  {
+    '<leader>rq',
+    function()
+      if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
+        return vim.cmd('cclose')
+      end
+
+      local comments = require('codecompanion.interactions.code_review').pending()
+      if #comments == 0 then
+        return vim.notify('No pending review comments', vim.log.levels.WARN)
+      end
+
+      local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+      local items = vim.tbl_map(function(c)
+        return {
+          filename = (git_root and git_root ~= '') and (git_root .. '/' .. c.path) or c.path,
+          lnum = c.start_line,
+          end_lnum = c.end_line,
+          text = c.comment,
+        }
+      end, comments)
+
+      vim.fn.setqflist({}, ' ', { title = 'Review Comments', items = items })
+      vim.cmd('copen')
+    end,
+    mode = 'n',
+    desc = 'List review comments in quickfix',
+  },
   -- [C]odeCompanion [D]iagnostics
   vim.keymap.set('n', '<LocalLeader>cd', function()
     return require('codecompanion').cli('#{diagnostics} Can you fix these?', { focus = false, submit = true })
@@ -186,4 +223,35 @@ return {
   vim.keymap.set({ 'n', 'v' }, '<LocalLeader>aT', function()
     return require('codecompanion').cli('#{this}', { focus = false })
   end, { desc = 'Add context to the CLI agent' }),
+  {
+    '<leader>cs',
+    function()
+      local start_line = vim.fn.line('v')
+      local end_line = vim.fn.line('.')
+      if start_line > end_line then
+        start_line, end_line = end_line, start_line
+      end
+      local path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':.')
+      local ref = string.format('@%s:%d-%d', path, start_line, end_line)
+      vim.api.nvim_input('<Esc>')
+
+      local chat = require('codecompanion').last_chat()
+      if chat == nil then
+        chat = require('codecompanion').chat({ context = { is_visual = false } })
+      end
+      if chat and chat.ui and not chat.ui:is_visible() then
+        chat.ui:open()
+      end
+      vim.schedule(function()
+        if chat and chat.ui and chat.ui.winnr then
+          vim.api.nvim_set_current_win(chat.ui.winnr)
+          vim.cmd('normal! G$')
+        end
+        vim.api.nvim_put({ ref .. ' ' }, 'c', true, true)
+        vim.cmd('startinsert!')
+      end)
+    end,
+    mode = 'v',
+    desc = 'Send file:line reference to CodeCompanion Chat',
+  },
 }

@@ -2,7 +2,7 @@ local M = {}
 
 M.mcpServers = {
   opts = {
-    default_servers = { 'sequential-thinking' },
+    -- default_servers = { 'memory' },
   },
   servers = {
     ['memory'] = {
@@ -15,18 +15,8 @@ M.mcpServers = {
       },
     },
     ['github'] = {
-      cmd = {
-        'docker',
-        'run',
-        '-i',
-        '--rm',
-        '-e',
-        'GITHUB_PERSONAL_ACCESS_TOKEN',
-        'ghcr.io/github/github-mcp-server',
-      },
-      env = {
-        GITHUB_PERSONAL_ACCESS_TOKEN = os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN'),
-      },
+      type = 'http',
+      url = 'https://api.githubcopilot.com/mcp/',
     },
     ['kubernetes'] = {
       cmd = { 'npx', 'mcp-server-kubernetes' },

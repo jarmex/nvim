@@ -9,19 +9,24 @@ return {
       anthropic = { env = {} },
       deepseek = { env = { api_key = os.getenv('DEEPSEEK_API_KEY') } },
       gemini = {},
-      mistral = {},
       openai = {},
       openai_responses = {},
-      openrouter = { env = { api_key = os.getenv('OPENROUTER_API_KEY') } },
+      openrouter = {
+        env = { api_key = os.getenv('OPENROUTER_API_KEY') },
+        schema = {
+          model = {
+            default = '~deepseek/deepseek-v4-flash-latest',
+          },
+        },
+      },
     },
-    openrouter_title_generation = function()
+    openrouter_background = function()
       return require('codecompanion.adapters').extend('openrouter', {
         env = { api_key = 'OPENROUTER_API_KEY' },
         opts = { session_id = 'title_generation' },
         schema = {
-          model = {
-            default = 'deepseek/deepseek-v4-flash',
-          },
+          model = { default = 'deepseek/deepseek-v4-flash-0731' },
+          ['reasoning.effort'] = { enabled = false },
         },
       })
     end,

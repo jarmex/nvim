@@ -25,21 +25,36 @@ local M = {}
 ----------------
 
 M.background = {
-  adapter = {
-    name = DEFAULT_ADAPTER,
-    model = 'gpt-5-mini',
-  },
+  -- adapter = {
+  --   name = DEFAULT_ADAPTER,
+  --   model = 'gpt-5-mini',
+  -- },
   chat = {
     callbacks = {
       ['on_ready'] = {
         actions = {
-          'interactions.background.builtin.chat_make_title',
+          {
+            path = 'interactions.background.builtin.chat_make_title',
+            adapter = {
+              name = 'openrouter_background',
+              model = 'openai/gpt-oss-120b',
+            },
+          },
         },
         enabled = true,
       },
     },
     opts = {
       enabled = true,
+    },
+  },
+  gates = {
+    judge = {
+      enabled = true,
+      adapter = {
+        name = 'openrouter_background',
+        model = 'openai/gpt-oss-120b',
+      },
     },
   },
 }
@@ -140,6 +155,12 @@ M.cmd = {
 
 M.code_review = {
   enabled = true,
+  display = {
+    virtual_text = {
+      icon = '  ',
+      overflow = 'wrap',
+    },
+  },
 }
 
 M.cli = {

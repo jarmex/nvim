@@ -264,6 +264,14 @@ return {
     },
     config = function(_, opts)
       require('persistent-breakpoints').setup(opts)
+      -- adapted from https://github.com/machichima/nary-dotfile/blob/main/nvim/.config/nvim/lua/plugins/debugging.lua
+      vim.keymap.set('n', '<Leader>db', "<cmd>lua require('persistent-breakpoints.api').toggle_breakpoint()<cr>")
+      vim.keymap.set(
+        'n',
+        '<Leader>dc',
+        "<cmd>lua require('persistent-breakpoints.api').set_conditional_breakpoint()<cr>"
+      )
+      vim.keymap.set('n', '<Leader>dl', "<cmd>lua require('persistent-breakpoints.api').set_log_point()<cr>")
     end,
   },
 }

@@ -76,15 +76,14 @@ return {
             description = 'Personal rules and code philosophy',
             files = {
               { path = '~/.config/personal/PERSONAL.md', parser = 'codecompanion' },
-              { path = 'CLAUDE.md', parser = 'claude' },
-              { path = 'AGENTS.md', parser = 'claude' },
             },
           },
           opts = {
             chat = {
               autoload = { 'personal' },
+              autoload_groups_in_prompt_library = true,
               -- autoload = 'default',
-              enabled = false,
+              enabled = true,
             },
           },
         },
