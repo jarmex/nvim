@@ -10,7 +10,7 @@ end
 
 -- Buffers
 keymap('n', '<C-y>', '<cmd>%y+<CR>', { desc = 'Copy buffer' })
-keymap('n', '<leader>`', '<C-^>', { noremap = true, desc = 'Alternate buffers' })
+-- keymap('n', '<leader>`', '<C-^>', { noremap = true, desc = 'Alternate buffers' })
 keymap('n', '<leader>bo', '<cmd>b#<cr>', { desc = 'Switch to Other Buffer' })
 
 -- Better window movement
@@ -38,7 +38,7 @@ keymap('n', 'u', '<cmd>silent undo<CR>zv', { desc = '󰜊 Silent undo' })
 keymap('n', 'U', '<cmd>silent redo<CR>zv', { desc = '󰛒 Silent redo' })
 keymap('n', '<leader>ue', ':earlier ', { desc = '󰜊 Undo to earlier' })
 
--- Spelling
+-- Spilling
 keymap('n', 'z.', '1z=', { desc = '󰓆 Fix spelling' }) -- works even with `spell=false`
 
 -- Better viewing
@@ -150,3 +150,9 @@ keymap('x', '<Right>', [["zx"zpgvlolo]], { desc = '➡️ Move selection right' 
 keymap('x', '<left>', [["zxhh"zpgvhoho]], { desc = '⬅ Move selection left' })
 
 --------------------------------------------------------------------------------
+vim.keymap.set('n', '<leader>oi', function()
+  vim.lsp.buf.code_action({
+    context = { only = { 'source.organizeImports' }, diagnostics = {} },
+    apply = true,
+  })
+end, { desc = 'Organize Imports' })

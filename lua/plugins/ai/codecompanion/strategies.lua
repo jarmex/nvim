@@ -1,6 +1,6 @@
 -- local defaultAdapter = os.getenv('NVIM_AI_ADAPTER') or 'copilot'
-local DEFAULT_ADAPTER = 'copilot'
-local DEFAULT_MODEL = 'claude-haiku-4.5'
+local DEFAULT_ADAPTER = 'openrouter_background'
+local DEFAULT_MODEL = 'openai/gpt-oss-120b'
 -- local COPILOT_GPTMODEL = 'gpt-4.1'
 
 --------------------------------------------------------------------------------
@@ -36,8 +36,8 @@ M.background = {
           {
             path = 'interactions.background.builtin.chat_make_title',
             adapter = {
-              name = 'openrouter_background',
-              model = 'openai/gpt-oss-120b',
+              name = DEFAULT_ADAPTER,
+              model = DEFAULT_MODEL,
             },
           },
         },
@@ -52,8 +52,8 @@ M.background = {
     judge = {
       enabled = true,
       adapter = {
-        name = 'openrouter_background',
-        model = 'openai/gpt-oss-120b',
+        name = DEFAULT_ADAPTER,
+        model = DEFAULT_MODEL,
       },
     },
   },
@@ -64,7 +64,7 @@ M.background = {
 --------------
 
 M.inline = {
-  adapter = { name = DEFAULT_ADAPTER, model = 'claude-haiku-4.5' },
+  adapter = { name = 'openai', model = 'gpt-5.6-luna' },
   opts = {
     diff_timeout = 300,
   },

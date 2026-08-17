@@ -14,8 +14,8 @@ return {
             desc = 'Find File',
             action = ':lua Snacks.picker.smart({filter = {cwd = true}})',
           },
-          -- { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
-          { icon = ' ', key = 's', desc = 'Load Session', section = 'session' },
+          { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
+          -- { icon = ' ', hidden=true, key = 's', desc = 'Load Session', section = 'session' },
           -- { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
           -- {
           --   icon = ' ',
@@ -46,16 +46,43 @@ return {
         },
       },
       sections = {
-        {
-          section = 'terminal',
-          align = 'center',
-          -- cmd = 'lolcat --seed=24 ~/.config/nvim/static/neo2.cat; sleep .1',
-          cmd = 'bash ' .. logo_path .. 'rainbow-logo.sh --speed 20 --play ' .. logo_path .. 'rainbow-logo.cache',
-          -- cmd = 'bash ' .. logo_path .. 'rainbow-logo.sh --speed 20',
-          height = 14,
-          width = 69,
-          padding = 1,
-        },
+        function()
+          return {
+            align = 'center',
+            padding = 1,
+            text = {
+              { '│ ', hl = 'Special' },
+              { '╲ ││\n', hl = 'String' },
+              { '││', hl = 'Special' },
+              { '╲╲││\n', hl = 'String' },
+              { '││ ', hl = 'Special' },
+              { '╲ │', hl = 'String' },
+            },
+          }
+        end,
+        function()
+          local v = vim.version()
+          return {
+            align = 'center',
+            text = {
+              {
+                string.format('NVIM v%d.%d.%d', v.major, v.minor, v.patch),
+                hl = 'String',
+              },
+            },
+            padding = 2,
+          }
+        end,
+        -- {
+        --   section = 'terminal',
+        --   align = 'center',
+        --   -- cmd = 'lolcat --seed=24 ~/.config/nvim/static/neo2.cat; sleep .1',
+        --   cmd = 'bash ' .. logo_path .. 'rainbow-logo.sh --speed 20 --play ' .. logo_path .. 'rainbow-logo.cache',
+        --   -- cmd = 'bash ' .. logo_path .. 'rainbow-logo.sh --speed 20',
+        --   height = 14,
+        --   width = 69,
+        --   padding = 1,
+        -- },
         {
           align = 'center',
           padding = 1,
@@ -75,8 +102,8 @@ return {
         },
         { icon = '󰏓 ', title = 'Projects', section = 'projects', indent = 2, padding = 1 },
         { icon = ' ', title = 'Recent Files', section = 'recent_files', indent = 2, padding = 1 },
-        { text = '', hidden = true, action = ':Lazy update', key = 'u' },
-        -- { text = '', hidden = true, action = ':PersistenceLoadSession', key = 's' },
+        { text = '', hidden = true, action = ':Lazy home', key = 'l' },
+        { text = '', hidden = true, section = 'session', key = 's' },
         { icon = ' ', hidden = true, text = '', key = 'q', desc = 'Quit', action = ':qa' },
         {
           text = '',

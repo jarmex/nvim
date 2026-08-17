@@ -1,40 +1,16 @@
 local prompt_library = {
-  ['Code review'] = require('plugins.ai.codecompanion.promptlibrary.code_review'),
-  ['Review'] = require('plugins.ai.codecompanion.promptlibrary.review'),
   markdown = {
     dirs = {
       vim.fn.getcwd() .. '/.prompts',
       vim.fn.stdpath('config') .. '/prompts',
     },
-    -- dirs = (function()
-    --           local base = vim.fn.expand("~/.config/nvim/utils/agents/skills")
-    --           local dirs = {}
-    --           for _, entry in ipairs(vim.fn.readdir(base)) do
-    --             local path = base .. "/" .. entry
-    --             if vim.fn.isdirectory(path) == 1 and entry ~= "references" then
-    --               table.insert(dirs, path)
-    --             end
-    --           end
-    --           return dirs
-    --         end)(),
   },
 }
-
-local commit_pull_request = require('plugins.ai.codecompanion.promptlibrary.commit_pull_request')
--- local linearReleaseNote = require('plugins.ai.codecompanion.promptlibrary.linear_release_notes')
-local others = require('plugins.ai.codecompanion.promptlibrary.others')
-local pr_review_prompt = require('plugins.ai.codecompanion.promptlibrary.review_pull_request')
-local review_documents = require('plugins.ai.codecompanion.promptlibrary.review_documentation')
--- local testgenerator = require('plugins.ai.codecompanion.promptlibrary.test_generator')
 
 return vim.tbl_extend(
   'force',
   {},
-  review_documents,
-  commit_pull_request,
-  others,
-  pr_review_prompt,
-  -- testgenerator,
-  -- linearReleaseNote,
-  prompt_library
+  prompt_library,
+  (require('plugins.ai.codecompanion.promptlibrary.others')),
+  (require('plugins.ai.codecompanion.promptlibrary.cli_prompt'))
 )

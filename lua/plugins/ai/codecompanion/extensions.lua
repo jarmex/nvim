@@ -1,5 +1,5 @@
-local DEFAULT_COPILOT_MODEL = 'claude-haiku-4.5' -- grok-code-fast-1, gpt-4.1
-local DEFAULT_ADAPTOR = 'copilot'
+local DEFAULT_MODEL = 'openai/gpt-oss-120b' -- grok-code-fast-1, gpt-4.1
+local DEFAULT_ADAPTOR = 'openrouter_background'
 
 return {
   history = {
@@ -26,8 +26,8 @@ return {
       expiration_days = 45,
       save_chat_keymap = 'sc',
       title_generation_opts = {
-        adapter = 'openrouter_background',
-        model = 'openai/gpt-oss-120b',
+        adapter = DEFAULT_ADAPTOR,
+        model = DEFAULT_MODEL,
         refresh_every_n_prompts = 3,
         max_refreshes = 10,
       },
@@ -59,7 +59,7 @@ return {
     callback = 'codecompanion._extensions.gitcommit',
     opts = {
       adapter = DEFAULT_ADAPTOR, -- Optional: specify LLM adapter (defaults to codecompanion chat adapter)
-      model = DEFAULT_COPILOT_MODEL, -- default model for gitcommit
+      model = DEFAULT_MODEL, -- default model for gitcommit
       languages = { 'English' }, -- Optional: specify languages for diff analysis
       exclude_files = {
         '*.generated.*',
