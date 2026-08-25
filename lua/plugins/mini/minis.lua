@@ -52,7 +52,7 @@ return {
 
       require('mini.surround').setup({
         mappings = {
-          add = 'gsa', -- Add surrounding in Normal and Visual modes
+          add = 'gsa', -- Add surrounding in Normal and Visual modes e.g. gsaiw), see `:h MiniSurround.add`
           delete = 'gsd', -- Delete surrounding
           find = 'gsf', -- Find surrounding (to the right)
           find_left = 'gsF', -- Find surrounding (to the left)

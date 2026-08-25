@@ -9,6 +9,24 @@ local function open_chat()
   end
 end
 
+local REVIEW_PROMPT =
+  "Please answer users's question with their language. For edit requests, please collect them in the very end and ask if user want to edit them.\n\n#{code_review}"
+
+---Put the pending review comments into the chat via the code_review editor context
+---@param opts? { submit?: boolean }
+local function send_review(opts)
+  opts = opts or {}
+
+  local cc = require('codecompanion')
+  local chat = cc.last_chat() or cc.chat()
+  chat.ui:open()
+  chat:add_buf_message({ role = 'user', content = REVIEW_PROMPT })
+
+  if opts.submit ~= false then
+    chat:submit()
+  end
+end
+
 -- Smart Inline
 --
 -- Handle <leader>c mapping intelligently based on selection state.
@@ -188,6 +206,22 @@ return {
     desc = 'CodeCompanion Send Selection with Message',
   },
   {
+    '<leader>ars',
+    function()
+      send_review()
+    end,
+    mode = 'n',
+    desc = 'Submit review comments to chat',
+  },
+  {
+    '<leader>arS',
+    function()
+      send_review({ submit = false })
+    end,
+    mode = 'n',
+    desc = 'Add review comments to chat (edit before sending)',
+  },
+  {
     '<leader>rq',
     function()
       if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
@@ -224,7 +258,7 @@ return {
     return require('codecompanion').cli('#{this}', { focus = false })
   end, { desc = 'Add context to the CLI agent' }),
   {
-    '<leader>cs',
+    '<leader>acs',
     function()
       local start_line = vim.fn.line('v')
       local end_line = vim.fn.line('.')

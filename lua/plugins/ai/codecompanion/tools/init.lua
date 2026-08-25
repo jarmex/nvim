@@ -15,22 +15,22 @@ return {
       requires_approval_after = false,
     },
   },
+  ['web_search'] = {
+    opts = {
+      adapter = 'duckduckgo',
+    },
+  },
   ['delete_file'] = {
     opts = {
       requires_approval_before = true,
     },
   },
-  read_file = {
+  ['read_file'] = {
     opts = {
       require_approval_before = false,
     },
   },
-  list_files = {
-    opts = {
-      require_approval_before = false,
-    },
-  },
-  fetch = {
+  ['fetch'] = {
     opts = {
       require_approval_before = false,
     },

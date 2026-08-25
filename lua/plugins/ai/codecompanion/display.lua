@@ -71,14 +71,19 @@ M.chat = {
   window = {
     width = 0.60,
     layout = vim.o.columns >= 120 and 'vertical' or 'horizontal',
-    position = 'right',
+    full_height = true, -- for vertical layout
+    position = 'right', -- left|right|top|bottom (nil will default depending on vim.opt.splitright|vim.opt.splitbelow)
+    height = 1.0, ---@return number|fun(): number
     sticky = true,
     opts = {
       number = false,
       relativenumber = false,
       signcolumn = 'no',
       spell = false,
-      winbar = '',
+      -- winbar = '',
+      nu = false,
+      breakindent = true,
+      linebreak = true,
     },
   },
 }
