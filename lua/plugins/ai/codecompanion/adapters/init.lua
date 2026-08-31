@@ -30,6 +30,25 @@ return {
         },
       })
     end,
+    qwen = function()
+      return require('codecompanion.adapters').extend('openai_compatible', {
+        name = 'qwen',
+        formatted_name = 'Qwen',
+        env = {
+          url = 'https://dashscope-intl.aliyuncs.com/compatible-mode',
+          chat_url = '/v1/chat/completions',
+          api_key = os.getenv('QWEN_API_KEY'),
+        },
+        schema = {
+          model = {
+            default = 'qwen3.7-flash',
+            choices = {
+              'qwen3.8-max',
+            },
+          },
+        },
+      })
+    end,
   },
   acp = require('plugins.ai.codecompanion.adapters.acp'),
 }
