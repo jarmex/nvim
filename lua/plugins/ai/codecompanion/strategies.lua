@@ -101,6 +101,12 @@ M.chat = {
   --   -- adapter = 'claude_code',
   --   -- model = 'haiku',
   -- },
+  sessions = {
+    enabled = true,
+    autosave = true,
+    continuous_save = true,
+    save_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'codecompanion', 'sessions'),
+  },
   opts = {
     completion_provider = 'blink', -- blink | cmp | coc | default
     -- remove default system prompt for acp agents (these usually come with their

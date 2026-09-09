@@ -2,59 +2,59 @@ local DEFAULT_MODEL = 'openai/gpt-oss-120b' -- grok-code-fast-1, gpt-4.1
 local DEFAULT_ADAPTOR = 'openrouter_background'
 
 return {
-  history = {
-    enabled = true,
-    auto_save = true,
-    expiration_days = 45,
-    opts = {
-      -- Keymap to open history from chat buffer (default: gh)
-      keymap = 'gh',
-      -- Automatically generate titles for new chats
-      auto_generate_title = false,
-      ---On exiting and entering neovim, loads the last chat on opening chat
-      continue_last_chat = false,
-      ---When chat is cleared with `gx` delete the chat from history
-      delete_on_clearing_chat = false,
-      -- Picker interface ("telescope", "snacks" or "default")
-      picker = 'snacks',
-      ---Enable detailed logging for history extension
-      enable_logging = false,
-      ---Directory path to save the chats
-      dir_to_save = vim.fn.stdpath('data') .. '/codecompanion-history',
-      auto_save = true,
-      -- Number of days after which chats are automatically deleted (0 to disable)
-      expiration_days = 45,
-      save_chat_keymap = 'sc',
-      title_generation_opts = {
-        adapter = DEFAULT_ADAPTOR,
-        model = DEFAULT_MODEL,
-        refresh_every_n_prompts = 3,
-        max_refreshes = 10,
-      },
-      picker_keymaps = {
-        rename = { n = 'gr', i = '<C-r>' },
-        delete = { n = 'dd', i = '<C-d>' },
-        duplicate = { n = 'yyp', i = '<C-y>' },
-      },
-      chat_filter = function(chat_data) -- only chats for the cwd
-        return chat_data.cwd == vim.fn.getcwd()
-      end,
-      summary = {
-        create_summary_keymap = 'gcs',
-        browse_summaries_keymap = 'gbs',
-
-        generation_opts = {
-          adapter = nil, -- defaults to current chat adapter
-          model = nil, -- defaults to current chat model
-          context_size = 128000, -- max tokens that the model supports
-          include_references = true, -- include slash command content
-          include_tool_outputs = true, -- include tool execution results
-          system_prompt = nil, -- custom system prompt (string or function)
-          format_summary = nil, -- custom function to format generated summary e.g to remove <think/> tags from summary
-        },
-      },
-    },
-  },
+  -- history = {
+  --   enabled = true,
+  --   auto_save = true,
+  --   expiration_days = 45,
+  --   opts = {
+  --     -- Keymap to open history from chat buffer (default: gh)
+  --     keymap = 'gh',
+  --     -- Automatically generate titles for new chats
+  --     auto_generate_title = false,
+  --     ---On exiting and entering neovim, loads the last chat on opening chat
+  --     continue_last_chat = false,
+  --     ---When chat is cleared with `gx` delete the chat from history
+  --     delete_on_clearing_chat = false,
+  --     -- Picker interface ("telescope", "snacks" or "default")
+  --     picker = 'snacks',
+  --     ---Enable detailed logging for history extension
+  --     enable_logging = false,
+  --     ---Directory path to save the chats
+  --     dir_to_save = vim.fn.stdpath('data') .. '/codecompanion-history',
+  --     auto_save = true,
+  --     -- Number of days after which chats are automatically deleted (0 to disable)
+  --     expiration_days = 45,
+  --     save_chat_keymap = 'sc',
+  --     title_generation_opts = {
+  --       adapter = DEFAULT_ADAPTOR,
+  --       model = DEFAULT_MODEL,
+  --       refresh_every_n_prompts = 3,
+  --       max_refreshes = 10,
+  --     },
+  --     picker_keymaps = {
+  --       rename = { n = 'gr', i = '<C-r>' },
+  --       delete = { n = 'dd', i = '<C-d>' },
+  --       duplicate = { n = 'yyp', i = '<C-y>' },
+  --     },
+  --     chat_filter = function(chat_data) -- only chats for the cwd
+  --       return chat_data.cwd == vim.fn.getcwd()
+  --     end,
+  --     summary = {
+  --       create_summary_keymap = 'gcs',
+  --       browse_summaries_keymap = 'gbs',
+  --
+  --       generation_opts = {
+  --         adapter = nil, -- defaults to current chat adapter
+  --         model = nil, -- defaults to current chat model
+  --         context_size = 128000, -- max tokens that the model supports
+  --         include_references = true, -- include slash command content
+  --         include_tool_outputs = true, -- include tool execution results
+  --         system_prompt = nil, -- custom system prompt (string or function)
+  --         format_summary = nil, -- custom function to format generated summary e.g to remove <think/> tags from summary
+  --       },
+  --     },
+  --   },
+  -- },
   gitcommit = {
     callback = 'codecompanion._extensions.gitcommit',
     opts = {
