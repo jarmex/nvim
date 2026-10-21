@@ -4,7 +4,7 @@ return {
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    ft = { 'markdown', 'codecompanion', 'obsidian', 'copilot-chat', 'opencode_output' },
+    ft = { 'markdown', 'codecompanion', 'obsidian', 'copilot-chat', 'codecompanion_chat_input' },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
@@ -114,6 +114,24 @@ return {
         },
       },
       overrides = {
+        iletype = {
+          codecompanion_chat_input = {
+            html = {
+              tag = {
+                buf = { icon = '󰍛 ', highlight = 'CodeCompanionChatIcon' },
+                file = { icon = ' ', highlight = 'CodeCompanionChatIcon' },
+                group = { icon = ' ', highlight = 'CodeCompanionChatIcon' },
+                help = { icon = '󰘥 ', highlight = 'CodeCompanionChatIcon' },
+                image = { icon = ' ', highlight = 'CodeCompanionChatIcon' },
+                notebook = { icon = '󰠮 ', highlight = 'CodeCompanionChatIcon' },
+                rules = { icon = '󰧑 ', highlight = 'CodeCompanionChatIcon' },
+                symbols = { icon = ' ', highlight = 'CodeCompanionChatIcon' },
+                tool = { icon = '󰯠 ', highlight = 'CodeCompanionChatIcon' },
+                url = { icon = '󰌹 ', highlight = 'CodeCompanionChatIcon' },
+              },
+            },
+          },
+        },
         buftype = {
           nofile = {
             render_modes = true,

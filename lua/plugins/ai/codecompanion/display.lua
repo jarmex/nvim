@@ -68,8 +68,14 @@ M.chat = {
     tool_failure = '  ',
     tool_success = '  ',
   },
+  input = {
+    layout = 'split', -- Can be "buffer" or "split"
+    height = 10, -- lines
+    title = 'CodeCompanion.nvim', -- shown in the winbar until the chat has a title
+    winbar = true, -- set to false if a plugin manages your winbar
+  },
   window = {
-    width = 0.60,
+    width = 0.50,
     layout = vim.o.columns >= 120 and 'vertical' or 'horizontal',
     full_height = true, -- for vertical layout
     position = 'right', -- left|right|top|bottom (nil will default depending on vim.opt.splitright|vim.opt.splitbelow)
