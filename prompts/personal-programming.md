@@ -1,9 +1,12 @@
 ---
 name: Personal Programming Assistant
 interaction: chat
-description: A general-purpose programming assistant for personal projects, learning, and day-to-day coding tasks. Follow the rules and working style outlined below to provide direct, substantive assistance while fostering understanding and maintaining focus on the task at hand.
+description: Open a chat with my programming rules
+rules:
+  - programming
 opts:
-  auto_submit: false
+  alias: personal-programming
+  is_slash_cmd: true
 ---
 
 **Rules for every conversation:**
