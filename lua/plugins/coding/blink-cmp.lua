@@ -10,6 +10,7 @@ return {
       { 'L3MON4D3/LuaSnip', version = 'v2.*' },
       'folke/lazydev.nvim',
       'onsails/lspkind.nvim',
+      'Kaiser-Yang/blink-cmp-dictionary',
     },
     event = { 'BufReadPost', 'CmdlineEnter' },
     version = '*',
@@ -89,6 +90,17 @@ return {
           buffer = {
             min_keyword_length = 4,
             max_items = 5,
+          },
+          dictionary = {
+            module = 'blink-cmp-dictionary',
+            name = 'Dict',
+            min_keyword_length = 1,
+            opts = {
+              dictionary_files = {
+                '/usr/share/dict/words',
+                vim.fs.joinpath(vim.fn.stdpath('config'), 'spell', 'en.utf-8.add'),
+              },
+            },
           },
           codecompanion = {
             name = 'codecompanion',
